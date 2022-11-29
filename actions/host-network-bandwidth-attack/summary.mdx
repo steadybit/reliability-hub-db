@@ -1,0 +1,24 @@
+# Introduction
+
+Limits bandwidth for all matching network traffic.
+
+# Prerequisites
+
+If you are not using our container images for the agents, you need install the `tc` (from the iproute2 package) tool to use the attack.
+
+# Use Cases
+
+    * Understand your service's performance under load
+    * Test your service's resilience to network attacks
+    * Test your service's resilience to decreased bandwidth
+
+# Parameters
+
+| Parameter         | Description                                          | Default  |
+|-------------------|------------------------------------------------------|----------|
+| Network Bandwidth | How much traffic should be allowed per second?       | 1024kbit |
+| Duration          | How long should the bandwidth be reduced?            | 30s      |
+| Hostname          | Restrict to which hosts the traffic is reduced       |          |
+| IP Address        | Restrict to which IP address the traffic is reduced  |          |
+| Network Interface | Target Network Interface which should be attacked    | eth0     |
+| Port Number       | Restrict to which port number the traffic is reduced |          |

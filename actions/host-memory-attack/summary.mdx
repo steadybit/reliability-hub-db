@@ -1,0 +1,25 @@
+# Introduction
+
+Allocate a specific amount of memory.
+
+# Usage
+
+Note that this can cause systems to trip the kernel OOM killer on Linux if not enough physical memory and swap is available.
+
+# Prerequisites
+
+If you are not using our container images for the agents, you need install the `stress-ng` tool to use the attack.
+
+
+# Use Cases
+
+    * Test the system's ability to handle a large amount of memory
+    * Observe the system's behavior when it runs out of memory
+
+
+# Parameters
+
+| Parameter  | Description                       | Default |
+|------------|-----------------------------------|---------|
+| Duration   | How long should memory be wasted? | 30s     |
+| Percentage | How much memory should be wasted? | 200%    |

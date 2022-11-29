@@ -1,0 +1,130 @@
+---
+!<experiment>
+name: 'Verify graceful degradation while Kafka is unavailable'
+version: '5'
+type: 'experiment'
+description: 'An unavailable Kafka is not user-visible as it leads to graceful degradation and downstream retries as soon as the Kafka is back available again.'
+inputs:
+  - name: 'environmentName'
+    type: 'string'
+    required: true
+  - name: 'teamKey'
+    type: 'string'
+    required: true
+experiment:
+  name: 'Verify graceful degradation while Kafka is unavailable'
+  team: '{{teamKey}}'
+  hypothesis: 'An unavailable Kafka is not user-visible as it leads to graceful degradation and downstream retries as soon as the Kafka is back available again.'
+  environment: '{{environmentName}}'
+  lanes:
+    - steps:
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+            environment: []
+            environmentId: '21222108-71f326a5-2134-4c3c-a159-8da6bce66a64'
+            apiKey: 'SECRET_API_KEY'
+            bail: false
+            collectionId: '21222108-f59ac16f-81ff-4894-9261-fc6700b0c185'
+            iterations: 10
+            verbose: false
+          customLabel: 'GIVEN: Orders are accepted'
+          actionType: 'com.github.steadybit.extension_postman.collection.run'
+          radius:
+            maximum: 1
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '5s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            headers: []
+            method: 'GET'
+            successRate: 100
+            maxConcurrent: 5
+            url: 'https://fulfillment.demo.steadybit.io/orders/?q=steadybit'
+            duration: '5s'
+            numberOfRequests: 1
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            responsesContains: 'count: 10'
+            statusCode: '200-299'
+          customLabel: 'GIVEN: All orders are submitted'
+          actionType: 'check:http'
+          radius:
+            maximum: 1
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '20s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '30s'
+            hostname: 'kafka.internal.steadybit.com'
+            port: ''
+          customLabel: 'WHEN: Kafka is not available'
+          actionType: 'container-network-blackhole-attack'
+          radius:
+            targetType: 'container'
+            predicate:
+              operator: 'AND'
+              predicates:
+                - key: 'k8s.cluster-name'
+                  operator: 'EQUALS'
+                  values:
+                    - 'demo-prod'
+                - key: 'k8s.namespace'
+                  operator: 'EQUALS'
+                  values:
+                    - 'steadybit-demo'
+            query: null
+            percentage: 100
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '20s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '30s'
+            environment: []
+            environmentId: '21222108-71f326a5-2134-4c3c-a159-8da6bce66a64'
+            apiKey: 'SECRET_API_KEY'
+            bail: false
+            collectionId: '21222108-f59ac16f-81ff-4894-9261-fc6700b0c185'
+            iterations: 30
+            verbose: false
+          customLabel: 'THEN: Orders are still accepted'
+          actionType: 'com.github.steadybit.extension_postman.collection.run'
+          radius:
+            maximum: 1
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '80s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            headers: []
+            method: 'GET'
+            successRate: 100
+            maxConcurrent: 5
+            url: 'https://fulfillment.demo.steadybit.io/orders/?q=steadybit'
+            duration: '5s'
+            numberOfRequests: 1
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            responsesContains: 'count: 40'
+            statusCode: '200-299'
+          customLabel: 'GIVEN: All orders are submitted'
+          actionType: 'check:http'
+          radius:
+            maximum: 1

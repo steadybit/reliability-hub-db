@@ -1,0 +1,18 @@
+# Introduction
+
+Deletes one pod after the other for a given Kubernetes deployment over a configurable period of time. The delay between pod deletions is `{attack duration} / {number of pods in deployment}`.
+
+Stopping this attack will cause no further pods to be deleted. Kubernetes is responsible for pod restoration/restarts.
+
+
+# Use Cases
+
+    * To test the resiliency of a deployment to pod failures
+    * Check the behavior of the application when a pod is deleted and the pod is restored by Kubernetes
+    * Check if your load balancer can handle pod failures
+
+# Parameters
+
+| Parameter | Description           | Default |
+| --------- | --------------------- | ------- |
+| Duration  | Total attack duration | 60s     |

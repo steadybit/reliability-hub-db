@@ -1,0 +1,6 @@
+---
+- type: youtube
+  id: 3GKCRDYrKuk
+- type: image
+  src: editor-sidebar.png
+  alt: The experiment editor's sidebar showing the request termination attack.

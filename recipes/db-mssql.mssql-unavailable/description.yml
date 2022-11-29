@@ -1,0 +1,6 @@
+id: db-mssql.mssql-unavailable
+label: Verify system unavailability status when Microsoft SQL Server database can't be reached
+description: An unavailable Microsoft SQL Server database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately.
+tags:
+  - Microsoft SQL Server
+  - recoverability

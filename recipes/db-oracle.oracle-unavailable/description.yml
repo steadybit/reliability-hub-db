@@ -1,0 +1,6 @@
+id: db-oracle.oracle-unavailable
+label: Verify system unavailability status when Oracle database can't be reached
+description: An unavailable Oracle database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately.
+tags:
+  - Oracle
+  - recoverability

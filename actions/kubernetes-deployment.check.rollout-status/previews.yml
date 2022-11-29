@@ -1,0 +1,4 @@
+---
+- type: image
+  src: 1.png
+  alt: Experiment editor showing the rollout status check among an experiment to identify how a deployment copes with restarts.

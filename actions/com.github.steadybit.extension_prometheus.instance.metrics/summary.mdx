@@ -1,0 +1,23 @@
+# Introduction
+
+With the Prometheus metric check, you can gather Prometheus metrics (using PromQL). Once gathered, you can optionally add a metric check on top. This capability is tremendously helpful in interacting with existing metric pipelines and Prometheus alerts.
+
+# Use Cases
+
+ - Leverage Prometheus alerts to validate a hypothesis.
+ - Validate that Prometheus alerting rules are functional, i.e., that they trigger during incidents.
+ - Try new alerting rules, e.g., from [Awesome Prometheus Alerts](https://awesome-prometheus-alerts.grep.to/).
+ - Collect Prometheus metrics for later visualization.
+ - Compare Prometheus metrics against each other.
+
+# Rollback
+
+No rollback necessary.
+
+# Parameters
+
+| Parameter | Description                                             | Default |
+|-----------|---------------------------------------------------------|---------|
+| Duration  | How long should the metric collector and evaluator run? | 30s     |
+| Query     | PromQL metric to send to the chosen Prometheus servers  |         |
+| Check     | Rules that can fail the experiment.                     |         |

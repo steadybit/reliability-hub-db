@@ -1,0 +1,135 @@
+---
+!<experiment>
+name: 'Load balancing hides a single container failure of Gateway for end users'
+version: '15'
+type: 'experiment'
+description: 'A failing pod caused by a crashed container is barely visible to end users and recovers fully within 90s.'
+inputs:
+  - name: 'teamKey'
+    type: 'string'
+    required: true
+  - name: 'environmentName'
+    type: 'string'
+    required: true
+experiment:
+  name: 'Load balancing hides a single container failure of Gateway for end users'
+  team: '{{teamKey}}'
+  hypothesis: 'A failing pod caused by a crashed container is barely visible to end users and recovers fully within 90s.'
+  environment: '{{environmentName}}'
+  lanes:
+    - steps:
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+            headers: []
+            method: 'GET'
+            successRate: 100
+            maxConcurrent: 5
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            requestsPerSecond: 10
+            url: 'http://k8s.demo.steadybit.io/products'
+            statusCode: '200-299'
+          customLabel: 'GIVEN: All HTTP-Calls are successful'
+          actionType: 'check:http'
+          radius:
+            maximum: 1
+    - steps:
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+            namespace: 'steadybit-demo'
+            cluster: 'demo-prod'
+            podcount: 'podCountEqualsDesiredCount'
+            deployment: 'gateway'
+          customLabel: 'GIVEN: All pods are ready'
+          actionType: 'check:kubernetes-pod-count'
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            graceful: 'true'
+          customLabel: 'WHEN: Container gateway is stopped'
+          actionType: 'container-stop-attack'
+          radius:
+            targetType: 'container'
+            predicate:
+              operator: 'AND'
+              predicates:
+                - key: 'k8s.cluster-name'
+                  operator: 'EQUALS'
+                  values:
+                    - 'demo-prod'
+                - key: 'k8s.namespace'
+                  operator: 'EQUALS'
+                  values:
+                    - 'steadybit-demo'
+                - key: 'k8s.deployment'
+                  operator: 'EQUALS'
+                  values:
+                    - 'gateway'
+                - key: 'k8s.container.name'
+                  operator: 'EQUALS'
+                  values:
+                    - 'gateway'
+            query: null
+            maximum: 1
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '20s'
+            namespace: 'steadybit-demo'
+            cluster: 'demo-prod'
+            podcount: 'podCountLessThanDesiredCount'
+            deployment: 'gateway'
+          customLabel: 'THEN: Ready Pod Count decreases'
+          actionType: 'check:kubernetes-pod-count'
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '5s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '90s'
+            namespace: 'steadybit-demo'
+            cluster: 'demo-prod'
+            podcount: 'podCountEqualsDesiredCount'
+            deployment: 'gateway'
+          customLabel: 'THEN: All pods are ready again within 90s'
+          actionType: 'check:kubernetes-pod-count'
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '105s'
+            headers: []
+            method: 'GET'
+            successRate: 95
+            maxConcurrent: 5
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            requestsPerSecond: 10
+            url: 'http://k8s.demo.steadybit.io/products'
+            statusCode: '200-299'
+          customLabel: 'THEN: At least 95% of the HTTP calls are successful'
+          actionType: 'check:http'
+          radius:
+            maximum: 1

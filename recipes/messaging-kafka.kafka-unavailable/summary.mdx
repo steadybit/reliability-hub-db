@@ -1,0 +1,11 @@
+# Intent
+
+An unavailable Kafka is not user-visible as it leads to graceful degradation and downstream retries as soon as the Kafka is back available again.
+
+# Motivation
+
+In case of an unavailable Kafka message broker, your application should still work successfully. To decouple your system parts from each other, each Kafka client should take care of appropriate caching and retry mechanisms and shouldn't make the failed Kafka message broker visible to the end user. Instead, your system should fail gracefully and retry the submission as soon as the Kafka message broker is back again.
+
+# Structure
+
+We start by ensuring that business functionality works as expected when your system is in healthy condition. In our example, we place an order via a Postman collection to an online shop and check that the fulfillment system has received all orders via the Kafka message broker from that online shop. Afterward, we simulate an unavailable Kafka message broker and expect that the user-facing online shop endpoint of placing an order is failing gracefully by still accepting all orders. To simulate the unavailability, we can blackhole the client connection using the hostname `kafka.internal.steadybit.com` so that no incoming or outgoing traffic is going through. As soon as the Kafka message broker is back again, every order should be sent to the fulfillment system and stored.

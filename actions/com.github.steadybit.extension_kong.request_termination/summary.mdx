@@ -1,0 +1,26 @@
+# Introduction
+
+This action configures the [Kong request termination plugin](https://docs.konghq.com/hub/kong-inc/request-termination/) to cause abnormal behavior in the communication between **services**.
+
+# Use Cases
+
+ - Verify service communication robustness.
+ - Understand how services degrade when a part of your system becomes unavailable.
+ - Attack a subset of the traffic flowing through your system.
+ - Inject abnormal response bodies to learn how downstream services handle uncommon scenarios.
+
+# Rollback
+
+Whenever the action or the experiment completes, the configured plugin is deleted through Kong's admin API.
+
+# Parameters
+
+| Parameter        | Description                                                                                                                                                                                 | Default                                                                                           |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| Duration         | How long should the status of the monitor be checked                                                                                                                                        | 30s                                                                                               |
+| Consumer         | You may optionally define for which Kong consumer the traffic should be impacted.                                                                                                           |                                                                                                   |
+| Message          | HTTP response to inject                                                                                                                                                                     | Error injected through the Steadybit Kong extension (through the request-termination Kong plugin) |
+| Body             | The raw response body to be returned for terminated requests. This is mutually exclusive with the message parameter. A body parameter takes precedence over the message parameter.          |                                                                                                   |
+| Content-Type     | Content-Type response header to be returned for terminated requests.                                                                                                                        |                                                                                                   |
+| HTTP status code | HTTP response status code to inject                                                                                                                                                         | 500                                                                                               |
+| Trigger          | When not set, the plugin always activates. When set to a string, the plugin will activate exclusively on requests containing either a header or a query parameter that is named the string. |                                                                                                   |

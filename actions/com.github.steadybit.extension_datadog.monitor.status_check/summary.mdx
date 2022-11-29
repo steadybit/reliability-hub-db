@@ -1,0 +1,19 @@
+# Introduction
+
+The monitor status check step can be dragged&dropped into the experiment editor. Once done, you can use it to collect information about the state of the Datadog monitors and, optionally, to verify that they are within the expected status.
+
+Experiments can be aborted and marked as failed when the Datadog monitor status check's actual state diverges from the expected state. This helps implement pre-/post-conditions and invariants. For example, to only start an experiment when the system is healthy.
+
+At last, to help you understand the monitors' status and how they evolved, the run view also contains a status visualization. Through this visualization, you can see what states the Datadog monitors had throughout the experiment execution.
+
+# Use Cases
+
+ - Pre-/postcondition or invariant for any experiment.
+ - Verify that alerts are triggered during incidents.
+
+# Parameters
+
+| Parameter | Description                           | Default |
+| --------- | ------------------------------------- | ------- |
+| Duration  | How long should the status of the monitor be checked | 30s     |
+| Expected Status  | The expected state of the monitor. One of Ok, Alert, Warn, No Data, Unknown, Skipped, Ignored. |      |

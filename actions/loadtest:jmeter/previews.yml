@@ -1,0 +1,4 @@
+---
+- type: image
+  src: jmeter-experiment.png
+  alt: JMeter loadtest within the experiment editor.

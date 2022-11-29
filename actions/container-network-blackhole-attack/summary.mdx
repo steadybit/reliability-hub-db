@@ -1,0 +1,22 @@
+# Introduction
+
+Drops all network traffic (IN/OUT/FORWARDED).
+
+# Details
+
+_Note:_ If you are going to attack containers using network attacks, **all containers in the target's namespace** (e.g. all containers belonging to the same Kubernetes Pod or Replica Set) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
+
+
+# Use Cases
+
+    * Understand how your services behave under network outages
+
+
+# Parameters
+
+| Parameter  | Description                                           | Required | Default |
+|------------|-------------------------------------------------------|----------|---------|
+| Duration   | How long should traffic been blocked?                 | yes      | 30s     |
+| Hostname   | Restrict to which hostname the traffic is affected.   | no       |         |
+| IP Address | Restrict to which ip address the traffic is affected. | no       |         |
+| Port       | Restrict to which port the traffic is affected.       | no       |         |

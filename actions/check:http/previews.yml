@@ -1,0 +1,7 @@
+---
+- type: image
+  src: http-call-step.png
+  alt: The http check within the experiment editor.
+- type: image
+  src: http-call-result.png
+  alt: The results of a http check.

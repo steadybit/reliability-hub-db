@@ -1,0 +1,4 @@
+---
+- type: image
+  src: 1.png
+  alt: Experiment editor showing how a rollout restart attack may be supported by a variety of checks.

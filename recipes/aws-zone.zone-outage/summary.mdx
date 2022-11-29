@@ -1,0 +1,30 @@
+# Intent
+
+AWS achieves high availability via redundancy across different Availability Zones.
+Ensure that failover works seamlessly by simulating Zone outages.
+
+# Motivation
+
+AWS hosts your deployments and services across multiple locations worldwide.
+From a reliability standpoint, AWS regions and Availability Zones are most interesting.
+While the former refers to separate geographic areas spread worldwide, the latter refers to an isolated location within a region.
+For most use cases applying deployments across AWS availability zone is sufficient.
+Given that failures may happen at this level quite frequently, you should verify that your applications are still working in case of an outage.
+
+# Structure
+
+We leverage the AWS blackhole attack to simulate an AWS availability zone outage.
+Before the simulated outage, we ensure that a load-balanced user-facing endpoint works appropriately.
+During an AWS availability zone's unavailability, the HTTP endpoint must continue operating but may suffer from degraded performance (e.g., lower success rate or higher response time).
+The performance should recover as soon as the zone is back again.
+
+# Environment Example
+
+The Kubernetes deployment `gateway` consists of two pods and exposes an [HTTP endpoint](http://k8s.demo.steadybit.io/products).
+We deployed each pod in a different AWS availability zone (`eu-central-1a` and `eu-central-1b`).
+We validate whether this HTTP endpoint works with a success rate of at least 95% while simulating a failure for `eu-central-1a`
+
+# Solution Sketch
+
+- [Regions and Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
+- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)

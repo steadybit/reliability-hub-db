@@ -1,0 +1,23 @@
+# Introduction
+
+The node count check can be used within a **Kubernetes** cluster to check the status of nodes.
+
+# Details
+
+It counts the number of all nodes and performs the check defined by the given check type.
+
+You can limit the node count to a specific cluster
+
+# Parameters
+
+## Node Count
+
+How many nodes are required or should change to let the check pass?
+
+## Check Type
+
+You can use the node count check in one of the following modes:
+
+- **actual count >= node count**: Can be used to assure that the amount of nodes is equal or more compared to the given node count target.
+- **actual count increases by node count**: Check if the node count is above your given target.
+- **actual count decreases by node count**: Check if the node count is below your given target.

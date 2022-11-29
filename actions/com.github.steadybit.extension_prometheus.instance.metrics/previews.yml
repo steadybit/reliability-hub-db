@@ -1,0 +1,10 @@
+---
+- type: image
+  src: 1.png
+  alt: Experiment editor showing how two collected metrics can be compared.
+- type: image
+  src: 2.png
+  alt: Metrics can be defined using PromQL.
+- type: image
+  src: 3.png
+  alt: Prometheus metric checks can fail the experiments.

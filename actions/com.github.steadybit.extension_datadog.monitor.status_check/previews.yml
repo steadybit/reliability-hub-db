@@ -1,0 +1,15 @@
+---
+- type: youtube
+  id: K9jtMSwJXD0
+- type: image
+  src: 1.png
+  alt: The status check within the experiment editor.
+- type: image
+  src: 2.png
+  alt: The run log showing that an experiment failed because of an unexpected monitor status.
+- type: image
+  src: 3.png
+  alt: Part of the run view is a visualization of the monitor status over time.
+- type: image
+  src: 4.png
+  alt: Events are reported to Datadog to indicate when a chaos engineering experiment executed.

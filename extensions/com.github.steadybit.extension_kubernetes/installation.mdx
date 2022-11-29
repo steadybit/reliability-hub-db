@@ -1,0 +1,26 @@
+<Accordion title="Helm / Kubernetes">
+  To install the chart with the name <code>steadybit-extension-kubernetes</code>.
+
+  <Code lang="bash" code={`
+helm repo add steadybit https://steadybit.github.io/helm-charts
+helm repo update
+
+helm upgrade steadybit-extension-kubernetes \\
+  --install \\
+  --wait \\
+  --timeout 5m0s \\
+  --create-namespace \\
+  --namespace steadybit-extension \\
+  steadybit/steadybit-extension-kubernetes`} />
+
+</Accordion>
+<Accordion title="Docker">
+  You may alternatively start the Docker container manually.
+
+  <Code lang="bash" code={`
+docker run \\
+  --env STEADYBIT_LOG_LEVEL=info \\
+  --expose 8088 \\
+  steadybit/extension-kubernetes:latest
+`} />
+</Accordion>

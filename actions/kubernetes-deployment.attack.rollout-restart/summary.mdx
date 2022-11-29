@@ -1,0 +1,24 @@
+# Introduction
+
+The rollout restart attack helps simulate the rollout of a Kubernetes deployment. More specifically, the attack issues a kubectl rollout restart command. This command adds an annotation with the current time to the Kubernetes deployment, which then forces the ReplicaSet to reconcile the state, i.e., update all pods.
+
+# Use Cases
+
+ - Check that a service remains available during rollouts, e.g., with the help of rolling rollouts.
+ - Verify how upstream services behave during a rollout of downstream services.
+ - Check that load balancer configurations update after updates.
+ - See whether persistent connections to a restarting service get re-established.
+
+# Rollback
+
+*No rollback possible.*
+
+# Blog Posts
+
+ - [Resilience Testing](https://steadybit.com/blog/resilience-testing)
+
+# Parameters
+
+| Name | Required | Description                                                             |
+|------|----------|-------------------------------------------------------------------------|
+| Wait | No       | Whether to wait for the rollout to complete before completing the step. |

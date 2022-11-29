@@ -1,0 +1,23 @@
+# Intent
+
+A resilient Kubernetes cluster is able to cope with a changing number of nodes and avoid user-facing reliability issues.
+
+# Motivation
+
+A changing amount of nodes in your Kubernetes cluster is an expected behavior as you may update your nodes from time to time or simply scale the cluster depending on traffic peaks.
+This is especially true in the case of using spot instances in a Cloud environment.
+This requires the deployments to be node-independent and properly configured to be rescheduled on a newly started node or on a node that still has free resources.
+
+# Structure
+
+Before restarting a node we verify that the cluster is in a healthy state and deployments are ready.
+Afterward, we trigger a restart of the node of a specific Kubernetes deployment and expect that the deployment will be rescheduled within 15 minutes.
+This assumes that the related node needs to be fully restarted and not a new one will kick in.
+
+# Environment Example
+
+The Kubernetes deployment `gateway` consists of two pods which are expected to be scheduled on two different nodes.
+
+# Solution Sketch
+
+- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)

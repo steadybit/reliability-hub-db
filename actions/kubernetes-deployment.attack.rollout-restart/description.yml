@@ -1,0 +1,21 @@
+---
+id: kubernetes-deployment.attack.rollout-restart
+label: rollout restart deployment
+description: execute a rollout restart for a Kubernetes deployment
+icon: |
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M10.448 2.656a3 3 0 012.631-.028l6.208 2.949A3 3 0 0121 8.287v7.426a3 3 0 01-1.713 2.71l-6.208 2.949a3 3 0 01-2.631-.028L4.655 18.44l.897-1.788 5.792 2.904a1 1 0 00.877.01l6.208-2.95a1 1 0 00.571-.902V8.287a1 1 0 00-.571-.904l-6.208-2.948a1 1 0 00-.877.01L5.552 7.347A1 1 0 005 8.242v7.516a1 1 0 00.552.894l-.897 1.788A3 3 0 013 15.758V8.242A3 3 0 014.655 5.56l5.793-2.904zm.69 4.509c.459-.215.998-.22 1.462-.015l3.448 1.526c.582.257.952.803.952 1.402v3.844c0 .6-.37 1.145-.952 1.402L12.6 16.85c-.464.205-1.003.2-1.462-.015L7.92 15.333c-.564-.264-.92-.8-.92-1.388v-3.89c0-.587.356-1.124.92-1.387l3.218-1.503z"
+      fill="currentColor"
+    />
+  </svg>
+kind: attack
+category: state
+targetType: kubernetes-deployment
+extension: com.github.steadybit.extension_kubernetes

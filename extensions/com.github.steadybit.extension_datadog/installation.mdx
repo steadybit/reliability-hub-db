@@ -1,0 +1,34 @@
+<Accordion title="Helm / Kubernetes">
+  To install the chart with the name <code>steadybit-extension-datadog</code>. To learn more about the supported values for <code>datadog.siteParameter</code> and <code>datadog.siteUrl</code>, please see <a href="https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site">Datadog's site documentation page</a>. You may alternatively decide to configure the <code>datadog.*</code> values through a pre-existing secret. See the <a href="https://github.com/steadybit/helm-charts/blob/main/charts/steadybit-extension-datadog/values.yaml#L15">documentation</a> for <code>datadog.existingSecret</code> to learn more.
+
+  <Code lang="bash" code={`
+helm repo add steadybit https://steadybit.github.io/helm-charts
+helm repo update
+
+helm upgrade steadybit-extension-datadog \\
+  --install \\
+  --wait \\
+  --timeout 5m0s \\
+  --create-namespace \\
+  --namespace steadybit-extension \\
+  --set datadog.apiKey="{{API_KEY}}" \\
+  --set datadog.applicationKey="{{APPLICATION_KEY}}" \\
+  --set datadog.siteParameter="{{SITE_PARAMETER}}" \\
+  --set datadog.siteUrl="{{SITE_URL}}" \\
+  steadybit/steadybit-extension-datadog`} />
+
+</Accordion>
+<Accordion title="Docker">
+  You may alternatively start the Docker container manually. To learn more about the supported values for <code>STEADYBIT_EXTENSION_SITE_PARAMETER</code> and <code>STEADYBIT_EXTENSION_SITE_URL</code>, please see <a href="https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site">Datadog's site documentation page</a>.
+
+  <Code lang="bash" code={`
+docker run \\
+  --env STEADYBIT_LOG_LEVEL=info \\
+  --env STEADYBIT_EXTENSION_API_KEY="{{API_KEY}}" \\
+  --env STEADYBIT_EXTENSION_APPLICATION_KEY="{{APPLICATION_KEY}}" \\
+  --env STEADYBIT_EXTENSION_SITE_PARAMETER="{{SITE_PARAMETER}}" \\
+  --env STEADYBIT_EXTENSION_SITE_URL="{{SITE_URL}}" \\
+  --expose 8090 \\
+  steadybit/extension-datadog:latest
+`} />
+</Accordion>

@@ -1,0 +1,16 @@
+# Intent
+
+An unavailable Microsoft SQL Server database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately
+
+# Motivation
+
+Depending on your context, an unavailable Microsoft SQL Server database may be considered so severe that there are no suitable fallbacks.
+In this case, ensuring that your system is indicating an appropriate error message is essential.
+After the Microsoft SQL Server database is back again, your system should recover automatically.
+
+# Structure
+
+We ensure that a load-balanced user-facing endpoint fully works while having all pods ready.
+As soon as we simulate an unavailable Microsoft SQL Server database, we expect the user-facing endpoint to indicate unavailability by responding with a "Service unavailable" status.
+To simulate the unavailability, we can blackhole the Microsoft SQL Server database client connection using the hostname `db.internal.steadybit.com` so that no incoming or outgoing traffic is going through.
+The endpoint should recover automatically once the Microsoft SQL Server database is reachable again.

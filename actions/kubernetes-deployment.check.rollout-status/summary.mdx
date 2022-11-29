@@ -1,0 +1,22 @@
+# Introduction
+
+You can use the rollout status check to ensure, among others, that a Kubernetes deployment is ready and operational before injecting chaos. This check is helpful to ensure that the system is in a steady state to avoid false positives.
+
+# Use Cases
+
+ - Check that there are no pending deployments before triggering chaos.
+ - Verify that the deployment is ready again after injecting turbulent conditions.
+
+# Rollback
+
+*No rollback necessary.*
+
+# Blog Posts
+
+ - [Resilience Testing](https://steadybit.com/blog/resilience-testing)
+
+# Parameters
+
+| Name | Required | Description                                                             |
+|------|----------|-------------------------------------------------------------------------|
+| Timeout | No       | Maximum time to wait for the rollout to complete. |

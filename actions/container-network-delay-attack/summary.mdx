@@ -1,0 +1,27 @@
+# Introduction
+
+Inject latency into all matching traffic.
+
+# Details
+
+The network delay operates at the ip level and affects single packets. Thus, you may encounter http requests that are delayed by a multiple of the specified delay.
+
+In this example the traffic is delayed by 500ms. If you tap the wire (using tcpdump) and feed it into Wireshark it looks like shown in the image above.
+
+1. The first incoming packet initiates the tcp connection and is accepted by the second packet, which is delayed exactly be the 500ms.\
+
+2. With the fourth packet we receive a http request in the payload. Which is acknowledged and answered with a http response in packet four to seven, which are also delayed by 500ms and thus the total latency for the http request sums up to 1 second.
+
+_Note:_ If you are going to attack containers using network attacks, **all containers in the target's namespace** (e.g. all containers belonging to the same Kubernetes Pod or Replica Set) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
+
+# Parameters
+
+| Parameter         | Description                                          | Default |
+| ----------------- | ---------------------------------------------------- | ------- |
+| Duration          | How long should the traffic be delayed?              | 30s     |
+| Hostname          | Restrict to which hosts the traffic is delayed       |         |
+| IP Address        | Restrict to which IP address the traffic is delayed  |         |
+| Network Delay     | How much should the traffic be delayed?              | 500ms   |
+| Network Interface | Target Network Interface which should be attacked    | eth0    |
+| Port Number       | Restrict to which port number the traffic is delayed |         |
+| Jitter            | Random +-30% jitter to network delay                 | true    |

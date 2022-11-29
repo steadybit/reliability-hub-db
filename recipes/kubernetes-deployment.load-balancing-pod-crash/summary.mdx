@@ -1,0 +1,26 @@
+# Intent
+
+In case a pod becomes temporarily unavailable you want to ensure that Kubernetes is properly reacting excluding that pod from the Service and restarting it.
+
+# Motivation
+
+If configured properly, Kubernetes is able to detect a non-responding pod and tries to fix it by simply restarting the unresponsive pod.
+Even so, the exact configuration requires careful consideration to avoid killing your pods too early or flooding your cluster’s traffic with liveness probes.
+
+# Structure
+
+Before killing a container of a Kubernetes pod we verify that a load-balanced user-facing endpoint is working properly and all pods of a Kubernetes deployment are marked as ready.
+As soon as one container crashes, Kubernetes should detect the crashed container via a failing liveness probe and mark the related pod as not ready.
+Now, Kubernetes is expected to restart the container so that the pod becomes ready within a certain amount of time.
+The user-facing HTTP endpoint may suffer from degraded performance when being under load (e.g.
+lower success rate or higher response time).
+Even so, this is expected to be within the SLA boundaries.
+
+# Environment Example
+
+The Kubernetes deployment `gateway` consists of two pods and exposes an [HTTP endpoint](http://k8s.demo.steadybit.io/products).
+We validate whether this HTTP endpoint is working even when one pod crashes with a success rate of at least 95%.
+
+# Solution Sketch
+
+- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)

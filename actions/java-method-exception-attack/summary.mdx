@@ -1,0 +1,17 @@
+# Introduction
+
+Injects a RuntimeException into a Spring™ MVC controller.
+
+# Details
+
+The exception is thrown before the handler method is executed.
+When an exception is thrown the handler itself will not be executed.
+
+# Parameters
+
+| Parameter           | Description                                               | Default |
+| ------------------- | --------------------------------------------------------- | ------- |
+| Class Name          | Which Java class should be attacked?                      |         |
+| Method Name         | Which public method should be attacked?                   |         |
+| Duration            | How long should the traffic be delayed?                   | 30s     |
+| Erroneous Call Rate | How many percent of requests should trigger an exception? | 100     |

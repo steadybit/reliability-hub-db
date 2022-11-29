@@ -1,0 +1,18 @@
+# Introduction
+
+Generate read/write operation on hard disks.
+
+# Usage
+The resources on a host are shared between containers.
+Running a resource attack for a container is executed in the containers namespace, but affects the host's resources and all containers running on it.
+
+# Use Cases
+
+    * Stress test the container resources
+
+# Parameters
+
+| Parameter | Description                                                                                  | Default |
+|-----------|----------------------------------------------------------------------------------------------|---------|
+| Duration  | How long should IO be consumed?                                                              | 30s     |
+| Workers   | How many workers should continually write, read and remove temporary files? (0 = 1 per core) | 1       |

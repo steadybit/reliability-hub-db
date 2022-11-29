@@ -1,0 +1,105 @@
+---
+!<experiment>
+name: 'Load balancing hides a AWS EC2 restart for end users'
+version: '3'
+type: 'experiment'
+description: 'An AWS EC2 restart is barely visible to end users and recovers afterward again.'
+inputs:
+  - name: 'environmentName'
+    type: 'string'
+    required: true
+  - name: 'teamKey'
+    type: 'string'
+    required: true
+experiment:
+  name: 'Load balancing hides a AWS EC2 restart for end users'
+  team: '{{teamKey}}'
+  hypothesis: 'An AWS EC2 restart is barely visible to end users and recovers afterward again.'
+  environment: '{{environmentName}}'
+  lanes:
+    - steps:
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+            headers: []
+            method: 'GET'
+            successRate: 100
+            maxConcurrent: 5
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            requestsPerSecond: 10
+            url: 'http://k8s.demo.steadybit.io/products'
+            statusCode: '200-299'
+          customLabel: 'GIVEN: All HTTP-Calls are successful'
+          actionType: 'check:http'
+          radius:
+            maximum: 1
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            action: 'reboot'
+          customLabel: 'WHEN: AWS EC2 is rebooted'
+          actionType: 'ec2-instance.state'
+          radius:
+            targetType: 'ec2-instance'
+            predicate:
+              operator: 'AND'
+              predicates:
+                - key: 'aws.account'
+                  operator: 'EQUALS'
+                  values:
+                    - '434059078104'
+                - key: 'aws-ec2.instance.name'
+                  operator: 'CONTAINS'
+                  values:
+                    - 'prod-demo-ngroup'
+            query: null
+            maximum: 1
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: '10s'
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '3m'
+            headers: []
+            method: 'GET'
+            successRate: 95
+            maxConcurrent: 5
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            requestsPerSecond: 10
+            url: 'http://k8s.demo.steadybit.io/products'
+            statusCode: '200-299'
+          customLabel: 'THEN: At least 95% of the HTTP calls are successful'
+          actionType: 'check:http'
+          radius:
+            maximum: 1
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: '30s'
+            headers: []
+            method: 'GET'
+            successRate: 100
+            maxConcurrent: 5
+            followRedirects: false
+            readTimeout: '5s'
+            connectTimeout: '5s'
+            requestsPerSecond: 10
+            url: 'http://k8s.demo.steadybit.io/products'
+            statusCode: '200-299'
+          customLabel: 'THEN: All HTTP calls are successful again'
+          actionType: 'check:http'
+          radius:
+            maximum: 1

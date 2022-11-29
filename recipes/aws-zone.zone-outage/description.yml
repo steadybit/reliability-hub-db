@@ -1,0 +1,6 @@
+id: aws-zone.zone-outage
+label: Verify smooth operation during an AWS Zone Outage
+description: AWS achieves high availability via redundancy across different Availability Zones. Ensure that failover works seamlessly by simulating Zone outages.
+tags:
+  - aws
+  - redundancy

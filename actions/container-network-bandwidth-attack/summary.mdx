@@ -1,0 +1,25 @@
+# Introduction
+
+Limits bandwidth for all matching network traffic.
+
+# Details
+
+_Note:_ If you are going to attack containers using network attacks, **all containers in the target's namespace** (e.g. all containers belonging to the same Kubernetes Pod or Replica Set) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
+
+
+# Use Cases
+
+    * Understand your service's performance under load
+    * Test your service's resilience to network attacks
+    * Test your service's resilience to decreased bandwidth
+
+# Parameters
+
+| Parameter         | Description                                          | Default  |
+|-------------------|------------------------------------------------------|----------|
+| Network Bandwidth | How much traffic should be allowed per second?       | 1024kbit |
+| Duration          | How long should the bandwidth be reduced?            | 30s      |
+| Hostname          | Restrict to which hosts the traffic is reduced       |          |
+| IP Address        | Restrict to which IP address the traffic is reduced  |          |
+| Network Interface | Target Network Interface which should be attacked    | eth0     |
+| Port Number       | Restrict to which port number the traffic is reduced |          |

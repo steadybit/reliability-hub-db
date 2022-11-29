@@ -1,0 +1,28 @@
+# Intent
+
+EC2 is part of the AWS Elastic Compute Cloud, which acquires and releases resources depending on the traffic demand.
+Check whether your application is elastic as well by rebooting an EC2 instance.
+
+# Motivation
+
+Depending on your traffic demand, you can leverage the ability to acquire and release resources automatically in the AWS cloud.
+Some services, such as S3 and SQS, do that automatically, while others, such as EC2, integrate with AWS Auto Scaling.
+Once configured, it boils down to a fluctuating number of EC2 instances starting up or shutting down frequently.
+Even when not using AWS Autoscaling, your EC2 instances may need to be restarted from time to time for maintenance and updating purposes.
+Thus it is best practice to validate your application's behavior for that.
+
+# Structure
+
+We ensure that a load-balanced user-facing endpoint fully works while having all EC2 instances available.
+While restarting an EC2 instance, the HTTP endpoint continues operating but may suffer from degraded performance (e.g., lower success rate or higher response time).
+The performance should recover to a 100% success rate as soon as all EC2 instances are back.
+
+# Environment Example
+
+The Kubernetes deployment `gateway` consists of two pods deployed on two different EC2 instances.
+We validate whether an exposed [HTTP endpoint](http://k8s.demo.steadybit.io/products) works with a success rate of at least 95% while restarting one of the EC2 instances.
+
+# Solution Sketch
+
+[AWS Well-Architected Framework](https://wa.aws.amazon.com/wat.concept.elasticity.en.html)
+[Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)

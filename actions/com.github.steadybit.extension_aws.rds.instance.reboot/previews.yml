@@ -1,0 +1,7 @@
+---
+- type: image
+  src: designer.png
+  alt: The Reboot RDS step within the experiment editor.
+- type: image
+  src: run.png
+  alt: The experiment execution view when issuing a RDS reboot.
