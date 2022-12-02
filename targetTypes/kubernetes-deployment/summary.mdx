@@ -1,1 +1,15 @@
-TODO
+# Discovery of Kubernetes Deyployments
+
+#### Kubernetes API Server
+
+Our agent is able to communicate directly with the `Kubernetes API Server` to get more details about containers and pods. This optional feature can be given to the agents when deploying the `DaemonSet` by setting up a `ServiceAccount` and limit the access by using a `RBAC Authorization`.
+
+Additional information is provided by \`
+
+* Deployments
+* ReplicaSets
+* StatefulSets
+* DaemonSets
+
+Our central platform prepares this additional information and uses it to identify new potential targets. Thus it is possible to attack a dedicated Kubernetes `Deployment` or to cause failures in a `ReplicaSet`.
+
