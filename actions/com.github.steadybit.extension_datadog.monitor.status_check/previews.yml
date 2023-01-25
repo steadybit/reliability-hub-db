@@ -13,3 +13,6 @@
 - type: image
   src: 4.png
   alt: Events are reported to Datadog to indicate when a chaos engineering experiment executed.
+- type: image
+  src: 5.png
+  alt: A Steadybit Datadog integration exists, adding dashboard templates.
