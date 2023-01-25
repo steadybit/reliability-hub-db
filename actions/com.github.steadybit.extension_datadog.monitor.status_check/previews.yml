@@ -16,3 +16,6 @@
 - type: image
   src: 5.png
   alt: A Steadybit Datadog integration exists, adding dashboard templates.
+- type: image
+  src: 6.png
+  alt: Experiment execution result dashboard within Datadog.
