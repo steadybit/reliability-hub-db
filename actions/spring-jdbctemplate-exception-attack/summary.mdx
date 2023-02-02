@@ -4,10 +4,10 @@ Throws an exception in a Spring™ JDBC Template.
 
 # Parameters
 
-| Parameter           | Description                                            | Default |
-| ------------------- | ------------------------------------------------------ | ------- |
-| Operation           | Which operation should be attacked?                    | Any     |
-| Duration            | How long should the traffic be delayed?                | 30s     |
-| Jitter              | Random +-30% jitter to network delay                   | true    |
-| JDBC Connection Url | Which JDBC connection should be attacked?              | Any     |
-| Erroneous Call Rate | How many percent of calls should trigger an exception? | 100     |
+| Parameter           | Description                                                                  | Default |
+|---------------------|------------------------------------------------------------------------------|---------|
+| Operation           | Which operation should be attacked?                                          | Any     |
+| Duration            | How long should the JDBC template call be intercepted to throw an exception? | 30s     |
+| Jitter              | Random +-30% jitter to network delay                                         | true    |
+| JDBC Connection Url | Which JDBC connection should be attacked?                                    | Any     |
+| Erroneous Call Rate | How many percent of calls should trigger an exception?                       | 100     |
