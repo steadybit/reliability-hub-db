@@ -30,7 +30,7 @@ experiment:
             readTimeout: '5s'
             connectTimeout: '5s'
             requestsPerSecond: 10
-            url: 'http://k8s.demo.steadybit.io/products'
+            url: 'http://demo.steadybit.io/products'
             statusCode: '200-299'
           customLabel: 'GIVEN: All HTTP requests are successful'
           actionType: 'check:http'
@@ -87,7 +87,7 @@ experiment:
             readTimeout: '5s'
             connectTimeout: '5s'
             requestsPerSecond: 10
-            url: 'http://k8s.demo.steadybit.io/products'
+            url: 'http://demo.steadybit.io/products'
             statusCode: '503'
           customLabel: 'THEN: HTTP requests resolve to be Service unavailable'
           actionType: 'check:http'
@@ -105,7 +105,7 @@ experiment:
             readTimeout: '5s'
             connectTimeout: '5s'
             requestsPerSecond: 10
-            url: 'http://k8s.demo.steadybit.io/products'
+            url: 'http://demo.steadybit.io/products'
             statusCode: '200-299'
           customLabel: 'THEN: All HTTP requests are successful again'
           actionType: 'check:http'
