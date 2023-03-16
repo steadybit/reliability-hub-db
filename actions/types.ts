@@ -2,15 +2,23 @@ import { ActionDescription as ActionKitActionDescription } from '@steadybit/acti
 
 import { ExtensionId } from '../extensions/types';
 
-export type Deprecation = ReplacementDeprecation;
+export type Deprecation = ReplacementDeprecation | FullDeprecation;
 
 export interface ReplacementDeprecation {
 	type: 'replacement';
 	newActionId: string;
 }
 
+export interface FullDeprecation {
+	type: 'deprecated';
+}
+
 export function isReplacementDeprecation(d: Deprecation): d is ReplacementDeprecation {
 	return d.type === 'replacement';
+}
+
+export function isFullDeprecation(d: Deprecation): d is FullDeprecation {
+	return d.type === 'deprecated';
 }
 
 export interface ActionDescription

@@ -8,3 +8,6 @@ kind: attack
 category: state
 targetType: kubernetes-deployment
 extension: com.steadybit.agent
+deprecation:
+  type: "deprecated"
+
