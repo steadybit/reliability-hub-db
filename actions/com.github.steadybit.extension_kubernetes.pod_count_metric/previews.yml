@@ -1,0 +1,4 @@
+---
+- type: image
+  src: widget.png
+  alt: Experiment Run View showing the pod count widget

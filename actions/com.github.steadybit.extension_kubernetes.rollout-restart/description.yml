@@ -1,5 +1,5 @@
 ---
-id: kubernetes-deployment.attack.rollout-restart
+id: com.github.steadybit.extension_kubernetes.rollout-restart
 label: rollout restart deployment
 description: execute a rollout restart for a Kubernetes deployment
 icon: |

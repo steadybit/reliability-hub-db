@@ -10,4 +10,4 @@ targetType: kubernetes-deployment
 extension: com.steadybit.agent
 deprecation:
   type: replacement
-  newActionId: kubernetes-deployment.attack.rollout-restart
+  newActionId: com.github.steadybit.extension_kubernetes.rollout-restart

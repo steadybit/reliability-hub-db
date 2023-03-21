@@ -1,0 +1,4 @@
+---
+- type: image
+  src: eventlog.png
+  alt: The experiment run view showing the kubernetes event log

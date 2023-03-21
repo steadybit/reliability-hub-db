@@ -1,7 +1,7 @@
 ---
-id: kubernetes-deployment.check.rollout-status
-label: deployment rollout status
-description: Check the rollout status of the deployment. The check succeeds when no rollout is pending, i.e., kubectl rollout status exits with status code 0.
+id: com.github.steadybit.extension_kubernetes.kubernetes_logs
+label: kubernetes event logs
+description: Collect event logs from a Kubernetes.
 icon: |
   <svg
     viewBox="0 0 24 24"
@@ -15,7 +15,7 @@ icon: |
       fill="currentColor"
     />
   </svg>
-kind: check
-category: state
-targetType: kubernetes-deployment
+kind: other
+category: kubernetes
+targetType: com.github.steadybit.extension_kubernetes.kubernetes-cluster
 extension: com.github.steadybit.extension_kubernetes

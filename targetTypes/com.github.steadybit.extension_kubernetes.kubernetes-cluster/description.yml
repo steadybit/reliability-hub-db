@@ -1,7 +1,8 @@
 ---
-id: check:kubernetes-pod-count
-label: pod count
-description: Verifies Kubernetes pod counts
+id: com.github.steadybit.extension_kubernetes.kubernetes-container
+label:
+  one: Kubernetes container
+  other: Kubernetes container
 icon: |
   <svg
     viewBox="0 0 24 24"
@@ -15,9 +16,5 @@ icon: |
       fill="currentColor"
     />
   </svg>
-kind: check
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_kubernetes.pod_count_check
-
+category: kubernetes
+extension: com.github.steadybit.extension_kubernetes

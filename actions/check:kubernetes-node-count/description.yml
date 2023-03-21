@@ -17,3 +17,6 @@ icon: |
   </svg>
 kind: check
 extension: com.steadybit.agent
+deprecation:
+  type: replacement
+  newActionId: com.github.steadybit.extension_kubernetes.node_count_check
