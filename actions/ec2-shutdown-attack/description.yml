@@ -21,4 +21,4 @@ targetType: ec2-instance
 extension: com.steadybit.aws_agent
 deprecation:
   type: replacement
-  newActionId: ec2-instance.state
+  newActionId: com.github.steadybit.extension_aws.ec2-instance-state

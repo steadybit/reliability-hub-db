@@ -17,4 +17,4 @@ icon: |
     />
   </svg>
 category: kubernetes
-extension: com.steadybit.agent
+extension: com.github.steadybit.extension_kubernetes

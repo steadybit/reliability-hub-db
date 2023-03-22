@@ -17,4 +17,4 @@ icon: |
     />
   </svg>
 category: cloud
-extension: com.steadybit.aws_agent
+extension: com.github.steadybit.extension_aws

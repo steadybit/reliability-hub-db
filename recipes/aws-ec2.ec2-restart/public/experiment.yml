@@ -46,7 +46,7 @@ experiment:
           parameters:
             action: 'reboot'
           customLabel: 'WHEN: AWS EC2 is rebooted'
-          actionType: 'ec2-instance.state'
+          actionType: 'com.github.steadybit.extension_aws.ec2-instance-state'
           radius:
             targetType: 'ec2-instance'
             predicate:

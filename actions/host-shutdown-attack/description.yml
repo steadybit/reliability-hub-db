@@ -9,4 +9,4 @@ category: state
 targetType: host
 extension: com.steadybit.agent
 promotedActions:
-  - ec2-instance.state
+  - com.github.steadybit.extension_aws.ec2-instance-state
