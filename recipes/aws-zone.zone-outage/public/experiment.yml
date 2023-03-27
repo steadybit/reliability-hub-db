@@ -46,7 +46,7 @@ experiment:
           parameters:
             duration: 30
           customLabel: 'WHEN: AWS Zone eu-central-1a is unavailable'
-          actionType: 'availability-zone-blackhole-attack'
+          actionType: 'com.github.steadybit.extension_aws.az.blackhole'
           radius:
             targetType: 'zone'
             predicate:
