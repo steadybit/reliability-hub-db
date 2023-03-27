@@ -1,5 +1,5 @@
 ---
-id: availability-zone-blackhole-attack
+id: com.github.steadybit.extension_aws.az.blackhole
 label: Blackhole Zone
 description: Simulates an outage of an entire availability zone.
 icon: |
@@ -18,7 +18,4 @@ icon: |
 kind: attack
 category: network
 targetType: zone
-extension: com.steadybit.aws_agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_aws.az.blackhole
+extension: com.github.steadybit.extension_aws

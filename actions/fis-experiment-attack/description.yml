@@ -19,3 +19,6 @@ kind: attack
 category: state
 targetType: fis-experiment-template
 extension: com.steadybit.aws_agent
+deprecation:
+  type: replacement
+  newActionId: com.github.steadybit.extension_aws.fis.start_experiment

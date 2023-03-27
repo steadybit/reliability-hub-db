@@ -1,0 +1,17 @@
+# Introduction
+
+Block all traffic for a selected availability zone.
+
+Steadybit will add a network ACL to every subnet in every VPC in the selected zone.
+
+The Attack won't start if you select a zone, where the agent or the extension is running in.
+
+# Use Cases
+
+    * Understand how your services behave under a complete availability zone outage
+
+# Parameters
+
+| Parameter | Description                           | Default |
+|-----------|---------------------------------------|---------|
+| Duration  | How long should traffic been blocked? | 30s     |

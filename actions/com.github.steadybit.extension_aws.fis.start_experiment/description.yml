@@ -1,7 +1,7 @@
 ---
-id: availability-zone-blackhole-attack
-label: Blackhole Zone
-description: Simulates an outage of an entire availability zone.
+id: com.github.steadybit.extension_aws.fis.start_experiment
+label: AWS FIS Experiment
+description: Start a AWS FIS experiment
 icon: |
   <svg
     viewBox="0 0 24 24"
@@ -16,9 +16,6 @@ icon: |
     />
   </svg>
 kind: attack
-category: network
-targetType: zone
-extension: com.steadybit.aws_agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_aws.az.blackhole
+category: state
+targetType: fis-experiment-template
+extension: com.github.steadybit.extension_aws
