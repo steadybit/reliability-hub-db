@@ -1,5 +1,5 @@
 ---
-id: com.github.steadybit.extension_aws.ec2-instance-state
+id: com.github.steadybit.extension_aws.ec2-instance.state
 label: change EC2 instance state
 description: Reboot, terminate, stop or hibernate EC2 instances
 icon: |
