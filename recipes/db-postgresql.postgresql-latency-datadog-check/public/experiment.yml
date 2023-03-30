@@ -1,0 +1,121 @@
+--- !<experiment>
+name: "ea_0034/ADM/ADM-573"
+version: "2"
+type: "experiment"
+description: "This experiment is to see how behave your application when the database\
+  \ is having some latencies, your application should be able to keep up."
+inputs:
+  - name: "environmentName"
+    type: "string"
+    required: true
+  - name: "teamKey"
+    type: "string"
+    required: true
+experiment:
+  name: "Verify system behaviour when PostgreSQL database suffers of latency"
+  team: "{{teamKey}}"
+  hypothesis: "This experiment is to see how behave your application when the database\
+    \ is having some latencies, your application should be able to keep up."
+  environment: "{{environmentName}}"
+  lanes:
+    - steps:
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            url: "http://demo.steadybit.io/products"
+            method: "GET"
+            headers: []
+            duration: "10s"
+            statusCode: "200-299"
+            readTimeout: "5s"
+            successRate: 100
+            maxConcurrent: 5
+            connectTimeout: "5s"
+            followRedirects: false
+            requestsPerSecond: 10
+          customLabel: "GIVEN: All HTTP requests are successful"
+          actionType: "check:http"
+          radius:
+            maximum: 1
+    - steps:
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            cluster: "demo-prod"
+            duration: "10s"
+            podcount: "podCountEqualsDesiredCount"
+            namespace: "steadybit-demo"
+          customLabel: "GIVEN: All pods are ready"
+          actionType: "check:kubernetes-pod-count"
+          radius:
+            maximum: 1
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            port: "5432"
+            duration: "60s"
+            networkDelay: "100ms"
+            networkInterface: "eth0"
+            networkDelayJitter: false
+          customLabel: "WHEN: PostgreSQL suffers latencies"
+          actionType: "container-network-delay-attack"
+          radius:
+            targetType: "container"
+            predicate:
+              operator: "AND"
+              predicates:
+                - key: "k8s.deployment"
+                  operator: "EQUALS"
+                  values:
+                    - "steadybit-demo"
+            query: null
+            percentage: 50
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: "10s"
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            url: "http://demo.steadybit.io/products"
+            method: "GET"
+            headers: []
+            duration: "70s"
+            statusCode: "200-399"
+            readTimeout: "5s"
+            successRate: 90
+            maxConcurrent: 5
+            connectTimeout: "5s"
+            followRedirects: false
+            requestsPerSecond: 10
+          customLabel: "THEN: HTTP requests are slow but mostly successful"
+          actionType: "check:http"
+          radius:
+            maximum: 1
+    - steps:
+        - !<wait>
+          ignoreFailure: false
+          parameters:
+            duration: "10s"
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            duration: "70s"
+          customLabel: "GIVEN: All Monitors stay green"
+          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+          radius:
+            targetType: "com.github.steadybit.extension_datadog.monitor"
+            predicate:
+              operator: "AND"
+              predicates:
+                - key: "datadog.monitor.tags"
+                  operator: "EQUALS"
+                  values:
+                    - "env:stg"
+                - key: "datadog.monitor.tags"
+                  operator: "EQUALS"
+                  values:
+                    - "service:steadybit-demo"
+            query: null
+            percentage: 50

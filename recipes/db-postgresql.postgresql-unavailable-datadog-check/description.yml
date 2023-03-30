@@ -1,0 +1,6 @@
+id: db-postgresql.postgresql-unavailable
+label: Verify system unavailability status when PostgreSQL database can't be reached
+description: An unavailable PostgreSQL database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately.
+tags:
+  - PostgreSQL
+  - recoverability

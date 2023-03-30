@@ -1,0 +1,6 @@
+id: db-postgresql.postgresql-unavailable
+label: Verify system unavailability status when PostgreSQL suffurs latencues
+description: This experiment is to see how behave your application when the database is having some latencies, your application should be able to keep up.
+tags:
+  - PostgreSQL
+  - recoverability

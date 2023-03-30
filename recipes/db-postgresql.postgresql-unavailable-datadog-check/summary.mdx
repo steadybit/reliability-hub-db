@@ -1,0 +1,17 @@
+# Intent
+
+An unavailable PostgreSQL database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately
+In this case, we want to assess that at least one monitor in datadog is alerting us
+
+# Motivation
+
+Depending on your context, an unavailable PostgreSQL database may be considered so severe that there are no suitable fallbacks.
+In this case, ensuring that your system is indicating an appropriate error message is essential.
+After the PostgreSQL database is back again, your system should recover automatically.
+
+# Structure
+
+We ensure that a load-balanced user-facing endpoint fully works while having all pods ready.
+As soon as we simulate an unavailable PostgreSQL database, we expect the user-facing endpoint to indicate unavailability by responding with a "Service unavailable" status.
+To simulate the unavailability, we can blackhole the PostgreSQL database client connection using the port `5432` so that no incoming or outgoing traffic is going through.
+The endpoint should recover automatically once the PostgreSQL database is reachable again.
