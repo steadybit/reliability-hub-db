@@ -1,0 +1,20 @@
+# Introduction
+
+Leverage Istio's native capabilities to inject HTTP delays into inter-service communication or traffic coming from gateways.
+
+# Use Cases
+
+ - Simulate network latency between services
+ - Simulate network latency between services and gateways
+
+# Parameters
+
+| Parameter              | Description                                                                                                                                                         | Default |
+|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration               | How long should the fault be injected?                                                                                                                              | 30s     |
+| Percentage             | What percentage of requests should be delayed?                                                                                                                      | 50%     |
+| Delay                  | How long should the request be delayed?                                                                                                                             | 5s      |
+| Headers                | A list of headers required to be present in the request before the fault is injected. If not specified, the fault will be injected for all requests.                |         |
+| HTTP header match type | The type of match to be performed on the header. If not specified, the match type is exact.                                                                         |         |
+| Source Labels          | A list of labels that should be present in the source service instance before the fault is injected. If not specified, the fault will be injected for all requests. |         |
+

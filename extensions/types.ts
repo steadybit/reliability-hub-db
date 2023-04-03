@@ -17,6 +17,12 @@ export interface DockerHub {
 	repository: string;
 }
 
+export interface GitHubContainerRegistry {
+	owner: string;
+	repository: string;
+	package: string;
+}
+
 export interface ExtensionDescription {
 	id: ExtensionId;
 	label: string;
@@ -28,6 +34,8 @@ export interface ExtensionDescription {
 	gitHub?: GitHub;
 	// will result in Docker statistics presentation
 	dockerHub?: DockerHub;
+	// will result in Docker statistics presentation
+	ghcr?: GitHubContainerRegistry;
 	homepage?: string;
 	changelog?: string;
 	tags: string[];
