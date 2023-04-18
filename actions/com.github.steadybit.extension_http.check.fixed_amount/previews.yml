@@ -1,0 +1,7 @@
+---
+- type: image
+  src: http_check_editor.png
+  alt: The http check within the experiment editor.
+- type: image
+  src: http_check.png
+  alt: The http check within the experiment run.
