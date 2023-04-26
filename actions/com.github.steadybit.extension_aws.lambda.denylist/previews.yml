@@ -1,0 +1,7 @@
+---
+- type: image
+  src: designer.png
+  alt: The Block TCP Connections step within the experiment editor.
+- type: image
+  src: run.png
+  alt: The experiment execution view when blocking tcp connections.

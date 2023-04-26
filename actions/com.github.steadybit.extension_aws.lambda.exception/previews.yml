@@ -1,0 +1,7 @@
+---
+- type: image
+  src: designer.png
+  alt: The Inject Exception step within the experiment editor.
+- type: image
+  src: run.png
+  alt: The experiment execution view when injecting exceptions.

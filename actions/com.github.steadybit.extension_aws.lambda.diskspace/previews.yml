@@ -1,0 +1,7 @@
+---
+- type: image
+  src: designer.png
+  alt: The Fill Diskspace step within the experiment editor.
+- type: image
+  src: run.png
+  alt: The experiment execution view when filling the diskspace.
