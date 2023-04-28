@@ -3,7 +3,7 @@ id: com.github.steadybit.extension_kubernetes
 label: Kubernetes
 description: A Steadybit extension to check the state of the Kubernetes cluster and inject faults.
 icon: |
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M11.9481 13.0696L12.5657 12.7723L12.7258 12.109L12.2912 11.5601H11.6051L11.1705 12.109L11.3306 12.7723L11.9481 13.0696Z" fill="currentColor" />
     <path d="M16.3851 12.7265C16.4308 12.2462 16.408 11.7659 16.2936 11.2857C16.1793 10.8054 15.9963 10.348 15.7447 9.93627L14.0294 11.4915C13.9837 11.5372 13.9608 11.583 13.9379 11.6516C13.8922 11.8574 14.0065 12.0633 14.2124 12.109L16.3851 12.7265Z" fill="currentColor" />
     <path d="M13.1832 10.4166L15.0586 9.09005C14.3725 8.40393 13.4805 7.96938 12.4742 7.85502L12.6114 10.165C12.6114 10.2336 12.6343 10.2793 12.68 10.3251C12.7944 10.4852 13.0231 10.508 13.1832 10.4166Z" fill="currentColor" />
