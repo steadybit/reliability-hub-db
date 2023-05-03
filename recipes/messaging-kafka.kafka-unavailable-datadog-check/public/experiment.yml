@@ -1,7 +1,7 @@
 ---
 !<experiment>
 name: 'Verify graceful degradation while Kafka is unavailable and check datadog monitors behaviour'
-version: '5'
+version: '1'
 type: 'experiment'
 description: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
   \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
