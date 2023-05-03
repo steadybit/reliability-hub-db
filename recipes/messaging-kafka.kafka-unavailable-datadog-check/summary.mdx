@@ -1,0 +1,15 @@
+# Intent
+
+The intent of this experiment is to test the resilience of your application to Kafka unavailability. By simulating an unavailable Kafka cluster, we want to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality. Specifically, we want to ensure that the system can handle the failure of a Kafka broker or a complete Kafka cluster outage and maintain its throughput.
+Testing for Kafka unavailability is critical in ensuring the reliability and availability of your system. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to address them.
+
+# Motivation
+
+Kafka unavailability can occur due to various reasons, such as hardware failure, network connectivity issues, or even intentional attacks. Such unavailability can have severe consequences for your application, such as lost messages, data inconsistencies, and degraded performance. By testing the resilience of your system to Kafka unavailability, you can identify areas for improvement and implement measures to minimize the impact of such outages on your system.
+
+# Structure
+
+To conduct this experiment, we will ensure that all Kafka topics and producers are ready, and the consumer is receiving and processing messages correctly. We will then simulate an unavailable Kafka cluster by shutting down one or more Kafka brokers or the entire Kafka cluster.
+During the outage, we will monitor the system to ensure that it continues to deliver its intended functionality and maintain its throughput. We will also verify that the system can handle the failure of a Kafka broker or a complete Kafka cluster outage without losing messages or data inconsistencies.
+Once the Kafka cluster becomes available again, we will verify that the system automatically recovers and resumes its normal operation. We will also analyze the monitoring data to identify any potential weaknesses in the system and take appropriate measures to address them.
+By conducting this experiment, we can identify any weaknesses in our system's resilience to Kafka unavailability and take appropriate measures to minimize their impact.

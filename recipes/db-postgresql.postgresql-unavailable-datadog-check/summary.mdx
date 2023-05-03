@@ -1,17 +1,15 @@
 # Intent
 
-An unavailable PostgreSQL database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately
-In this case, we want to assess that at least one monitor in datadog is alerting us
+The intent of this experiment is to test the resilience of your application in the event of a PostgreSQL database outage. By simulating an unavailable database, we want to ensure that your system can handle the outage gracefully and indicate unavailability appropriately. Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.
+Testing for a database outage is crucial in ensuring the reliability and availability of your system. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to address them.
 
 # Motivation
 
-Depending on your context, an unavailable PostgreSQL database may be considered so severe that there are no suitable fallbacks.
-In this case, ensuring that your system is indicating an appropriate error message is essential.
-After the PostgreSQL database is back again, your system should recover automatically.
+Database outages can occur due to various reasons, including hardware failures, software bugs, network connectivity issues, or even intentional attacks. Such outages can have severe consequences for your application, such as lost revenue, dissatisfied customers, and reputational damage. By testing your application's resilience to a database outage, you can identify areas for improvement and implement measures to minimize the impact of such outages on your system.
 
 # Structure
 
-We ensure that a load-balanced user-facing endpoint fully works while having all pods ready.
-As soon as we simulate an unavailable PostgreSQL database, we expect the user-facing endpoint to indicate unavailability by responding with a "Service unavailable" status.
-To simulate the unavailability, we can blackhole the PostgreSQL database client connection using the port `5432` so that no incoming or outgoing traffic is going through.
-The endpoint should recover automatically once the PostgreSQL database is reachable again.
+To conduct this experiment, we will ensure that all pods are ready, and the load-balanced user-facing endpoint is fully functional. We will then simulate an unavailable PostgreSQL database by blackholing the PostgreSQL database client connection using port 5432.
+During the outage, we will monitor the system and ensure that the user-facing endpoint indicates unavailability by responding with a "Service unavailable" status. We will also verify that at least one monitor in Datadog is alerting us to the database outage.
+Once the database becomes available again, we will verify that the endpoint automatically recovers and resumes its normal operation. We will also analyze the monitoring data to identify any potential weaknesses in the system and take appropriate measures to address them.
+By conducting this experiment, we can identify any weaknesses in our system's resilience to database outages and take appropriate measures to minimize their impact.

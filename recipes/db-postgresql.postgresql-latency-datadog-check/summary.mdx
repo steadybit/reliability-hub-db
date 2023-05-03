@@ -1,17 +1,21 @@
 # Intent
 
-This experiment is to see how behave your application when the database is having some latencies, your application should be able to keep up.
-It can also highlight some of your requests that needs optimization to less suffer in case of latencies.
-You can also detect if the timeouts of your application are correctly configured and will not drop the requests because of the latency induced.
+This experiment aims to validate the resilience of your application to database latencies.
+By inducing a delay attack on the PostgreSQL port, we want to observe how your application behaves under stress and ensure it can maintain its expected level of service during this time.
+The experiment also serves to identify any bottlenecks or inefficiencies in your application's request processing pipeline that could be optimized to better handle database latencies.
+Additionally, we want to ensure that your application's timeout configurations are correctly set to prevent dropping requests during the attack.
 
 
 # Motivation
 
-Sometimes when the database is shared and/or a huge request is made, the database can suffer from latencies, this experiment can demonstrate which requests will suffer the most from this.
+Latencies in shared or overloaded databases are a common occurrence and can significantly impact the performance of your application.
+By conducting this experiment, you can gain insights into the robustness of your application and identify areas for improvement.
 
 # Structure
 
-We ensure that a load-balanced user-facing endpoint fully works while having all pods ready.
-As soon as we simulate a latency PostgreSQL database, we expect some monitors to trigger based on latency but the service must continue to deliver his purpose.
-To simulate the latency, we can create a delay attack with the PostgreSQL port so every traffic towards this port is having a delay of XXX milliseconds.
-The performance should go back to normal after the attack ended.
+To conduct this experiment, we will ensure that all pods are ready, and the load-balanced user-facing endpoint is fully functional.
+We will then simulate a latency attack on the PostgreSQL database by adding a delay of XXX milliseconds to all traffic to the database port.
+During the attack, we will monitor the system's behavior to ensure that the service remains operational and can deliver its purpose.
+We will also analyze the performance metrics to identify any request types that are most affected by the latency and optimize them accordingly.
+Finally, we will end the attack and monitor the system's recovery time to ensure that it returns to its normal state promptly.
+By conducting this experiment, we can gain valuable insights into our application's resilience to database latencies and make informed decisions to optimize its performance under stress.

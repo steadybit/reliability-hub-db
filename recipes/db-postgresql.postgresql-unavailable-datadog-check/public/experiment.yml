@@ -1,7 +1,8 @@
---- !<experiment>
-name: "ea_0034/ADM/ADM-572"
-version: "2"
-type: "experiment"
+---
+!<experiment>
+name: 'Simulate a Postgres downtime and check datadog monitors behaviour'
+version: '7'
+type: 'experiment'
 description: "An unavailable PostgreSQL database might be too severe for suitable\
   \ fallbacks and requires your system to indicate unavailability appropriately."
 inputs:
@@ -15,7 +16,12 @@ experiment:
   name: "Verify system unavailability status when PostgreSQL database can not be reached"
   team: "{{teamKey}}"
   hypothesis: "An unavailable PostgreSQL database might be too severe for suitable\
-    \ fallbacks and requires your system to indicate unavailability appropriately."
+    \ fallbacks and requires your system to indicate unavailability appropriately.\
+    \ What to verify : \
+    \ - Your app is not having a crashloopbackoff because of the downtime of the database\
+    \ - You respond with an error understandable for others\
+    \ - You can notice this kind of event in your observability with a monitor (either a specific one or an error rate one)\
+    \ - You can check and maybe tweak the value of your connection timeout\ "
   environment: "{{environmentName}}"
   lanes:
     - steps:
@@ -61,6 +67,14 @@ experiment:
             predicate:
               operator: "AND"
               predicates:
+                - key: "k8s.deployment"
+                  operator: "EQUALS"
+                  values:
+                    - "steadybit-demo"
+                - key: "k8s.container.name"
+                  operator: "EQUALS"
+                  values:
+                    - "main"
                 - key: "k8s.cluster-name"
                   operator: "EQUALS"
                   values:
@@ -69,8 +83,8 @@ experiment:
                   operator: "EQUALS"
                   values:
                     - "steadybit-demo"
-            query: null
-            percentage: 100
+              query: null
+              percentage: 100
     - steps:
         - !<wait>
           ignoreFailure: false
@@ -131,13 +145,9 @@ experiment:
                 - key: "datadog.monitor.tags"
                   operator: "EQUALS"
                   values:
-                    - "env:stg"
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:steadybit-demo"
+                    - "service:test"
             query: null
-            percentage: 50
+            percentage: 100
         - !<action>
           ignoreFailure: false
           parameters:
@@ -152,13 +162,9 @@ experiment:
                 - key: "datadog.monitor.tags"
                   operator: "EQUALS"
                   values:
-                    - "env:stg"
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:steadybit-demo"
+                    - "service:test"
             query: null
-            percentage: 50
+            percentage: 100
         - !<wait>
           ignoreFailure: false
           parameters:
@@ -178,10 +184,6 @@ experiment:
                 - key: "datadog.monitor.tags"
                   operator: "EQUALS"
                   values:
-                    - "env:stg"
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:steadybit-demo"
+                    - "service:test"
             query: null
-            percentage: 50
+            percentage: 100

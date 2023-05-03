@@ -1,9 +1,9 @@
 --- !<experiment>
-name: "ea_0034/ADM/ADM-573"
-version: "2"
-type: "experiment"
-description: "This experiment is to see how behave your application when the database\
-  \ is having some latencies, your application should be able to keep up."
+name: "Add latency to the postgres connection and check datadog monitors behaviour"
+version: '1'
+type: 'experiment'
+description: 'This experiment is to see how behave your application when the database\
+  \ is having some latencies, your application should be able to keep up.'
 inputs:
   - name: "environmentName"
     type: "string"
@@ -68,8 +68,20 @@ experiment:
                   operator: "EQUALS"
                   values:
                     - "steadybit-demo"
-            query: null
-            percentage: 50
+                - key: "k8s.container.name"
+                  operator: "EQUALS"
+                  values:
+                    - "main"
+                - key: "k8s.cluster-name"
+                  operator: "EQUALS"
+                  values:
+                    - "demo-prod"
+                - key: "k8s.namespace"
+                  operator: "EQUALS"
+                  values:
+                    - "steadybit-demo"
+              query: null
+              percentage: 100
     - steps:
         - !<wait>
           ignoreFailure: false
@@ -112,10 +124,6 @@ experiment:
                 - key: "datadog.monitor.tags"
                   operator: "EQUALS"
                   values:
-                    - "env:stg"
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:steadybit-demo"
+                    - "service:test"
             query: null
-            percentage: 50
+            percentage: 100

@@ -1,0 +1,6 @@
+id: messaging-kafka.kafka-unavailable-datadog-check
+label: Verify system unavailability status during Kafka downtime
+description: This experiment tests the resilience of your application to Kafka downtime by simulating an unavailable Kafka cluster. The experiment aims to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality. Specifically, we want to ensure that the system can handle the failure of a Kafka broker or a complete Kafka cluster outage and maintain its throughput. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to improve its performance and resilience.
+tags:
+  - Kafka
+  - recoverability
