@@ -1,26 +1,24 @@
 ---
 !<experiment>
-name: "Add latency to the Kafka connection and check datadog monitors behaviour"
+name: 'Verify graceful degradation while Redis is unavailable and check datadog monitors behaviour'
 version: '1'
 type: 'experiment'
-description: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
-  \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
-  \ should have a monitor ringing either from kafka lagging or because you have errors\
-  \ related to kafka do"
+description: 'This experiment tests the resilience of your application to Redis downtime by simulating an unavailable Redis instance. The experiment aims to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality. Specifically, we want to ensure that the system can handle the failure of a Redis instance or a complete Redis cluster outage and maintain its throughput. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to improve its performance and resilience.'
 inputs:
-  - name: "environmentName"
-    type: "string"
-    required: true
   - name: "teamKey"
     type: "string"
     required: true
+  - name: "environmentName"
+    type: "string"
+    required: true
 experiment:
-  name: "Verify graceful degradation while Kafka suffers a high latency"
+  name: "Verify graceful degradation while Redis is unavailable"
   team: "{{teamKey}}"
-  hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
-    \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
-    \ should have a monitor ringing either from kafka lagging or because you have\
-    \ errors related to kafka do"
+  hypothesis: "Under simulated Redis unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality.
+The experiment will identify potential weaknesses in the system's handling of Redis unavailability, allowing for improvements to be made to its resilience and recovery capabilities.
+The system can handle the failure of a Redis instance or a complete Redis cluster outage without significant impact on its performance or functionality.
+The system can recover automatically and efficiently from Redis unavailability once the Redis instance or cluster becomes available again.
+The experiment will verify that the system can indicate unavailability appropriately during Redis unavailability, preventing users from attempting to use the system during the outage."
   environment: "{{environmentName}}"
   lanes:
     - steps:
@@ -29,24 +27,37 @@ experiment:
           parameters:
             duration: "3m"
             podcount: "podCountEqualsDesiredCount"
-          customLabel: "The pod should survive a kafka latency"
+          customLabel: "The pod should survive a Redis downtime"
           actionType: "check:kubernetes-pod-count"
           radius:
             maximum: 1
     - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
         - !<action>
           ignoreFailure: false
           parameters:
+            duration: "30s"
+            expectedStatus: "OK"
+          customLabel: "Monitors should be OK"
+          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+          radius:
+            targetType: "com.github.steadybit.extension_datadog.monitor"
+            predicate:
+              operator: "AND"
+              predicates:
+                - key: "datadog.monitor.tags"
+                  operator: "EQUALS"
+                  values:
+                    - "service:test"
+            query: null
+            percentage: 100
+        - !<action>
+          ignoreFailure: false
+          parameters:
+            port: "9094"
             duration: "2m"
-            networkDelay: "300ms"
-            networkInterface: "eth0"
-            networkDelayJitter: true
-          customLabel: "WHEN: Kafka is slow because of a network issue"
-          actionType: "container-network-delay-attack"
+            hostname: ""
+          customLabel: "WHEN: Redis is not available"
+          actionType: "container-network-blackhole-attack"
           radius:
             targetType: "container"
             predicate:
@@ -70,16 +81,11 @@ experiment:
                     - "steadybit-demo"
             query: null
             percentage: 100
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: "20s"
         - !<action>
           ignoreFailure: false
           parameters:
             duration: "30s"
             expectedStatus: "OK"
-          customLabel: "Monitor should go back to green"
           actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
           radius:
             targetType: "com.github.steadybit.extension_datadog.monitor"
@@ -93,34 +99,15 @@ experiment:
             query: null
             percentage: 100
     - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-            expectedStatus: "OK"
-          customLabel: "Monitors should be OK"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
         - !<wait>
           ignoreFailure: false
           parameters:
-            duration: "30s"
+            duration: "40s"
         - !<action>
           ignoreFailure: true
           parameters:
             duration: "100s"
             expectedStatus: "Alert"
-          customLabel: "Monitor should alert a latency issue"
           actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
           radius:
             targetType: "com.github.steadybit.extension_datadog.monitor"

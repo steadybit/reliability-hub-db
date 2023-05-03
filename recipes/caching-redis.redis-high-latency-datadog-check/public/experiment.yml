@@ -1,12 +1,11 @@
 ---
 !<experiment>
-name: "Add latency to the Kafka connection and check datadog monitors behaviour"
+name: "Add latency to the Redis cache and check datadog monitors behaviour"
 version: '1'
 type: 'experiment'
-description: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
-  \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
-  \ should have a monitor ringing either from kafka lagging or because you have errors\
-  \ related to kafka do"
+description: "This experiment tests the resilience of your application to Redis latency by simulating delays in Redis operations.
+   The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency.
+   By conducting this experiment, you can identify potential bottlenecks or inefficiencies in your system and take appropriate measures to improve its performance and reliability."
 inputs:
   - name: "environmentName"
     type: "string"
@@ -15,12 +14,11 @@ inputs:
     type: "string"
     required: true
 experiment:
-  name: "Verify graceful degradation while Kafka suffers a high latency"
+  name: "Verify graceful degradation while Redis suffers a high latency"
   team: "{{teamKey}}"
-  hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
-    \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
-    \ should have a monitor ringing either from kafka lagging or because you have\
-    \ errors related to kafka do"
+  hypothesis: "Under simulated Redis latency conditions, the system can maintain its performance and indicate unavailability appropriately.
+The experiment will identify potential bottlenecks or inefficiencies in the system, allowing for optimization and improvement.
+The system's performance will return to normal after the latency has ended."
   environment: "{{environmentName}}"
   lanes:
     - steps:
@@ -29,7 +27,7 @@ experiment:
           parameters:
             duration: "3m"
             podcount: "podCountEqualsDesiredCount"
-          customLabel: "The pod should survive a kafka latency"
+          customLabel: "The pod should survive a Redis latency"
           actionType: "check:kubernetes-pod-count"
           radius:
             maximum: 1
@@ -45,7 +43,7 @@ experiment:
             networkDelay: "300ms"
             networkInterface: "eth0"
             networkDelayJitter: true
-          customLabel: "WHEN: Kafka is slow because of a network issue"
+          customLabel: "WHEN: Redis is slow because of a network issue"
           actionType: "container-network-delay-attack"
           radius:
             targetType: "container"
