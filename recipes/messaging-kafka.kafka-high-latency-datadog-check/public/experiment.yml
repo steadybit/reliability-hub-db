@@ -41,6 +41,7 @@ experiment:
         - !<action>
           ignoreFailure: false
           parameters:
+            port: "9094"
             duration: "2m"
             networkDelay: "300ms"
             networkInterface: "eth0"

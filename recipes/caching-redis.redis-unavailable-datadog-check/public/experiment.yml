@@ -53,7 +53,7 @@ The experiment will verify that the system can indicate unavailability appropria
         - !<action>
           ignoreFailure: false
           parameters:
-            port: "9094"
+            port: "6379"
             duration: "2m"
             hostname: ""
           customLabel: "WHEN: Redis is not available"

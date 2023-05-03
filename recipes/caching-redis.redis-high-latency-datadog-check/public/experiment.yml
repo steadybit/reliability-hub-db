@@ -39,6 +39,7 @@ The system's performance will return to normal after the latency has ended."
         - !<action>
           ignoreFailure: false
           parameters:
+            port: "6379"
             duration: "2m"
             networkDelay: "300ms"
             networkInterface: "eth0"
