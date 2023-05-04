@@ -1,6 +1,6 @@
 id: caching-redis.redis-unavailable-datadog-check
 label: Verify system unavailability status during Redis downtime
-description: This experiment tests the resilience of your application to Redis downtime by simulating an unavailable Redis instance. The experiment aims to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality. Specifically, we want to ensure that the system can handle the failure of a Redis instance or a complete Redis cluster outage and maintain its throughput. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to improve its performance and resilience.
+description: Check that your application handles a Redis cache downtime gracefully and continues to deliver its intended functionality. The cache downtime may be an unavailable Redis instance or a complete cluster.
 tags:
   - Redis
   - recoverability

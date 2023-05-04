@@ -1,133 +1,121 @@
 ---
 !<experiment>
-name: "Add latency to the Kafka connection and check datadog monitors behaviour"
-version: '1'
-type: 'experiment'
-description: 'Simulating a latency towards a Kafka broker.'
-inputs:
-  - name: "environmentName"
-    type: "string"
-    required: true
-  - name: "teamKey"
-    type: "string"
-    required: true
-experiment:
-  name: "Verify graceful degradation while Kafka suffers a high latency"
-  team: "{{teamKey}}"
-  hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
-    \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
-    \ should have a monitor ringing either from kafka lagging or because you have\
-    \ errors related to kafka do"
-  environment: "{{environmentName}}"
-  lanes:
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "3m"
-            podcount: "podCountEqualsDesiredCount"
-          customLabel: "The pod should survive a kafka latency"
-          actionType: "check:kubernetes-pod-count"
-          radius:
-            maximum: 1
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            port: "9094"
-            duration: "2m"
-            networkDelay: "300ms"
-            networkInterface: "eth0"
-            networkDelayJitter: true
-          customLabel: "WHEN: Kafka is slow because of a network issue"
-          actionType: "container-network-delay-attack"
-          radius:
-            targetType: "container"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "k8s.deployment"
-                  operator: "EQUALS"
-                  values:
-                    - "steadybit-demo"
-                - key: "k8s.container.name"
-                  operator: "EQUALS"
-                  values:
-                    - "main"
-                - key: "k8s.cluster-name"
-                  operator: "EQUALS"
-                  values:
-                    - "demo-prod"
-                - key: "k8s.namespace"
-                  operator: "EQUALS"
-                  values:
-                    - "steadybit-demo"
-            query: null
-            percentage: 100
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: "20s"
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-            expectedStatus: "OK"
-          customLabel: "Monitor should go back to green"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-            expectedStatus: "OK"
-          customLabel: "Monitors should be OK"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-        - !<action>
-          ignoreFailure: true
-          parameters:
-            duration: "100s"
-            expectedStatus: "Alert"
-          customLabel: "Monitor should alert a latency issue"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
+name: "Verify graceful degradation while Kafka suffers a high latency"
+team: "{{teamKey}}"
+hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
+  \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
+  \ should have a monitor ringing either from kafka lagging or because you have\
+  \ errors related to kafka do"
+environment: "{{environmentName}}"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "3m"
+          podcount: "podCountEqualsDesiredCount"
+        customLabel: "The pod should survive a kafka latency"
+        actionType: "check:kubernetes-pod-count"
+        radius:
+          maximum: 1
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          port: "9094"
+          duration: "2m"
+          networkDelay: "300ms"
+          networkInterface: "eth0"
+          networkDelayJitter: true
+        customLabel: "WHEN: Kafka is slow because of a network issue"
+        actionType: "container-network-delay-attack"
+        radius:
+          targetType: "container"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.container.name"
+                operator: "EQUALS"
+                values:
+                  - "main"
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
+          percentage: 100
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "20s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        customLabel: "Monitor should go back to green"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        customLabel: "Monitors should be OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+      - !<action>
+        ignoreFailure: true
+        parameters:
+          duration: "100s"
+          expectedStatus: "Alert"
+        customLabel: "Monitor should alert a latency issue"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100

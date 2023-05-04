@@ -1,7 +1,7 @@
 # Intent
 
-The intent of this experiment is to test the resilience of your application to Kafka unavailability. By simulating an unavailable Kafka cluster, we want to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality. Specifically, we want to ensure that the system can handle the failure of a Kafka broker or a complete Kafka cluster outage and maintain its throughput.
-Testing for Kafka unavailability is critical in ensuring the reliability and availability of your system. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to address them.
+An unavailable Kafka broker or even entire cluster should be handled by your application gracefully and being indicated appropriately.
+Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.
 
 # Motivation
 

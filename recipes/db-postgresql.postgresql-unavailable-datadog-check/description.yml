@@ -1,6 +1,6 @@
 id: db-postgresql.postgresql-unavailable-datadog-check
 label: Verify system unavailability status during PostgreSQL downtime
-description: This experiment tests the resilience of your application to PostgreSQL downtime by simulating an unavailable database. The experiment aims to ensure that your system can handle database unavailability gracefully and indicate unavailability appropriately. Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage. By conducting this experiment, you can identify potential weaknesses in your system and take steps to address them, such as implementing failover mechanisms or caching mechanisms to reduce the impact of a database outage on your application's performance.
+description: An unavailable database should be handled by your application gracefully and being indicated appropriately. Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage. You can address a potential impact on your system by implementing e.g. a failover or caching mechanism.
 tags:
   - PostgreSQL
   - recoverability

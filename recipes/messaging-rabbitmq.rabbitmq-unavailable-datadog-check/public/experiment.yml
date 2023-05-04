@@ -1,121 +1,109 @@
 ---
 !<experiment>
-name: 'Verify graceful degradation while RabbitMQ is unavailable and check datadog monitors behaviour'
-version: '1'
-type: 'experiment'
-description: 'Simulating an unavailable RabbitMQ cluster.'
-inputs:
-  - name: "teamKey"
-    type: "string"
-    required: true
-  - name: "environmentName"
-    type: "string"
-    required: true
-experiment:
-  name: "Verify graceful degradation while RabbitMQ is unavailable"
-  team: "{{teamKey}}"
-  hypothesis: "Under simulated RabbitMQ unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality.
+name: "Verify graceful degradation while RabbitMQ is unavailable"
+team: "{{teamKey}}"
+hypothesis: "Under simulated RabbitMQ unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality.
 The experiment will identify potential weaknesses in the system's handling of RabbitMQ unavailability, allowing for improvements to be made to its resilience and recovery capabilities.
 The system can handle the failure of a RabbitMQ instance or a complete RabbitMQ cluster outage without significant impact on its performance or functionality.
 The system can recover automatically and efficiently from RabbitMQ unavailability once the RabbitMQ instance or cluster becomes available again"
-  environment: "{{environmentName}}"
-  lanes:
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "3m"
-            podcount: "podCountEqualsDesiredCount"
-          customLabel: "The pod should survive a RabbitMQ downtime"
-          actionType: "check:kubernetes-pod-count"
-          radius:
-            maximum: 1
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-            expectedStatus: "OK"
-          customLabel: "Monitors should be OK"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            port: "5672"
-            duration: "2m"
-            hostname: ""
-          customLabel: "WHEN: RabbitMQ is not available"
-          actionType: "container-network-blackhole-attack"
-          radius:
-            targetType: "container"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "k8s.deployment"
-                  operator: "EQUALS"
-                  values:
-                    - "steadybit-demo"
-                - key: "k8s.container.name"
-                  operator: "EQUALS"
-                  values:
-                    - "main"
-                - key: "k8s.cluster-name"
-                  operator: "EQUALS"
-                  values:
-                    - "demo-prod"
-                - key: "k8s.namespace"
-                  operator: "EQUALS"
-                  values:
-                    - "steadybit-demo"
-            query: null
-            percentage: 100
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: "30s"
-            expectedStatus: "OK"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: "40s"
-        - !<action>
-          ignoreFailure: true
-          parameters:
-            duration: "100s"
-            expectedStatus: "Alert"
-          actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-          radius:
-            targetType: "com.github.steadybit.extension_datadog.monitor"
-            predicate:
-              operator: "AND"
-              predicates:
-                - key: "datadog.monitor.tags"
-                  operator: "EQUALS"
-                  values:
-                    - "service:test"
-            query: null
-            percentage: 100
+environment: "{{environmentName}}"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "3m"
+          podcount: "podCountEqualsDesiredCount"
+        customLabel: "The pod should survive a RabbitMQ downtime"
+        actionType: "check:kubernetes-pod-count"
+        radius:
+          maximum: 1
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        customLabel: "Monitors should be OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          port: "5672"
+          duration: "2m"
+          hostname: ""
+        customLabel: "WHEN: RabbitMQ is not available"
+        actionType: "container-network-blackhole-attack"
+        radius:
+          targetType: "container"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.container.name"
+                operator: "EQUALS"
+                values:
+                  - "main"
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
+          percentage: 100
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "40s"
+      - !<action>
+        ignoreFailure: true
+        parameters:
+          duration: "100s"
+          expectedStatus: "Alert"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100

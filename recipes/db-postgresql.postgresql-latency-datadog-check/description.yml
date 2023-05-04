@@ -1,6 +1,6 @@
 id: db-postgresql.postgresql-latency-datadog-check
 label: Verify system unavailability status during PostgreSQL latency
-description: This experiment tests the resilience of your application to PostgreSQL latency by simulating delays in the database connection. The experiment aims to ensure that your system can continue to function properly and indicate unavailability appropriately, even during database latency. Additionally, this experiment can highlight requests that need optimization and verify the correct configuration of timeouts to prevent dropped requests.
+description: Your application should continue to function properly and indicate unavailability appropriately in case of increased connection latency to PostgreSQL. Additionally, this experiment can highlight requests that need optimization of timeouts to prevent dropped requests.
 tags:
   - PostgreSQL
   - recoverability

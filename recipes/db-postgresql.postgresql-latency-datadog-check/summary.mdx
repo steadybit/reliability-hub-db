@@ -1,10 +1,7 @@
 # Intent
 
-This experiment aims to validate the resilience of your application to database latencies.
-By inducing a delay attack on the PostgreSQL port, we want to observe how your application behaves under stress and ensure it can maintain its expected level of service during this time.
-The experiment also serves to identify any bottlenecks or inefficiencies in your application's request processing pipeline that could be optimized to better handle database latencies.
-Additionally, we want to ensure that your application's timeout configurations are correctly set to prevent dropping requests during the attack.
-
+Your application should continue to function properly and indicate unavailability appropriately in case of increased connection latency to PostgreSQL.
+Additionally, this experiment can highlight requests that need optimization of timeouts to prevent dropped requests.
 
 # Motivation
 

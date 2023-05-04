@@ -1,7 +1,8 @@
 # Intent
 
-The intent of this experiment is to test the resilience of your application in the event of a PostgreSQL database outage. By simulating an unavailable database, we want to ensure that your system can handle the outage gracefully and indicate unavailability appropriately. Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.
-Testing for a database outage is crucial in ensuring the reliability and availability of your system. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to address them.
+An unavailable database should be handled by your application gracefully and being indicated appropriately
+Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.
+You can address a potential impact on your system by implementing e.g. a failover or caching mechanism.
 
 # Motivation
 
