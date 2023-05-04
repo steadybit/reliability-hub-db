@@ -1,6 +1,6 @@
 id: caching-redis.redis-high-latency-datadog-check
 label: Verify system unavailability status during Redis latency
-description: This experiment tests the resilience of your application to Redis latency by simulating delays in Redis operations. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency. By conducting this experiment, you can identify potential bottlenecks or inefficiencies in your system and take appropriate measures to improve its performance and reliability.
+description: This experiment tests the resilience of your application to Redis latency by simulating delays in Redis operations. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency. 
 tags:
   - Redis
   - recoverability

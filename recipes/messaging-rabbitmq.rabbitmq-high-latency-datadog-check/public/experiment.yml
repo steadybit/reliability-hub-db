@@ -1,9 +1,9 @@
 ---
 !<experiment>
-name: "Add latency to the Redis cache and check datadog monitors behaviour"
+name: "Add latency to the Rabbitmq connection and check datadog monitors behaviour"
 version: '1'
 type: 'experiment'
-description: "Redis latency by simulating delays in Redis operations."
+description: 'Simulating an unavailable RabbitMQ broker.'
 inputs:
   - name: "environmentName"
     type: "string"
@@ -12,9 +12,9 @@ inputs:
     type: "string"
     required: true
 experiment:
-  name: "Verify graceful degradation while Redis suffers a high latency"
+  name: "Verify graceful degradation while RabbitMQ suffers a high latency"
   team: "{{teamKey}}"
-  hypothesis: "Under simulated Redis latency conditions, the system can maintain its performance and indicate unavailability appropriately.
+  hypothesis: "Under simulated RabbitMQ latency conditions, the system can maintain its performance and indicate unavailability appropriately.
 The experiment will identify potential bottlenecks or inefficiencies in the system, allowing for optimization and improvement.
 The system's performance will return to normal after the latency has ended."
   environment: "{{environmentName}}"
@@ -25,7 +25,7 @@ The system's performance will return to normal after the latency has ended."
           parameters:
             duration: "3m"
             podcount: "podCountEqualsDesiredCount"
-          customLabel: "The pod should survive a Redis latency"
+          customLabel: "The pod should survive a RabbitMQ latency"
           actionType: "check:kubernetes-pod-count"
           radius:
             maximum: 1
@@ -37,12 +37,12 @@ The system's performance will return to normal after the latency has ended."
         - !<action>
           ignoreFailure: false
           parameters:
-            port: "6379"
+            port: "5672"
             duration: "2m"
             networkDelay: "300ms"
             networkInterface: "eth0"
             networkDelayJitter: true
-          customLabel: "WHEN: Redis is slow because of a network issue"
+          customLabel: "WHEN: RabbitMQ is slow because of a network issue"
           actionType: "container-network-delay-attack"
           radius:
             targetType: "container"

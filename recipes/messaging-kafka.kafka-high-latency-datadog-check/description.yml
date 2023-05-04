@@ -1,6 +1,6 @@
 id: messaging-kafka.kafka-high-latency-datadog-check
 label: Verify system unavailability status during Kafka latency
-description: This experiment tests the resilience of your application to Kafka latency by simulating delays in the Kafka message delivery. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency. By conducting this experiment, you can identify potential bottlenecks or inefficiencies in your system and take appropriate measures to improve its performance and reliability.
+description: This experiment tests the resilience of your application to Kafka latency by simulating delays in the Kafka message delivery. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency. 
 tags:
   - Kafka
   - recoverability

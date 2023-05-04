@@ -3,8 +3,7 @@
 name: 'Simulate a Postgres downtime and check datadog monitors behaviour'
 version: '1'
 type: 'experiment'
-description: "An unavailable PostgreSQL database might be too severe for suitable\
-  \ fallbacks and requires your system to indicate unavailability appropriately."
+description: 'Simulating an unavailable Postgres instance.'
 inputs:
   - name: "environmentName"
     type: "string"

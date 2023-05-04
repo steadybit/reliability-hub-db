@@ -1,0 +1,6 @@
+id: messaging-rabbitmq.rabbitmq-unavailable-datadog-check
+label: Verify system unavailability status during RabbitMQ downtime
+description: This experiment is designed to test the resilience of your application to RabbitMQ downtime by simulating an unavailable RabbitMQ cluster. The aim is to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality.
+tags:
+  - RabbitMQ
+  - recoverability

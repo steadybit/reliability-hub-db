@@ -3,7 +3,7 @@
 name: 'Verify graceful degradation while Redis is unavailable and check datadog monitors behaviour'
 version: '1'
 type: 'experiment'
-description: 'This experiment tests the resilience of your application to Redis downtime by simulating an unavailable Redis instance. The experiment aims to ensure that your system can handle the outage gracefully and continue to deliver its intended functionality. Specifically, we want to ensure that the system can handle the failure of a Redis instance or a complete Redis cluster outage and maintain its throughput. By conducting this experiment, you can identify any potential weaknesses in your system and take appropriate measures to improve its performance and resilience.'
+description: 'Simulating an unavailable Redis instance.'
 inputs:
   - name: "teamKey"
     type: "string"

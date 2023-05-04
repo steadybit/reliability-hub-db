@@ -1,0 +1,11 @@
+# Intent
+
+This experiment is designed to test the resilience of your application to RabbitMQ latency by simulating delays in message delivery. The aim is to ensure that your system can handle increased processing time and maintain its throughput during increased latency. The experiment can help you identify potential bottlenecks or inefficiencies in your system and take appropriate measures to improve its performance and reliability.
+
+# Motivation
+
+Latency issues in RabbitMQ can lead to degraded system performance, longer response times, and potentially lost or delayed data. By testing the resilience of your system to RabbitMQ latency, you can ensure that your system can handle increased processing time and maintain its throughput during increased latency. Additionally, you can identify any potential bottlenecks or inefficiencies in your system and take appropriate measures to optimize its performance and reliability.
+
+# Structure
+
+We will verify that a load-balanced user-facing endpoint fully works while having all pods ready. As soon as we simulate RabbitMQ latency, we expect the system to maintain its throughput and indicate unavailability appropriately. To simulate latency, we can introduce delays in message delivery. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency. The performance should return to normal after the latency has ended.

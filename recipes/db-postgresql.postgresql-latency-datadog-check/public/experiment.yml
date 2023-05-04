@@ -2,8 +2,7 @@
 name: "Add latency to the postgres connection and check datadog monitors behaviour"
 version: '1'
 type: 'experiment'
-description: 'This experiment is to see how behave your application when the database\
-  \ is having some latencies, your application should be able to keep up.'
+description: "Postgres latency by simulating delays in postgres operations."
 inputs:
   - name: "environmentName"
     type: "string"

@@ -1,0 +1,6 @@
+id: messaging-rabbitmq.rabbitmq-high-latency-datadog-check
+label: Verify system unavailability status during RabbitMQ latency
+description: This experiment is designed to test the resilience of your application to RabbitMQ latency by simulating delays in message delivery. The aim is to ensure that your system can handle increased processing time and maintain its throughput during increased latency.
+tags:
+  - RabbitMQ
+  - recoverability
