@@ -1,76 +1,70 @@
 ---
 !<experiment>
 name: "Load balancing hides a restart of Gateway's node for end users"
-version: '1'
-type: 'experiment'
-description: 'When a single node running one of the Gateway pod is restarted, then within 10 minutes all pods are ready.'
-inputs:
-  - name: 'teamKey'
-    type: 'string'
-    required: true
-  - name: 'environmentName'
-    type: 'string'
-    required: true
-experiment:
-  name: "Load balancing hides a restart of Gateway's node for end users"
-  team: '{{teamKey}}'
-  hypothesis: 'When a single node running one of the Gateway pod is restarted, then within 10 minutes all pods are ready.'
-  environment: '{{environmentName}}'
-  lanes:
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            namespace: 'steadybit-demo'
-            cluster: 'demo-prod'
-            podcount: 'podCountEqualsDesiredCount'
-            deployment: 'gateway'
-          customLabel: 'GIVEN: All pods are ready'
-          actionType: 'check:kubernetes-pod-count'
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            reboot: 'true'
-            delay: '0m'
-          customLabel: 'WHEN: A node is rebooted'
-          actionType: 'host-shutdown-attack'
-          radius:
-            targetType: 'host'
-            predicate:
-              operator: 'AND'
-              predicates:
-                - key: 'k8s.cluster-name'
-                  operator: 'EQUALS'
-                  values:
-                    - 'demo-prod'
-                - key: 'k8s.namespace'
-                  operator: 'EQUALS'
-                  values:
-                    - 'steadybit-demo'
-                - key: 'k8s.deployment'
-                  operator: 'EQUALS'
-                  values:
-                    - 'gateway'
-            query: null
-            maximum: 1
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '5m'
-            namespace: 'steadybit-demo'
-            cluster: 'demo-prod'
-            podcount: 'podCountLessThanDesiredCount'
-            deployment: 'gateway'
-          customLabel: 'THEN: Ready Pod Count decreases'
-          actionType: 'check:kubernetes-pod-count'
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '5m'
-            namespace: 'steadybit-demo'
-            cluster: 'demo-prod'
-            podcount: 'podCountEqualsDesiredCount'
-            deployment: 'gateway'
-          customLabel: 'THEN: Pod count is all back again'
-          actionType: 'check:kubernetes-pod-count'
+team: "ADM"
+hypothesis:
+  "When a single node running one of the Gateway pod is restarted, then\
+    \ within 10 minutes all pods are ready."
+area: "Global"
+environment: "Global"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          cluster: "demo-prod"
+          duration: "10s"
+          podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
+        customLabel: "GIVEN: All pods are ready"
+        actionType: "check:kubernetes-pod-count"
+        radius: {}
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          delay: "0m"
+          reboot: "true"
+        customLabel: "WHEN: A node is rebooted"
+        actionType: "host-shutdown-attack"
+        radius:
+          targetType: "host"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
+          maximum: 1
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          cluster: "demo-prod"
+          duration: "5m"
+          podcount: "podCountLessThanDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
+        customLabel: "THEN: Ready Pod Count decreases"
+        actionType: "check:kubernetes-pod-count"
+        radius: {}
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          cluster: "demo-prod"
+          duration: "5m"
+          podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
+        customLabel: "THEN: Pod count is all back again"
+        actionType: "check:kubernetes-pod-count"
+        radius: {}

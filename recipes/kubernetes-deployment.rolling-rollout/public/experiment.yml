@@ -1,133 +1,127 @@
 ---
 !<experiment>
-name: 'Faultless redundancy of Gateway during rolling update'
-version: '2'
-type: 'experiment'
-description: 'When a deployment is rescheduled 95% of all requests are successful'
-inputs:
-  - name: 'environmentName'
-    type: 'string'
-    required: true
-  - name: 'teamKey'
-    type: 'string'
-    required: true
-experiment:
-  name: 'Faultless redundancy of Gateway during rolling update'
-  team: '{{teamKey}}'
-  hypothesis: 'When a deployment is rescheduled 95% of all requests are successful'
-  environment: '{{environmentName}}'
-  lanes:
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            method: 'GET'
-            successRate: 100
-            maxConcurrent: '5'
-            followRedirects: 'false'
-            readTimeout: '5s'
-            connectTimeout: '5s'
-            requestsPerSecond: 10
-            url: 'http://demo.steadybit.io/products'
-            statusCode: '200-299'
-          customLabel: 'GIVEN: All HTTP-Calls are successful'
-          actionType: 'check:http'
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            namespace: 'steadybit-demo'
-            cluster: 'demo-prod'
-            podcount: 'podCountEqualsDesiredCount'
-            deployment: 'gateway'
-          customLabel: 'GIVEN: All PODs are available'
-          actionType: 'check:kubernetes-pod-count'
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-          customLabel: 'Wait: Until GIVEN steps are checked'
-        - !<action>
-          ignoreFailure: false
-          parameters: {}
-          customLabel: 'WHEN: A rollout restart is executed'
-          actionType: 'kubernetes-rollout-restart-attack'
-          radius:
-            targetType: 'kubernetes-deployment'
-            predicate:
-              operator: 'AND'
-              predicates:
-                - key: 'k8s.cluster-name'
-                  operator: 'EQUALS'
-                  values:
-                    - 'demo-prod'
-                - key: 'k8s.namespace'
-                  operator: 'EQUALS'
-                  values:
-                    - 'steadybit-demo'
-                - key: 'k8s.deployment'
-                  operator: 'EQUALS'
-                  values:
-                    - 'gateway'
-            query: null
-            percentage: 100
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '180s'
-            method: 'GET'
-            successRate: 95
-            maxConcurrent: '5'
-            followRedirects: 'false'
-            readTimeout: '5s'
-            connectTimeout: '5s'
-            requestsPerSecond: 10
-            url: 'http://demo.steadybit.io/products'
-            statusCode: '200-299'
-          customLabel: 'THEN: At least 95% of the HTTP calls are successful'
-          actionType: 'check:http'
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: '190s'
-          customLabel: 'Wait: Until Rolling Update is expected to be finished'
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            namespace: 'steadybit-demo'
-            cluster: 'demo-prod'
-            podcount: 'podCountEqualsDesiredCount'
-            deployment: 'gateway'
-          customLabel: 'THEN: All PODs are available'
-          actionType: 'check:kubernetes-pod-count'
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: '190s'
-          customLabel: 'Wait: Until Rolling Update is expected to be finished'
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            method: 'GET'
-            successRate: 100
-            maxConcurrent: '5'
-            followRedirects: 'false'
-            readTimeout: '5s'
-            connectTimeout: '5s'
-            requestsPerSecond: 10
-            url: 'http://demo.steadybit.io/products'
-            statusCode: '200-299'
-          customLabel: 'THEN: All HTTP-Calls are successful again'
-          actionType: 'check:http'
+name: "Faultless redundancy of Gateway during rolling update"
+team: "ADM"
+hypothesis: "When a deployment is rescheduled 95% of all requests are successful"
+area: "Global"
+environment: "Global"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          duration: "10s"
+          statusCode: "200-299"
+          readTimeout: "5s"
+          successRate: 100
+          maxConcurrent: "5"
+          connectTimeout: "5s"
+          followRedirects: "false"
+          requestsPerSecond: 10
+        customLabel: "GIVEN: All HTTP-Calls are successful"
+        actionType: "check:http"
+        radius: {}
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          cluster: "demo-prod"
+          duration: "10s"
+          podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
+        customLabel: "GIVEN: All PODs are available"
+        actionType: "check:kubernetes-pod-count"
+        radius: {}
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "10s"
+        customLabel: "Wait: Until GIVEN steps are checked"
+      - !<action>
+        ignoreFailure: false
+        parameters: {}
+        customLabel: "WHEN: A rollout restart is executed"
+        actionType: "kubernetes-rollout-restart-attack"
+        radius:
+          targetType: "kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
+          percentage: 100
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "10s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          duration: "180s"
+          statusCode: "200-299"
+          readTimeout: "5s"
+          successRate: 95
+          maxConcurrent: "5"
+          connectTimeout: "5s"
+          followRedirects: "false"
+          requestsPerSecond: 10
+        customLabel: "THEN: At least 95% of the HTTP calls are successful"
+        actionType: "check:http"
+        radius: {}
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "190s"
+        customLabel: "Wait: Until Rolling Update is expected to be finished"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          cluster: "demo-prod"
+          duration: "10s"
+          podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
+        customLabel: "THEN: All PODs are available"
+        actionType: "check:kubernetes-pod-count"
+        radius: {}
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "190s"
+        customLabel: "Wait: Until Rolling Update is expected to be finished"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          duration: "10s"
+          statusCode: "200-299"
+          readTimeout: "5s"
+          successRate: 100
+          maxConcurrent: "5"
+          connectTimeout: "5s"
+          followRedirects: "false"
+          requestsPerSecond: 10
+        customLabel: "THEN: All HTTP-Calls are successful again"
+        actionType: "check:http"
+        radius: {}
