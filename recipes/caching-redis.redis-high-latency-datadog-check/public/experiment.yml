@@ -11,12 +11,20 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          duration: "3m"
-          podcount: "podCountEqualsDesiredCount"
-        customLabel: "The pod should survive a Redis latency"
-        actionType: "check:kubernetes-pod-count"
-        radius:
-          maximum: 1
+          url: https://api/healthcheck
+          method: GET
+          headers: []
+          duration: 3m
+          statusCode: 200-299
+          readTimeout: 5s
+          successRate: 95
+          maxConcurrent: 5
+          connectTimeout: 5s
+          followRedirects: false
+          requestsPerSecond: 1
+        customLabel: 'HTTP Check : The service should survive a redis latency'
+        actionType: check:http
+        radius: {}
   - steps:
       - !<wait>
         ignoreFailure: false
@@ -55,28 +63,6 @@ lanes:
                   - "steadybit-demo"
           query: null
           percentage: 100
-      - !<wait>
-        ignoreFailure: false
-        parameters:
-          duration: "20s"
-      - !<action>
-        ignoreFailure: false
-        parameters:
-          duration: "30s"
-          expectedStatus: "OK"
-        customLabel: "Monitor should go back to green"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
-        radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
-          predicate:
-            operator: "AND"
-            predicates:
-              - key: "datadog.monitor.tags"
-                operator: "EQUALS"
-                values:
-                  - "service:test"
-          query: null
-          percentage: 100
   - steps:
       - !<action>
         ignoreFailure: false
@@ -99,13 +85,44 @@ lanes:
       - !<wait>
         ignoreFailure: false
         parameters:
-          duration: "30s"
+          duration: "5s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: 20s
+          podcount: podCountMin1
+          namespace: pulse
+          deployment: infra-firefighter-v2-web
+        customLabel: Check if pod is crashing
+        actionType: check:kubernetes-pod-count
       - !<action>
         ignoreFailure: true
         parameters:
           duration: "100s"
           expectedStatus: "Alert"
         customLabel: "Monitor should alert a latency issue"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "20s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        customLabel: "Monitor should go back to green"
         actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
         radius:
           targetType: "com.github.steadybit.extension_datadog.monitor"
