@@ -19,7 +19,7 @@ lanes:
           maxConcurrent: 5
           connectTimeout: "5s"
           followRedirects: false
-          requestsPerSecond: 10
+          requestsPerSecond: 5
         customLabel: "GIVEN: All HTTP requests are successful"
         actionType: "check:http"
         radius:
@@ -67,8 +67,8 @@ lanes:
                 operator: "EQUALS"
                 values:
                   - "steadybit-demo"
-            query: null
-            percentage: 100
+          query: null
+          percentage: 100
   - steps:
       - !<wait>
         ignoreFailure: false
@@ -87,7 +87,7 @@ lanes:
           maxConcurrent: 5
           connectTimeout: "5s"
           followRedirects: false
-          requestsPerSecond: 10
+          requestsPerSecond: 5
         customLabel: "THEN: HTTP requests are slow but mostly successful"
         actionType: "check:http"
         radius:
