@@ -1,5 +1,5 @@
 ---
-id: host-cpu-attack
+id: com.github.steadybit.extension_host.stress-cpu
 label: Stress CPU
 description: Generate CPU load for one or more cores
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: resource
 targetType: host
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_host.stress-cpu
+extension: com.github.steadybit.extension_host

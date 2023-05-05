@@ -1,0 +1,29 @@
+---
+id: com.github.steadybit.extension_host
+label: HTTP
+description: A Steadybit extension to execute Hosts attacks.
+icon: |
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M11.6491 2.06407C11.8753 1.97864 12.1246 1.97864 12.3508 2.06407L22.3503 5.8401C22.7409 5.9876 22.9997 6.36398 22.9997 6.78447C22.9997 7.20496 22.7408 7.58128 22.3502 7.7287L12.3506 11.5024C12.1245 11.5877 11.8754 11.5877 11.6493 11.5024L1.64979 7.7287C1.25916 7.58128 1.00029 7.20496 1.00024 6.78447C1.0002 6.36398 1.259 5.9876 1.6496 5.8401L11.6491 2.06407Z" fill="#1D2632"/>
+  <path d="M1.06383 17.0286C1.2576 16.5071 1.83403 16.2427 2.35134 16.438L12 20.0816L21.6487 16.438C22.166 16.2427 22.7424 16.5071 22.9362 17.0286C23.1299 17.5501 22.8677 18.1312 22.3504 18.3266L12.3509 22.1026C12.1246 22.188 11.8754 22.188 11.6491 22.1026L1.64963 18.3266C1.13233 18.1312 0.870056 17.5501 1.06383 17.0286Z" fill="#1D2632"/>
+  <path d="M2.35134 11.1391C1.83403 10.9437 1.2576 11.2081 1.06383 11.7296C0.870056 12.2511 1.13233 12.8322 1.64963 13.0276L11.6491 16.8036C11.8754 16.889 12.1246 16.889 12.3509 16.8036L22.3504 13.0276C22.8677 12.8322 23.1299 12.2511 22.9362 11.7296C22.7424 11.2081 22.166 10.9437 21.6487 11.1391L12 14.7826L2.35134 11.1391Z" fill="#1D2632"/>
+  </svg>
+
+
+maintainer: com.steadybit
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: extension-host
+helmChart:
+  repository: https://steadybit.github.io/extension-host
+  name: steadybit-extension-host
+homepage: https://github.com/steadybit/extension-host
+changelog: https://github.com/steadybit/extension-host/blob/main/CHANGELOG.md
+tags:
+  - host
+  - stress
+  - network
+  - time
+  - attack
+  - testing
