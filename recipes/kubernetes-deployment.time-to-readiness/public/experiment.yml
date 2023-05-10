@@ -1,6 +1,6 @@
 ---
 !<experiment>
-name: 'Verify Time to Readiness of Deployment Toys-Bestseller'
+name: 'Verify Time to Readiness of Deployment'
 version: '7'
 type: 'experiment'
 description: 'A failing pod caused by a crashed container recovers within 90s.'
@@ -12,7 +12,7 @@ inputs:
     type: 'string'
     required: true
 experiment:
-  name: 'Verify Time to Readiness of Deployment Toys-Bestseller'
+  name: 'Verify Time to Readiness of Deployment'
   team: '{{teamKey}}'
   hypothesis: 'A failing pod caused by a crashed container recovers within 90s.'
   environment: '{{environmentName}}'
