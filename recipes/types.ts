@@ -5,8 +5,7 @@ export interface RecipeDescription {
 	tags: string[];
 }
 
-export interface ExperimentRecipe {
-	experiment: Experiment;
+export interface ExperimentRecipe extends Experiment {
 }
 
 export interface Experiment {
