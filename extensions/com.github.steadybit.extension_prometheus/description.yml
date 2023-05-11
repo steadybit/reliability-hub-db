@@ -18,9 +18,10 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-prometheus
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-prometheus
+  package: extension-prometheus
 helmChart:
   repository: https://steadybit.github.io/extension-prometheus
   name: steadybit-extension-prometheus

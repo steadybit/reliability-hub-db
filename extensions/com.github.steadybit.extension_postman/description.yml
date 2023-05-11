@@ -17,9 +17,10 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-postman
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-postman
+  package: extension-postman
 helmChart:
   repository: https://steadybit.github.io/extension-postman
   name: steadybit-extension-postman

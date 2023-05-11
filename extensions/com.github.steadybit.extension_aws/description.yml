@@ -20,9 +20,10 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-aws
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-aws
+  package: extension-aws
 helmChart:
   repository: https://steadybit.github.io/extension-aws
   name: steadybit-extension-aws

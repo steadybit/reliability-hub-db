@@ -12,6 +12,10 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-http
+ghcr:
+  owner: steadybit
+  repository: extension-http
+  package: extension-http
 helmChart:
   repository: https://steadybit.github.io/extension-http
   name: steadybit-extension-http

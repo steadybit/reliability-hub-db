@@ -1,6 +1,6 @@
 ---
 id: com.github.steadybit.extension_k6
-label: Kong
+label: K6
 description: A Steadybit action implementation to integrate K6 Load Tests into Steadybit experiments.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
@@ -15,12 +15,13 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-k6
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-k6
+  package: extension-k6
 helmChart:
   repository: https://steadybit.github.io/extension-k6
-  name: steadybit-extension-kong
+  name: steadybit-extension-k6
 homepage: https://github.com/steadybit/extension-k6
 changelog: https://github.com/steadybit/extension-k6/blob/main/CHANGELOG.md
 tags:

@@ -15,9 +15,10 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-datadog
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-datadog
+  package: extension-datadog
 helmChart:
   repository: https://steadybit.github.io/extension-datadog
   name: steadybit-extension-datadog
