@@ -1,0 +1,19 @@
+# Introduction
+
+This action leverages [https://github.com/gunnargrosch/failure-lambda](gunnargrosch/failure-lambda) and the AWS Systems Manager API to fill the tmp disk of a lambda.
+
+# Use Cases
+
+- Understand how a lambda behaves when it pollutes the tmp directory
+
+# Prerequisites
+
+The AWS Lambda Function to attack must [be wrapped with the failure-lambda library](https://github.com/gunnargrosch/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
+
+# Parameters
+
+| Parameter | Description                                                                       | Default |
+|-----------|-----------------------------------------------------------------------------------|---------|
+| Duration  | The duration of the attack.                                                       | 30s     |
+| Rate      | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
+| Megabytes | Size in MB of the file created in tmp.                                            |         |

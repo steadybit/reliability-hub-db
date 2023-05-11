@@ -1,0 +1,20 @@
+# Introduction
+
+This action leverages [https://github.com/gunnargrosch/failure-lambda](gunnargrosch/failure-lambda) and the AWS Systems Manager API to inject latency into an AWS Lambda.
+
+# Use Cases
+
+- Understand how other (e.g. upstream services, monitoring) behaves when the lambda is answering to slow.
+
+# Prerequisites
+
+The AWS Lambda Function to attack must [be wrapped with the failure-lambda library](https://github.com/gunnargrosch/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
+
+# Parameters
+
+| Parameter       | Description                                                                       | Default |
+|-----------------|-----------------------------------------------------------------------------------|---------|
+| Duration        | The duration of the attack.                                                       | 30s     |
+| Rate            | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
+| Minimum Latency | Minimum latency to inject.                                                        | 500ms   |
+| Maximum Latency | Maximum latency to inject.                                                        | 500ms   |

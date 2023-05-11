@@ -20,11 +20,12 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-aws
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-aws
+  package: extension-aws
 helmChart:
-  repository: https://steadybit.github.io/helm-charts
+  repository: https://steadybit.github.io/extension-aws
   name: steadybit-extension-aws
 homepage: https://github.com/steadybit/extension-aws
 changelog: https://github.com/steadybit/extension-aws/blob/main/CHANGELOG.md
@@ -33,3 +34,5 @@ tags:
   - cloud
   - rds
   - ec2
+  - fis
+  - lambda

@@ -1,113 +1,104 @@
 ---
 !<experiment>
-name: 'Verify system unavailability status when Microsoft SQL Server database can not be reached'
-version: '7'
-type: 'experiment'
-description: 'An unavailable Microsoft SQL Server database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately.'
-inputs:
-  - name: 'teamKey'
-    type: 'string'
-    required: true
-  - name: 'environmentName'
-    type: 'string'
-    required: true
-experiment:
-  name: 'Verify system unavailability status when Microsoft SQL Server database can not be reached'
-  team: '{{teamKey}}'
-  hypothesis: 'An unavailable Microsoft SQL Server database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately.'
-  environment: '{{environmentName}}'
-  lanes:
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            headers: []
-            method: 'GET'
-            successRate: 100
-            maxConcurrent: 5
-            followRedirects: false
-            readTimeout: '5s'
-            connectTimeout: '5s'
-            requestsPerSecond: 10
-            url: 'http://demo.steadybit.io/products'
-            statusCode: '200-299'
-          customLabel: 'GIVEN: All HTTP requests are successful'
-          actionType: 'check:http'
-          radius:
-            maximum: 1
-    - steps:
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            namespace: 'steadybit-demo'
-            cluster: 'demo-prod'
-            podcount: 'podCountEqualsDesiredCount'
-          customLabel: 'GIVEN: All pods are ready'
-          actionType: 'check:kubernetes-pod-count'
-          radius:
-            maximum: 1
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '60s'
-            hostname: 'db.internal.steadybit.com'
-          customLabel: 'WHEN: Microsoft SQL Server is not available'
-          actionType: 'container-network-blackhole-attack'
-          radius:
-            targetType: 'container'
-            predicate:
-              operator: 'AND'
-              predicates:
-                - key: 'k8s.cluster-name'
-                  operator: 'EQUALS'
-                  values:
-                    - 'demo-prod'
-                - key: 'k8s.namespace'
-                  operator: 'EQUALS'
-                  values:
-                    - 'steadybit-demo'
-            query: null
-            percentage: 100
-    - steps:
-        - !<wait>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '70s'
-            headers: []
-            method: 'GET'
-            successRate: 90
-            maxConcurrent: 5
-            followRedirects: false
-            readTimeout: '5s'
-            connectTimeout: '5s'
-            requestsPerSecond: 10
-            url: 'http://demo.steadybit.io/products'
-            statusCode: '503'
-          customLabel: 'THEN: HTTP requests resolve to be Service unavailable'
-          actionType: 'check:http'
-          radius:
-            maximum: 1
-        - !<action>
-          ignoreFailure: false
-          parameters:
-            duration: '10s'
-            headers: []
-            method: 'GET'
-            successRate: 100
-            maxConcurrent: 5
-            followRedirects: false
-            readTimeout: '5s'
-            connectTimeout: '5s'
-            requestsPerSecond: 10
-            url: 'http://demo.steadybit.io/products'
-            statusCode: '200-299'
-          customLabel: 'THEN: All HTTP requests are successful again'
-          actionType: 'check:http'
-          radius:
-            maximum: 1
+name: "Verify system unavailability status when Microsoft SQL Server database can not be reached"
+team: "ADM"
+hypothesis:
+  "An unavailable Microsoft SQL Server database might be too severe for\
+    \ suitable fallbacks and requires your system to indicate unavailability appropriately."
+area: "Global"
+environment: "Global"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          headers: []
+          duration: "10s"
+          statusCode: "200-299"
+          readTimeout: "5s"
+          successRate: 100
+          maxConcurrent: 5
+          connectTimeout: "5s"
+          followRedirects: false
+          requestsPerSecond: 10
+        customLabel: "GIVEN: All HTTP requests are successful"
+        actionType: "check:http"
+        radius:
+          list: []
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          cluster: "demo-prod"
+          duration: "10s"
+          podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+        customLabel: "GIVEN: All pods are ready"
+        actionType: "check:kubernetes-pod-count"
+        radius:
+          list: []
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "60s"
+          hostname: "db.internal.steadybit.com"
+        customLabel: "WHEN: Microsoft SQL Server is not available"
+        actionType: "container-network-blackhole-attack"
+        radius:
+          targetType: "container"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
+          percentage: 100
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "10s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          headers: []
+          duration: "70s"
+          statusCode: "503"
+          readTimeout: "5s"
+          successRate: 90
+          maxConcurrent: 5
+          connectTimeout: "5s"
+          followRedirects: false
+          requestsPerSecond: 10
+        customLabel: "THEN: HTTP requests resolve to be Service unavailable"
+        actionType: "check:http"
+        radius:
+          list: []
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          headers: []
+          duration: "10s"
+          statusCode: "200-299"
+          readTimeout: "5s"
+          successRate: 100
+          maxConcurrent: 5
+          connectTimeout: "5s"
+          followRedirects: false
+          requestsPerSecond: 10
+        customLabel: "THEN: All HTTP requests are successful again"
+        actionType: "check:http"
+        radius:
+          list: []

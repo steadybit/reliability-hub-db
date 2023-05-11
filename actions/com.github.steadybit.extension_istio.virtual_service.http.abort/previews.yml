@@ -1,0 +1,9 @@
+---
+- type: youtube
+  id: KwnQXulLCJk
+- type: image
+  src: overview.png
+  alt: Configure HTTP abort reason and what percentage of traffic is affected.
+- type: image
+  src: client-restriction.png
+  alt: Limit the injected faults to a subset of clients or HTTP requests based on source labels or HTTP headers.

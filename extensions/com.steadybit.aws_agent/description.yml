@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.aws_agent
 label: Steadybit AWS cloud service agent
-description: Steadybit's AWS cloud service agent enables the discovery and interaction with AWS resources.
+description: DEPRECATED (please use the AWS extension) - Steadybit's AWS cloud service agent enables the discovery and interaction with AWS resources.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 24 24">
     <path

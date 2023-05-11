@@ -1,0 +1,16 @@
+<Accordion title="Helm / Kubernetes">
+  To install the chart with the name <code>steadybit-extension-istio</code>.
+
+  <Code lang="bash" code={`
+helm repo add steadybit-extension-istio https://steadybit.github.io/extension-istio
+helm repo update
+helm upgrade steadybit-extension-istio \\
+    --install \\
+    --wait \\
+    --timeout 5m0s \\
+    --create-namespace \\
+    --namespace steadybit-extension \\
+    --set kubernetes.clusterName="my-cluster" \\
+    steadybit-extension-istio/steadybit-extension-istio`} />
+
+</Accordion>
