@@ -1,0 +1,42 @@
+# Introduction
+
+[K6](https://k6.io/) is a developer-centric, free and open-source load testing tool built for making performance testing a productive and enjoyable experience. You can integrate the execution of K6 load tests directly into your experiments.
+
+# Details
+
+To use K6 you need to upload your K6-Test-Script. This can be done simply by adding a step of type "K6 Cloud" and use the provided File-Upload.
+
+Within the K6 load test you have access to your provided parameters as environment variables. You can use them in the script via e.g. `${__ENV.TARGETURL}` as shown in our basic example below.
+
+If you don't know where to start, feel free to use our example. It is a very basic script and will just perform some HTTP-Calls on a specified endpoint.
+
+### Example K6 Loadtest script
+
+```
+import http from 'k6/http';
+import {check, sleep} from 'k6';
+
+export let options = {
+  scenarios: {
+    default_test: {
+      executor: 'constant-vus',
+      vus: `${__ENV.VUS}`,
+      duration: `${__ENV.DURATION}s`,
+    },
+  },
+};
+
+export default function () {
+  let response = http.get(`${__ENV.TARGETURL}`);
+  check(response, { 'status was 200': r => r.status == 200 });
+  sleep(1);
+}
+```
+
+# Parameters
+
+| Parameter     | Environment Variable | Description                               | Default                            |
+| ------------- | -------------------- | ----------------------------------------- | ---------------------------------- |
+| Duration      | DURATION             | How long should the load test run?        | inherited from experiment duration |
+| Virtual Users | VUS                  | How many virtual users should be started? |                                    |
+| Target URL    | TARGETURL            | Which url should be targeted?             |                                    |

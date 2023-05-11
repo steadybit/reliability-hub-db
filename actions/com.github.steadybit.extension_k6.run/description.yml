@@ -1,5 +1,5 @@
 ---
-id: loadtest:k6
+id: com.github.steadybit.extension_k6.run
 label: K6
 description: Runs a K6 load test.
 icon: |
@@ -18,7 +18,4 @@ icon: |
     </g>
   </svg>
 kind: load_test
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_k6.run
+extension: com.github.steadybit.extension_k6
