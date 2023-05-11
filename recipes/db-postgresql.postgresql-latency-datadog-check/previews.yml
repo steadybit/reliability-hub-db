@@ -1,0 +1,4 @@
+---
+- type: image
+  src: editor.png
+  alt: The experiment editor showing the visual structure of the experiment.

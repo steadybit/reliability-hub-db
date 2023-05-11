@@ -1,6 +1,6 @@
 ---
 !<experiment>
-name: "Verify Time to Readiness of Deployment Toys-Bestseller"
+name: "Verify Time to Readiness of Deployment"
 team: "ADM"
 hypothesis: "A failing pod caused by a crashed container recovers within 90s."
 area: "Global"
