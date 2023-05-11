@@ -1,0 +1,16 @@
+# Intent
+
+Verify that an increased latency in a Redis cache is handled by your application properly by having increased processing time but still being able to maintain the throughput.
+
+# Motivation
+
+Latency issues in Redis can lead to degraded system performance, longer response times, and potentially lost or delayed data.
+By testing the resilience of your system to Redis latency, you can ensure that your system can handle increased processing time and maintain its throughput during increased latency.
+Additionally, you can identify any potential bottlenecks or inefficiencies in your system and take appropriate measures to optimize its performance and reliability.
+
+# Structure
+
+We will verify that a load-balanced user-facing endpoint fully works while having all pods ready.
+As soon as we simulate Redis latency, we expect the system to maintain its throughput and indicate unavailability appropriately.
+To simulate latency, we can introduce delays in Redis operations. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency.
+The performance should return to normal after the latency has ended.

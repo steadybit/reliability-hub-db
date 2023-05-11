@@ -1,0 +1,109 @@
+---
+!<experiment>
+name: "Verify graceful degradation while Kafka is unavailable"
+team: "{{teamKey}}"
+hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
+  \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
+  \ should have a monitor ringing either from kafka lagging or because you have\
+  \ errors related to your kafka connector"
+environment: "{{environmentName}}"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "3m"
+          podcount: "podCountEqualsDesiredCount"
+        customLabel: "The pod should survive a kafka downtime"
+        actionType: "check:kubernetes-pod-count"
+        radius:
+          maximum: 1
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        customLabel: "Monitors should be OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          port: "9094"
+          duration: "2m"
+          hostname: ""
+        customLabel: "WHEN: Kafka is not available"
+        actionType: "container-network-blackhole-attack"
+        radius:
+          targetType: "container"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.container.name"
+                operator: "EQUALS"
+                values:
+                  - "main"
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
+          percentage: 100
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "40s"
+      - !<action>
+        ignoreFailure: true
+        parameters:
+          duration: "100s"
+          expectedStatus: "Alert"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100

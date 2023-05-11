@@ -2,7 +2,7 @@
   To install the chart with the name <code>steadybit-extension-datadog</code>. To learn more about the supported values for <code>datadog.siteParameter</code> and <code>datadog.siteUrl</code>, please see <a href="https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site">Datadog's site documentation page</a>. You may alternatively decide to configure the <code>datadog.*</code> values through a pre-existing secret. See the <a href="https://github.com/steadybit/helm-charts/blob/main/charts/steadybit-extension-datadog/values.yaml#L15">documentation</a> for <code>datadog.existingSecret</code> to learn more.
 
   <Code lang="bash" code={`
-helm repo add steadybit https://steadybit.github.io/helm-charts
+helm repo add steadybit https://steadybit.github.io/extension-datadog
 helm repo update
 
 helm upgrade steadybit-extension-datadog \\

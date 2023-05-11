@@ -20,11 +20,12 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-kubernetes
-dockerHub:
+ghcr:
   owner: steadybit
   repository: extension-kubernetes
+  package: extension-kubernetes
 helmChart:
-  repository: https://steadybit.github.io/helm-charts
+  repository: https://steadybit.github.io/extension-kubernetes
   name: steadybit-extension-kubernetes
 homepage: https://github.com/steadybit/extension-kubernetes
 changelog: https://github.com/steadybit/extension-kubernetes/blob/main/CHANGELOG.md

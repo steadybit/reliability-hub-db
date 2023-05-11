@@ -1,0 +1,136 @@
+---
+!<experiment>
+name: "Verify graceful degradation while Redis is unavailable"
+team: "ADM"
+hypothesis: "Under simulated Redis unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality.
+The experiment will identify potential weaknesses in the system's handling of Redis unavailability, allowing for improvements to be made to its resilience and recovery capabilities.
+The system can handle the failure of a Redis instance or a complete Redis cluster outage without significant impact on its performance or functionality.
+The system can recover automatically and efficiently from Redis unavailability once the Redis instance or cluster becomes available again.
+The experiment will verify that the system can indicate unavailability appropriately during Redis unavailability, preventing users from attempting to use the system during the outage."
+environment: "GLOBAL"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: https://api/healthcheck
+          method: GET
+          headers: [ ]
+          duration: 3m
+          statusCode: 200-299
+          readTimeout: 5s
+          successRate: 95
+          maxConcurrent: 5
+          connectTimeout: 5s
+          followRedirects: false
+          requestsPerSecond: 1
+        customLabel: 'HTTP Check : The service should survive a redis outage'
+        actionType: check:http
+        radius: { }
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          port: "6379"
+          duration: "2m"
+          hostname: ""
+        customLabel: "WHEN: Redis is not available"
+        actionType: "container-network-blackhole-attack"
+        radius:
+          targetType: "container"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.container.name"
+                operator: "EQUALS"
+                values:
+                  - "main"
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "demo-prod"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
+          percentage: 100
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        customLabel: "Monitors should be OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "5s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: 20s
+          podcount: podCountMin1
+          namespace: pulse
+          deployment: infra-firefighter-v2-web
+        customLabel: Check if pod is crashing
+        actionType: check:kubernetes-pod-count
+      - !<action>
+        ignoreFailure: true
+        parameters:
+          duration: "100s"
+          expectedStatus: "Alert"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "20s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "30s"
+          expectedStatus: "OK"
+        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.github.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "service:test"
+          query: null
+          percentage: 100
+

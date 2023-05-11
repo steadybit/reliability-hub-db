@@ -1,0 +1,18 @@
+# Intent
+
+Your application should continue to function properly and indicate unavailability appropriately in case of increased connection latency to PostgreSQL.
+Additionally, this experiment can highlight requests that need optimization of timeouts to prevent dropped requests.
+
+# Motivation
+
+Latencies in shared or overloaded databases are a common occurrence and can significantly impact the performance of your application.
+By conducting this experiment, you can gain insights into the robustness of your application and identify areas for improvement.
+
+# Structure
+
+To conduct this experiment, we will ensure that all pods are ready, and the load-balanced user-facing endpoint is fully functional.
+We will then simulate a latency attack on the PostgreSQL database by adding a delay of XXX milliseconds to all traffic to the database port.
+During the attack, we will monitor the system's behavior to ensure that the service remains operational and can deliver its purpose.
+We will also analyze the performance metrics to identify any request types that are most affected by the latency and optimize them accordingly.
+Finally, we will end the attack and monitor the system's recovery time to ensure that it returns to its normal state promptly.
+By conducting this experiment, we can gain valuable insights into our application's resilience to database latencies and make informed decisions to optimize its performance under stress.
