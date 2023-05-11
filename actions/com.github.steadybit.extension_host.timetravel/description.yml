@@ -1,5 +1,5 @@
 ---
-id: host-timetravel-attack
+id: com.github.steadybit.extension_host.timetravel
 label: Time Travel
 description: Change the system time by the given offset
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: state
 targetType: host
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_host.timetravel
+extension: com.github.steadybit.extension_host

@@ -17,4 +17,4 @@ icon: |
       fill="currentColor"
     />
   </svg>
-extension: com.steadybit.agent
+extension: com.github.steadybit.extension_host

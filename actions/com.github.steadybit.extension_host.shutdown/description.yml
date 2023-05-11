@@ -1,5 +1,5 @@
 ---
-id: host-shutdown-attack
+id:  com.github.steadybit.extension_host.shutdown
 label: Shutdown Host
 description: Reboots or shuts down the host
 icon: |
@@ -7,9 +7,6 @@ icon: |
 kind: attack
 category: state
 targetType: host
-extension: com.steadybit.agent
+extension: com.github.steadybit.extension_host
 promotedActions:
   - com.github.steadybit.extension_aws.ec2-instance.state
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_host.shutdown

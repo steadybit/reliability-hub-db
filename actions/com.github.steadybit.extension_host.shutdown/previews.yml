@@ -1,0 +1,4 @@
+---
+- type: image
+  src: reboot.png
+  alt: The experiment editor showing a configured reboot attack.
