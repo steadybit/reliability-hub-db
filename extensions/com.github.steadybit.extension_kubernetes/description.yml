@@ -24,7 +24,7 @@ dockerHub:
   owner: steadybit
   repository: extension-kubernetes
 helmChart:
-  repository: https://steadybit.github.io/helm-charts
+  repository: https://steadybit.github.io/extension-kubernetes
   name: steadybit-extension-kubernetes
 homepage: https://github.com/steadybit/extension-kubernetes
 changelog: https://github.com/steadybit/extension-kubernetes/blob/main/CHANGELOG.md

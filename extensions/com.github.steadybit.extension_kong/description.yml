@@ -19,7 +19,7 @@ dockerHub:
   owner: steadybit
   repository: extension-kong
 helmChart:
-  repository: https://steadybit.github.io/helm-charts
+  repository: https://steadybit.github.io/extension-kong
   name: steadybit-extension-kong
 homepage: https://github.com/steadybit/extension-kong
 changelog: https://github.com/steadybit/extension-kong/blob/main/CHANGELOG.md
