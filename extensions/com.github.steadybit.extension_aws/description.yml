@@ -27,7 +27,8 @@ ghcr:
 helmChart:
   repository: https://steadybit.github.io/extension-aws
   name: steadybit-extension-aws
-homepage: https://github.com/steadybit/extension-aws
+homepage: https://github.com/steadybit/extension-aws#readme
+installation: https://github.com/steadybit/extension-aws#readme
 changelog: https://github.com/steadybit/extension-aws/blob/main/CHANGELOG.md
 tags:
   - aws
