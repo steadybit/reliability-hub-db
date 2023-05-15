@@ -1,5 +1,5 @@
 ---
-id: host-io-attack
+id: com.github.steadybit.extension_host.stress-io
 label: Stress IO
 description: Generate read/write operation on hard disks.
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: resource
 targetType: host
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_host.stress-io
+extension: com.github.steadybit.extension_host

@@ -1,5 +1,5 @@
 ---
-id: host-memory-attack
+id: com.github.steadybit.extension_host.stress-mem
 label: Stress Memory
 description: Allocate a specific amount of memory.
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: resource
 targetType: host
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_host.stress-mem
+extension: com.github.steadybit.extension_host

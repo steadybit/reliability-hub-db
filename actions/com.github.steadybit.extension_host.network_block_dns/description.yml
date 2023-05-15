@@ -1,12 +1,9 @@
 ---
-id: host-network-dns-attack
+id:  com.github.steadybit.extension_host.network_block_dns
 label: Block DNS
 description: Blocks access to DNS servers
 icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#icon-attack-network-dns_svg__clip0)" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"><path d="M17.25 12a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5zm-6.75 5.25a6.75 6.75 0 1113.5 0 6.75 6.75 0 01-13.5 0z"/><path d="M20.03 14.47a.75.75 0 010 1.06l-4.5 4.5a.75.75 0 11-1.06-1.06l4.5-4.5a.75.75 0 011.06 0z"/><path d="M14.47 14.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 11-1.06 1.06l-4.5-4.5a.75.75 0 010-1.06z"/><path d="M15.363 2.053a10.501 10.501 0 10-4.773 20.354.75.75 0 01-.202 1.486A12.001 12.001 0 1123.893 10.4a.75.75 0 01-1.486.2 10.5 10.5 0 00-7.044-8.547z"/><path d="M9.711.46a.748.748 0 01.198 1.041C8.507 3.56 7.5 7.441 7.5 12s1.007 8.442 2.409 10.499a.75.75 0 01-1.24.844C7.03 20.936 6 16.707 6 12S7.029 3.065 8.67.657A.75.75 0 019.71.459z"/><path d="M.025 11.25a.75.75 0 01.75-.75H10.5a.75.75 0 010 1.5H.775a.75.75 0 01-.75-.75zm2.224-6a.75.75 0 01.75-.75H21A.75.75 0 0121 6H2.999a.75.75 0 01-.75-.75zm-.951 12a.75.75 0 01.75-.75h5.166a.75.75 0 010 1.5H2.048a.75.75 0 01-.75-.75z"/><path d="M14.329.434a.75.75 0 011.027.263 17.76 17.76 0 012.41 7.474.75.75 0 01-1.495.134 16.259 16.259 0 00-2.205-6.844.75.75 0 01.263-1.027z"/></g><defs><clipPath id="icon-attack-network-dns_svg__clip0"><path fill="currentColor" d="M0 0h24v24H0z"/></clipPath></defs></svg>
 kind: attack
 category: network
 targetType: host
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_host.network_block_dns
+extension: com.github.steadybit.extension_host
