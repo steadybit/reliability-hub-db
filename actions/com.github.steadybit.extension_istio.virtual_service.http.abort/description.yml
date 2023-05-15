@@ -1,6 +1,6 @@
 ---
 id: com.github.steadybit.extension_istio.virtual_service.http.abort
-label: HTTP abort
+label: Istio HTTP abort
 description: Injects a HTTP abort fault into all HTTP routes of the targeted virtual services. Abort requests before forwarding, emulating various failures such as network issues, overloaded upstream service, etc.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64">

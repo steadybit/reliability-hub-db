@@ -1,6 +1,6 @@
 ---
 id: com.github.steadybit.extension_istio.virtual_service.http.delay
-label: HTTP delay
+label: Istio HTTP delay
 description: Injects a HTTP delay fault into all HTTP routes of the targeted virtual services. Delay requests before forwarding, emulating various failures such as network issues, overloaded upstream service, etc.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64">
