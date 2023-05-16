@@ -2,9 +2,8 @@
 !<experiment>
 name: "Verify graceful degradation while RabbitMQ suffers a high latency"
 team: "{{teamKey}}"
-hypothesis: "Under simulated RabbitMQ latency conditions, the system can maintain its performance and indicate unavailability appropriately.
-The experiment will identify potential bottlenecks or inefficiencies in the system, allowing for optimization and improvement.
-The system's performance will return to normal after the latency has ended."
+hypothesis: "Under simulated RabbitMQ latency conditions, the system can maintain its performance and indicate unavailability appropriately. The 
+system's performance will return to normal after the latency has ended."
 environment: "{{environmentName}}"
 lanes:
   - steps:

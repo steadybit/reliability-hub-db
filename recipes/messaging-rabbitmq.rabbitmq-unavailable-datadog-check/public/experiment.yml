@@ -2,10 +2,7 @@
 !<experiment>
 name: "Verify graceful degradation while RabbitMQ is unavailable"
 team: "{{teamKey}}"
-hypothesis: "Under simulated RabbitMQ unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality.
-The experiment will identify potential weaknesses in the system's handling of RabbitMQ unavailability, allowing for improvements to be made to its resilience and recovery capabilities.
-The system can handle the failure of a RabbitMQ instance or a complete RabbitMQ cluster outage without significant impact on its performance or functionality.
-The system can recover automatically and efficiently from RabbitMQ unavailability once the RabbitMQ instance or cluster becomes available again"
+hypothesis: "Under simulated RabbitMQ unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality."
 environment: "{{environmentName}}"
 lanes:
   - steps:

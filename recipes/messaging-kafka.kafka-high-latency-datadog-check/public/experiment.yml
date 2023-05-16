@@ -2,10 +2,8 @@
 !<experiment>
 name: "Verify graceful degradation while Kafka suffers a high latency"
 team: "{{teamKey}}"
-hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation\
-  \ and downstream retries as soon as the Kafka is back available again.\n\n- You\
-  \ should have a monitor ringing either from kafka lagging or because you have\
-  \ errors related to kafka do"
+hypothesis: "An unavailable Kafka is not user-visible as it leads to graceful degradation and downstream retries as soon as the Kafka is back 
+available again."
 environment: "{{environmentName}}"
 lanes:
   - steps:

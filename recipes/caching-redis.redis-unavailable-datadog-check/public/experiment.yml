@@ -2,11 +2,7 @@
 !<experiment>
 name: "Verify graceful degradation while Redis is unavailable"
 team: "ADM"
-hypothesis: "Under simulated Redis unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality.
-The experiment will identify potential weaknesses in the system's handling of Redis unavailability, allowing for improvements to be made to its resilience and recovery capabilities.
-The system can handle the failure of a Redis instance or a complete Redis cluster outage without significant impact on its performance or functionality.
-The system can recover automatically and efficiently from Redis unavailability once the Redis instance or cluster becomes available again.
-The experiment will verify that the system can indicate unavailability appropriately during Redis unavailability, preventing users from attempting to use the system during the outage."
+hypothesis: "Under simulated Redis unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality."
 environment: "GLOBAL"
 lanes:
   - steps:
