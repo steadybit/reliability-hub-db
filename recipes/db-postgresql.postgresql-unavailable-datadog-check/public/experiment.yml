@@ -3,12 +3,7 @@
 name: "Verify system unavailability status when PostgreSQL database can not be reached"
 team: "ADM"
 hypothesis: "An unavailable PostgreSQL database might be too severe for suitable
-   fallbacks and requires your system to indicate unavailability appropriately.
-   What to verify : 
-   - Your app is not having a crashloopbackoff because of the downtime of the database
-   - You respond with an error understandable for others
-   - You can notice this kind of event in your observability with a monitor (either a specific one or an error rate one)
-   - You can check and maybe tweak the value of your connection timeout "
+   fallbacks and requires your system to indicate unavailability appropriately."
 environment: "GLOBAL"
 lanes:
   - steps:

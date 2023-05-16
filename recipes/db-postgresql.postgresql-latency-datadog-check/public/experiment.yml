@@ -1,8 +1,8 @@
 --- !<experiment>
 name: "Verify system behaviour when PostgreSQL database suffers of latency"
 team: "ADM"
-hypothesis: "This experiment is to see how behave your application when the database\
-  \ is having some latencies, your application should be able to keep up."
+hypothesis: "Under simulated Postgres latency conditions, the system can maintain its performance and indicate unavailability appropriately. The 
+system's performance will return to normal after the latency has ended."
 environment: "Global"
 lanes:
   - steps:
