@@ -23,6 +23,7 @@ helmChart:
   repository: https://steadybit.github.io/extension-k6
   name: steadybit-extension-k6
 homepage: https://github.com/steadybit/extension-k6
+installation: https://github.com/steadybit/extension-k6#installation
 changelog: https://github.com/steadybit/extension-k6/blob/main/CHANGELOG.md
 tags:
   - k6

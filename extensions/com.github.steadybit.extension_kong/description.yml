@@ -23,6 +23,7 @@ helmChart:
   repository: https://steadybit.github.io/extension-kong
   name: steadybit-extension-kong
 homepage: https://github.com/steadybit/extension-kong
+installation: https://github.com/steadybit/extension-kong#installation
 changelog: https://github.com/steadybit/extension-kong/blob/main/CHANGELOG.md
 tags:
   - kong

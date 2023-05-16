@@ -21,6 +21,7 @@ helmChart:
   repository: https://steadybit.github.io/extension-host
   name: steadybit-extension-host
 homepage: https://github.com/steadybit/extension-host
+installation: https://github.com/steadybit/extension-host#installation
 changelog: https://github.com/steadybit/extension-host/blob/main/CHANGELOG.md
 tags:
   - host

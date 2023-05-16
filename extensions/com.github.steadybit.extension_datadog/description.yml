@@ -23,6 +23,7 @@ helmChart:
   repository: https://steadybit.github.io/extension-datadog
   name: steadybit-extension-datadog
 homepage: https://github.com/steadybit/extension-datadog
+installation: https://github.com/steadybit/extension-datadog#installation
 changelog: https://github.com/steadybit/extension-datadog/blob/main/CHANGELOG.md
 tags:
   - datadog
