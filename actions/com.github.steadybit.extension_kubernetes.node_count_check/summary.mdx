@@ -2,8 +2,27 @@
 
 Check if the count of ready nodes is matching your expectation
 
+It counts the number of all nodes and performs the check defined by the given check type.
+
 # Use Cases
 
  - Check if the ready node count matches a given amount
  - Check if the ready node count increases by a given amount
  - Check if the ready node count decreases by a given amount
+
+# Parameters
+
+| Parameter  | Description                                                         | Default |
+|------------|---------------------------------------------------------------------|---------|
+| Timeout    | How long should the check wait for the specified node count?        | 10s     |
+| Check Type | How should the node count change? (See values below)                |         |
+| Node Count | How many nodes are required or should change to let the check pass? |         |
+
+## Check Type
+
+You can use the node count check in one of the following modes:
+
+- **actual count >= node count**: Can be used to assure that the amount of nodes is equal or more compared to the given node count target.
+- **actual count increases by node count**: Check if the node count is above your given target.
+- **actual count decreases by node count**: Check if the node count is below your given target.
+

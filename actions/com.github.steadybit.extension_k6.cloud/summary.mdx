@@ -10,6 +10,13 @@ Within the K6 load test you have access to your provided parameters as environme
 
 If you don't know where to start, feel free to use our example. It is a very basic script and will just perform some HTTP-Calls on a specified endpoint.
 
+# Parameters
+
+| Parameter    | Description                                |
+|--------------|--------------------------------------------|
+| File         | The Load-Test-Script file                  |
+| Environment  | Environment Variables passed to the script |
+
 ### Example K6 Loadtest script
 
 ```
@@ -33,10 +40,10 @@ export default function () {
 }
 ```
 
-# Parameters
+### Example Script Environment Variables
 
-| Parameter     | Environment Variable | Description                               | Default                            |
-| ------------- | -------------------- | ----------------------------------------- | ---------------------------------- |
-| Duration      | DURATION             | How long should the load test run?        | inherited from experiment duration |
-| Virtual Users | VUS                  | How many virtual users should be started? |                                    |
-| Target URL    | TARGETURL            | Which url should be targeted?             |                                    |
+| Parameter     | Environment Variable | Description                               |
+| ------------- | -------------------- | ----------------------------------------- |
+| Duration      | DURATION             | How long should the load test run?        |
+| Virtual Users | VUS                  | How many virtual users should be started? |
+| Target URL    | TARGETURL            | Which url should be targeted?             |
