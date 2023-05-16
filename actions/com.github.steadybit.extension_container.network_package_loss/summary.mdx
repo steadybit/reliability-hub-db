@@ -1,0 +1,24 @@
+# Introduction
+
+Cause packet loss for matching outgoing network traffic.
+
+# Details
+
+_Note:_ If you are going to attack containers using network attacks, **all containers in the target's linux network namespace** (e.g. all containers belonging to the same Kubernetes Pod or Replica Set) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
+
+
+# Use Cases
+
+    * Understand how your services behave under specific / flaky network conditions
+
+# Parameters
+
+| Parameter            | Description                                                               | Default |
+|----------------------|---------------------------------------------------------------------------|---------|
+| Network Loss         | How much percentage of traffic should be lost?                            | 70      |
+| Fail on Host Network | Emit failure when the targeted container is using the host network        | true    |
+| Duration             | How long should the traffic be affected?                                  | 30s     |
+| Hostname             | Restrict to which hosts the traffic is reduced                            |         |
+| IP Address           | Restrict to which IP address the traffic is reduced                       |         |
+| Network Interface    | Target Network Interface which should be attacked. All if none specified. |         |
+| Ports                | Restrict to which ports the traffic is reduced                            |         |

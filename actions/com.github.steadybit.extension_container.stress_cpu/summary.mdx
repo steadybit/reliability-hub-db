@@ -1,0 +1,19 @@
+# Introduction
+
+Generate CPU load for one or more cores
+
+# Usage
+The resources on a host are shared between containers.
+Running a resource attack for a container is executed in the containers cgroup, but affects the host's resources and all containers running on it.
+
+# Use Cases
+
+    * Test your application's resilience to high CPU load
+
+# Parameters
+
+| Parameter      | Description                                        | Default   |
+|----------------|----------------------------------------------------|-----------|
+| CPU Load       | How many CPU should be consumed?                   | 100       |
+| Container CPUs | How many workers should be used to stress the CPU? | All Cores |
+| Duration       | How long should CPU be consumed?                   | 30s       |

@@ -1,5 +1,5 @@
 ---
-id: container-cpu-attack
+id: com.github.steadybit.extension_container.stress_cpu
 label: Stress CPU
 description: Generate CPU load for one or more cores. The resources on a host are shared between containers. Running a resource attack for a container is executed in the containers namespace, but affects the host's resources and all containers running on it.
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: resource
 targetType: container
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_container.stress_cpu
+extension: com.github.steadybit.extension_container

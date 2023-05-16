@@ -1,5 +1,5 @@
 ---
-id: container-io-attack
+id: com.github.steadybit.extension_container.stress_io
 label: Stress IO
 description: Generate read/write operation on hard disks.
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: resource
 targetType: container
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_container.stress_io
+extension: com.github.steadybit.extension_container

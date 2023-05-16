@@ -1,5 +1,5 @@
 ---
-id: container-memory-attack
+id: com.github.steadybit.extension_container.stress_mem
 label: Stress Memory
 description: Allocates memory.
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: resource
 targetType: container
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_container.stress_mem
+extension: com.github.steadybit.extension_container

@@ -1,5 +1,5 @@
 ---
-id: container-pause-attack
+id: com.github.steadybit.extension_container.pause
 label: Pause Container
 description: Pauses the Docker container for the given duration.
 icon: |
@@ -7,7 +7,4 @@ icon: |
 kind: attack
 category: state
 targetType: container
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_container.pause
+extension: com.github.steadybit.extension_container
