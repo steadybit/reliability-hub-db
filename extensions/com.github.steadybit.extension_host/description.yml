@@ -17,6 +17,10 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-host
+ghcr:
+  owner: steadybit
+  repository: extension-host
+  package: extension-host
 helmChart:
   repository: https://steadybit.github.io/extension-host
   name: steadybit-extension-host
