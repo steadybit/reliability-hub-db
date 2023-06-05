@@ -13,3 +13,9 @@ Within the JMeter load test you have access to your provided parameters as envir
 # Report
 
 After execution, JMeter results and logs are transferred to the platform.
+
+# Step result / Assertions
+
+You can use [jmeter assertions](https://jmeter.apache.org/usermanual/component_reference.html#assertions) to control the loadtest-step-result in the platform.
+
+We will scan the report for non empty `<failureMessage>`-Tags and let the step fail if there are any.
