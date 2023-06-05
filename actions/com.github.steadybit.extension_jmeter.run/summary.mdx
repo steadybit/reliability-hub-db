@@ -1,0 +1,15 @@
+# Introduction
+
+[JMeter](https://jmeter.apache.org/) is a Java Application designed to load test functional behavior and measure performance. You can integrate the execution of JMeter load tests directly into your experiments.
+
+# Details
+
+To use JMeter you need to upload your JMeter-Test-Script. Test-Scripts can be created by the JMeter-GUI.
+
+Uploading can be done simply by adding a step of type "JMeter" and use the provided File-Upload.
+
+Within the JMeter load test you have access to your provided parameters as environment variables. You can use them in the script via e.g. `${__P(TARGET_HOST)}`.
+
+# Report
+
+After execution, JMeter results and logs are transferred to the platform.
