@@ -16,3 +16,6 @@ icon: |
 
 kind: load_test
 extension: com.steadybit.agent
+deprecation:
+  type: replacement
+  newActionId: com.github.steadybit.extension_jmeter.run
