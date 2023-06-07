@@ -1,0 +1,15 @@
+# Introduction
+
+[Gatling](https://gatling.io/) is a powerful load-testing solution for applications, APIs, and microservices. You can integrate the execution of Gatling load tests directly into your experiments.
+
+# Details
+
+To use Gatling you need to upload your Gatling Test implementation. Java, Scala and Kotlin Sources are supported. If you have multiple source files, you can upload a zip file.
+
+Uploading can be done simply by adding a step of type "Gatling" and use the provided File-Upload.
+
+Parameters will be accessible from your Gatling Source via Java System Properties, e.g. `System.getProperty("myParameter")`
+
+# Report
+
+After execution, Gatling results and logs are zipped and transferred to the platform.

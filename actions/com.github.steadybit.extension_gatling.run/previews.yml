@@ -1,0 +1,10 @@
+---
+- type: image
+  src: gatling-experiment.png
+  alt: Gatling loadtest within the experiment editor.
+- type: image
+  src: gatling-result.png
+  alt: Gatling loadtest within the result view.
+- type: image
+  src: gatling-report.png
+  alt: Gatling report.
