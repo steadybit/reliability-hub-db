@@ -1,8 +1,8 @@
 ---
-id: com.github.steadybit.extension_kubernetes.kubernetes-cluster
+id: com.github.steadybit.extension_kubernetes.kubernetes-container
 label:
-  one: Kubernetes cluster
-  other: Kubernetes cluster
+  one: Kubernetes container
+  other: Kubernetes container
 icon: |
   <svg
     viewBox="0 0 24 24"
