@@ -1,0 +1,4 @@
+---
+- type: image
+  src: stackstate-action-setup.png
+  alt: The status check within the experiment editor.

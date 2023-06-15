@@ -1,0 +1,4 @@
+---
+- type: image
+  src: stackstate-service-target.png
+  alt: Identified information about a StackState service status that can later be used within experiments.
