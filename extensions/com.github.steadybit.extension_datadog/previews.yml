@@ -1,0 +1,13 @@
+---
+- type: image
+  src: steadybit_experiment_editor.png
+  alt: Steadybit's "Monitor Status Check" allows you to verify that the DataDog monitor notices inject failures.
+- type: image
+  src: steadybit_datadog_experiment_execution_run_log.png
+  alt: The run log showing that an experiment failed because of an unexpected monitor status.
+- type: image
+  src: datadog_steadybit_events.png
+  alt: Steadybit events are reported to DataDog to ease analyzing causes and effects.
+- type: image
+  src: steadybit_datadog_dashboard.png
+  alt: DataDog dashboard helps to get an overview of all running experiments and their timing.

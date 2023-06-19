@@ -1,3 +1,13 @@
+
 # Introduction
 
-The Datadog extension bridges the world of Steadybit and Datadog. Specifically, it allows the usage of Datadog monitors within Steadybit and events are reported back to Datadog whenever a chaos engineering experiment is active.
+The Datadog extension bridges the world of Steadybit and Datadog.
+Specifically, it allows the usage of Datadog monitors within Steadybit and events are reported back to Datadog whenever a chaos engineering experiment is active.
+
+## Integration of DataDog in Steadybit
+With the [Monitor Status Check](/action/com.github.steadybit.extension_datadog.monitor.status_check) you can integrate your DataDog monitors into your experiments.
+Check that your observability strategy is working as expected by verifying that DataDog monitors notice a fault injected by Steadybit.
+
+## Integration of Steadybit in DataDog
+The extension automatically reports experiment executions to DataDog which helps you to correlate detected anomalies in DataDog.
+Furthermore, you can get a dashboard to see amount of experiment executions by installing Steadybit's [DataDog integration](https://app.datadoghq.eu/integrations/steadybit).
