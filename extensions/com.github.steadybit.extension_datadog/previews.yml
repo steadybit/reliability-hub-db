@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: K9jtMSwJXD0
 - type: image
   src: steadybit_experiment_editor.png
   alt: Steadybit's "Monitor Status Check" allows you to verify that the DataDog monitor notices inject failures.
