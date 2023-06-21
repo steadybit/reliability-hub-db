@@ -86,10 +86,10 @@ lanes:
         ignoreFailure: false
         parameters:
           duration: 20s
-          podcount: podCountMin1
-          namespace: pulse
-          deployment: infra-firefighter-v2-web
-        customLabel: Check if pod is crashing
+          podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
+        customLabel: Pod should be resilient to the loss of the cache
         actionType: check:kubernetes-pod-count
       - !<action>
         ignoreFailure: true

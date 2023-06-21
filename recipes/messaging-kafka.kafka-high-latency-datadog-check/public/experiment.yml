@@ -12,10 +12,11 @@ lanes:
         parameters:
           duration: "3m"
           podcount: "podCountEqualsDesiredCount"
+          namespace: "steadybit-demo"
+          deployment: "gateway"
         customLabel: "The pod should survive a kafka latency"
         actionType: "check:kubernetes-pod-count"
-        radius:
-          maximum: 1
+        radius: {}
   - steps:
       - !<wait>
         ignoreFailure: false
