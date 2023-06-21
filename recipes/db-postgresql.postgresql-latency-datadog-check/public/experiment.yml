@@ -34,8 +34,7 @@ lanes:
           namespace: "steadybit-demo"
         customLabel: "GIVEN: All pods are ready"
         actionType: "check:kubernetes-pod-count"
-        radius:
-          maximum: 1
+        radius: {}
       - !<action>
         ignoreFailure: false
         parameters:
