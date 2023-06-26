@@ -34,7 +34,6 @@ lanes:
                 values:
                   - "service:test"
           query: null
-          percentage: 100
       - !<action>
         ignoreFailure: false
         parameters:
@@ -82,7 +81,6 @@ lanes:
                 values:
                   - "service:test"
           query: null
-          percentage: 100
   - steps:
       - !<wait>
         ignoreFailure: false
@@ -104,4 +102,3 @@ lanes:
                 values:
                   - "service:test"
           query: null
-          percentage: 100

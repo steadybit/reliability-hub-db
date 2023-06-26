@@ -112,4 +112,3 @@ lanes:
                 values:
                   - "service:test"
           query: null
-          percentage: 100
