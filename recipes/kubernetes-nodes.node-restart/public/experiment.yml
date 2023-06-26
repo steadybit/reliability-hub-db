@@ -1,12 +1,11 @@
 ---
 !<experiment>
 name: "Load balancing hides a restart of Gateway's node for end users"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis:
   "When a single node running one of the Gateway pod is restarted, then\
     \ within 10 minutes all pods are ready."
-area: "Global"
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

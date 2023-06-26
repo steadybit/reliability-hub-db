@@ -1,12 +1,11 @@
 ---
 !<experiment>
 name: "Load balancing hides a single container failure of Gateway for end users"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis:
   "A failing pod caused by a crashed container is barely visible to end\
     \ users and recovers fully within 90s."
-area: "Global"
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

@@ -1,12 +1,11 @@
 ---
 !<experiment>
 name: "Verify system unavailability status when PostgreSQL database can not be reached"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis:
   "An unavailable PostgreSQL database might be too severe for suitable fallbacks\
     \ and requires your system to indicate unavailability appropriately."
-area: "Global"
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

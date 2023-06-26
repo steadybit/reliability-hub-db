@@ -1,10 +1,9 @@
 ---
 !<experiment>
 name: "Verify Time to Readiness of Deployment"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis: "A failing pod caused by a crashed container recovers within 90s."
-area: "Global"
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

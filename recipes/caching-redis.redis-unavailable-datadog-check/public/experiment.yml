@@ -1,9 +1,9 @@
 ---
 !<experiment>
 name: "Verify graceful degradation while Redis is unavailable"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis: "Under simulated Redis unavailability conditions, the system can gracefully handle the outage and continue to deliver its intended functionality."
-environment: "GLOBAL"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

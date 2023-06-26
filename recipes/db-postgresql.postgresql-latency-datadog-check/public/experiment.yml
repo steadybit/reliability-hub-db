@@ -1,9 +1,9 @@
 --- !<experiment>
 name: "Verify system behaviour when PostgreSQL database suffers of latency"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis: "Under simulated Postgres latency conditions, the system can maintain its performance and indicate unavailability appropriately. The 
 system's performance will return to normal after the latency has ended."
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

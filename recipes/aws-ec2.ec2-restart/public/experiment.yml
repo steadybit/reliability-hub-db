@@ -1,12 +1,11 @@
 ---
 !<experiment>
 name: "Load balancing hides a AWS EC2 restart for end users"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis:
   "An AWS EC2 restart is barely visible to end users and recovers afterward\
     \ again."
-area: "Global"
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>

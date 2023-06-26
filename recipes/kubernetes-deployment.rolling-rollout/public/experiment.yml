@@ -1,10 +1,9 @@
 ---
 !<experiment>
 name: "Faultless redundancy of Gateway during rolling update"
-team: "ADM"
+team: "{{teamKey}}"
 hypothesis: "When a deployment is rescheduled 95% of all requests are successful"
-area: "Global"
-environment: "Global"
+environment: "{{environmentName}}"
 lanes:
   - steps:
       - !<action>
