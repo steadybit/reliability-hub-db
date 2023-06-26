@@ -9,7 +9,7 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          url: https://api/healthcheck
+          url: "https://api/healthcheck"
           method: GET
           headers: [ ]
           duration: 3m
