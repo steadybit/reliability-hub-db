@@ -1,0 +1,17 @@
+# Introduction
+
+Delays a response from a RestTemplate or WebClient by the given duration.
+
+
+# Use Cases
+
+    * Understand how your services behave under slow network connections to other services
+
+# Parameters
+
+| Parameter    | Description                              | Default |
+|--------------|------------------------------------------|---------|
+| Duration     | How long should the response be delayed? | 30s     |
+| Delay        | How much should the response be delayed? | 500ms   |
+| Jitter       | Random +-30% jitter to response delay    | true    |
+| Host Address | Which host address should be attacked    | any     |
