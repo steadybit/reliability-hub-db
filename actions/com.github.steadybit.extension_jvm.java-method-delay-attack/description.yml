@@ -1,12 +1,9 @@
 ---
-id: java-method-delay-attack
+id: com.github.steadybit.extension_jvm.java-method-delay-attack
 label: Java Method Delay
 description: Delay a public method call by the given duration.
 icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#icon-attack-java-method-delay_svg__clip0)" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"><path d="M18.066 12.067a5.25 5.25 0 10-1.655 10.367 5.25 5.25 0 001.655-10.367zm5.098 4.238l.74-.119a6.757 6.757 0 00-5.6-5.6 6.75 6.75 0 105.6 5.6l-.74.119z"/><path d="M13.152 1.561a.75.75 0 00-.287-.057H2.237a.75.75 0 00-.75.75v16.5a.75.75 0 00.75.75h6a.75.75 0 010 1.5h-6a2.25 2.25 0 01-2.25-2.25v-16.5a2.25 2.25 0 012.25-2.25h10.628a2.252 2.252 0 011.591.658l2.874 2.871a2.25 2.25 0 01.66 1.592v3.129a.75.75 0 01-1.5 0V5.125a.75.75 0 00-.22-.53l-2.874-2.871a.751.751 0 00-.244-.163zm3.798 12.348a.75.75 0 01.817.163l2.652 2.652a.75.75 0 01-.53 1.28h-2.652a.75.75 0 01-.75-.75v-2.652a.75.75 0 01.463-.693zm1.037 2.504v.091h.09l-.09-.09z"/><path d="M3.737 4.504a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5a.75.75 0 01.75-.75zm2.25.75a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v4.5a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-4.5zm1.5.75v3h1.5v-3h-1.5zm5.25-1.5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5a.75.75 0 01.75-.75zm-9.75 8.25a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v4.5a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-4.5zm1.5.75v3h1.5v-3h-1.5z"/></g><defs><clipPath id="icon-attack-java-method-delay_svg__clip0"><path fill="currentColor" d="M0 0h24v24H0z"/></clipPath></defs></svg>
 kind: attack
 category: application
 targetType: application
-extension: com.steadybit.agent
-deprecation:
-  type: replacement
-  newActionId: com.github.steadybit.extension_jvm.java-method-delay-attack
+extension: com.github.steadybit.extension_jvm

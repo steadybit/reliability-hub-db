@@ -1,0 +1,34 @@
+---
+id: com.github.steadybit.extension_jvm
+label: Host
+description: A Steadybit extension to discover jvm / java applications and attack them.
+icon: |
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.6001 13.8462C12.6001 13.2939 13.0478 12.8462 13.6001 12.8462H16.2001C16.7524 12.8462 17.2001 13.2939 17.2001 13.8462C17.2001 14.3984 16.7524 14.8462 16.2001 14.8462H13.6001C13.0478 14.8462 12.6001 14.3984 12.6001 13.8462Z" fill="#1D2632"/>
+  <path d="M8.51581 10.6865C8.13026 10.291 7.49714 10.283 7.10171 10.6686C6.70627 11.0541 6.69826 11.6872 7.08381 12.0827L8.80316 13.8461L7.08381 15.6096C6.69826 16.005 6.70627 16.6381 7.10171 17.0237C7.49714 17.4092 8.13026 17.4012 8.51581 17.0058L10.9158 14.5442C11.2945 14.1558 11.2945 13.5364 10.9158 13.148L8.51581 10.6865Z" fill="#1D2632"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7176 3H4.292L4.28884 3.00001C3.67412 3.00195 3.09037 3.25348 2.66358 3.69122C2.23762 4.1281 2.00182 4.71487 2 5.32212V18.7692C2 19.3528 2.22579 19.9174 2.63547 20.3376C3.04599 20.7587 3.60824 21 4.2 21H19.708L19.7112 21C20.3259 20.9981 20.9096 20.7465 21.3364 20.3088C21.7624 19.8719 21.9982 19.2851 22 18.6779L22 18.6749L22 5.31856L22 5.31554C21.9982 4.71004 21.7631 4.12495 21.3383 3.68929C20.9127 3.25279 20.3306 3.00195 19.7176 3ZM20 6.69232V5.32037C19.9994 5.22761 19.963 5.14368 19.9063 5.08549C19.8504 5.02818 19.7802 5.00048 19.7122 5H4.29417C4.22453 5.00048 4.15266 5.02888 4.09558 5.08742C4.03762 5.14687 4.00055 5.23254 4 5.3271V6.69232H20ZM4 8.69232H20V18.6731C19.9994 18.7676 19.9623 18.8532 19.9044 18.9126C19.8473 18.9711 19.7754 18.9995 19.7058 19H4.2C4.15525 19 4.10704 18.982 4.06747 18.9414C4.02706 18.9 4 18.8385 4 18.7692V8.69232Z" fill="#1D2632"/>
+  </svg>
+
+
+maintainer: com.steadybit
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: extension-jvm
+ghcr:
+  owner: steadybit
+  repository: extension-jvm
+  package: extension-jvm
+helmChart:
+  repository: https://steadybit.github.io/extension-jvm
+  name: steadybit-extension-jvm
+homepage: https://github.com/steadybit/extension-jvm
+installation: https://github.com/steadybit/extension-jvm#installation
+changelog: https://github.com/steadybit/extension-jvm/blob/main/CHANGELOG.md
+tags:
+  - jvm
+  - java
+  - delay
+  - exception
+  - attack
+  - testing
