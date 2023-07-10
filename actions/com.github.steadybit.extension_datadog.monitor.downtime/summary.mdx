@@ -1,0 +1,17 @@
+# Introduction
+
+When executing chaos experiments, you may mute your datadog monitors not to bother your ops colleagues. You can do this with this action.
+
+The create downtime step can be dragged&dropped into the experiment editor. Afterwards you can select the monitors which should be muted by creating a downtime.
+
+# Use Cases
+
+ - Avoid false positives in your monitoring system
+ - Avoid alerting your ops colleagues during chaos experiments
+
+# Parameters
+
+| Parameter | Description                           | Default |
+| --------- | ------------------------------------- | ------- |
+| Duration  | How long should the downtime exist?   | 30s     |
+| Notify after Downtime if unhealthy  | Should Datadog notify after the Downtime if the monitor is still in an unhealthy state  | yes     |

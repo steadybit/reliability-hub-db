@@ -1,0 +1,7 @@
+---
+- type: image
+  src: 1.png
+  alt: The "Create Downtime" action within the experiment editor.
+- type: image
+  src: 2.png
+  alt: The created Downtime in Datadog.
