@@ -95,6 +95,7 @@ lanes:
         parameters:
           duration: "100s"
           expectedStatus: "Alert"
+          statusCheckMode: "atLeastOnce"
         actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
         radius:
           targetType: "com.github.steadybit.extension_datadog.monitor"

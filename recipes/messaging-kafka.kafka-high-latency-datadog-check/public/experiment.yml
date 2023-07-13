@@ -103,6 +103,7 @@ lanes:
         parameters:
           duration: "100s"
           expectedStatus: "Alert"
+          statusCheckMode: "atLeastOnce"
         customLabel: "Monitor should alert a latency issue"
         actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
         radius:
