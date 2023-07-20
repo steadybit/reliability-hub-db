@@ -1,0 +1,16 @@
+# Introduction
+
+This action leverages AWS EC2 API to conduct a RDS Cluster failover. This is done by promoting a replica to the primary instance.
+
+# Use Cases
+
+- Understand how a service behaves when the database is performing a failover
+- Understand the performance impact when the database performs a failover, e.g., cold caches.
+
+# Rollback
+
+Note that this attack does not support any rollback. The attack only transmits the API call, i.e., FailoverDBCluster.
+
+# Parameters
+
+*No parameters.*
