@@ -1,7 +1,7 @@
 ---
-id: com.github.steadybit.extension_aws.rds.instance.downtime
-label: Perform Instance Downtime
-description: Stops a DB instance and restarts it after a given time
+id: com.github.steadybit.extension_aws.rds.instance.stop
+label: Trigger DB Instance Stop
+description: Stops a DB instance
 icon: |
   <svg
     viewBox="0 0 24 24"
