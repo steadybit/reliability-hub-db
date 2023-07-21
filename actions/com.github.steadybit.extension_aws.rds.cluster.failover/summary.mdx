@@ -1,6 +1,6 @@
 # Introduction
 
-This action leverages AWS EC2 API to conduct a RDS Cluster failover. This is done by promoting a replica to the primary instance.
+This action leverages AWS EC2 API to trigger a RDS Cluster failover. This is done by promoting a replica to the primary instance.
 
 # Use Cases
 
@@ -9,7 +9,7 @@ This action leverages AWS EC2 API to conduct a RDS Cluster failover. This is don
 
 # Rollback
 
-Note that this attack does not support any rollback. The attack only transmits the API call, i.e., FailoverDBCluster.
+Note that this attack does not support any rollback. The attack triggers the reboot via API. The failover can't be canceled.
 
 # Parameters
 

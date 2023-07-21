@@ -1,6 +1,8 @@
 # Introduction
 
-This action leverages AWS EC2 API to manipulate the state of RDS database instances. More specifically, it can reboot them.
+This action leverages AWS EC2 API to manipulate the state of RDS database instances. It stops the database instance for a given duration and then starts it again.
+
+As it is not possible to stop instances of Multi-AZ clusters, please use the [Trigger DB Cluster Failover](/action/com.github.steadybit.extension_aws.rds.cluster.failover) action instead.
 
 # Use Cases
 
@@ -9,7 +11,7 @@ This action leverages AWS EC2 API to manipulate the state of RDS database instan
 
 # Rollback
 
-Note that this attack does not support any rollback. The attack only transmits the API call, i.e., RebootDBInstance.
+The DB instance is started again on rollback.
 
 # Parameters
 

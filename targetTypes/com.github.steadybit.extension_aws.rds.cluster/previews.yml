@@ -1,1 +1,4 @@
 ---
+- type: image
+  src: target-details.png
+  alt: Identified information about a AWS RDS cluster that can later be used within experiments.

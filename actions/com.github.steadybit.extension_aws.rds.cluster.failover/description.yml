@@ -1,7 +1,7 @@
 ---
 id: com.github.steadybit.extension_aws.rds.cluster.failover
-label: Failover RDS cluster
-description: Failover a RDS cluster by promoting a read replica to primary
+label: Trigger DB Cluster Failover
+description: Triggers DB cluster failover by promoting a standby instance to primary
 icon: |
   <svg
     viewBox="0 0 24 24"
