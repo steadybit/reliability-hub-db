@@ -1,0 +1,27 @@
+---
+id: com.steadybit.extension_k6
+label: K6
+description: A Steadybit action implementation to integrate K6 Load Tests into Steadybit experiments.
+icon: |
+  <svg viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.666 18.334H1.333L7.436 5.529l3.677 2.658L15.908.833l3.758 17.5zm-6.722-2.766h.04c.453 0 .89-.172 1.217-.481a1.568 1.568 0 00.523-1.184 1.417 1.417 0 00-.504-1.136 1.546 1.546 0 00-1.047-.443h-.03a.552.552 0 00-.152.02l.968-1.414-.771-.53-.365.53-.933 1.4c-.16.233-.294.437-.377.58-.086.15-.16.307-.222.468-.07.172-.106.356-.106.54a1.545 1.545 0 00.517 1.171c.323.31.755.482 1.206.481l.036-.002zm-4.098-1.523l1.068 1.486h1.143L9.8 13.807l1.116-1.525-.741-.504-.327.425-1.004 1.392v-2.8l-1-.801v5.537h1v-1.488l.002.002zm4.1.595a.742.742 0 01-.52-.212.717.717 0 010-1.024.742.742 0 01.52-.211h.006a.729.729 0 01.519.218.676.676 0 01.222.501.73.73 0 01-.222.514.754.754 0 01-.525.212v.002z"
+    fill="currentColor"/>
+  </svg>
+maintainer: com.steadybit
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: extension-k6
+ghcr:
+  owner: steadybit
+  repository: extension-k6
+  package: extension-k6
+helmChart:
+  repository: https://steadybit.github.io/extension-k6
+  name: steadybit-extension-k6
+homepage: https://github.com/steadybit/extension-k6
+installation: https://github.com/steadybit/extension-k6#installation
+changelog: https://github.com/steadybit/extension-k6/blob/main/CHANGELOG.md
+tags:
+  - k6
+  - load-test

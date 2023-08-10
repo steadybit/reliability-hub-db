@@ -1,0 +1,22 @@
+# Introduction
+
+This action leverages AWS EC2 API to manipulate the state of RDS database instances. It triggers stopping a database instance.
+
+As it is not possible to stop instances of Multi-AZ clusters, please use the [Trigger DB Cluster Failover](/action/com.steadybit.extension_aws.rds.cluster.failover) action instead.
+
+**Note:** This action will not perform a rollback. You will need to restart the database instance.
+
+Stopping a DB instance will take several minutes or even hours in case of issues.
+
+# Use Cases
+
+- Understand how a service behaves when the database is not available, e.g., check whether it reconnects.
+- Understand the performance impact when stopping the database, e.g., cold caches.
+
+# Rollback
+
+Note that this attack does not support any rollback. The attack triggers the stop via API. The stop can't be canceled.
+
+# Parameters
+
+*No parameters.*

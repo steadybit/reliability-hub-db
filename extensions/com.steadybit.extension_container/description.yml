@@ -1,0 +1,30 @@
+---
+id: com.steadybit.extension_container
+label: Container
+description: A Steadybit extension to discover container and attack them.
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.65 1.064a1 1 0 01.7 0l10 3.744a1 1 0 01.65.937v12.51a1 1 0 01-.65.937l-10 3.744a1 1 0 01-.7 0l-10-3.744a1 1 0 01-.65-.937V5.745a1 1 0 01.65-.937l10-3.744zM3 6.438v11.124l9 3.37 9-3.37V6.438l-9-3.37-9 3.37zm8.944.608a.89.89 0 01.562 0l5.335 1.778a.889.889 0 010 1.687l-5.335 1.777a.889.889 0 01-.562 0L6.609 10.51a.889.889 0 010-1.687l5.335-1.778zm-4.737 6.228a1 1 0 10-.633 1.897l5.335 1.779a1 1 0 00.632 0l5.335-1.779a1 1 0 10-.633-1.897l-5.018 1.672-5.018-1.672z" fill="currentcolor"/></svg>
+
+
+maintainer: com.steadybit
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: extension-container
+ghcr:
+  owner: steadybit
+  repository: extension-container
+  package: extension-container
+helmChart:
+  repository: https://steadybit.github.io/extension-container
+  name: steadybit-extension-container
+homepage: https://github.com/steadybit/extension-container
+installation: https://github.com/steadybit/extension-container#installation
+changelog: https://github.com/steadybit/extension-container/blob/main/CHANGELOG.md
+tags:
+  - container
+  - stress
+  - network
+  - time
+  - attack
+  - testing

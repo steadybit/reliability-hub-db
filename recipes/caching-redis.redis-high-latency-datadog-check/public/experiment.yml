@@ -69,9 +69,9 @@ lanes:
           duration: "30s"
           expectedStatus: "OK"
         customLabel: "Monitors should be OK"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:
@@ -100,9 +100,9 @@ lanes:
           expectedStatus: "Alert"
           statusCheckMode: "atLeastOnce"
         customLabel: "Monitor should alert a latency issue"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:
@@ -121,9 +121,9 @@ lanes:
           duration: "30s"
           expectedStatus: "OK"
         customLabel: "Monitor should go back to green"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:

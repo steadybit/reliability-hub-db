@@ -19,5 +19,5 @@ kind: check
 extension: com.steadybit.agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_kubernetes.pod_count_check
+  newActionId: com.steadybit.extension_kubernetes.pod_count_check
 

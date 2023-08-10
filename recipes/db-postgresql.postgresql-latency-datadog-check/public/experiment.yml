@@ -101,9 +101,9 @@ lanes:
         parameters:
           duration: "70s"
         customLabel: "GIVEN: All Monitors stay green"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:

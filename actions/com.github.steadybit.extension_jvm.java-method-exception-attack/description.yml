@@ -1,9 +1,0 @@
----
-id: com.github.steadybit.extension_jvm.java-method-exception-attack
-label: Java Method Exception
-description: Throw an exception in an public Java method.
-icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#icon-attack-java-method-exception_svg__clip0)" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"><path d="M12.476 12.481a6.75 6.75 0 119.546 9.546 6.75 6.75 0 01-9.546-9.546zm4.773-.477a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5zm-2.78 2.469a.75.75 0 011.06 0l1.72 1.72 1.72-1.72a.75.75 0 011.06 1.06l-1.72 1.72 1.72 1.72a.75.75 0 01-1.06 1.06l-1.72-1.72-1.72 1.72a.75.75 0 01-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06z"/><path d="M2.249 1.504a.75.75 0 00-.75.75v16.5a.75.75 0 00.75.75h6a.75.75 0 010 1.5h-6a2.25 2.25 0 01-2.25-2.25v-16.5a2.25 2.25 0 012.25-2.25h10.629a2.25 2.25 0 011.59.658l2.872 2.872A2.252 2.252 0 0118 5.125v3.129a.75.75 0 01-1.5 0V5.125a.75.75 0 00-.22-.53m0 0l-2.871-2.871a.75.75 0 00-.53-.22H2.249"/><path d="M3.749 4.504a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5a.75.75 0 01.75-.75zm2.25.75a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v4.5a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-4.5zm1.5.75v3h1.5v-3h-1.5zm5.25-1.5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5a.75.75 0 01.75-.75zm-9.75 8.25a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v4.5a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-4.5zm1.5.75v3h1.5v-3h-1.5z"/></g><defs><clipPath id="icon-attack-java-method-exception_svg__clip0"><path fill="currentColor" d="M0 0h24v24H0z"/></clipPath></defs></svg>
-kind: attack
-category: application
-targetType: application
-extension: com.github.steadybit.extension_jvm

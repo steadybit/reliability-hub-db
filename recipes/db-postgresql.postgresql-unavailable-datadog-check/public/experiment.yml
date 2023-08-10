@@ -122,9 +122,9 @@ lanes:
         parameters:
           duration: "10s"
         customLabel: "GIVEN: All Monitors are green"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:
@@ -138,9 +138,9 @@ lanes:
         parameters:
           duration: "70s"
         customLabel: "THEN: One or more Monitors alerts the outage consequences"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:
@@ -159,9 +159,9 @@ lanes:
           duration: "10s"
         customLabel: "THEN: All Monitors are green again after the resiliency mechanism\
       \ kicks in"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:

@@ -17,4 +17,4 @@ kind: load_test
 extension: com.steadybit.agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_gatling.run
+  newActionId: com.steadybit.extension_gatling.run

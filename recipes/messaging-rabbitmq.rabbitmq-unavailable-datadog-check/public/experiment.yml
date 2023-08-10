@@ -23,9 +23,9 @@ lanes:
           duration: "30s"
           expectedStatus: "OK"
         customLabel: "Monitors should be OK"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:
@@ -70,9 +70,9 @@ lanes:
         parameters:
           duration: "30s"
           expectedStatus: "OK"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:
@@ -92,9 +92,9 @@ lanes:
           duration: "100s"
           expectedStatus: "Alert"
           statusCheckMode: "atLeastOnce"
-        actionType: "com.github.steadybit.extension_datadog.monitor.status_check"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
-          targetType: "com.github.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_datadog.monitor"
           predicate:
             operator: "AND"
             predicates:

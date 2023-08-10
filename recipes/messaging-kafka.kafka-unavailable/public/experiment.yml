@@ -20,7 +20,7 @@ lanes:
           collectionId: "21222108-f59ac16f-81ff-4894-9261-fc6700b0c185"
           environmentId: "21222108-71f326a5-2134-4c3c-a159-8da6bce66a64"
         customLabel: "GIVEN: Orders are accepted"
-        actionType: "com.github.steadybit.extension_postman.collection.run"
+        actionType: "com.steadybit.extension_postman.collection.run"
         radius:
           list: []
       - !<wait>
@@ -92,7 +92,7 @@ lanes:
           collectionId: "21222108-f59ac16f-81ff-4894-9261-fc6700b0c185"
           environmentId: "21222108-71f326a5-2134-4c3c-a159-8da6bce66a64"
         customLabel: "THEN: Orders are still accepted"
-        actionType: "com.github.steadybit.extension_postman.collection.run"
+        actionType: "com.steadybit.extension_postman.collection.run"
         radius:
           list: []
   - steps:

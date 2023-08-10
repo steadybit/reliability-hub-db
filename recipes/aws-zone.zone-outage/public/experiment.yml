@@ -36,7 +36,7 @@ lanes:
         parameters:
           duration: 30
         customLabel: "WHEN: AWS Zone eu-central-1a is unavailable"
-        actionType: "com.github.steadybit.extension_aws.az.blackhole"
+        actionType: "com.steadybit.extension_aws.az.blackhole"
         radius:
           targetType: "zone"
           predicate:

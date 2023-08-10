@@ -17,8 +17,8 @@ icon: |
   </svg>
 kind: attack
 category: network
-targetType: zone
+targetType: com.steadybit.extension_aws.zone
 extension: com.steadybit.aws_agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_aws.az.blackhole
+  newActionId: com.steadybit.extension_aws.az.blackhole

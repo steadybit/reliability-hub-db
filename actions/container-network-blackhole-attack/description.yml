@@ -5,8 +5,8 @@ description: Drops network traffic (incoming and outgoing).
 icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.963 3.557a.75.75 0 01.817.163L4.06 5h2.69a.75.75 0 010 1.5H4.06L2.78 7.78a.75.75 0 01-1.28-.53V6.5H.75a.75.75 0 010-1.5h.75v-.75a.75.75 0 01.463-.693zm12.304 3.534A.75.75 0 0115 6.5h1.5a.75.75 0 01.364.094l6.737 3.743a.774.774 0 01.288.27.748.748 0 01-.288 1.056l-6.737 3.743a.75.75 0 01-.364.094H15a.75.75 0 01-.31-1.433l5.098-2.317H11.25a.75.75 0 010-1.5h8.538L14.69 7.933a.75.75 0 01-.423-.842zM3.463 8.807a.75.75 0 01.817.163l1.28 1.28H6a.75.75 0 010 1.5h-.44l-1.28 1.28A.75.75 0 013 12.5v-.75H.75a.75.75 0 010-1.5H3V9.5a.75.75 0 01.463-.693zm-1.5 5.25a.75.75 0 01.817.163l1.28 1.28h2.69a.75.75 0 010 1.5H4.06l-1.28 1.28a.75.75 0 01-1.28-.53V17H.75a.75.75 0 010-1.5h.75v-.75a.75.75 0 01.463-.693z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.858 4.027a8.623 8.623 0 019.033 0l.01.006a8.626 8.626 0 01-9.034 14.696.75.75 0 11.766-1.29 7.127 7.127 0 007.468-12.137 7.123 7.123 0 00-7.457.003.75.75 0 01-.786-1.278z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M9.552 8.734C9.226 9.278 9 10.077 9 11s.226 1.722.552 2.266c.335.558.693.734.948.734s.613-.176.948-.734c.326-.544.552-1.343.552-2.266s-.226-1.722-.552-2.266C11.113 8.176 10.755 8 10.5 8s-.613.176-.948.734zm-1.286-.771C8.745 7.163 9.512 6.5 10.5 6.5s1.755.664 2.234 1.463c.488.813.766 1.889.766 3.037s-.278 2.224-.766 3.037c-.479.8-1.246 1.463-2.234 1.463s-1.755-.664-2.234-1.463C7.778 13.224 7.5 12.149 7.5 11s.278-2.224.766-3.037z" fill="currentColor"/></svg>
 kind: attack
 category: network
-targetType: container
+targetType: com.steadybit.extension_container.container
 extension: com.steadybit.agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_container.network_blackhole
+  newActionId: com.steadybit.extension_container.network_blackhole

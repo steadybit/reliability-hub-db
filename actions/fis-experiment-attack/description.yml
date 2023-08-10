@@ -17,8 +17,8 @@ icon: |
   </svg>
 kind: attack
 category: state
-targetType: fis-experiment-template
+targetType: com.steadybit.extension_aws.fis-experiment-template
 extension: com.steadybit.aws_agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_aws.fis.start_experiment
+  newActionId: com.steadybit.extension_aws.fis.start_experiment

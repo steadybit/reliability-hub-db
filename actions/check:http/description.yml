@@ -20,4 +20,4 @@ kind: check
 extension: com.steadybit.agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_http.check.periodically
+  newActionId: com.steadybit.extension_http.check.periodically

@@ -17,8 +17,8 @@ icon: |
   </svg>
 kind: attack
 category: state
-targetType: ec2-instance
+targetType: com.steadybit.extension_aws.ec2-instance
 extension: com.steadybit.aws_agent
 deprecation:
   type: replacement
-  newActionId: com.github.steadybit.extension_aws.ec2-instance.state
+  newActionId: com.steadybit.extension_aws.ec2-instance.state
