@@ -1,6 +1,6 @@
 ---
-id: com.steadybit.extension_azure.vm.state
-label: Change Azure virtual machine state
+id: com.steadybit.extension_azure.scale_set.instance.state
+label: Change Azure scale set instance state
 description: Reboot, delete, stop or deallocate azure virtual machines
 icon: |
   <svg
@@ -16,5 +16,5 @@ icon: |
 
 kind: attack
 category: state
-targetType: com.steadybit.extension_azure.vm
+targetType: com.steadybit.extension_azure.scale_set.instance
 extension: com.steadybit.extension_azure

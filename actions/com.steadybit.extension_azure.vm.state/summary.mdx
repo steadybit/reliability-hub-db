@@ -1,11 +1,9 @@
 # Introduction
 
-This action leverages Azure API to manipulate the state of Azure virtual machines. More specifically, it can start, reboot, delete, stop or deallocate them.
+This action leverages Azure API to manipulate the state of Azure virtual machines. More specifically, it can reboot, delete, stop or deallocate them.
 
 # Use Cases
 
-- Verify auto-scaling of a Kubernetes node group.
-- Understand how pods are shifted across different nodes within a Kubernetes cluster.
 - Verify that system services come up on system start.
 - Check that your monitoring solution informs you about this occurrence.
 
@@ -15,6 +13,6 @@ Note that this attack does not support any rollback. The attack only transmits t
 
 # Parameters
 
-| Parameter | Description                                                                                 | Default |
-|-----------|---------------------------------------------------------------------------------------------|---------|
-| Action    | How the virtual machine state should be changed. Start, reboot, delete, stop or deallocate. |         |
+| Parameter | Description                                                                          | Default |
+|-----------|--------------------------------------------------------------------------------------|---------|
+| Action    | How the virtual machine state should be changed. Reboot, delete, stop or deallocate. |         |
