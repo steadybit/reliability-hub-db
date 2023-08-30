@@ -1,0 +1,20 @@
+# Introduction
+
+This action leverages GCP / Google Cloud API to manipulate the state of GCP virtual machines. More specifically, it can reset, delete, stop or suspend them.
+
+# Use Cases
+
+- Verify auto-scaling of a Kubernetes node group.
+- Understand how pods are shifted across different nodes within a Kubernetes cluster.
+- Verify that system services come up on system start.
+- Check that your monitoring solution informs you about this occurrence.
+
+# Rollback
+
+Note that this attack does not support any rollback. The attack only transmits the API call, e.g., Stop or Delete virtual machine.
+
+# Parameters
+
+| Parameter | Description                                                                      | Default |
+|-----------|----------------------------------------------------------------------------------|---------|
+| Action    | How the virtual machine state should be changed. Reset, delete, stop or suspend. |         |
