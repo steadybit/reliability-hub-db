@@ -121,7 +121,10 @@ lanes:
         ignoreFailure: false
         parameters:
           duration: "10s"
-        customLabel: "GIVEN: All Monitors are green"
+          expectedStatusList:
+            - "OK"
+            - "No Data"
+        customLabel: "Monitors should be OK or No Data"
         actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
           targetType: "com.steadybit.extension_datadog.monitor"

@@ -67,8 +67,10 @@ lanes:
         ignoreFailure: false
         parameters:
           duration: "30s"
-          expectedStatus: "OK"
-        customLabel: "Monitors should be OK"
+          expectedStatusList:
+            - "OK"
+            - "No Data"
+        customLabel: "Monitors should be OK or No Data"
         actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
           targetType: "com.steadybit.extension_datadog.monitor"
@@ -91,7 +93,7 @@ lanes:
           podcount: "podCountEqualsDesiredCount"
           namespace: "steadybit-demo"
           deployment: "gateway"
-        customLabel: Pod should be resilient to high latency of the cache
+        customLabel: "Pod should be resilient to high latency of the cache"
         actionType: check:kubernetes-pod-count
       - !<action>
         ignoreFailure: true
