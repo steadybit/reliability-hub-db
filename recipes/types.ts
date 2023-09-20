@@ -1,21 +1,29 @@
+import { GitHub, SpdxLicenseIdentifier } from "../extensions/types";
+
+import { MaintainerId } from "../maintainers/types";
+
 export interface RecipeDescription {
-	id: string;
-	label: string;
-	description: string;
-	tags: string[];
+  id: string;
+  label: string;
+  description: string;
+  tags: string[];
+  license?: SpdxLicenseIdentifier;
+  maintainer: MaintainerId;
+  // will result in GitHub statistics presentation
+  gitHub?: GitHub;
+  homepage?: string;
 }
 
-export interface ExperimentRecipe extends Experiment {
-}
+export interface ExperimentRecipe extends Experiment {}
 
 export interface Experiment {
-	lanes: Lane[];
+  lanes: Lane[];
 }
 
 export interface Lane {
-	steps: Step[];
+  steps: Step[];
 }
 
 export interface Step {
-	actionType?: string;
+  actionType?: string;
 }

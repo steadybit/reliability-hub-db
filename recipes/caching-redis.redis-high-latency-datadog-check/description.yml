@@ -4,3 +4,9 @@ description: Verify that an increased latency in a Redis cache is handled by you
 tags:
   - Redis
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/caching-redis.redis-high-latency-datadog-check
+maintainer: com.manomano

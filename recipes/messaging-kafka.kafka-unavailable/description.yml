@@ -4,3 +4,9 @@ description: An unavailable Kafka is not user-visible as it leads to graceful de
 tags:
   - Kafka
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/messaging-kafka.kafka-unavailable
+maintainer: com.steadybit

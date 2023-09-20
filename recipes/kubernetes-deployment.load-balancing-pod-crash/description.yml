@@ -4,3 +4,9 @@ description: If configured properly, Kubernetes is able to detect a non-respondi
 tags:
   - kubernetes
   - redundancy
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-deployment.load-balancing-pod-crash
+maintainer: com.steadybit

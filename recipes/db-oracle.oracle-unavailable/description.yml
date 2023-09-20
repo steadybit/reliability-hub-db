@@ -4,3 +4,9 @@ description: An unavailable Oracle database might be too severe for suitable fal
 tags:
   - Oracle
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/db-oracle.oracle-unavailable
+maintainer: com.steadybit

@@ -4,3 +4,9 @@ description: An unavailable Kafka broker or even entire cluster should be handle
 tags:
   - Kafka
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/messaging-kafka.kafka-unavailable-datadog-check
+maintainer: com.manomano

@@ -4,3 +4,9 @@ description: An unavailable Microsoft SQL Server database might be too severe fo
 tags:
   - Microsoft SQL Server
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/db-mssql.mssql-unavailable
+maintainer: com.steadybit

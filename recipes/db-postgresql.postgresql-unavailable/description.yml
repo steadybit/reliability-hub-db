@@ -4,3 +4,9 @@ description: An unavailable PostgreSQL database might be too severe for suitable
 tags:
   - PostgreSQL
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/db-postgresql.postgresql-unavailable
+maintainer: com.steadybit

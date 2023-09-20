@@ -5,3 +5,9 @@ tags:
   - kubernetes
   - restart
   - rolling-rollout
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-deployment.rolling-rollout
+maintainer: com.steadybit
