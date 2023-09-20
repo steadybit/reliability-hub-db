@@ -4,3 +4,9 @@ description: AWS achieves high availability via redundancy across different Avai
 tags:
   - aws
   - redundancy
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/aws-zone.zone-outage
+maintainer: com.steadybit

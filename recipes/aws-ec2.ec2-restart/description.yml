@@ -6,3 +6,9 @@ tags:
   - redundancy
   - elasticity
   - scalability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/aws-ec2.ec2-restart
+maintainer: com.steadybit

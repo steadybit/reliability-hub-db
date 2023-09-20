@@ -5,3 +5,8 @@ tags:
   - PostgreSQL
   - recoverability
 
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/db-postgresql.postgresql-latency-datadog-check
+maintainer: com.manomano

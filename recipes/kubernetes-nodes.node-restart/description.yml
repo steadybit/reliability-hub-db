@@ -6,3 +6,9 @@ tags:
   - recoverability
   - scalability
   - elasticity
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-nodes.node-restart
+maintainer: com.steadybit

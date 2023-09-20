@@ -5,3 +5,9 @@ tags:
   - kubernetes
   - recoverability
   - scalability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-deployment.time-to-readiness
+maintainer: com.steadybit

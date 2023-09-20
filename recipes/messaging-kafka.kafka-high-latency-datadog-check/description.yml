@@ -4,3 +4,9 @@ description: Verify that an increased latency in your Kafka message delivery is 
 tags:
   - Kafka
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/messaging-kafka.kafka-high-latency-datadog-check
+maintainer: com.manomano

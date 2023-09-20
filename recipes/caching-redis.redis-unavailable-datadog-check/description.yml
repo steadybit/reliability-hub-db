@@ -4,3 +4,9 @@ description: Check that your application handles a Redis cache downtime graceful
 tags:
   - Redis
   - recoverability
+
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/caching-redis.redis-unavailable-datadog-check
+maintainer: com.manomano
