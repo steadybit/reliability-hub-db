@@ -1,0 +1,18 @@
+# Introduction
+
+This attack can be used to taint a node. Nodes are drained via `kubectl taint`.
+
+# Use Cases
+
+# Parameters
+
+| Parameter | Description                                       | Default    |
+|-----------|---------------------------------------------------|------------|
+| Duration  | How long should the node keep tainted?            | 180s       |
+| Key       | The key for the taint expression                  |            |
+| Value     | The value for the taint expression                |            |
+| Effect    | The effect for the taint expression               | NoSchedule |
+
+# Rollback
+
+The given taint is removed after the given duration or in case of an error.
