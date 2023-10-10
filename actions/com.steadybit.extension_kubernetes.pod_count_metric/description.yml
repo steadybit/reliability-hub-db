@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.pod_count_metric
-label: pod count metrics
+label: Pod Count Metrics
 description: Collects information about pod counts (desired vs. actual count).
 icon: |
   <svg

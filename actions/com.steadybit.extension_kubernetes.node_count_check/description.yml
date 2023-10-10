@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.node_count_check
-label: node count
+label: Node Count
 description: Verifies Kubernetes node counts
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

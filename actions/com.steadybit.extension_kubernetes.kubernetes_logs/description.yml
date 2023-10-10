@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.kubernetes_logs
-label: kubernetes event logs
+label: Kubernetes Event Logs
 description: Collect event logs from a Kubernetes.
 icon: |
   <svg

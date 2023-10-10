@@ -1,0 +1,25 @@
+# Introduction
+
+This attack can be used to drain a node. Nodes are drained via `kubectl drain`.
+
+Some details:
+ - Steadybit agents and extensions are excluded from the drain
+ - kubectl parameter `force` is used to continue even if there are pods that do not declare a controller
+ - kubectl parameter `ignore-daemonsets` is used to ignore daemonsets
+ - kubectl parameter `delete-emptydir-data` is used to delete local data of pods using `emptyDir`
+
+
+# Use Cases
+
+ - Check if your application is still available if a node is drained
+ - Check if new nodes are created by your autoscaler (in combination with node count check)
+
+# Parameters
+
+| Parameter | Description                                       | Default |
+|-----------|---------------------------------------------------|---------|
+| Duration  | How long should the node keep drained / cordoned? | 180s    |
+
+# Rollback
+
+The command is stopped if it is still running/waiting. The node is uncordoned after the given duration or in case of an error.
