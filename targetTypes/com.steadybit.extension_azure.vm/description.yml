@@ -4,7 +4,7 @@ label:
   one: Azure Virtual Machine
   other: Azure Virtual Machines
 icon: |
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
    <path d="M8 11.8182C8 12.0145 8.12422 12.2109 8.32298 12.2982L11.4727 14V9.85455L8 8V11.8182Z" fill="#1D2632"/>
    <path d="M12.1933 5.03405C12.0625 4.93881 11.8942 4.93881 11.7634 5.03405L8.5 7.03405L11.9783 9.03405L15.2634 7.03405L12.1933 5.03405Z" fill="#1D2632"/>
    <path d="M12.5 14L15.7578 12.2982C15.9068 12.2109 16 12.0145 16 11.8182V8L12.5 9.85455V14Z" fill="#1D2632"/>
