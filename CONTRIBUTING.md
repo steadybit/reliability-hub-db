@@ -12,4 +12,5 @@ with the following text to agree our CLA: "I have read the CLA Document and I he
 
 ## SVG Icons
 
-The icons shouldn't define a fixed `width`and `height` in order to be able to scale them individually.
+- The icons shouldn't define a fixed `width`and `height` in order to be able to scale them individually.
+- Icons should use the `currentColor` for the `fill` attribute in order to be able to change the color via CSS.
