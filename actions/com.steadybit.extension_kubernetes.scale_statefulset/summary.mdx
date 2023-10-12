@@ -1,0 +1,16 @@
+# Introduction
+
+The action can be used to up or downscale a kubernetes statefulset.
+
+# Use Cases
+
+# Parameters
+
+| Name          | Required | Description                            | Default |
+|---------------|----------|----------------------------------------|---------|
+| Duration      | true     | How long should the new scale be used? | 180s    |
+| Replica Count | true     | The desired replica count              | 1       |
+
+# Rollback
+
+The old desired replica count will be restored after the action has ended.
