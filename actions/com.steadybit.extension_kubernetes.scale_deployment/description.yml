@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.scale_deployment
-label: Scale Deplyoment
+label: Scale Deployment
 description: Up-/Downscale a Kubernetes Deployment
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

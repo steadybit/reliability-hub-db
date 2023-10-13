@@ -1,8 +1,11 @@
 # Introduction
 
-The action can be used to up or downscale a kubernetes deployment.
+Use this action to up or downscale a Kubernetes deployment.
 
 # Use Cases
+- Verify that your deployment is successfully scaled up and the new pod is taken into account by your load balancer
+- Check how long it takes to scale your deployment to a desirable amount of pods (in combination with a [pod count check](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.pod_count_check))
+
 
 # Parameters
 
@@ -12,5 +15,4 @@ The action can be used to up or downscale a kubernetes deployment.
 | Replica Count | true     | The desired replica count              | 1       |
 
 # Rollback
-
-The old desired replica count will be restored after the action has ended.
+At the end of the attack or in case of an error, the old desired replica count will be restored.

@@ -1,8 +1,10 @@
 # Introduction
 
-This attack can be used to taint a node. Nodes are drained via `kubectl taint`.
+Use this attack to taint one or multiple nodes via `kubectl taint`.
 
 # Use Cases
+- Check that your pods affinity/taint/toleration configuration is working
+- Simulate [Kubernetes taint-based evictions](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/#taint-based-evictions) like a node having memory pressure
 
 # Parameters
 
@@ -14,5 +16,4 @@ This attack can be used to taint a node. Nodes are drained via `kubectl taint`.
 | Effect    | The effect for the taint expression               | NoSchedule |
 
 # Rollback
-
 The given taint is removed after the given duration or in case of an error.

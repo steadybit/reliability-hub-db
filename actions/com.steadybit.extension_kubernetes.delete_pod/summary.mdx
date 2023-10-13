@@ -1,11 +1,14 @@
 # Introduction
 
-This attack can be used to delete pods. Pods are deleted only once using `kubectl delete pod`.
+This attack allows you to delete one or multiple pods. Pods are deleted once using `kubectl delete pod`.
+
+By benefitting from Steadybit's discovery, you can easily delete multiple pods, e.g., from different deployments in a namespace or a certain availability zone (only available for managed Kubernetes and requires the AWS-extension, Azure-extension, or GCP-extension).
 
 # Use Cases
 
  - Check if your application is still available if certain pods are restarting
- - Check how long it takes until new pods are respawned and ready (in combination with a pod count check)
+ - Check how long it takes until new pods are respawned and ready (in combination with a [pod count check](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.pod_count_check))
+- Verify that your leader election works for a set of pods
 
 # Parameters
 

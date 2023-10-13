@@ -1,6 +1,6 @@
 # Introduction
 
-This attack can be used to drain a node. Nodes are drained via `kubectl drain`.
+Use the attack to drain one or multiple nodes. The nodes are drained via `kubectl drain`.
 
 Some details:
  - Steadybit agents and extensions are excluded from the drain
@@ -11,8 +11,8 @@ Some details:
 
 # Use Cases
 
- - Check if your application is still available if a node is drained
- - Check if new nodes are created by your autoscaler (in combination with node count check)
+ - Check your application failover when a node is drained
+ - Check if new nodes are created by your autoscaler (in combination with [node count check](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.node_count_check))
 
 # Parameters
 
@@ -21,5 +21,4 @@ Some details:
 | Duration  | How long should the node keep drained / cordoned? | 180s    |
 
 # Rollback
-
-The command is stopped if it is still running/waiting. The node is uncordoned after the given duration or in case of an error.
+A drained node will be automatically uncorden after the given duration or in case of an error to rollback the effect.
