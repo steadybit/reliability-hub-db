@@ -1,0 +1,20 @@
+# Introduction
+
+You can use this step to continuously kill all (or a given) container in a selected pod.
+
+# Use Cases
+
+# Known limitations
+- Pods using `hostPID=true` are currently not supported
+- Containers without `kill` binary are currently not supported
+
+# Rollback
+
+*No rollback necessary.*
+
+# Parameters
+
+| Parameter | Required | Description                                                                       | Default |
+|-----------|----------|-----------------------------------------------------------------------------------|---------|
+| Duration  | true     | How long should the attack run?                                                   | 60s     |
+| Container | false    | Name of a container which should be killed. By default all containers are killed. |         |
