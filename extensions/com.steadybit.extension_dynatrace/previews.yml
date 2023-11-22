@@ -1,0 +1,7 @@
+---
+- type: image
+  src: dynatrace-connected-event.png
+  alt: Steadybit events are reported to Dynatrace to ease analyzing causes and effects.
+- type: image
+  src: dynatrace-dashboard.png
+  alt: Dynatrace dashboard helps to get an overview of all running experiments and their timing.
