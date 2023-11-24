@@ -1,0 +1,4 @@
+---
+- type: image
+  src: create-maintenance-window.png
+  alt: The action within the experiment editor.
