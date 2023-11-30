@@ -7,7 +7,7 @@
 We base our integration of custom load test on the concept of Docker-images. Therefore, you need a Docker Hub user or a private Docker registry as prerequisite. After that, just follow the steps below to integrate your custom load test:
 
 1. Place your Gatling load test file in a separate folder. We assume for this steps that it is named _custom.scala_. Alternatively, download an example [custom.scala](https://github.com/steadybit/docs-public/blob/main/use-steadybit/actions/gatling-custom.scala) load test and adjust it as needed.
-2. Put a [Dockerfile](https://github.com/steadybit/docs-public/blob/main/use-steadybit/actions/gatling-Dockerfile/README.md) into the same directory which simply copies the custom load test into the Docker image. It looks like:
+2. Put a Dockerfile into the same directory which simply copies the custom load test into the Docker image. It looks like:
 
 ```
 # Inherit existing image
