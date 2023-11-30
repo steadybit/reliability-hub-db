@@ -1,11 +1,10 @@
 # Introduction
 
-This action leverages [https://github.com/gunnargrosch/failure-lambda](gunnargrosch/failure-lambda) and the AWS Systems Manager API to inject exceptions into AWS Lambdas.
+This action leverages [gunnargrosch/failure-lambda](https://github.com/gunnargrosch/failure-lambda) and the AWS Systems Manager API to inject exceptions into AWS Lambdas.
 
 # Use Cases
 
 - Understand how other (e.g. upstream services, monitoring) behaves when the lambda is returning a failure.
-
 
 # Prerequisites
 
@@ -14,7 +13,7 @@ The AWS Lambda Function to attack must [be wrapped with the failure-lambda libra
 # Parameters
 
 | Parameter | Description                                                                       | Default |
-|-----------|-----------------------------------------------------------------------------------|---------|
+| --------- | --------------------------------------------------------------------------------- | ------- |
 | Duration  | The duration of the attack.                                                       | 30s     |
 | Rate      | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
 | Message   | Message of the thrown exception                                                   |         |
