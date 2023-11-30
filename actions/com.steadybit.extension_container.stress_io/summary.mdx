@@ -1,10 +1,10 @@
 # Introduction
 
-Generate read/write sync operation on disks.
+Generate read/write/flush operation on disks.
 
 # Usage
 The resources on a host are shared between containers.
-Running a resource attack for a container is executed in the containers cgroup, but affects the host's resources and all containers running on it.
+Running a resource attack for a container is executed in the containers cgroup and namespace, but might affect the host's resources and all containers running on it.
 
 # Use Cases
 
@@ -12,10 +12,10 @@ Running a resource attack for a container is executed in the containers cgroup, 
 
 # Parameters
 
-| Parameter             | Description                                                                                                                                                                 | Default              |
-|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
-| Mode                  | Define the operational mode. The attack can stress io either by just flushing disk caches calling `sync()` and/or continually reading and writings temporary files to disk. | read_write_and_flush |
-| Duration              | How long should IO be consumed?                                                                                                                                             | 30s                  |
-| Workers               | How many workers should continually write, read and remove temporary files? (0 = 1 per core)                                                                                | 1                    |
-| Path                  | Path where the IO should be inflicted                                                                                                                                       | /                    |
-| Disk Usage Percentage | Percentage of available disk space to use                                                                                                                                   | 50%                  |
+| Parameter       | Description                                                                                                                                                                 | Default              |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
+| Mode            | Define the operational mode. The attack can stress io either by just flushing disk caches calling `sync()` and/or continually reading and writings temporary files to disk. | read_write_and_flush |
+| Duration        | How long should IO be consumed?                                                                                                                                             | 30s                  |
+| Workers         | How many workers should continually write, read and remove temporary files? (0 = 1 per core)                                                                                | 1                    |
+| Path            | Path where the IO should be inflicted                                                                                                                                       | /                    |
+| MBytes to write | How many megabytes should be written per stress operation?                                                                                                                  | 1024                 |
