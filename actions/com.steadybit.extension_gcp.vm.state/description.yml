@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_gcp.vm.state
-label: Change GCP / Google Cloud virtual machine state
+label: Change GCP Virtual Machine State
 description: Reset, delete, stop or suspend gcp virtual machines
 icon: |
   <svg
