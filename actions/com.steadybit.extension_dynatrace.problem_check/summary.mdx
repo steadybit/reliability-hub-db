@@ -1,0 +1,11 @@
+# Introduction
+
+When executing chaos experiments, you may want to check if problems in Dynatrace are popping up. Or the opposite.
+
+# Parameters
+
+| Parameter            | Description                                                                    | Default                      |
+| ---------------------| ------------------------------------------------------------------------------ | ---------------------------- |
+| Duration             | How long should steadybit check for problems?                                  | 30s                          |
+| Condition            | If you pick a condition, the experiment will fail if the condition is not met. | No check, only show problems |
+| Condition Check Mode | How often should the status be expected. "At least once" or "All the time"     | "All the time"               |
