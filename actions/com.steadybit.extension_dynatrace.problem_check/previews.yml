@@ -3,5 +3,5 @@
   src: problem_check_editor.png
   alt: The action within the experiment editor.
 - type: image
-  src: problem_check_results.png
+  src: problem_check_result.png
   alt: The results of the action within the experiment run view.
