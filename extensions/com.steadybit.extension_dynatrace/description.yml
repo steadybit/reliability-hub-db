@@ -20,6 +20,7 @@ helmChart:
 homepage: https://github.com/steadybit/extension-dynatrace
 installation: https://github.com/steadybit/extension-dynatrace#installation
 changelog: https://github.com/steadybit/extension-dynatrace/blob/main/CHANGELOG.md
+releaseDate: '2023-12-01'
 tags:
   - dynatrace
   - monitors
