@@ -1,3 +1,7 @@
+/*
+ * Copyright 2023 steadybit GmbH. All rights reserved.
+ */
+
 import { MaintainerId } from "../maintainers/types";
 
 // reverse domain name, e.g., com.example
@@ -40,4 +44,5 @@ export interface ExtensionDescription {
   installation?: string;
   changelog?: string;
   tags: string[];
+  releaseDate?: string;
 }
