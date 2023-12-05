@@ -1,0 +1,11 @@
+id: kubernetes-node.drain-node
+label: Verify that drained nodes are replaced quickly
+description: When draining a node, Kubernetes should reschedule the pods on other nodes to achieve elasticity.
+tags:
+  - kubernetes
+  - elasticity
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-node.drain-node
+maintainer: com.steadybit

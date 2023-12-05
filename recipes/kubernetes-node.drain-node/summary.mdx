@@ -1,0 +1,18 @@
+# Intent
+When draining a node, Kubernetes should reschedule running pods on other nodes without hiccups to ease, e.g., node maintenance.
+
+# Motivation
+Draining a node may be necessary for, e.g., maintenance of a node.
+If that happens, Kubernetes should be able to reschedule the pods running on that node within the expected time and without user-noticeable failures.
+
+# Structure
+
+For the entire duration of the experiment, a user-facing endpoint should work within expected success rates.
+At the beginning of the experiment, all pods should be ready to accept traffic. As soon as the node is drained, Kubernetes will evict the pods, but we still expect the pod's redundancy to be able to serve the user-facing endpoint.
+Eventually, after 120 seconds, all pods should be rescheduled and ready again to recover after the maintenance.
+
+# Environment Example
+
+In our example, we check for a user-visible endpoint of the gateway deployment while draining the node.
+Also, we are limiting the experiment to a pod of gateway and all other pods running on the same host (as this is unavoidable).
+Starting a new gateway pod and becoming ready may take longer than after a single pod failure (as many pods are potentially rescheduled). Still, we don't expect it to take longer than 120 seconds.

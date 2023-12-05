@@ -1,5 +1,5 @@
 ---
-name: "Scaling of Hot-Deals should lead to error-free load-balancing"
+name: "Draining a node should spawn a new node"
 team: "{{teamKey}}"
 environment: "{{environmentName}}"
 lanes:
@@ -7,10 +7,10 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          url: "http://demo.steadybit.io/products"
+          url: "http://demo.steadybit.io/products/cb"
           method: "GET"
           headers: []
-          duration: "100s"
+          duration: "210s"
           statusCode: "200-299"
           readTimeout: "5s"
           successRate: 100
@@ -24,43 +24,12 @@ lanes:
         actionType: "com.steadybit.extension_http.check.periodically"
         radius: {}
   - steps:
-      - !<wait>
-        ignoreFailure: false
-        parameters:
-          duration: "10s"
       - !<action>
         ignoreFailure: false
         parameters:
-          duration: "60s"
-          replicaCount: 3
-        customLabel: "WHEN: Deployment Hot-Deals is scaling up"
-        actionType: "com.steadybit.extension_kubernetes.scale_deployment"
-        radius:
-          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
-          predicate:
-            operator: "AND"
-            predicates:
-              - key: "k8s.cluster-name"
-                operator: "EQUALS"
-                values:
-                  - "prod-demo"
-              - key: "k8s.namespace"
-                operator: "EQUALS"
-                values:
-                  - "steadybit-demo"
-              - key: "k8s.deployment"
-                operator: "EQUALS"
-                values:
-                  - "hot-deals"
-          query: null
-          percentage: 50
-  - steps:
-      - !<action>
-        ignoreFailure: false
-        parameters:
-          duration: "65s"
-          podCountCheckMode: "podCountIncreased"
-        customLabel: "THEN: New hot-deals pod is becoming ready within 60s"
+          duration: "30s"
+          podCountCheckMode: "podCountEqualsDesiredCount"
+        customLabel: "Given: All Pods of gateway are ready"
         actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius:
           targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
@@ -78,34 +47,63 @@ lanes:
               - key: "k8s.deployment"
                 operator: "EQUALS"
                 values:
-                  - "hot-deals"
+                  - "gateway"
           query: null
-  - steps:
       - !<action>
         ignoreFailure: false
         parameters:
-          duration: "100s"
-          statusCheckMode: "allTheTime"
-          expectedStatusList:
-            - "OK"
-        customLabel: "THEN: No monitoring alerts while scaling up"
-        actionType: "com.steadybit.extension_datadog.monitor.status_check"
+          duration: "60s"
+        customLabel: "WHEN: Draining a node of gateway"
+        actionType: "com.steadybit.extension_kubernetes.drain_node"
         radius:
-          targetType: "com.steadybit.extension_datadog.monitor"
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-node"
           predicate:
             operator: "AND"
             predicates:
-              - key: "datadog.monitor.tags"
+              - key: "k8s.cluster-name"
                 operator: "EQUALS"
                 values:
-                  - "env:prod"
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
+          maximum: 1
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "120s"
+          podCountCheckMode: "podCountEqualsDesiredCount"
+        customLabel: "THEN: Eventually all Pods should be ready again"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
           query: null
   - steps:
       - !<action>
         ignoreFailure: false
         parameters:
-          duration: "100s"
-        customLabel: "Collect Pod Count Metrics"
+          duration: "210s"
         actionType: "com.steadybit.extension_kubernetes.pod_count_metric"
         radius:
           targetType: "com.steadybit.extension_kubernetes.kubernetes-cluster"
