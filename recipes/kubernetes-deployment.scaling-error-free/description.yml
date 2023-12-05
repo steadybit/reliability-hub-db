@@ -1,0 +1,12 @@
+id: kubernetes-deployment.scaling-error-free
+label: Verify that you can scale your deployment without noticeable errors.
+description: When you need to scale your Kubernetes deployment, ensure that users don't notice any hiccups and that it seamlessly integrates into your load balancing.
+tags:
+  - kubernetes
+  - scalability
+  - elasticity
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-deployment.scaling-error-free
+maintainer: com.steadybit
