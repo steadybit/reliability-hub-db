@@ -22,7 +22,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 1
         customLabel: 'HTTP Check : The service should survive a redis latency'
-        actionType: check:http
+        actionType: com.steadybit.extension_http.check.periodically
         radius: {}
   - steps:
       - !<wait>
@@ -38,7 +38,7 @@ lanes:
           networkInterface: "eth0"
           networkDelayJitter: true
         customLabel: "WHEN: Redis is slow because of a network issue"
-        actionType: "container-network-delay-attack"
+        actionType: "com.steadybit.extension_container.network_delay"
         radius:
           targetType: "container"
           predicate:
@@ -94,7 +94,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "Pod should be resilient to high latency of the cache"
-        actionType: check:kubernetes-pod-count
+        actionType: com.steadybit.extension_kubernetes.pod_count_check
       - !<action>
         ignoreFailure: true
         parameters:

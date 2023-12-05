@@ -17,7 +17,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "GIVEN: All pods are ready"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
       - !<action>
         ignoreFailure: false
@@ -25,7 +25,7 @@ lanes:
           delay: "0m"
           reboot: "true"
         customLabel: "WHEN: A node is rebooted"
-        actionType: "host-shutdown-attack"
+        actionType: "com.steadybit.extension_host.shutdown"
         radius:
           targetType: "host"
           predicate:
@@ -54,7 +54,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "THEN: Ready Pod Count decreases"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
       - !<action>
         ignoreFailure: false
@@ -65,5 +65,5 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "THEN: Pod count is all back again"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}

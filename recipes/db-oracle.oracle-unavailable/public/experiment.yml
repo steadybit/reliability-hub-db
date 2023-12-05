@@ -23,7 +23,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "GIVEN: All HTTP requests are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
   - steps:
@@ -35,7 +35,7 @@ lanes:
           podcount: "podCountEqualsDesiredCount"
           namespace: "steadybit-demo"
         customLabel: "GIVEN: All pods are ready"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
       - !<action>
         ignoreFailure: false
@@ -43,7 +43,7 @@ lanes:
           duration: "60s"
           hostname: "db.internal.steadybit.com"
         customLabel: "WHEN: Oracle is not available"
-        actionType: "container-network-blackhole-attack"
+        actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
           targetType: "container"
           predicate:
@@ -79,7 +79,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: HTTP requests resolve to be Service unavailable"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
       - !<action>
@@ -97,6 +97,6 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: All HTTP requests are successful again"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []

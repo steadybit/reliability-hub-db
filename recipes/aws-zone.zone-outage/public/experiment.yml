@@ -23,7 +23,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "GIVEN: All HTTP-Calls are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
   - steps:
@@ -72,7 +72,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: At least 95% of the HTTP calls are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
       - !<action>
@@ -90,6 +90,6 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: All HTTP calls are successful again"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []

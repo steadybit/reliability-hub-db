@@ -20,7 +20,7 @@ lanes:
           followRedirects: "false"
           requestsPerSecond: 10
         customLabel: "GIVEN: All HTTP-Calls are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius: {}
   - steps:
       - !<action>
@@ -32,7 +32,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "GIVEN: All PODs are available"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
   - steps:
       - !<wait>
@@ -44,7 +44,7 @@ lanes:
         ignoreFailure: false
         parameters: {}
         customLabel: "WHEN: A rollout restart is executed"
-        actionType: "kubernetes-rollout-restart-attack"
+        actionType: "com.steadybit.extension_kubernetes.rollout-restart"
         radius:
           targetType: "kubernetes-deployment"
           predicate:
@@ -83,7 +83,7 @@ lanes:
           followRedirects: "false"
           requestsPerSecond: 10
         customLabel: "THEN: At least 95% of the HTTP calls are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius: {}
   - steps:
       - !<wait>
@@ -100,7 +100,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "THEN: All PODs are available"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
   - steps:
       - !<wait>
@@ -122,5 +122,5 @@ lanes:
           followRedirects: "false"
           requestsPerSecond: 10
         customLabel: "THEN: All HTTP-Calls are successful again"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius: {}

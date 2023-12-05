@@ -15,7 +15,7 @@ lanes:
           podcount: "podCountEqualsDesiredCount"
           namespace: "steadybit-demo"
         customLabel: "GIVEN: All pods are ready"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
   - steps:
       - !<action>
@@ -33,7 +33,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 5
         customLabel: "GIVEN: All HTTP requests are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           maximum: 1
   - steps:
@@ -47,7 +47,7 @@ lanes:
           port: "5432"
           duration: "60s"
         customLabel: "WHEN: PostgreSQL is not available"
-        actionType: "container-network-blackhole-attack"
+        actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
           targetType: "container"
           predicate:
@@ -91,7 +91,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: HTTP requests resolve to be Service unavailable"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           maximum: 1
       - !<wait>
@@ -113,7 +113,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 5
         customLabel: "THEN: All HTTP requests are successful again"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           maximum: 1
   - steps:

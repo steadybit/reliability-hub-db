@@ -15,7 +15,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "The pod should survive a kafka downtime"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
   - steps:
       - !<action>
@@ -44,7 +44,7 @@ lanes:
           duration: "2m"
           hostname: ""
         customLabel: "WHEN: Kafka is not available"
-        actionType: "container-network-blackhole-attack"
+        actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
           targetType: "container"
           predicate:

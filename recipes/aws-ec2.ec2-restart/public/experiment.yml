@@ -23,7 +23,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "GIVEN: All HTTP-Calls are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
   - steps:
@@ -36,7 +36,7 @@ lanes:
         parameters:
           action: "reboot"
         customLabel: "WHEN: AWS EC2 is rebooted"
-        actionType: "ec2-shutdown-attack"
+        actionType: "com.steadybit.extension_aws.ec2-instance.state"
         radius:
           targetType: "ec2-instance"
           predicate:
@@ -72,7 +72,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: At least 95% of the HTTP calls are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
       - !<action>
@@ -90,6 +90,6 @@ lanes:
           followRedirects: false
           requestsPerSecond: 10
         customLabel: "THEN: All HTTP calls are successful again"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []

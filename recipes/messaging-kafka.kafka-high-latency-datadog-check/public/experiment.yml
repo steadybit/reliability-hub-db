@@ -15,7 +15,7 @@ lanes:
           namespace: "steadybit-demo"
           deployment: "gateway"
         customLabel: "The pod should survive a kafka latency"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
   - steps:
       - !<wait>
@@ -31,7 +31,7 @@ lanes:
           networkInterface: "eth0"
           networkDelayJitter: true
         customLabel: "WHEN: Kafka is slow because of a network issue"
-        actionType: "container-network-delay-attack"
+        actionType: "com.steadybit.extension_container.network_delay"
         radius:
           targetType: "container"
           predicate:

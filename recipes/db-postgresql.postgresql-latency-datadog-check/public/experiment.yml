@@ -21,7 +21,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 5
         customLabel: "GIVEN: All HTTP requests are successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           maximum: 1
   - steps:
@@ -33,7 +33,7 @@ lanes:
           podcount: "podCountEqualsDesiredCount"
           namespace: "steadybit-demo"
         customLabel: "GIVEN: All pods are ready"
-        actionType: "check:kubernetes-pod-count"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
         radius: {}
       - !<action>
         ignoreFailure: false
@@ -44,7 +44,7 @@ lanes:
           networkInterface: "eth0"
           networkDelayJitter: false
         customLabel: "WHEN: PostgreSQL suffers latencies"
-        actionType: "container-network-delay-attack"
+        actionType: "com.steadybit.extension_container.network_delay"
         radius:
           targetType: "container"
           predicate:
@@ -88,7 +88,7 @@ lanes:
           followRedirects: false
           requestsPerSecond: 5
         customLabel: "THEN: HTTP requests are slow but mostly successful"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           maximum: 1
   - steps:

@@ -44,7 +44,7 @@ lanes:
           requestsPerSecond: "1"
           responsesContains: "count: 10"
         customLabel: "GIVEN: All orders are submitted"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
   - steps:
@@ -59,7 +59,7 @@ lanes:
           duration: "30s"
           hostname: "kafka.internal.steadybit.com"
         customLabel: "WHEN: Kafka is not available"
-        actionType: "container-network-blackhole-attack"
+        actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
           targetType: "container"
           predicate:
@@ -117,6 +117,6 @@ lanes:
           requestsPerSecond: "1"
           responsesContains: "count: 40"
         customLabel: "GIVEN: All orders are submitted"
-        actionType: "check:http"
+        actionType: "com.steadybit.extension_http.check.periodically"
         radius:
           list: []
