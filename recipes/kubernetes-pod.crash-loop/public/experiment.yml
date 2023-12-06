@@ -11,38 +11,7 @@ lanes:
           statusCheckMode: "allTheTime"
           expectedStatusList:
             - "OK"
-        customLabel: "Monitor is 'Ok'"
-        actionType: "com.steadybit.extension_datadog.monitor.status_check"
-        radius:
-          targetType: "com.steadybit.extension_datadog.monitor"
-          predicate:
-            operator: "AND"
-            predicates:
-              - key: "datadog.monitor.tags"
-                operator: "EQUALS"
-                values:
-                  - "env:prod"
-              - key: "datadog.monitor.name"
-                operator: "EQUALS"
-                values:
-                  - "Some pods aren't ready for more than 2 minutes"
-          query: null
-  - steps:
-      - !<wait>
-        ignoreFailure: false
-        parameters:
-          duration: "10s"
-      - !<action>
-        ignoreFailure: false
-        parameters:
-          duration: "3m"
-          statusCheckMode: "atLeastOnce"
-          expectedStatusList:
-            - "Alert"
-            - "Warn"
-        customLabel:
-          "Monitor should be in 'Alert' state because of Non-Ready PODs for\
-                \ more than 2 minutes"
+        customLabel: "GIVEN: Monitor is 'Ok'"
         actionType: "com.steadybit.extension_datadog.monitor.status_check"
         radius:
           targetType: "com.steadybit.extension_datadog.monitor"
@@ -67,7 +36,7 @@ lanes:
         ignoreFailure: false
         parameters:
           duration: "2m"
-        customLabel: "Crash Loop Gateway"
+        customLabel: "WHEN: Gateway crash loops"
         actionType: "com.steadybit.extension_kubernetes.crash_loop_pod"
         radius:
           targetType: "com.steadybit.extension_kubernetes.kubernetes-pod"
@@ -88,3 +57,57 @@ lanes:
                   - "gateway"
           query: null
           percentage: 50
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "10s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "3m"
+          statusCheckMode: "atLeastOnce"
+          expectedStatusList:
+            - "Alert"
+            - "Warn"
+        customLabel:
+          "THEN: Monitor should be in 'Alert' state because of Non-Ready PODs for\
+                \ more than 2 minutes"
+        actionType: "com.steadybit.extension_datadog.monitor.status_check"
+        radius:
+          targetType: "com.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "env:prod"
+              - key: "datadog.monitor.name"
+                operator: "EQUALS"
+                values:
+                  - "Some pods aren't ready for more than 2 minutes"
+          query: null
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          notify: true
+          duration: "190s"
+        customLabel:
+          "Mute alerting monitor to avoid escalations"
+        actionType: "com.steadybit.extension_datadog.monitor.downtime"
+        radius:
+          targetType: "com.steadybit.extension_datadog.monitor"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "datadog.monitor.tags"
+                operator: "EQUALS"
+                values:
+                  - "env:prod"
+              - key: "datadog.monitor.name"
+                operator: "EQUALS"
+                values:
+                  - "Some pods aren't ready for more than 2 minutes"
+          query: null
