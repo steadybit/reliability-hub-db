@@ -1,5 +1,5 @@
 ---
-name: "Draining a node should spawn a new node"
+name: "Draining a node should reschedule all pods quickly"
 team: "{{teamKey}}"
 environment: "{{environmentName}}"
 lanes:
