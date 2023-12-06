@@ -1,0 +1,23 @@
+# Introduction
+
+Generate a huge file in the filesystem.
+
+# Usage
+The resources on a host are shared between containers.
+Running a fill disk resource attack for a container is executed in the containers cgroup and namespace, but might affect the host's resources and all containers running on it.
+
+# Use Cases
+
+    * Fill the container file system to test the behavior of the container when the file system is full.
+    * Fill the emphemeral storage to the maximum to test the behavior of the cluster when the emphemeral storage is full.
+
+# Parameters
+
+| Parameter  | Description                                                                                                                                                                         | Default |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration   | How long should disk be filled?                                                                                                                                                     | 30s     |
+| Mode       | Define the operational mode. The attack fill disk as <br/> * Overall percentage of filled disk space in percent. <br/> * Megabytes to write <br/> * Megabytes to leave free on disk | PERCENT |
+| Size       | Depending on the mode, specify the percentage of filled disk space or the number of Megabytes to be written or left free.                                                           | 80      |
+| Path       | Path where the file should be written                                                                                                                                               | /tmp    |
+| Method     | Should the disk filled at once or over time? That means use the command fallocate or dd.                                                                                            | AT_ONCE |
+| Block Size | Define the block size for writing the file with the dd command. If the block size is larger than the fill value, the fill value will be used as block size.                         | 5       |
