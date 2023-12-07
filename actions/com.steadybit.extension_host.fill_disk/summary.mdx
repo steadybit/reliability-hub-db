@@ -33,3 +33,34 @@ When this happens, use the "Over time" method to fill the disk with dd command.
 If you want to fill the disk over time, the extension uses the dd command. The dd command is much slower than the fallocate command.
 But the dd command writes real data to the disk. The disk is filled with zeros.
 This command takes some time but can write up to 100% of the disk space.
+
+# Check if the disk is full
+To check if the disk is full, you can use the following command:
+```
+df -h
+```
+
+# Calculation of the fill value
+## Percentage
+We are using df -kP `filepath` to get the disk usage in kilobytes.
+The size to write is calculated as follows:
+- diskSpace is the output of df -kP `filepath`
+- size is the percentage of the disk space to write
+
+```
+diskSpace.Capacity * size / 100 - diskSpace.Used
+```
+
+The result is the number of kilobytes to write.
+BUT if you check the disk usage with df -h, you could see a different percentage usage. Sometimes the usage is higher than the percentage you specified because of diskSpace.Usage is another value than calculating diskSpace.Capacity - diskSpace.Available.
+
+## Megabytes to leave free on disk
+The size to write is calculated as follows:
+- size is the number of megabytes to write
+- size is the amount of megabytes to leave free on disk
+
+```
+diskSpace.Available - size * 1024
+```
+
+The result is the number of kilobytes to write.
