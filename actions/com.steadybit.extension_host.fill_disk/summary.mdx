@@ -26,10 +26,10 @@ If you are not using our container images for the extension, you need install th
 ## Should the disk filled at once?
 If you want to fill the disk at once, the extension uses the fallocate command. The fallocate command is much faster than the dd command.
 It allocates the space on the disk without writing any data. The fallocate command is only available on Linux systems.
-But if you want to write more than 100% of the disk space, the fallolcate command my not the right choice. Sometimes it stops allocating space before the disk is full.
-When this happens use the method "Over time" to fill the disk.
+However, if you want to write more than 100% of the disk space, there are better choices than the fallocate command. Sometimes, it stops allocating space before the disk is full.
+When this happens, use the "Over time" method to fill the disk with dd command.
 
 ## Should the disk filled over time?
 If you want to fill the disk over time, the extension uses the dd command. The dd command is much slower than the fallocate command.
 But the dd command writes real data to the disk. The disk is filled with zeros.
-This command takes some times but is able to write up to 100% of the disk space.
+This command takes some time but can write up to 100% of the disk space.
