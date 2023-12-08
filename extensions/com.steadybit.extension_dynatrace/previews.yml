@@ -1,5 +1,11 @@
 ---
 - type: image
+  src: dynatrace-problem-check-editor.png
+  alt: The experiment editor shows an experiment with a Dynatrace problem check and Maintenance Window to harden Dynatrace configuration without alerting.
+- type: image
+  src: dynatrace-problem-check-run.png
+  alt: An experiment run to verify that Dynatrace detects a crash loop of a container as a problem.
+- type: image
   src: dynatrace-connected-event.png
   alt: Steadybit events are reported to Dynatrace to ease analyzing causes and effects.
 - type: image
