@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_datadog
 label: Datadog
-description: A Steadybit check implementation for data exposed through Datadog.
+description: Bi-directional integration of Steadybit and Datadog via the Datadog API.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800.55 856.85">
     <path
