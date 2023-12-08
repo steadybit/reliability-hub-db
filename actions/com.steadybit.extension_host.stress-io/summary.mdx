@@ -1,10 +1,10 @@
 # Introduction
 
-Generate read/write operation on hard disks.
+Generate read/write/flush operation on hard disks.
 
 # Prerequisites
 
-If you are not using our container images for the extension, you need install the `stress-ng` tool to use the attack.
+If you are not using our container images for the extension, `stress-ng` needs to be present.
 
 # Use Cases
 
@@ -12,7 +12,10 @@ If you are not using our container images for the extension, you need install th
 
 # Parameters
 
-| Parameter | Description                                                                                  | Default |
-|-----------|----------------------------------------------------------------------------------------------|---------|
-| Duration  | How long should IO be consumed?                                                              | 30s     |
-| Workers   | How many workers should continually write, read and remove temporary files? (0 = 1 per core) | 1       |
+| Parameter       | Description                                                                                                                                                                 | Default              |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
+| Mode            | Define the operational mode. The attack can stress io either by just flushing disk caches calling `sync()` and/or continually reading and writings temporary files to disk. | read_write_and_flush |
+| Duration        | How long should IO be consumed?                                                                                                                                             | 30s                  |
+| Workers         | How many workers should continually write, read and remove temporary files? (0 = 1 per core)                                                                                | 1                    |
+| Path            | Path where the IO should be inflicted                                                                                                                                       | /                    |
+| MBytes to write | How many megabytes should be written per stress operation?                                                                                                                  | 1024                 |
