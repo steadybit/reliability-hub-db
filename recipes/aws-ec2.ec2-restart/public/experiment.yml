@@ -36,7 +36,7 @@ lanes:
         parameters:
           action: "reboot"
         customLabel: "WHEN: AWS EC2 is rebooted"
-        actionType: "com.steadybit.extension_aws.ec2-instance.state"
+        actionType: "com.steadybit.extension_aws.ec2_instance.state"
         radius:
           targetType: "ec2-instance"
           predicate:
