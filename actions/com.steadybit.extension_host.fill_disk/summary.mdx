@@ -1,66 +1,65 @@
 # Introduction
 
-Generate a huge file in the filesystem.
+Fill the host's hard disk with random data for a given duration.
 
 # Prerequisites
 
-If you are not using our container images for the extension, you need install the `df` and `fallocate` / `dd`  tool to use the attack.
+If you are not using our container images for the extension, you must install the tools `df` and `fallocate` (for 'at once' mode) and `dd` (for 'over time' mode) to use the attack.
 
 # Use Cases
 
-    * Fill the host file system to test the behavior of the host when the file system is full.
-    * Fill the emphemeral storage to the maximum to test the behavior of the cluster when the emphemeral storage is full.
+* Test your system's behavior when there is no free space left on the disk
+* Validate how much free disk space is needed to run your system reliably
 
 # Parameters
 
-| Parameter  | Description                                                                                                                                                                         | Default |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration   | How long should disk be filled?                                                                                                                                                     | 30s     |
-| Mode       | Define the operational mode. The attack fill disk as <br/> * Overall percentage of filled disk space in percent. <br/> * Megabytes to write <br/> * Megabytes to leave free on disk | PERCENT |
-| Size       | Depending on the mode, specify the percentage of filled disk space or the number of Megabytes to be written or left free.                                                           | 80      |
-| Path       | Path where the file should be written                                                                                                                                               | /tmp    |
-| Method     | Should the disk filled at once or over time? That means use the command fallocate or dd.                                                                                            | AT_ONCE |
-| Block Size | Define the block size for writing the file with the dd command. If the block size is larger than the fill value, the fill value will be used as block size.                         | 5       |
+| Parameter  | Description                                                                                                                                                                           | Default                                                        |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| Duration   | How long should the disk be filled?                                                                                                                                                   | 30s                                                            |
+| Mode       | Decide how to specify the amount to fill the disk: <br/> *overall percentage of filled disk space in percent*, <br/> *Megabytes to write*,<br/> *Megabytes to leave free on disk*     | overall percentage of filled disk space in percent (*PERCENT*) |
+| Size       | Depending on the mode, specify the percentage of filled disk space or the number of Megabytes to be written or left free.                                                             | 80                                                             |
+| Path       | Path where the file should be written                                                                                                                                                 | /tmp                                                           |
+| Method     | Should the disk be filled all at once (using `fallocate`) or gradually over time (using `dd`)?                                                                                        | at once (*AT_ONCE*)                                            |
+| Block Size | Only applicable for method over time (`dd`): The block size when writing the file. If the block size is larger than the size value, the attack uses the size value as the block size. | 5                                                              |
 
-# How to use the different methods
-## Should the disk filled at once?
-If you want to fill the disk at once, the extension uses the fallocate command. The fallocate command is much faster than the dd command.
-It allocates the space on the disk without writing any data. The fallocate command is only available on Linux systems.
-However, if you want to write more than 100% of the disk space, there are better choices than the fallocate command. Sometimes, it stops allocating space before the disk is full.
-When this happens, use the "Over time" method to fill the disk with dd command.
+# Frequently Asked Questions (FAQs)
+## Q: What is the difference between the available modes?
+**A:** The disk fill attack differentiates between two modes (at once and over time). Read further to understand the difference and which is the best choice for you.
 
-## Should the disk filled over time?
-If you want to fill the disk over time, the extension uses the dd command. The dd command is much slower than the fallocate command.
-But the dd command writes real data to the disk. The disk is filled with zeros.
-This command takes some time but can write up to 100% of the disk space.
+### When should you use the 'at once' mode?
+The mode is perfect if you want to check how your system behaves when the disk is almost full, and you don't need to simulate a gradual decrease in free space.
+However, if you want to write more than 100% of the disk space, the gradual approach (see below) might be a better fit as it works more reliably.
+The mode uses the `fallocate` Linux command, which allocates the disk space without writing actual data and, thus, results in the disk filling up very fast.
 
-# Check if the disk is full
-To check if the disk is full, you can use the following command:
-```
-df -h
-```
 
-# Calculation of the fill value
-## Percentage
-We are using df -kP `filepath` to get the disk usage in kilobytes.
-The size to write is calculated as follows:
-- diskSpace is the output of df -kP `filepath`
-- size is the percentage of the disk space to write
+### When should you use the 'over time' mode?
+The over-time approach is perfect when you want to simulate a more realistic case of a gradually filling disk or need to fill the disk more than available space.
+The mode uses the `dd` command, which writes actual data (zeros) to the disk and is thus slower than the at-once approach (see above).
 
-```
-diskSpace.Capacity * size / 100 - diskSpace.Used
-```
-
-The result is the number of kilobytes to write.
-BUT if you check the disk usage with df -h, you could see a different percentage usage. Sometimes the usage is higher than the percentage you specified because of diskSpace.Usage is another value than calculating diskSpace.Capacity - diskSpace.Available.
-
-## Megabytes to leave free on disk
-The size to write is calculated as follows:
-- size is the number of megabytes to write
-- size is the amount of megabytes to leave free on disk
+## Q: How is the number of free megabytes on disk calculated?
+**A:** The attack uses the following formula to ensure that the specified megabytes are left free on the device (defined by the `size` parameter):
 
 ```
 diskSpace.Available - size * 1024
 ```
+Where
+- `diskSpace` is the output of `df -kP <filepath>`
+- size is the amount of megabytes to leave free on disk
 
-The result is the number of kilobytes to write.
+## Q: How is the percentage of filled disk space calculated?
+**A:** The attack uses the following formula to calculate how many kilobytes need to be written based on the configured percentage (defined by the `size` parameter):
+```
+diskSpace.Capacity * size / 100 - diskSpace.Used
+```
+Where
+- `diskSpace` is the output of `df -kP <filepath>`
+- `size` is the configured percentage of the disk space to be writen
+
+## Q: How can I check whether the disk is full?
+**A:** Use the following command to check if the disk is full:
+```
+df -h
+```
+
+## Q: Why is my disk not filled up to the specified value/percentage even though the attack was executed without errors?
+**A:** The attack calculates the amount to write only once at the beginning of the attack using the formulas mentioned above. If other processes cause the used disk space or overall capacity to vary while running the attack, you may have a higher or lower filled disk percentage. Also, the 'over time' approach works more reliably if you need to write more to the disk than available space.
