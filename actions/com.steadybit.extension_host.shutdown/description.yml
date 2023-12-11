@@ -9,4 +9,4 @@ category: state
 targetType: com.steadybit.extension_host.host
 extension: com.steadybit.extension_host
 promotedActions:
-  - com.steadybit.extension_aws.ec2-instance.state
+  - com.steadybit.extension_aws.ec2_instance.state
