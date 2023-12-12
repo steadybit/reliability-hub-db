@@ -24,14 +24,11 @@ Fill the container's ephemeral storage with random data for a given duration.
 ## Q: What is the difference between the available modes?
 **A:** The disk fill attack differentiates between two modes (at once and over time). Read further to understand the difference and which is the best choice for you.
 
-### When should you use the 'at once' mode?
-The mode is perfect if you want to check how your system behaves when the disk is almost full, and you don't need to simulate a gradual decrease in free space.
+**Mode 'at once'** The mode is perfect if you want to check how your system behaves when the disk is almost full, and you don't need to simulate a gradual decrease in free space.
 However, if you want to write more than 100% of the disk space, the gradual approach (see below) might be a better fit as it works more reliably.
 The mode uses the `fallocate` Linux command, which allocates the disk space without writing actual data and, thus, results in the disk filling up very fast.
 
-
-### When should you use the 'over time' mode?
-The over-time approach is perfect when you want to simulate a more realistic case of a gradually filling disk or need to fill the disk more than available space.
+**Mode 'over time'** The over-time approach is perfect when you want to simulate a more realistic case of a gradually filling disk or need to fill the disk more than available space.
 The mode uses the `dd` command, which writes actual data (zeros) to the disk and is thus slower than the at-once approach (see above).
 
 ## Q: How is the number of free megabytes on disk calculated?
@@ -54,10 +51,7 @@ Where
 - `size` is the configured percentage of the disk space to be writen
 
 ## Q: How can I check whether the disk is full?
-**A:** Use the following command to check if the disk is full:
-```
-df -h
-```
+**A:** Use the command `df -h` to check if the disk is full.
 
 ## Q: Why is my disk not filled up to the specified value/percentage even though the attack was executed without errors?
 **A:** The attack calculates the amount to write only once at the beginning of the attack using the formulas mentioned above. If other processes cause the used disk space or overall capacity to vary while running the attack, you may have a higher or lower filled disk percentage. Also, the 'over time' approach works more reliably if you need to write more to the disk than available space.
