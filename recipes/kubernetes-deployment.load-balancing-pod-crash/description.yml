@@ -2,8 +2,8 @@ id: kubernetes-deployment.load-balancing-pod-crash
 label: Verify load balancing of your Kubernetes Deployment while one pod crashes
 description: If configured properly, Kubernetes is able to detect a non-responding pod and tries to fix it by simply restarting the unresponsive pod. Even so, the exact configuration requires careful consideration to avoid killing your pods too early or flooding your cluster’s traffic with liveness probes.
 tags:
-  - kubernetes
-  - redundancy
+  - Kubernetes
+  - Redundancy
 
 license: MIT
 gitHub:

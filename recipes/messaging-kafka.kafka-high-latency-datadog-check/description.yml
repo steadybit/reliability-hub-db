@@ -3,7 +3,7 @@ label: Verify system unavailability status during Kafka latency
 description: Verify that an increased latency in your Kafka message delivery is handled by your application properly by having increased processing time but still being able to maintain the throughput.
 tags:
   - Kafka
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

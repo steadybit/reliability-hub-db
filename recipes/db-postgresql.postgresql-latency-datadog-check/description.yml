@@ -3,7 +3,7 @@ label: Verify system unavailability status during PostgreSQL latency
 description: Your application should continue to function properly and indicate unavailability appropriately in case of increased connection latency to PostgreSQL. Additionally, this experiment can highlight requests that need optimization of timeouts to prevent dropped requests.
 tags:
   - PostgreSQL
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

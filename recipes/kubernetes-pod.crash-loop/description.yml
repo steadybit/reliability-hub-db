@@ -2,9 +2,9 @@ id: kubernetes-pod.crash-loop
 label: Verify that your monitor alerts when a Kubernetes pod is in crash loop.
 description: When one of your containers has problems starting, it may result in a crash loop and, eventually, Kubernetes backing off to restart this container. Verify that your monitoring notices a crash loop and will alert you to take action.
 tags:
-  - kubernetes
-  - restart
-  - crash-loop
+  - Kubernetes
+  - Restart
+  - Crash loop
 license: MIT
 gitHub:
   owner: steadybit

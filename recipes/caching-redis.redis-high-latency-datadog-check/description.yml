@@ -3,7 +3,7 @@ label: Verify system unavailability status during Redis latency
 description: Verify that an increased latency in a Redis cache is handled by your application properly by having increased processing time but still being able to maintain the throughput.
 tags:
   - Redis
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

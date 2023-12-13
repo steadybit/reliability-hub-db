@@ -3,7 +3,7 @@ label: Verify system unavailability status when Microsoft SQL Server database ca
 description: An unavailable Microsoft SQL Server database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately.
 tags:
   - Microsoft SQL Server
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

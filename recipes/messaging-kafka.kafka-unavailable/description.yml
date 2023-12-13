@@ -3,7 +3,7 @@ label: Verify graceful degradation when Kafka message broker can't be reached
 description: An unavailable Kafka is not user-visible as it leads to graceful degradation and downstream retries as soon as the Kafka is back available again.
 tags:
   - Kafka
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

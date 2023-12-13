@@ -2,10 +2,10 @@ id: aws-ec2.ec2-restart
 label: Verify smooth operation during a EC2 restart
 description: EC2 is part of the AWS Elastic Compute Cloud, which acquires and releases resources depending on the traffic demand. Check whether your application is elastic as well by rebooting an EC2 instance.
 tags:
-  - aws
-  - redundancy
-  - elasticity
-  - scalability
+  - AWS
+  - Redundancy
+  - Elasticity
+  - Scalability
 
 license: MIT
 gitHub:

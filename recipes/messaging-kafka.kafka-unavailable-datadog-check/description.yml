@@ -3,7 +3,7 @@ label: Verify system unavailability status during Kafka downtime
 description: An unavailable Kafka broker or even entire cluster should be handled by your application gracefully and being indicated appropriately. Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.
 tags:
   - Kafka
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

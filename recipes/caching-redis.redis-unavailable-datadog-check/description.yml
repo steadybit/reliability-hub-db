@@ -3,7 +3,7 @@ label: Verify system unavailability status during Redis downtime
 description: Check that your application handles a Redis cache downtime gracefully and continues to deliver its intended functionality. The cache downtime may be an unavailable Redis instance or a complete cluster.
 tags:
   - Redis
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:

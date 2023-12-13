@@ -2,10 +2,10 @@ id: kubernetes-nodes.node-restart
 label: Verify Cluster Elasticity when restarting a node
 description: A resilient Kubernetes cluster is able to cope with a changing number of hosts and avoid user-facing reliability issues.
 tags:
-  - kubernetes
-  - recoverability
-  - scalability
-  - elasticity
+  - Kubernetes
+  - Recoverability
+  - Scalability
+  - Elasticity
 
 license: MIT
 gitHub:

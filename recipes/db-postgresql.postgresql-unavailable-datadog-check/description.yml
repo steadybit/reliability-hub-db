@@ -3,7 +3,7 @@ label: Verify system unavailability status during PostgreSQL downtime
 description: An unavailable database should be handled by your application gracefully and being indicated appropriately. Specifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage. You can address a potential impact on your system by implementing e.g. a failover or caching mechanism.
 tags:
   - PostgreSQL
-  - recoverability
+  - Recoverability
 
 license: MIT
 gitHub:
