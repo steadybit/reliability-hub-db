@@ -23,6 +23,5 @@ homepage: https://github.com/steadybit/extension-http
 installation: https://github.com/steadybit/extension-http#installation
 changelog: https://github.com/steadybit/extension-http/blob/main/CHANGELOG.md
 tags:
-  - http
-  - checks
-  - testing
+  - HTTP
+  - Check

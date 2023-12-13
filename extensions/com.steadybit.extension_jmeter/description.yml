@@ -20,5 +20,5 @@ homepage: https://github.com/steadybit/extension-jmeter
 installation: https://github.com/steadybit/extension-jmeter#installation
 changelog: https://github.com/steadybit/extension-jmeter/blob/main/CHANGELOG.md
 tags:
-  - jmeter
-  - load-test
+  - JMeter
+  - Load test

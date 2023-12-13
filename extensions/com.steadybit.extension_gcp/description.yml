@@ -23,9 +23,8 @@ homepage: https://github.com/steadybit/extension-gcp
 installation: https://github.com/steadybit/extension-gcp#installation
 changelog: https://github.com/steadybit/extension-gcp/blob/main/CHANGELOG.md
 tags:
-  - kubernetes engine
-  - google cloud
-  - gcp
-  - cloud
-  - virtual machine
-  - vm
+  - Kubernetes
+  - Google Cloud (GCP)
+  - Cloud
+  - Virtual machine
+  - VM

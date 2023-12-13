@@ -26,10 +26,10 @@ homepage: https://github.com/steadybit/extension-kong
 installation: https://github.com/steadybit/extension-kong#installation
 changelog: https://github.com/steadybit/extension-kong/blob/main/CHANGELOG.md
 tags:
-  - kong
-  - api-gateway
+  - Kong
+  - API gateway
   - nginx
-  - http
-  - rest
-  - service
-  - route
+  - Http
+  - Rest
+  - Service
+  - Route

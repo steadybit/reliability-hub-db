@@ -20,7 +20,8 @@ homepage: https://github.com/steadybit/extension-stackstate
 installation: https://github.com/steadybit/extension-stackstate#installation
 changelog: https://github.com/steadybit/extension-stackstate/blob/main/CHANGELOG.md
 tags:
-  - stackstate
-  - check
-  - observability
-  - monitoring
+  - StackState
+  - Kubernetes
+  - Check
+  - Observability
+  - Monitoring

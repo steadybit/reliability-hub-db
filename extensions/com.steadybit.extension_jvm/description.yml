@@ -28,9 +28,6 @@ homepage: https://github.com/steadybit/extension-jvm
 installation: https://github.com/steadybit/extension-jvm#installation
 changelog: https://github.com/steadybit/extension-jvm/blob/main/CHANGELOG.md
 tags:
-  - jvm
-  - java
-  - delay
-  - exception
-  - attack
-  - testing
+  - JVM
+  - Java
+  - Exception

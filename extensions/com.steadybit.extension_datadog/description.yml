@@ -26,8 +26,7 @@ homepage: https://github.com/steadybit/extension-datadog
 installation: https://github.com/steadybit/extension-datadog#installation
 changelog: https://github.com/steadybit/extension-datadog/blob/main/CHANGELOG.md
 tags:
-  - datadog
-  - monitors
-  - check
-  - observability
-  - monitoring
+  - Datadog
+  - Check
+  - Observability
+  - Monitoring

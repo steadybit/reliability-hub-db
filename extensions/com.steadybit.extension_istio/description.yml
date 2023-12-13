@@ -26,8 +26,8 @@ homepage: https://github.com/steadybit/extension-istio
 installation: https://github.com/steadybit/extension-istio#installation
 changelog: https://github.com/steadybit/extension-istio/blob/main/CHANGELOG.md
 tags:
-  - istio
-  - service mesh
-  - kubernetes
-  - http
-  - grpc
+  - Istio
+  - Service Mesh
+  - Kubernetes
+  - Http
+  - gRPC

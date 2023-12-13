@@ -22,9 +22,6 @@ homepage: https://github.com/steadybit/extension-container
 installation: https://github.com/steadybit/extension-container#installation
 changelog: https://github.com/steadybit/extension-container/blob/main/CHANGELOG.md
 tags:
-  - container
-  - stress
-  - network
-  - time
-  - attack
-  - testing
+  - Container
+  - Kubernetes
+  - Network
