@@ -33,7 +33,3 @@ changelog: https://github.com/steadybit/extension-aws/blob/main/CHANGELOG.md
 tags:
   - AWS
   - Cloud
-  - RDS
-  - EC2
-  - FIS
-  - Lambda

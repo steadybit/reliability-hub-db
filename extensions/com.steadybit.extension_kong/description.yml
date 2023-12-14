@@ -28,8 +28,4 @@ changelog: https://github.com/steadybit/extension-kong/blob/main/CHANGELOG.md
 tags:
   - Kong
   - API gateway
-  - nginx
   - Http
-  - Rest
-  - Service
-  - Route
