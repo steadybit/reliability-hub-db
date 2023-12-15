@@ -2,7 +2,7 @@
 - type: youtube
   id: YZFnhs-rnuU
 - type: image
-  src: experiment-editor-pod-count-check.png.png
+  src: experiment-editor-pod-count-check.png
   alt: The Experiment editor shows the configuration to check that pods are becoming ready within a given duration.
 - type: image
   src: experiment-run-timeline-view.png
