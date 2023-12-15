@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: WrwG6-C-HY0
 - type: image
   src: dynatrace-problem-check-editor.png
   alt: The experiment editor shows an experiment with a Dynatrace problem check and Maintenance Window to harden Dynatrace configuration without alerting.
