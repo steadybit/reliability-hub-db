@@ -1,40 +1,12 @@
 # Introduction to the Kubernetes Extension
-The Steadybit Kubernetes Extension is designed to integrate seamlessly with your Kubernetes clusters, enhancing them with robust Chaos Engineering capabilities.
-Ideal for both local minikube environments and managed Kubernetes services like AWS EKS, this extension is a versatile tool in your reliability toolkit.
+The Steadybit Kubernetes Extension adds support for Chaos Engineering attacks and checks in your Kubernetes clusters. The extension works for local minikube environments and managed Kubernetes clusters, such as AWS EKS.
 
 
 # Integration and Functionality
-Built on `kubectl`-commands and Kubernetes API calls, the extension ensures a native Kubernetes experience.
-It is the perfect match with for the [extension-container](https://hub.steadybit.com/extension/com.steadybit.extension_container), which bolsters attack and discovery functionalities for containers in Kubernetes pods.
+The extension uses `kubectl`-commands and Kubernetes API calls to communicate with your cluster. The [extension-container](https://hub.steadybit.com/extension/com.steadybit.extension_container)
+and [extension-host](https://hub.steadybit.com/extension/com.steadybit.extension_host) are a good addition to support further attacks and checks in your Kubernetes cluster.
 
+# Installation of the Extension
+If you've installed the Steadybit Agent in a Kubernetes cluster using our provided [helm-chart](https://docs.steadybit.com/install-and-configure/install-outpost-agent/install-on-kubernetes#installation), the Kubernetes extension is already installed by default.
 
-# Key Features
-1. **Enhanced Discovery**: Uncover intricate details of your Kubernetes clusters. This feature provides a deep dive into [nodes](https://hub.steadybit.com/target/com.steadybit.extension_kubernetes.kubernetes-node), [pods](https://hub.steadybit.com/target/com.steadybit.extension_kubernetes.kubernetes-pod), [StatefulSets](https://hub.steadybit.com/target/com.steadybit.extension_kubernetes.kubernetes-statefulset), [DaemonSets](https://hub.steadybit.com/target/com.steadybit.extension_kubernetes.kubernetes-daemonset), and more, offering a panoramic view of your deployment.
-2. **Advanced Attack Scenarios**: Prepare for real-world disruptions with expanded attack options like [pod deletions](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.delete_pod), [node tainting](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.taint_node)/[draining](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.drain_node), and [inducing CrashLoopBackOff states in pods](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.crash_loop_pod). These scenarios are crucial for stress-testing and enhancing system resilience.
-3. **Extension-Container Synergy**: The extension-container enhances the Kubernetes extension, offering targeted attack and discovery capabilities for pod-contained containers, enabling a more comprehensive Chaos Engineering practice.
-4. **Ease of Use**: The extension integrates seamlessly into Steadybit's user-friendly interface to ensure a smooth experience, catering to both beginners and seasoned practitioners in Chaos Engineering.
-5. **Versatile Compatibility**: The extension is designed to adapt to various Kubernetes environments, from local setups like minikube to managed services like AWS EKS.
-
-# Installation and Setup
-To integrate the Kubernetes extension with your environment, follow our [detailed setup guide](https://github.com/steadybit/extension-kubernetes#installation).
-This guide provides step-by-step instructions to ensure a hassle-free integration process.
-
-If you installed the Agent in a Kubernetes cluster using the helm-chart, the Kubernetes extension is already installed.
-
-# Frequently Asked Questions (FAQs)
-## Q: How does the extension enhance Kubernetes Chaos Engineering?
-**A:** The extension brings advanced discovery and attack scenarios specifically tailored for Kubernetes, allowing for more accurate and realistic reliability testing.
-
-## Q: Is the extension compatible with all Kubernetes environments?
-**A:** Yes, it is designed to work with various environments, including local minikube setups and managed services like AWS EKS.
-
-## Q: What support is available for setting up and using the extension?
-**A:** Our detailed setup guide provides comprehensive instructions. For additional support, you can contact our expert team.
-
-## Q: How often is the extension updated?
-**A:** We regularly update the extension, adding new features and enhancements based on user feedback and industry developments.
-
-# Learn More and Get Started
-Discover the full capabilities of the Steadybit Kubernetes Extension and how it can transform your Chaos Engineering practices.
-If you installed the Agent in a Kubernetes cluster using the helm-chart, the Kubernetes extension is already installed.
-Otherwise, visit our [detailed setup guide](https://github.com/steadybit/extension-kubernetes#installation) and begin your journey to enhanced Kubernetes resilience.
+Otherwise, you can also use the [helm-chart of the Kubernetes extension](https://github.com/steadybit/extension-kubernetes#installation) to deploy the extension in your cluster.

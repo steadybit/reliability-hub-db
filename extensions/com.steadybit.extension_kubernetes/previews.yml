@@ -1,0 +1,12 @@
+---
+- type: youtube
+  id: YZFnhs-rnuU
+- type: image
+  src: experiment-editor-pod-count-check.png.png
+  alt: The Experiment editor shows the configuration to check that pods are becoming ready within a given duration.
+- type: image
+  src: experiment-run-timeline-view.png
+  alt: The Experiment run view always displays which actions are currently performed by Steadybit to keep you in control.
+- type: image
+  src: experiment-run-k8s-visibility.png
+  alt: The Experiment run view provides additional visibility into your Kubernetes cluster to understand what's happening.
