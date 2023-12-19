@@ -11,12 +11,27 @@ lanes:
         ignoreFailure: false
         parameters:
           duration: "3m"
-          podcount: "podCountEqualsDesiredCount"
-          namespace: "steadybit-demo"
-          deployment: "gateway"
+          podCountCheckMode: "podCountEqualsDesiredCount"
         customLabel: "The pod should survive a RabbitMQ latency"
         actionType: "com.steadybit.extension_kubernetes.pod_count_check"
-        radius: {}
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
   - steps:
       - !<wait>
         ignoreFailure: false
@@ -25,10 +40,10 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          port: "5672"
+          port: ["5672"]
           duration: "2m"
           networkDelay: "300ms"
-          networkInterface: "eth0"
+          networkInterface: ["eth0"]
           networkDelayJitter: true
         customLabel: "WHEN: RabbitMQ is slow because of a network issue"
         actionType: "com.steadybit.extension_container.network_delay"

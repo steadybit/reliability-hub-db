@@ -31,9 +31,9 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          port: "6379"
+          port: ["6379"]
           duration: "2m"
-          hostname: ""
+          hostname: []
         customLabel: "WHEN: Redis is not available"
         actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
@@ -86,12 +86,28 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          duration: 20s
-          podcount: "podCountEqualsDesiredCount"
-          namespace: "steadybit-demo"
-          deployment: "gateway"
+          duration: "20s"
+          podCountCheckMode: "podCountEqualsDesiredCount"
         customLabel: "Pod should be resilient to the loss of the cache"
-        actionType: com.steadybit.extension_kubernetes.pod_count_check
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
       - !<action>
         ignoreFailure: true
         parameters:

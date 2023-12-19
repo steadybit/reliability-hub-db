@@ -11,14 +11,24 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          cluster: "demo-prod"
           duration: "10s"
-          podcount: "podCountEqualsDesiredCount"
-          namespace: "steadybit-demo"
-          deployment: "gateway"
+          podCountCheckMode: "podCountEqualsDesiredCount"
         customLabel: "GIVEN: All pods are ready"
         actionType: "com.steadybit.extension_kubernetes.pod_count_check"
-        radius: {}
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
       - !<action>
         ignoreFailure: false
         parameters:
@@ -48,22 +58,50 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          cluster: "demo-prod"
           duration: "5m"
-          podcount: "podCountLessThanDesiredCount"
-          namespace: "steadybit-demo"
-          deployment: "gateway"
+          podCountCheckMode: "podCountLessThanDesiredCount"
         customLabel: "THEN: Ready Pod Count decreases"
         actionType: "com.steadybit.extension_kubernetes.pod_count_check"
-        radius: {}
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
       - !<action>
         ignoreFailure: false
         parameters:
-          cluster: "demo-prod"
           duration: "5m"
-          podcount: "podCountEqualsDesiredCount"
-          namespace: "steadybit-demo"
-          deployment: "gateway"
+          podCountCheckMode: "podCountEqualsDesiredCount"
         customLabel: "THEN: Pod count is all back again"
         actionType: "com.steadybit.extension_kubernetes.pod_count_check"
-        radius: {}
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null

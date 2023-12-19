@@ -30,18 +30,29 @@ lanes:
       - !<action>
         ignoreFailure: false
         parameters:
-          cluster: "demo-prod"
           duration: "10s"
-          podcount: "podCountEqualsDesiredCount"
-          namespace: "steadybit-demo"
+          podCountCheckMode: "podCountEqualsDesiredCount"
         customLabel: "GIVEN: All pods are ready"
         actionType: "com.steadybit.extension_kubernetes.pod_count_check"
-        radius: {}
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+          query: null
       - !<action>
         ignoreFailure: false
         parameters:
           duration: "60s"
-          hostname: "db.internal.steadybit.com"
+          hostname: ["db.internal.steadybit.com"]
         customLabel: "WHEN: Microsoft SQL Server is not available"
         actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
