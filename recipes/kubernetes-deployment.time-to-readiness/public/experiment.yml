@@ -45,7 +45,7 @@ lanes:
               - key: "k8s.cluster-name"
                 operator: "EQUALS"
                 values:
-                  - "demo-prod"
+                  - "prod-demo"
               - key: "k8s.namespace"
                 operator: "EQUALS"
                 values:
