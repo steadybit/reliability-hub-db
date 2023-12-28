@@ -1,0 +1,25 @@
+# Introduction
+
+When executing chaos experiments, you may want to check if events in Instana are popping up. Or the opposite.
+
+The problem check step can be dragged&dropped into the experiment editor.
+Once done, you can use it to collect information about the state of the Instana events and, optionally, to verify that they are within the expected condition.
+
+Experiments can be aborted and marked as failed when the Events check's actual state diverges from the expected state.
+This helps to implement pre-/post-conditions and invariants.
+For example, to only start an experiment when the system is healthy.
+
+# Use Cases
+
+ - Pre-/postcondition or invariant for any experiment.
+ - Verify that events are triggered during incidents.
+
+# Parameters
+
+| Parameter             | Description                                                                    | Default                      |
+| ----------------------| ------------------------------------------------------------------------------ | ---------------------------- |
+| Duration              | How long should steadybit check for events  ?                                  | 30s                          |
+| Condition             | If you pick a condition, the experiment will fail if the condition is not met. | No check, only show problems |
+| Condition Check Mode  | How often should the status be expected. "At least once" or "All the time"     | "All the time"               |
+| Event Type Filter     | Which events should be reported                                                | "INCIDENT", "ISSUE"          |
+| Event Severity Filter | Which severity should be reported                                              | "Warning"                    |

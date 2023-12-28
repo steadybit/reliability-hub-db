@@ -1,0 +1,7 @@
+---
+- type: image
+  src: instana-event-check.png
+  alt: The experiment editor shows an experiment with a Instana event check.
+- type: image
+  src: instana-event-log.png
+  alt: An experiment run showing events from Instana.
