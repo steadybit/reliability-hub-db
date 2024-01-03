@@ -5,3 +5,6 @@
 - type: image
   src: instana-event-log.png
   alt: An experiment run showing events from Instana.
+- type: image
+  src: instana-create-maintenance-window.png
+  alt: Create a maintenance window in Instana.
