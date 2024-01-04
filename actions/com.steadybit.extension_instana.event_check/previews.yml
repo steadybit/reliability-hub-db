@@ -3,5 +3,5 @@
   src: instana-event-check.png
   alt: The action within the experiment editor.
 - type: image
-  src: instana-event-log.png
+  src: instana-event-view.png
   alt: The results of the action within the experiment run view.
