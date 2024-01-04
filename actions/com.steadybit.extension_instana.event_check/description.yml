@@ -8,4 +8,5 @@ icon: |
 kind: check
 category: monitoring
 releaseDate: '2024-01-01'
+targetType: com.steadybit.extension_instana.application-perspective
 extension: com.steadybit.extension_instana
