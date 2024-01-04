@@ -1,0 +1,4 @@
+---
+- type: image
+  src: 1.png
+  alt: Identified information about a Instana application perspective that can later be used within experiments.
