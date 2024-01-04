@@ -1,5 +1,5 @@
 ---
-id: com.steadybit.extension_instana.maintenance_window
+id: com.steadybit.extension_instana.maintenance-window
 label: Create Maintenance Window
 description: Creates a maintenance window in Instana.
 icon: |
