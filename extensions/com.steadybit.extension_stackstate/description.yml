@@ -16,7 +16,7 @@ ghcr:
 helmChart:
   repository: https://steadybit.github.io/extension-stackstate
   name: steadybit-extension-stackstate
-homepage: https://github.com/steadybit/extension-stackstate
+homepage: https://hub.steadybit.com/extension/com.steadybit.extension_stackstate
 installation: https://github.com/steadybit/extension-stackstate#installation
 changelog: https://github.com/steadybit/extension-stackstate/blob/main/CHANGELOG.md
 tags:

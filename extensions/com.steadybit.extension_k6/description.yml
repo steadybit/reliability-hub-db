@@ -19,7 +19,7 @@ ghcr:
 helmChart:
   repository: https://steadybit.github.io/extension-k6
   name: steadybit-extension-k6
-homepage: https://github.com/steadybit/extension-k6
+homepage: https://hub.steadybit.com/extension/com.steadybit.extension_k6
 installation: https://github.com/steadybit/extension-k6#installation
 changelog: https://github.com/steadybit/extension-k6/blob/main/CHANGELOG.md
 tags:

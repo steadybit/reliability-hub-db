@@ -17,7 +17,7 @@ ghcr:
 helmChart:
   repository: https://steadybit.github.io/extension-instana
   name: steadybit-extension-instana
-homepage: https://github.com/steadybit/extension-instana
+homepage: https://hub.steadybit.com/extension/com.steadybit.extension_instana
 installation: https://github.com/steadybit/extension-instana#installation
 changelog: https://github.com/steadybit/extension-instana/blob/main/CHANGELOG.md
 releaseDate: '2024-01-15'

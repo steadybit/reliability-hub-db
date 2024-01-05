@@ -25,7 +25,7 @@ ghcr:
 helmChart:
   repository: https://steadybit.github.io/extension-prometheus
   name: steadybit-extension-prometheus
-homepage: https://github.com/steadybit/extension-prometheus
+homepage: https://hub.steadybit.com/extension/com.steadybit.extension_prometheus
 installation: https://github.com/steadybit/extension-prometheus#installation
 changelog: https://github.com/steadybit/extension-prometheus/blob/main/CHANGELOG.md
 tags:

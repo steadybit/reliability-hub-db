@@ -18,7 +18,7 @@ ghcr:
 helmChart:
   repository: https://steadybit.github.io/extension-azure
   name: steadybit-extension-azure
-homepage: https://github.com/steadybit/extension-azure
+homepage: https://hub.steadybit.com/extension/com.steadybit.extension_azure
 installation: https://github.com/steadybit/extension-azure#installation
 changelog: https://github.com/steadybit/extension-azure/blob/main/CHANGELOG.md
 tags:
