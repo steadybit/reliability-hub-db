@@ -1,8 +1,8 @@
 ---
-id: com.steadybit.extension_jvm.application
+id: com.steadybit.extension_jvm.jvm-instance
 label:
-  one: Application
-  other: Applications
+  one: JVM Instance
+  other: JVM Instances
 category: basic
 icon: |
   <svg
