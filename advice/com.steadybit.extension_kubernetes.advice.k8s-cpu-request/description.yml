@@ -1,0 +1,15 @@
+---
+id: com.steadybit.extension_kubernetes.advice.k8s-cpu-request
+label: Requesting Reasonable CPU Resources
+description: Validates that your Kubernetes resources request reasonable CPU.
+icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13 1.5a1 1 0 10-2 0v1.25H7.75V1.5a1 1 0 00-2 0v1.25h-.5a2.5 2.5 0 00-2.5 2.5v.5H1.5a1 1 0 000 2h1.25V11H1.5a1 1 0 100 2h1.25v3.25H1.5a1 1 0 100 2h1.25v.5a2.5 2.5 0 002.5 2.5h.5v1.25a1 1 0 102 0v-1.25H11v1.25a1 1 0 102 0v-1.25h3.25v1.25a1 1 0 102 0v-1.25h.5a2.5 2.5 0 002.5-2.5v-.5h1.25a1 1 0 100-2h-1.25V13h1.25a1 1 0 100-2h-1.25V7.75h1.25a1 1 0 100-2h-1.25v-.5a2.5 2.5 0 00-2.5-2.5h-.5V1.5a1 1 0 10-2 0v1.25H13V1.5zM4.75 12V5.25a.5.5 0 01.5-.5h13.5a.5.5 0 01.5.5v13.5a.5.5 0 01-.5.5H5.25a.5.5 0 01-.5-.5V12zM9 9.143C9 9.064 9.064 9 9.143 9h5.714c.079 0 .143.064.143.143v5.714a.143.143 0 01-.143.143H9.143A.143.143 0 019 14.857V9.143zM9.143 7C7.959 7 7 7.96 7 9.143v5.714C7 16.041 7.96 17 9.143 17h5.714C16.041 17 17 16.04 17 14.857V9.143C17 7.959 16.04 7 14.857 7H9.143z" fill="currentColor"/></svg>
+targetTypes:
+  - com.steadybit.extension_kubernetes.kubernetes-daemonset
+  - com.steadybit.extension_kubernetes.kubernetes-deployment
+  - com.steadybit.extension_kubernetes.kubernetes-statefulset
+tags:
+  - Kubernetes
+  - Requests
+  - CPU
+extension: com.steadybit.extension_kubernetes
+releaseDate: '2024-02-01'

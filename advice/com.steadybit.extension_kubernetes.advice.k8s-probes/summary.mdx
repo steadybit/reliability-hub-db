@@ -1,0 +1,15 @@
+# Introduction
+Validates whether you have configured liveness and readiness probes for deployments targeted by Kubernetes services. Kubernetes wouldn't be able to route traffic properly without these probes.
+
+# Supported Advice States
+## Action Needed
+The advice automatically discovers whether all Kubernetes containers that are part of a workload resource targeted by a Kubernetes service, have configured a `readinessProbe` and `livenessProbe`. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+## Validation Needed
+Asks you to validate with an automatically created experiment that provided liveness and readiness probes are working as expected. The experiment will block traffic to one container, which should be detected by Kubernetes via the configured liveness probe, causing Kubernetes to restart the container and eventually redirect traffic once it is marked as ready again based on the configured readiness probe.
+
+## Implemented
+Once the Kubernetes container's specifications `readinessProbe` and `livenessProbe` are configured and validated with the suggested experiment.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration). You can also activate advice individually, using for this advice, the identifier `com.steadybit.extension_kubernetes.advice.k8s-probes`.

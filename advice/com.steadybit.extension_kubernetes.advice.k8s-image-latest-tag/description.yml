@@ -1,0 +1,12 @@
+---
+id: com.steadybit.extension_kubernetes.advice.k8s-image-latest-tag
+label: Image Version Explicitly Configured
+description: Validates usage of explicit image versioning and avoids latest-tags.
+icon: <svg viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.731 4.286h11.09M1 4.286h3.696m3.286 3.285a3.286 3.286 0 100-6.571 3.286 3.286 0 000 6.571zm5.749 13.144h11.09M1 20.715h3.696M7.982 24a3.286 3.286 0 100-6.572 3.286 3.286 0 000 6.572zM1 12.5h11.09m9.035 0h3.696m-6.981 3.286a3.286 3.286 0 100-6.572 3.286 3.286 0 000 6.572z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg>
+targetTypes:
+  - com.steadybit.extension_kubernetes.kubernetes-deployment
+tags:
+  - Kubernetes
+  - Explicit Versioning
+extension: com.steadybit.extension_kubernetes
+releaseDate: '2024-02-01'
