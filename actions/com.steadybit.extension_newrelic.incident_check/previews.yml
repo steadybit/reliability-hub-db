@@ -1,0 +1,7 @@
+---
+- type: image
+  src: incident-check.png
+  alt: The action within the experiment editor.
+- type: image
+  src: incident-check-results.png
+  alt: The results of an incident check shown in the run view.

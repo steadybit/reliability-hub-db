@@ -1,0 +1,23 @@
+# Introduction
+
+When executing chaos experiments, you may want to check the status of a workload in New Relic are popping up. Or the opposite.
+
+The workload check step can be dragged&dropped into the experiment editor. The action needs one or more New Relic workloads to be selected as targets.
+Once done, you can use it to collect information about the state of the New Relic workload and, optionally, to verify that they are within the expected condition.
+
+Experiments can be aborted and marked as failed when the workload check's actual state diverges from the expected state.
+This helps to implement pre-/post-conditions and invariants.
+For example, to only start an experiment when the system is healthy.
+
+# Use Cases
+
+ - Pre-/postcondition or invariant for any experiment.
+ - Verify that incidents are triggered during experiments.
+
+# Parameters
+
+| Parameter                | Description                                                                | Default                                                       |
+| -------------------------| -------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Duration                 | How long should steadybit check the state of the workload ?                | 30s                                                           |
+| Expected States          | Which states are expected?                                                 | "OPERATIONAL", "CRITICAL", "UNKNOWN", "DISRUPTED", "DEGRADED" |
+| Condition Check Mode     | How often should the status be expected. "At least once" or "All the time" | "All the time"                                                |

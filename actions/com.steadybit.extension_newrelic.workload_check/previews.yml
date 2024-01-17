@@ -1,0 +1,7 @@
+---
+- type: image
+  src: workload-check.png
+  alt: The action within the experiment editor.
+- type: image
+  src: workload-check-results.png
+  alt: The results of a workload check shown in the run view.

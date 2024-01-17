@@ -1,0 +1,29 @@
+# Introduction to the New Relic Extension
+The Steadybit New Relic Extension bridges the world of Steadybit and New Relic.
+The extension adds checks to your Chaos Engineering experiments to validate detection of New Relic incidents and the state of workloads.
+Furthermore it reports events of your experiments to New Relic to ease correlation.
+
+
+# Integration and Functionality
+
+## Integration of New Relic in Steadybit
+
+Integration of New Relic into Steadybit works via the New Relic GraphQL API. All you need is an API Key and the base URL of your New Relic API.
+
+<!-- With the [Event Check](/action/com.steadybit.extension_instana.event_check) you can integrate your Instana events into your experiments. -->
+<!-- Check that your observability strategy is working as expected by verifying that Instana notices a problem which is injected by Steadybit. -->
+
+<!-- With the [Create Maintenance Window](/action/com.steadybit.extension_instana.maintenance-window) you can mute your alerting during an experiment to avoid false alarms and avoid incident processes. -->
+
+
+## Integration of Steadybit in New Relic
+
+This type of integration is using the Insight Collector API of New Relic. You need an API Key of Type "LICENSE" and the base URL of your New Relic API.
+
+The extension automatically reports experiment executions to New Relic which helps you to correlate detected incidents in New Relic.
+
+
+
+# Installation and Setup
+
+To integrate the New Relic extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-newrelic#installation).
