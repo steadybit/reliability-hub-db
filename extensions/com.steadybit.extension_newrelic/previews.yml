@@ -9,11 +9,11 @@
   src: incident-check.png
   alt: The experiment editor shows an experiment with an Incident Check Action.
 - type: image
-  src: incident-check-result.png
+  src: incident-check-results.png
   alt: The experiment run view showing the result of an Incident Check Action.
 - type: image
   src: workload-check.png
   alt: The experiment editor shows an experiment with a Workflow Check Action.
 - type: image
-  src: workload-check-result.png
+  src: workload-check-results.png
   alt: The experiment run view showing the result of a Workflow Check Action.
