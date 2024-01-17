@@ -1,10 +1,19 @@
 ---
 - type: image
-  src: instana-event-check.png
-  alt: The experiment editor shows an experiment with an Instana event check.
+  src: dashboard.png
+  alt: An New Relic dashboard showing Steadybit Experiment Runs.
 - type: image
-  src: instana-event-log.png
-  alt: An experiment run showing events from Instana.
+  src: create-muting-rule.png
+  alt: The experiment editor shows an experiment with a Create Muting Rule Action.
 - type: image
-  src: instana-create-maintenance-window.png
-  alt: Create a maintenance window in Instana.
+  src: incident-check.png
+  alt: The experiment editor shows an experiment with an Incident Check Action.
+- type: image
+  src: incident-check-result.png
+  alt: The experiment run view showing the result of an Incident Check Action.
+- type: image
+  src: workload-check.png
+  alt: The experiment editor shows an experiment with a Workflow Check Action.
+- type: image
+  src: workload-check-result.png
+  alt: The experiment run view showing the result of a Workflow Check Action.

@@ -10,10 +10,12 @@ Furthermore it reports events of your experiments to New Relic to ease correlati
 
 Integration of New Relic into Steadybit works via the New Relic GraphQL API. All you need is an API Key and the base URL of your New Relic API.
 
-<!-- With the [Event Check](/action/com.steadybit.extension_instana.event_check) you can integrate your Instana events into your experiments. -->
-<!-- Check that your observability strategy is working as expected by verifying that Instana notices a problem which is injected by Steadybit. -->
+With the [Incident Check](/action/com.steadybit.extension_newrelic.incident_check) you can integrate your New Relic incidents into your experiments.
+Check that your observability strategy is working as expected by verifying that New Relic notices a problem which is injected by Steadybit.
 
-<!-- With the [Create Maintenance Window](/action/com.steadybit.extension_instana.maintenance-window) you can mute your alerting during an experiment to avoid false alarms and avoid incident processes. -->
+With the [Workload Check](/action/com.steadybit.extension_newrelic.workload_check) you can check the state of a workload.
+
+With the [Create Muting Rule](/action/com.steadybit.extension_newrelic.create_muting_rule) you can mute your alerting during an experiment to avoid false alarms and avoid incident processes.
 
 
 ## Integration of Steadybit in New Relic
@@ -22,6 +24,7 @@ This type of integration is using the Insight Collector API of New Relic. You ne
 
 The extension automatically reports experiment executions to New Relic which helps you to correlate detected incidents in New Relic.
 
+Furthermore, you can [get a dashboard](https://github.com/steadybit/extension-newrelic/tree/main/dashboard) to see amount of experiment executions in your Dynatrace environment.
 
 
 # Installation and Setup
