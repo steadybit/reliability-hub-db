@@ -1,0 +1,16 @@
+---
+id: com.steadybit.extension_kubernetes.advice.k8s-probes
+label: Probes Configured
+description: Validates configuration of liveness and readiness probes.
+icon: <svg viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.455 0a1 1 0 01.93.668l4.367 12.416 2.182-4.033a1 1 0 01.88-.524H21a1 1 0 110 2h-3.59l-2.972 5.494a1 1 0 01-1.823-.144L8.403 3.904 6.12 9.884a1 1 0 01-.934.643H1a1 1 0 110-2h3.497L7.507.643A1 1 0 018.456 0z" fill="currentColor"/></svg>
+targetTypes:
+  - com.steadybit.extension_kubernetes.kubernetes-daemonset
+  - com.steadybit.extension_kubernetes.kubernetes-deployment
+  - com.steadybit.extension_kubernetes.kubernetes-statefulset
+tags:
+  - Kubernetes
+  - Readiness
+  - Liveness
+  - Load Balancing
+extension: com.steadybit.extension_kubernetes
+releaseDate: '2024-02-01'

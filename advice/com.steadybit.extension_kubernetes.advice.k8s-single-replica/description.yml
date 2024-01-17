@@ -1,0 +1,12 @@
+---
+id: com.steadybit.extension_kubernetes.advice.k8s-single-replica
+label: Redundant Pod Deployment
+description: Validate pod redundancy to have at least 2 pods per deployment
+icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="st0" d="M19.2 8H16V4.7c0-1-.8-1.7-1.8-1.7H4.8C3.8 3 3 3.7 3 4.7v9.5c0 1 .8 1.7 1.8 1.7H8v3.3c0 1 .8 1.7 1.8 1.7h9.5c.9 0 1.8-.7 1.8-1.7V9.7c-.1-1-.9-1.7-1.9-1.7zM8 9.7V14H5V5h9v3H9.8C8.8 8 8 8.7 8 9.7zM19 19h-9v-3h4.2c.9 0 1.8-.7 1.8-1.7V10h3v9z" fill="currentColor"/></svg>
+targetTypes:
+  - com.steadybit.extension_kubernetes.kubernetes-deployment
+tags:
+  - Kubernetes
+  - Redundancy
+extension: com.steadybit.extension_kubernetes
+releaseDate: '2024-02-01'

@@ -1,0 +1,17 @@
+# Introduction
+Validates usage of explicit container image versioning and avoids the `:latest`-tag.
+
+# Supported Advice States
+## Action Needed
+The advice automatically discovers whether you configured your container of a Kubernetes resource to an explicit version to enable version downgrades and ease debugging. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+
+## Validation Needed
+Not supported.
+
+## Implemented
+Once the Kubernetes resources' container use a fixed and explicit version.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
+You can also activate advice individually, using for this advice, the identifier `com.steadybit.extension_kubernetes.advice.k8s-image-latest-tag`.

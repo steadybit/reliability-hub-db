@@ -1,0 +1,16 @@
+# Introduction
+Validates whether you prevent multiple pods from being deployed on the same node in the cluster to increase availability in case one node becomes unavailable. Otherwise, a single node outage may cause an entire deployment/stateful set to become unavailable.
+
+# Supported Advice States
+## Action Needed
+The advice automatically discovers whether a Kubernetes workload resource spreads pods across hosts, e.g., via a `podAntiAffinity` rule. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+## Validation Needed
+Not supported.
+
+## Implemented
+Once you have configured Kubernetes to spread the pods across different hosts.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
+You can also activate advice individually, using for this advice, the identifier `com.steadybit.extension_kubernetes.advice.k8s-host-podantiaffinity`.

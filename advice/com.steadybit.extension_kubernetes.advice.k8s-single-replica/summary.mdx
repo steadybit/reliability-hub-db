@@ -1,0 +1,16 @@
+# Introduction
+Prevent your deployment from being down by having at least two pods or an automatic scaling via HorizontalPodAutoscaler. Otherwise, e.g., a single failure in a pod, crashing host, or availability zone being down would cause unavailability of a deployment.
+
+# Supported Advice States
+## Action Needed
+The advice automatically discovers whether a Kubernetes deployment has at least two pods configured, e.g., via `spec.replicas` or HorizontalPodAutoscaler. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+## Validation Needed
+Asks you to validate with an automatically created experiment that provided features work as expected when a container of a single pod is restarting.
+
+## Implemented
+Once you have configured Kubernetes to have at least two pods or the deployment is targeted by a HorizontalPodAutoscaler.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
+You can also activate advice individually, using for this advice, the identifier `com.steadybit.extension_kubernetes.advice.k8s-single-replica`.

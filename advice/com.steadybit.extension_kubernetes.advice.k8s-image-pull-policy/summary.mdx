@@ -1,0 +1,16 @@
+# Introduction
+Validates whether you have configured the image pull policy to always download the container image. Otherwise, you may end up with different versions running in your Kubernetes cluster if one node has cached a container image.
+
+# Supported Advice States
+## Action Needed
+Automatically discovers whether all Kubernetes containers' `imagePullPolicy` are set to `Always` (explicitly configured or implicitly as the default policy for some container image versioning schemes). The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+## Validation Needed
+Not supported.
+
+## Implemented
+Once the Kubernetes container's specification `imagePullPolicy` uses the `Always`strategy.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
+You can also activate advice individually, using for this advice, the identifier `com.steadybit.extension_kubernetes.advice.k8s-image-pull-policy`.

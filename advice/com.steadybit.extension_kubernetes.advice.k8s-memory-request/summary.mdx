@@ -1,0 +1,17 @@
+# Introduction
+Validates whether you request reasonable memory for your Kubernetes resources.
+The requested resources of a pod's container inform Kubernetes' decision on where to schedule a pod.
+
+# Supported Advice States
+## Action Needed
+Automatically discovers whether all Kubernetes container's `resources.requests.memory` are configured. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+## Validation Needed
+Asks you to confirm that you've configured the requested memory reasonable to the best of our knowledge and belief.
+
+## Implemented
+Once the Kubernetes container's specification `resources.requests.memory` configures a value that was marked as validated.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
+You can also activate advice individually, using, for this advice, the identifier `com.steadybit.extension_kubernetes.advice.k8s-memory-request`.

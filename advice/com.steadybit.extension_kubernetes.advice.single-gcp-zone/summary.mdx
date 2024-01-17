@@ -1,0 +1,16 @@
+# Introduction
+Prevent multiple pods from being deployed in the same GCP Availability Zone to avoid downtime whenever one zone isn't available.
+
+# Supported Advice States
+## Action Needed
+The advice automatically discovers whether a Kubernetes workload resource spreads pods across GCP Availability Zones, e.g., via a `podAntiAffinity` rule. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+
+## Validation Needed
+Not supported.
+
+## Implemented
+Once you have configured Kubernetes to spread the pods across different GCP availability zones.
+
+# Disabling Advice
+Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
+You can also activate advice individually, using for this advice, the identifier `com.steadybit.extension_kubernetes.advice.single-gcp-zone`.
