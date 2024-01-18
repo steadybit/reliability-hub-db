@@ -1,9 +1,9 @@
 # Introduction
-Prevent multiple pods from being deployed in the same GCP Availability Zone to avoid downtime whenever one zone isn't available.
+Validate whether, right now, multiple pods of the same workload resource are deployed in the same GCP Availability Zone to avoid downtime whenever one zone isn't available.
 
 # Supported Advice States
 ## Action Needed
-The advice automatically discovers whether a Kubernetes workload resource spreads pods across GCP Availability Zones, e.g., via a `podAntiAffinity` rule. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+The advice automatically discovers whether a Kubernetes workload resource, right now, spreads pods across GCP Availability Zones, e.g., via a `podAntiAffinity` rule.
 
 ## Validation Needed
 Not supported.
