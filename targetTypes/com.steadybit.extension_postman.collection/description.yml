@@ -1,10 +1,13 @@
 ---
-id: com.steadybit.extension_postman.collection.run
-label: Postman collection
-description: Execute a Postman collection through Postman's cloud API.
+id: com.steadybit.extension_postman.collection
+label:
+  one: Postman Collection
+  other: Postman Collections
+category: basic
 icon: |
   <svg
     viewBox="0 0 24 24"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -12,6 +15,4 @@ icon: |
       fill="currentColor"
     />
   </svg>
-kind: check
-targetType: com.steadybit.extension_postman.collection
 extension: com.steadybit.extension_postman

@@ -12,17 +12,24 @@ lanes:
         ignoreFailure: false
         parameters:
           bail: false
-          apiKey: "SECRET_API_KEY"
           verbose: false
           duration: "10s"
           iterations: 10
           environment: []
-          collectionId: "21222108-f59ac16f-81ff-4894-9261-fc6700b0c185"
-          environmentId: "21222108-71f326a5-2134-4c3c-a159-8da6bce66a64"
+          environmentIdOrName: "21222108-71f326a5-2134-4c3c-a159-8da6bce66a64"
         customLabel: "GIVEN: Orders are accepted"
         actionType: "com.steadybit.extension_postman.collection.run"
         radius:
-          list: []
+          targetType: "com.steadybit.extension_postman.collection"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "postman.collection.id"
+                operator: "EQUALS"
+                values:
+                  - "21222108-f59ac16f-81ff-4894-9261-fc6700b0c185"
+          query: null
+          percentage: 100
       - !<wait>
         ignoreFailure: false
         parameters:
@@ -84,17 +91,24 @@ lanes:
         ignoreFailure: false
         parameters:
           bail: false
-          apiKey: "SECRET_API_KEY"
           verbose: false
           duration: "30s"
           iterations: 30
           environment: []
-          collectionId: "21222108-f59ac16f-81ff-4894-9261-fc6700b0c185"
-          environmentId: "21222108-71f326a5-2134-4c3c-a159-8da6bce66a64"
+          environmentIdOrName: "21222108-71f326a5-2134-4c3c-a159-8da6bce66a64"
         customLabel: "THEN: Orders are still accepted"
         actionType: "com.steadybit.extension_postman.collection.run"
         radius:
-          list: []
+          targetType: "com.steadybit.extension_postman.collection"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "postman.collection.id"
+                operator: "EQUALS"
+                values:
+                  - "21222108-f59ac16f-81ff-4894-9261-fc6700b0c185"
+          query: null
+          percentage: 100
   - steps:
       - !<wait>
         ignoreFailure: false
