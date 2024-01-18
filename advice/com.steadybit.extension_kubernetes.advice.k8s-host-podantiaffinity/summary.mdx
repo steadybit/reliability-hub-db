@@ -3,13 +3,13 @@ Validates whether you prevent multiple pods from being deployed on the same node
 
 # Supported Advice States
 ## Action Needed
-The advice automatically discovers whether a Kubernetes workload resource spreads pods across hosts, e.g., via a `podAntiAffinity` rule. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
+The advice automatically discovers whether a Kubernetes workload resource spreads pods across nodes via a `podAntiAffinity` rule. The discovery is performed by the open-source library [kube-score](https://github.com/zegl/kube-score) and integrated into this advice.
 
 ## Validation Needed
 Not supported.
 
 ## Implemented
-Once you have configured Kubernetes to spread the pods across different hosts.
+Once you have configured Kubernetes to spread the pods across different nodes.
 
 # Disabling Advice
 Every advice is automatically active as described in [extension-kubernetes#configuration](https://github.com/steadybit/extension-kubernetes/?tab=readme-ov-file#configuration).
