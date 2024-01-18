@@ -1,5 +1,5 @@
 ---
-name: "Instana should detect a CrashLoop problem"
+name: "Instana should detect a CrashLoop incident"
 team: "{{teamKey}}"
 environment: "{{environmentName}}"
 lanes:
@@ -14,7 +14,7 @@ lanes:
             - "ISSUE"
           conditionCheckMode: "allTheTime"
           eventSeverityFilter: "critical"
-        customLabel: "Given: No problem found"
+        customLabel: "Given: No incident found"
         actionType: "com.steadybit.extension_instana.event_check"
         radius:
           targetType: "com.steadybit.extension_instana.application-perspective"
@@ -71,7 +71,7 @@ lanes:
             - "ISSUE"
           conditionCheckMode: "atLeastOnce"
           eventSeverityFilter: "critical"
-        customLabel: "THEN: Instana should detect this as problem"
+        customLabel: "THEN: Instana should detect this as incident"
         actionType: "com.steadybit.extension_instana.event_check"
         radius:
           targetType: "com.steadybit.extension_instana.application-perspective"
@@ -92,7 +92,7 @@ lanes:
         ignoreFailure: false
         parameters:
           duration: "600s"
-        customLabel: "WHILE: Mute alerting problems to avoid escalations"
+        customLabel: "WHILE: Mute alerting to avoid escalations"
         actionType: "com.steadybit.extension_instana.maintenance-window"
         radius:
           targetType: "com.steadybit.extension_instana.application-perspective"
