@@ -1,5 +1,5 @@
 # Intent
-Verify that your monitoring solution alerts you on pods not being ready to accept traffic for a certain amount of time.
+Verify that Datadog monitor alerts you on pods not being ready to accept traffic for a certain amount of time.
 
 # Motivation
 
@@ -10,8 +10,8 @@ If this isn't working, Kubernetes will eventually back off to restart the contai
 
 # Structure
 
-First, check that your monitor is in an 'okay' state and doesn't alert on non-ready containers.
-As soon as one of the containers is crash looping, caused by the Steadybit attack [crash loop](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.crash_loop_pod), a specific monitor should alert to achieve your on-call team is taking action.
+First, check that Datadog monitor responsible for tracking non-ready container is in an 'okay' state.
+As soon as one of the containers is crash looping, caused by the Steadybit attack [crash loop](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.crash_loop_pod), the Datadog monitor should alert and escalate it to your on-call team.
 
 # Environment Example
 

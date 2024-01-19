@@ -1,11 +1,12 @@
 id: dynatrace.problem-check-pod-crashloop
-label: Verify that Dynatrace detects problem when a Kubernetes pod is in crash loop.
+label: Dynatrace detects problem when a Kubernetes pod is in crash loop.
 description: When one of your containers has problems starting, it may result in a crash loop and, eventually, Kubernetes backing off to restart this container. Verify that Dynatrace notices a crash loop and will alert you to take action.
 tags:
   - Kubernetes
   - Dynatrace
   - Restart
   - Crash loop
+  - Harden Observability
 license: MIT
 gitHub:
   owner: steadybit

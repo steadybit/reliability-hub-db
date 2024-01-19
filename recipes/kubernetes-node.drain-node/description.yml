@@ -1,5 +1,5 @@
 id: kubernetes-node.drain-node
-label: Verify that drained nodes are replaced quickly
+label: Drained nodes results in quickly rescheduling pods
 description: When draining a node, Kubernetes should reschedule the pods on other nodes to achieve elasticity.
 tags:
   - Kubernetes

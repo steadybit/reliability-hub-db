@@ -1,5 +1,5 @@
 id: kubernetes-deployment.rolling-rollout
-label: Verify that a rolling update of a Kubernetes deployment works under load
+label: Rolling Update of a Kubernetes deployment works error-free under load
 description: Kubernetes features a rolling update strategy to deploy new releases without downtime. When being under load this only works reliably when your load balancer and the Kubernetes readiness probe are configured properly and DNS caches are up-to-date.
 tags:
   - Kubernetes
