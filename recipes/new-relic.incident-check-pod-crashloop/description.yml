@@ -9,5 +9,5 @@ tags:
 license: MIT
 gitHub:
   owner: steadybit
-  repository: reliability-hub-db/tree/main/recipes/instana.event-check-pod-crashloop
+  repository: reliability-hub-db/tree/main/recipes/new-relic.incident-check-pod-crashloop
 maintainer: com.steadybit
