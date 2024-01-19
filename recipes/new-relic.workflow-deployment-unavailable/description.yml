@@ -1,0 +1,11 @@
+id: new-relic.workflow-deployment-unavailable
+label: Verify that your New Relic workflow is alerting on non-ready pods for a deployment
+description: When a deployment has no pods ready, New Relic Workflow should notice that and mark the workflow as disrupted.
+tags:
+  - Kubernetes
+  - New Relic
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/new-relic.workflow-deployment-unavailable
+maintainer: com.steadybit
