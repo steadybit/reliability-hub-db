@@ -64,7 +64,7 @@ lanes:
         customLabel: "WHEN: Container gateway is stopped"
         actionType: "com.steadybit.extension_container.stop"
         radius:
-          targetType: "container"
+          targetType: "com.steadybit.extension_container.container"
           predicate:
             operator: "AND"
             predicates:

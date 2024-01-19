@@ -37,7 +37,7 @@ lanes:
         customLabel: "WHEN: A node is rebooted"
         actionType: "com.steadybit.extension_host.shutdown"
         radius:
-          targetType: "host"
+          targetType: "com.steadybit.extension_host.host"
           predicate:
             operator: "AND"
             predicates:

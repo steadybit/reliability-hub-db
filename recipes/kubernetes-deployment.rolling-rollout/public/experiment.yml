@@ -60,7 +60,7 @@ lanes:
         customLabel: "WHEN: A rollout restart is executed"
         actionType: "com.steadybit.extension_kubernetes.rollout-restart"
         radius:
-          targetType: "kubernetes-deployment"
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
           predicate:
             operator: "AND"
             predicates:

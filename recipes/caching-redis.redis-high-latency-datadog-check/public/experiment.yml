@@ -40,7 +40,7 @@ lanes:
         customLabel: "WHEN: Redis is slow because of a network issue"
         actionType: "com.steadybit.extension_container.network_delay"
         radius:
-          targetType: "container"
+          targetType: "com.steadybit.extension_container.container"
           predicate:
             operator: "AND"
             predicates:

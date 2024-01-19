@@ -38,7 +38,7 @@ lanes:
         customLabel: "WHEN: Container {{containerName}} is stopped"
         actionType: "com.steadybit.extension_container.stop"
         radius:
-          targetType: "container"
+          targetType: "com.steadybit.extension_container.container"
           predicate:
             operator: "AND"
             predicates:

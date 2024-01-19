@@ -38,7 +38,7 @@ lanes:
         customLabel: "WHEN: AWS Zone eu-central-1a is unavailable"
         actionType: "com.steadybit.extension_aws.az.blackhole"
         radius:
-          targetType: "zone"
+          targetType: "com.steadybit.extension_aws.zone"
           predicate:
             operator: "AND"
             predicates:

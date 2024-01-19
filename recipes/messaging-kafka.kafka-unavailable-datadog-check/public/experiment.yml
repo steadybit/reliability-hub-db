@@ -61,7 +61,7 @@ lanes:
         customLabel: "WHEN: Kafka is not available"
         actionType: "com.steadybit.extension_container.network_blackhole"
         radius:
-          targetType: "container"
+          targetType: "com.steadybit.extension_container.container"
           predicate:
             operator: "AND"
             predicates:
