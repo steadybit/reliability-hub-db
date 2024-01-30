@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: WrwG6-C-HY0
 - type: image
   src: create-maintenance-window.png
   alt: The action within the experiment editor.

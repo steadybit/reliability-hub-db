@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: WrwG6-C-HY0
 - type: image
   src: problem_check_editor.png
   alt: The action within the experiment editor.
