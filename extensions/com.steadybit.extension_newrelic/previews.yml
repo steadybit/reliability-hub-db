@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: UD1gGff8NCU
 - type: image
   src: dashboard.png
   alt: An New Relic dashboard showing Steadybit Experiment Runs.

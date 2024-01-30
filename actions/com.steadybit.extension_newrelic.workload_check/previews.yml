@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: UD1gGff8NCU
 - type: image
   src: workload-check.png
   alt: The action within the experiment editor.
