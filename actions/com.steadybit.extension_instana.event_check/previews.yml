@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: 23gPAfFvjtA
 - type: image
   src: instana-event-check.png
   alt: The action within the experiment editor.

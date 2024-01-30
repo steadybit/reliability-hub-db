@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: 23gPAfFvjtA
 - type: image
   src: instana-event-check.png
   alt: The experiment editor shows an experiment with an Instana event check.
