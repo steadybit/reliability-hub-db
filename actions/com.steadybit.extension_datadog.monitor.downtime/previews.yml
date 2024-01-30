@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: K9jtMSwJXD0
 - type: image
   src: 1.png
   alt: The "Create Downtime" action within the experiment editor.
