@@ -5,5 +5,8 @@
   src: instana-event-check.png
   alt: The action within the experiment editor.
 - type: image
-  src: instana-event-view.png
+  src: instana-event-run.png
   alt: The results of the action within the experiment run view.
+- type: image
+  src: instana.png
+  alt: The event shown in Instana, easily opened by following the link in Steadybit's experiment run view.

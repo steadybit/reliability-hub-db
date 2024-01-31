@@ -5,8 +5,11 @@
   src: instana-event-check.png
   alt: The experiment editor shows an experiment with an Instana event check.
 - type: image
-  src: instana-event-log.png
-  alt: An experiment run showing events from Instana.
-- type: image
   src: instana-create-maintenance-window.png
-  alt: Create a maintenance window in Instana.
+  alt: To avoid escalations in Instana, create a maintenance window directly from Steadybit.
+- type: image
+  src: instana-event-run.png
+  alt: An experiment run showing the event check for Instana in action.
+- type: image
+  src: instana.png
+  alt: The event shown in Instana, easily opened by following the link in Steadybit's experiment run view.

@@ -5,3 +5,6 @@
 - type: image
   src: run.png
   alt: The experiment run showing a successful validation.
+- type: image
+  src: instana.png
+  alt: The event shown in Instana, easily opened by following the link in Steadybit's experiment run view.
