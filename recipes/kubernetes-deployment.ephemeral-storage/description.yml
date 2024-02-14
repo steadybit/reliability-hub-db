@@ -1,0 +1,11 @@
+id: kubernetes-deployment.ephemeral-storage
+label: Kubernetes Deployment recovers from exceeding ephemeral storage
+description: Ensure that your pods become ready again when your containers exceed ephemeral storage.
+tags:
+  - Kubernetes
+  - Elasticity
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/recipes/kubernetes-deployment.scaling-error-free
+maintainer: com.steadybit

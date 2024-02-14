@@ -1,0 +1,134 @@
+---
+name: "Fill ephemeral storage of a container"
+team: "{{teamKey}}"
+environment: "{{environmentName}}"
+lanes:
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          url: "http://demo.steadybit.io/products"
+          method: "GET"
+          headers: []
+          duration: "120s"
+          statusCode: "200-299"
+          readTimeout: "5s"
+          successRate: "95"
+          maxConcurrent: 5
+          connectTimeout: "5s"
+          followRedirects: false
+          requestsPerSecond: 1
+        customLabel: "WHILE: HTTP requests on pod's endpoint are working within expected\
+      \ success rates"
+        actionType: "com.steadybit.extension_http.check.periodically"
+        radius: {}
+  - steps:
+      - !<wait>
+        ignoreFailure: false
+        parameters:
+          duration: "10s"
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          mode: "PERCENTAGE"
+          path: "/tmp"
+          size: 120
+          method: "AT_ONCE"
+          duration: "30s"
+          blocksize: 5
+        customLabel: "WHEN: Write 120% into ephemeral storage"
+        actionType: "com.steadybit.extension_container.fill_disk"
+        radius:
+          targetType: "com.steadybit.extension_container.container"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
+          maximum: 1
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "1m"
+          podCountCheckMode: "podCountDecreased"
+        customLabel: "THEN: Gateway pod count decreases"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "60s"
+          podCountCheckMode: "podCountEqualsDesiredCount"
+        customLabel: "THEN: All gateways pods become ready eventually"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_check"
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-deployment"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+              - key: "k8s.namespace"
+                operator: "EQUALS"
+                values:
+                  - "steadybit-demo"
+              - key: "k8s.deployment"
+                operator: "EQUALS"
+                values:
+                  - "gateway"
+          query: null
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "120s"
+        actionType: "com.steadybit.extension_kubernetes.pod_count_metric"
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-cluster"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+          query: null
+  - steps:
+      - !<action>
+        ignoreFailure: false
+        parameters:
+          duration: "120s"
+        actionType: "com.steadybit.extension_kubernetes.kubernetes_logs"
+        radius:
+          targetType: "com.steadybit.extension_kubernetes.kubernetes-cluster"
+          predicate:
+            operator: "AND"
+            predicates:
+              - key: "k8s.cluster-name"
+                operator: "EQUALS"
+                values:
+                  - "prod-demo"
+          query: null
