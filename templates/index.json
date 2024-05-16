@@ -1,0 +1,6 @@
+{
+    "lastChange": 1715856562,
+    "templates": [
+        "https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/templates/aws-zone.zone-outage/template.json"
+    ]
+}
