@@ -1,0 +1,5 @@
+https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/recipes/aws-ec2.ec2-restart/public/experiment.yml
+https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/recipes/aws-zone.zone-outage/public/experiment.yml
+https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/recipes/caching-redis.redis-high-latency-datadog-check/public/experiment.yml
+https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/recipes/dynatrace.problem-check-pod-crashloop/public/experiment.yml
+https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/recipes/datadog.monitor-alerts-on-pod-crash-loop/public/experiment.yml
