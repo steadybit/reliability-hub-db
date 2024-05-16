@@ -8,9 +8,9 @@ for folder in "$directory"/*/; do
         folder_name=$(basename "$folder")
         # Check if it's the last subfolder
         if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
-            echo '        "https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/'${folder}'template.json",' >> templates/index.json
+            echo '        "/'${folder}'template.json",' >> templates/index.json
         else
-            echo '        "https://raw.githubusercontent.com/steadybit/reliability-hub-db/main/'${folder}'template.json"' >> templates/index.json
+            echo '        "/'${folder}'template.json"' >> templates/index.json
         fi
     fi
 done
