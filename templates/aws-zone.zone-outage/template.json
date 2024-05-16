@@ -1,0 +1,323 @@
+{
+  "_actions": [
+    "edit",
+    "delete"
+  ],
+  "version": 7,
+  "id": "9a4c4f50-c88c-404c-b9a7-7c7d0964f59a",
+  "templateTitle": "AWS Zone Outage Doesn't Result in User-Visible Errors",
+  "templateDescription": "## Intent\nAWS achieves high availability via redundancy across different Availability Zones. Ensure that failover works seamlessly by simulating Zone outages.\n\n## Motivation\nAWS hosts your deployments and services across multiple locations worldwide. From a reliability standpoint, AWS regions and Availability Zones are most interesting. While the former refers to separate geographic areas spread worldwide, the latter refers to an isolated location within a region. For most use cases applying deployments across AWS availability zone is sufficient. Given that failures may happen at this level quite frequently, you should verify that your applications are still working in case of an outage.\n\n## Structure\nWe leverage the AWS blackhole attack to simulate an AWS availability zone outage. Before the simulated outage, we ensure that a load-balanced user-facing endpoint works appropriately. During an AWS availability zone's unavailability, the HTTP endpoint must continue operating but may suffer from degraded performance (e.g., lower success rate or higher response time). The performance should recover as soon as the zone is back again.",
+  "experimentName": "AWS Zone Outage of [[k8sDeployment]] Doesn't Result in User-Visible Errors",
+  "placeholders": [
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the **Kubernetes namespace** of the Kubernetes Deployment under test?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the name of the **Kubernetes Deployment** under test?"
+    },
+    {
+      "key": "awsZone",
+      "name": "AWS Zone of Deployment",
+      "description": "Which **AWS Availability Zone** of the Kubernetes deployment should be simulated to have an outage?\n\n__Note__: Please make sure that you select one of the availability zones that your deployment is actually deployed into."
+    },
+    {
+      "key": "k8sDeploymentRecoveryDuration",
+      "name": "Kubernetes Deployment's Recovery Time",
+      "description": "What is the expected duration of recovery for the Kubernetes Deployment under test?"
+    },
+    {
+      "key": "httpUrl",
+      "name": "Service's HTTP URL",
+      "description": "Specify an HTTP endpoint the deployment under-test offers that should work within an expected success rate."
+    },
+    {
+      "key": "httpUrlSuccessRate",
+      "name": "Service's HTTP URL Success Rate",
+      "description": "What is the expected HTTP success rate for the system under-test?"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "0",
+      "steps": [
+        {
+          "type": "action",
+          "id": "08bb1117-6432-40b9-b32e-a425bcd675c0",
+          "customLabel": "GIVEN: All pods are ready",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_kubernetes.pod_count_check",
+          "blastRadius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "steps": [
+        {
+          "type": "action",
+          "id": "21bb7b94-2e33-439d-9681-177a0f1e4685",
+          "customLabel": "GIVEN: HTTP API is working as expected",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpUrl]]",
+            "statusCode": "200-299"
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_http.check.periodically",
+          "blastRadius": {}
+        },
+        {
+          "type": "action",
+          "id": "724fb97d-8fd9-4829-aad3-1ee3db3fcb86",
+          "customLabel": "THEN: Unready pods are detected",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountLessThanDesiredCount"
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_kubernetes.pod_count_check",
+          "blastRadius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "steps": [
+        {
+          "type": "wait",
+          "id": "9a3cd27a-e99e-4463-b88f-89624e290598",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "metricQueries": [],
+          "metricChecks": []
+        },
+        {
+          "type": "action",
+          "id": "b2b59555-ef7f-43a2-9708-75ffa8e32a8b",
+          "customLabel": "WHEN: AWS Zone [[awsZone]] is unavailable",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_container.network_blackhole",
+          "blastRadius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                },
+                {
+                  "key": "aws.zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[awsZone]]"
+                  ]
+                },
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "{{k8sClusterName}}"
+                  ]
+                }
+              ]
+            },
+            "percentage": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "steps": [
+        {
+          "type": "wait",
+          "id": "00de00dd-570c-48e9-b3aa-7f4b5267af1e",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "metricQueries": [],
+          "metricChecks": []
+        },
+        {
+          "type": "action",
+          "id": "a51d0239-bb16-456f-9f41-112589ea9c18",
+          "customLabel": "THEN: All HTTP calls are successfull again",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "100",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpUrl]]",
+            "statusCode": "200-299"
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_http.check.periodically",
+          "blastRadius": {}
+        },
+        {
+          "type": "action",
+          "id": "4e9a3542-c5e7-4fff-b602-31e17e81fe51",
+          "customLabel": "THEN: At least [[httpUrlSuccessRate]] of the HTTP calls are successfull",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpUrlSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpUrl]]",
+            "statusCode": "200-299"
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_http.check.periodically",
+          "blastRadius": {}
+        },
+        {
+          "type": "action",
+          "id": "208a791c-eb16-4f3a-9076-fa1be154af89",
+          "customLabel": "THEN: All pods recover",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sDeploymentRecoveryDuration]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "metricQueries": [],
+          "metricChecks": [],
+          "actionId": "com.steadybit.extension_kubernetes.pod_count_check",
+          "blastRadius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "edited": "2024-05-10T12:13:40.152174Z",
+  "editedBy": {
+    "username": "cd3ec5cc-d299-47ab-998f-c2a53b433820",
+    "name": "Manuel Gerding",
+    "pictureUrl": "https://lh3.googleusercontent.com/a/ACg8ocLgnoseITIXn60EsP-Z3VUdnhoDiWtJcs8ytI-7-YJLjl8AE_c=s96-c"
+  },
+  "tags": [
+    "Redundancy",
+    "AWS"
+  ],
+  "hidden": false
+}
