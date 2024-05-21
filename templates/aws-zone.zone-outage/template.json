@@ -1,6 +1,4 @@
 {
-  "id": "9a4c4f50-c88c-404c-b9a7-7c7d0964f59a",
-  "version": 7,
   "templateTitle": "AWS Zone Outage Doesn't Result in User-Visible Errors",
   "templateDescription": "## Intent\nAWS achieves high availability via redundancy across different Availability Zones. Ensure that failover works seamlessly by simulating Zone outages.\n\n## Motivation\nAWS hosts your deployments and services across multiple locations worldwide. From a reliability standpoint, AWS regions and Availability Zones are most interesting. While the former refers to separate geographic areas spread worldwide, the latter refers to an isolated location within a region. For most use cases applying deployments across AWS availability zone is sufficient. Given that failures may happen at this level quite frequently, you should verify that your applications are still working in case of an outage.\n\n## Structure\nWe leverage the AWS blackhole attack to simulate an AWS availability zone outage. Before the simulated outage, we ensure that a load-balanced user-facing endpoint works appropriately. During an AWS availability zone's unavailability, the HTTP endpoint must continue operating but may suffer from degraded performance (e.g., lower success rate or higher response time). The performance should recover as soon as the zone is back again.",
   "placeholders": [
@@ -281,6 +279,5 @@
         }
       ]
     }
-  ],
-  "hidden": false
+  ]
 }
