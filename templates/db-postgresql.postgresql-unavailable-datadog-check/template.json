@@ -1,0 +1,315 @@
+{
+  "templateTitle": "Graceful degradation and Datadog alerts when Postgres database can not be reached",
+  "templateDescription": "## Intent\n\nAn unavailable database should be handled by your application gracefully and indicated appropriately\nSpecifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.\nYou can address a potential impact on your system by implementing, e.g., a failover or caching mechanism.\n\n## Motivation\n\nDatabase outages can occur for various reasons, including hardware failures, software bugs, network connectivity issues, or even intentional attacks. Such outages can severely affect your application, such as lost revenue, dissatisfied customers, and reputational damage. By testing your application's resilience to a database outage, you can identify areas for improvement and implement measures to minimize the impact of such outages on your system.\n\n## Structure\n\nTo conduct this experiment, we will ensure that all pods are ready and that the load-balanced user-facing endpoint is fully functional. We will then simulate an unavailable PostgreSQL database by blocking the PostgreSQL database client connection on a given hostname.\nDuring the outage, we will monitor the system and ensure that the user-facing endpoint indicates unavailability by responding with a \"Service unavailable\" status. We will also verify that at least one monitor in Datadog is alerting us to the database outage.\nOnce the database becomes available again, we will verify that the endpoint automatically recovers and resumes its normal operation. We will also analyze the monitoring data to identify any potential weaknesses in the system and take appropriate measures to address them.\nBy conducting this experiment, we can identify any weaknesses in our system's resilience to database outages and take appropriate measures to minimize their impact.",
+  "placeholders": [
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes Namespace in which the Kubernetes workload under test is running?"
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "databaseHostname",
+      "name": "Postgres Database Hostname",
+      "description": "What is the hostname of the Postgres database used by the Kubernetes Workload owner to reach the database?\n\nPlease note that we only block traffic from the Kubernetes Workload on that specific hostname to simulate the database unavailability."
+    },
+    {
+      "key": "datadogMonitorTags",
+      "name": "Datadog Monitor Tags",
+      "description": "Which Datadog Monitors (identified via Tags) should notice the unavailable Postgres database?"
+    },
+    {
+      "key": "httpLoadBalancedEndpoint",
+      "name": "HTTP Load Balanced Endpoint",
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
+    },
+    {
+      "key": "httpResponseStatusCode",
+      "name": "HTTP Response Status Code",
+      "description": "What is the expected HTTP status code while the database can't be reached? E.g., `503` (Service unavailable) to indicate an unavailable service."
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "What is the expected success rate of HTTP requests indicating a graceful degradation when the Postgres database is unavailable?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    }
+  ],
+  "tags": [
+    "Postgres",
+    "Recoverability",
+    "Datadog"
+  ],
+  "experimentName": "Graceful degradation of [[k8sWorkloadOwner]] and Datadog alerts when Postgres database can not be reached",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: All HTTP requests are successful",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": "true",
+            "hostname": [
+              "[[databaseHostname]]"
+            ]
+          },
+          "customLabel": "WHEN: Postgres database is not available",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "[[httpResponseStatusCode]]"
+          },
+          "customLabel": "THEN: HTTP requests resolve to be Service unavailable",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: All HTTP requests are successful again",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK",
+              "No Data"
+            ]
+          },
+          "customLabel": "GIVEN: Monitors are green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "Alert",
+              "Warn"
+            ]
+          },
+          "customLabel": "THEN: One or more Monitors alerts on the outage",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK",
+              "No Data"
+            ]
+          },
+          "customLabel": "THEN: All Monitors are green again after the resiliency mechanism kicks in",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s",
+            "notify": true
+          },
+          "customLabel": "Mute alerting monitor to avoid escalations",
+          "actionType": "com.steadybit.extension_datadog.monitor.downtime",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "templateTitle": "Kubernetes deployment survives Redis latency",
+  "templateDescription": "## Intent\n\nVerify that your application handles an increased latency in a Redis cache properly, allowing for increased processing time while maintaining throughput.\n\n## Motivation\n\nLatency issues in Redis can lead to degraded system performance, longer response times, and potentially lost or delayed data.\nBy testing your system's resilience to Redis latency, you can ensure that it can handle increased processing time and maintain its throughput during increased latency.\nAdditionally, you can identify any potential bottlenecks or inefficiencies in your system and take appropriate measures to optimize its performance and reliability.\n\n## Structure\n\nWe will verify that a load-balanced user-facing endpoint fully works while having all pods ready.\nAs soon as we simulate Redis latency, we expect the system to maintain its throughput and indicate unavailability appropriately.\nWe can introduce delays in Redis operations to simulate latency. The experiment aims to ensure that your system can handle increased processing time and maintain its throughput during increased latency.\nThe performance should return to normal after the latency has ended.",
+  "placeholders": [
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes Namespace in which the deployment under test is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "redisPort",
+      "name": "Redis Port",
+      "description": "Which port is used by the Kubernetes Deployment to communicate with Redis?\n\n**Default**: `6379`"
+    },
+    {
+      "key": "datadogMonitorTags",
+      "name": "Datadog Monitor Tags",
+      "description": "Which Datadog Monitors (identified via Tags) should notice the latency in Redis communication?"
+    },
+    {
+      "key": "httpLoadBalancedEndpoint",
+      "name": "HTTP Load Balanced Endpoint",
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes deployment?"
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "What is the expected success rate of HTTP requests while Redis has high latency?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    }
+  ],
+  "tags": [
+    "Redis",
+    "Recoverability",
+    "Datadog"
+  ],
+  "experimentName": "Kubernetes deployment [[k8sDeployment]] survives Redis latency",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "WHILE: The service should survive a Redis latency",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK",
+              "No Data"
+            ]
+          },
+          "customLabel": "GIVEN: Monitors are green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "2m",
+            "failOnHostNetwork": "true",
+            "port": [
+              "[[redisPort]]"
+            ],
+            "networkDelay": "300ms",
+            "networkInterface": [
+              "eth0"
+            ],
+            "networkDelayJitter": true
+          },
+          "customLabel": "WHEN: Redis is slow because of a network issue",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "2m",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: Pod should be resilient to high latency of the cache",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": true,
+          "parameters": {
+            "duration": "2m",
+            "statusCheckMode": "atLeastOnce",
+            "expectedStatusList": [
+              "Alert"
+            ]
+          },
+          "customLabel": "THEN: Monitor alert about latency issue",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK"
+            ]
+          },
+          "customLabel": "THEN: Monitor is back to green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

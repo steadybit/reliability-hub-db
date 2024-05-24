@@ -1,6 +1,6 @@
 {
-  "templateTitle": "Load balancer covers an AWS zone outage",
-  "templateDescription": "## Intent\n\nAWS achieves high availability via redundancy across different Availability Zones.\nEnsure that failover works seamlessly by simulating Zone outages.\n\n## Motivation\n\nAWS hosts your deployments and services across multiple locations worldwide.\nFrom a reliability standpoint, AWS regions and Availability Zones are most interesting.\nWhile the former refers to separate geographic areas spread worldwide, the latter refers to an isolated location within a region.\nFor most use cases, applying deployments across AWS availability zone is sufficient.\nGiven that failures may happen at this level quite frequently, you should verify that your applications are still working in case of an outage.\n\n## Structure\n\nWe leverage the AWS blackhole attack to simulate an AWS availability zone outage.\nBefore the simulated outage, we ensure that a load-balanced user-facing endpoint works appropriately.\nDuring an AWS availability zone's unavailability, the HTTP endpoint must continue operating but may suffer from degraded performance (e.g., lower success rate or higher response time).\nThe performance should recover as soon as the zone is back again.\n\n## Solution Sketch\n\n- [Regions and Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+  "templateTitle": "Load balancer covers an AWS EC2 restart",
+  "templateDescription": "## Intent\n\nEC2 is part of the AWS Elastic Compute Cloud, which acquires and releases resources depending on the traffic demand.\nCheck whether your application is elastic as well by rebooting an EC2 instance.\n\n## Motivation\n\nDepending on your traffic demand, you can use AWS cloud's ability to acquire and release resources automatically.\nSome services, such as S3 and SQS, do that automatically, while others, such as EC2, integrate with AWS Auto Scaling.\nOnce configured, it boils down to fluctuating EC2 instances starting or shutting down frequently.\nEven when not using AWS Autoscaling, your EC2 instances may need to be restarted occasionally for maintenance and updating purposes.\nThus, it is best practice to validate your application's behavior.\n\n## Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all EC2 instances available.\nWhile restarting an EC2 instance, the HTTP endpoint continues operating but may suffer from degraded performance (e.g., lower success rate or higher response time).\nThe performance should recover to a 100% success rate once all EC2 instances are back.\n\n## Solution Sketch\n\n- [AWS Well-Architected Framework](https://wa.aws.amazon.com/wat.concept.elasticity.en.html)\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
   "placeholders": [
     {
       "key": "awsAccount",
@@ -8,14 +8,14 @@
       "description": "What is the AWS Account in which the EC2 is running?"
     },
     {
-      "key": "awsZone",
-      "name": "AWS Zone",
-      "description": "For which AWS zone would you like to simulate an outage?"
+      "key": "awsEC2InstanceName",
+      "name": "AWS EC2 Instance Name",
+      "description": "What is the instance name of the EC2 that should be rebooted?"
     },
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?  \n\n**Note**: The HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?\n\n**Note**: The HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
     },
     {
       "key": "httpSuccessRate",
@@ -23,16 +23,19 @@
       "description": "What is the expected success rate of HTTP requests while the EC2 is rebooting?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
-      "key": "recoveryTime",
-      "name": "Recovery Time",
-      "description": "After the zone outage, how long do you expect it to take before everything should be available again and the HTTP service works faultlessly?"
+      "key": "ec2RecoveryTime",
+      "name": "EC2 Recovery Time",
+      "description": "How long do you expect it to take before EC2 is available again and the HTTP service works faultlessly?"
     }
   ],
   "tags": [
+    "Scalability",
     "Redundancy",
+    "Elasticity",
     "AWS"
   ],
-  "experimentName": "Load balancer covers zone outage of [[awsZone]]",
+  "experimentName": "Load-balanced endpoint works when EC2 [[awsEC2InstanceName]] restarts",
+  "hypothesis": "Whenever we restart EC2 [[awsEC2InstanceName]], the load-balanced HTTP endpoint works within a given success rate.",
   "lanes": [
     {
       "steps": [
@@ -71,12 +74,12 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": 30
+            "action": "reboot"
           },
-          "customLabel": "WHEN: AWS Zone eu-central-1a is unavailable",
-          "actionType": "com.steadybit.extension_aws.az.blackhole",
+          "customLabel": "WHEN: AWS EC2 is rebooted",
+          "actionType": "com.steadybit.extension_aws.ec2_instance.state",
           "radius": {
-            "targetType": "com.steadybit.extension_aws.zone",
+            "targetType": "com.steadybit.extension_aws.ec2-instance",
             "predicate": {
               "operator": "AND",
               "predicates": [
@@ -88,10 +91,10 @@
                   ]
                 },
                 {
-                  "key": "aws.zone.id",
-                  "operator": "EQUALS",
+                  "key": "aws-ec2.instance.name",
+                  "operator": "CONTAINS",
                   "values": [
-                    "[[awsZone]]"
+                    "[[awsEC2InstanceName]]"
                   ]
                 }
               ]
@@ -115,7 +118,7 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "30s",
+            "duration": "[[ec2RecoveryTime]]",
             "headers": [],
             "method": "GET",
             "successRate": "[[httpSuccessRate]]",
@@ -130,14 +133,6 @@
           "customLabel": "THEN: At least [[httpSuccessRate]]% of the HTTP calls are successful",
           "actionType": "com.steadybit.extension_http.check.periodically",
           "radius": {}
-        },
-        {
-          "type": "wait",
-          "ignoreFailure": false,
-          "parameters": {
-            "duration": "[[recoveryTime]]"
-          },
-          "customLabel": "THEN: Wait for systems to recover"
         },
         {
           "type": "action",

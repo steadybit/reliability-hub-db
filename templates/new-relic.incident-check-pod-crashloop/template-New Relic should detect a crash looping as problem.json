@@ -1,0 +1,213 @@
+{
+  "templateTitle": "New Relic should detect a crash looping as problem",
+  "templateDescription": "## Intent\nVerify that New Relic alerts you that pods are not ready to accept traffic for some time.\n\n## Motivation\n\nKubernetes features a readiness probe to determine whether your pod is ready to accept traffic.\nIf it isn't becoming ready, Kubernetes tries to solve it by restarting the underlying container and hoping to achieve its readiness eventually.\nIf this isn't working, Kubernetes will eventually back off to restart the container, and the Kubernetes resource remains non-functional.\n\n\n## Structure\n\nFirst, check that New Relic has no critical events for related entities.\nAs soon as one of the containers is crash looping, caused by the Steadybit attack [crash loop](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.crash_loop_pod), New Relic should detect this via an incident to ensure your on-call team is taking action.\n\n## Solution Sketch\n\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+  "placeholders": [
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes Namespace in which the pod under test is running?"
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "newRelicAccountId",
+      "name": "New Relic Account Id",
+      "description": "Which New Relic Account Id do you want to check for the problem?"
+    },
+    {
+      "key": "newRelicEntityTagFilterKey",
+      "name": "New Relic Entity Tag Filter - Key",
+      "description": "Which key in an entity filter selects the entity on which New Relic should detect the problem? E.g., `k8s.deployment`"
+    },
+    {
+      "key": "newRelicEntityTagFilterValue",
+      "name": "New Relic Entity Tag Filter - Value",
+      "description": "Which value in an entity filter selects the entity on which New Relic should detect the problem? E.g., same value as for the `Kubernetes Workload Owner`"
+    }
+  ],
+  "tags": [
+    "Crash loop",
+    "New Relic",
+    "Harden Observability",
+    "Kubernetes"
+  ],
+  "experimentName": "New Relic should detect a crash looping of [[k8sWorkloadOwner]] as problem",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "15s",
+            "entityTagFilter": [
+              {
+                "key": "[[newRelicEntityTagFilterKey]]",
+                "value": "[[newRelicEntityTagFilterValue]]"
+              }
+            ],
+            "conditionCheckMode": "allTheTime",
+            "condition": "noIncidents",
+            "incidentPriorityFilter": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ]
+          },
+          "customLabel": "Given: No incidents found",
+          "actionType": "com.steadybit.extension_newrelic.incident_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_newrelic.account",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "new-relic.account.id",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[newRelicAccountId]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "15s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "180s"
+          },
+          "customLabel": "WHEN: Kubernetes pod crash loops",
+          "actionType": "com.steadybit.extension_kubernetes.crash_loop_pod",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-pod",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "15s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "180s",
+            "entityTagFilter": [
+              {
+                "key": "[[newRelicEntityTagFilterKey]]",
+                "value": "[[newRelicEntityTagFilterValue]]"
+              }
+            ],
+            "conditionCheckMode": "atLeastOnce",
+            "condition": "atLeastOneIncident",
+            "incidentPriorityFilter": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ]
+          },
+          "customLabel": "THEN: New Relic should raise an incident",
+          "actionType": "com.steadybit.extension_newrelic.incident_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_newrelic.account",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "new-relic.account.id",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[newRelicAccountId]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "15s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "180s"
+          },
+          "customLabel": "WHILE: Muting New Relic to avoid escalations",
+          "actionType": "com.steadybit.extension_newrelic.create_muting_rule",
+          "radius": {
+            "targetType": "com.steadybit.extension_newrelic.account",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "new-relic.account.id",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[newRelicAccountId]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

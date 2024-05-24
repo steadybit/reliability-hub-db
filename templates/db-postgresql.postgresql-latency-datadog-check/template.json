@@ -1,0 +1,235 @@
+{
+  "templateTitle": "Graceful degradation and Datadog alerts when Postgres suffers latency",
+  "templateDescription": "## Intent\n\nYour application should continue functioning properly and indicate unavailability appropriately in case of increased connection latency to PostgreSQL.\nAdditionally, this experiment can highlight requests that need optimization of timeouts to prevent dropped requests.\n\n## Motivation\n\nLatencies in shared or overloaded databases are common and can significantly impact the performance of your application.\nBy conducting this experiment, you can gain insights into the robustness of your application and identify areas for improvement.\n\n## Structure\n\nTo conduct this experiment, we will ensure that all pods are ready and that the load-balanced user-facing endpoint is fully functional.\nWe will then simulate a latency attack on the PostgreSQL database by adding a delay of 100 milliseconds to all traffic to the database hostname.\nDuring the attack, we will monitor the system's behavior to ensure the service remains operational and can deliver its purpose.\nWe will also analyze the performance metrics to identify any request types most affected by the latency and optimize them accordingly.\nFinally, we will end the attack and monitor the system's recovery time to ensure it returns to its normal state promptly.\nBy conducting this experiment, we can gain valuable insights into our application's resilience to database latencies and make informed decisions to optimize its performance under stress.",
+  "placeholders": [
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes Namespace in which the Kubernetes workload under test is running?"
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "databaseHostname",
+      "name": "Postgres Database Hostname",
+      "description": "What is the hostname of the Postgres database used by the Kubernetes Workload owner to reach the database?\n\nPlease note that we only block traffic from the Kubernetes Workload on that specific hostname to simulate the database unavailability."
+    },
+    {
+      "key": "datadogMonitorTags",
+      "name": "Datadog Monitor Tags",
+      "description": "Which Datadog Monitors (identified via Tags) should notice the latency to the Postgres database?"
+    },
+    {
+      "key": "httpLoadBalancedEndpoint",
+      "name": "HTTP Load Balanced Endpoint",
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "What is the expected success rate of HTTP requests while having latency to the Postgres database? E.g., `95%`\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    }
+  ],
+  "tags": [
+    "Postgres",
+    "Recoverability",
+    "Datadog"
+  ],
+  "experimentName": "Graceful degradation of [[k8sWorkloadOwner]] and Datadog alerts when Postgres database suffers latency",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: All HTTP requests are successful",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "hostname": [
+              "[[databaseHostname]]"
+            ],
+            "port": [],
+            "networkDelay": "100ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": true
+          },
+          "customLabel": "WHEN: PostgreSQL suffers latencies",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: HTTP requests are slow but mostly successful",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK",
+              "No Data"
+            ]
+          },
+          "customLabel": "THEN: All Monitors stay green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s",
+            "notify": true
+          },
+          "customLabel": "Mute alerting monitor to avoid escalations",
+          "actionType": "com.steadybit.extension_datadog.monitor.downtime",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

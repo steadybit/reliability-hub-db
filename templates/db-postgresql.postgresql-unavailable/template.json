@@ -1,0 +1,185 @@
+{
+  "templateTitle": "Graceful degradation when Postgres database can not be reached",
+  "templateDescription": "## Intent\n\nAn unavailable Postgres database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately\n\n## Motivation\n\nDepending on your context, an unavailable Postgres database may be considered so severe that there are no suitable fallbacks.\nIn this case, ensuring that your system indicates an appropriate error message is essential.\nAfter the Postgres database returns, your system should recover automatically.\n\n# Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate an unavailable Postgres database, we expect the user-facing endpoint to indicate unavailability by responding with a \"Service unavailable\" status.\nTo simulate the unavailability, we can block the Postgres database client connection on its hostname so that no incoming or outgoing traffic goes through.\nThe endpoint should recover automatically once the Postgres database is reachable again.",
+  "placeholders": [
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes Namespace in which the Kubernetes workload under test is running?"
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "databaseHostname",
+      "name": "Postgres Database Hostname",
+      "description": "What is the hostname of the Postgres database used by the Kubernetes Workload owner to reach the database?\n\nPlease note that we only block traffic from the Kubernetes Workload on that specific hostname to simulate the database unavailability."
+    },
+    {
+      "key": "httpLoadBalancedEndpoint",
+      "name": "HTTP Load Balanced Endpoint",
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
+    },
+    {
+      "key": "httpResponseStatusCode",
+      "name": "HTTP Response Status Code",
+      "description": "What is the expected HTTP status code while the database can't be reached? E.g., `503` (Service unavailable) to indicate an unavailable service."
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "What is the expected success rate of HTTP requests indicating a graceful degradation when the Postgres database is unavailable?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    }
+  ],
+  "tags": [
+    "Postgres",
+    "Recoverability"
+  ],
+  "experimentName": "Graceful degradation of [[k8sWorkloadOwner]] when Postgres database can not be reached",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: All HTTP requests are successful",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": "true",
+            "hostname": [
+              "[[databaseHostname]]"
+            ]
+          },
+          "customLabel": "WHEN: Postgres database is not available",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "[[httpResponseStatusCode]]"
+          },
+          "customLabel": "THEN: HTTP requests resolve to be Service unavailable",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: All HTTP requests are successful again",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    }
+  ]
+}
