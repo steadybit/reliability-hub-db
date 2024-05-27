@@ -1,0 +1,228 @@
+{
+  "templateTitle": "Graceful degradation of Kubernetes deployment while RabbitMQ is down",
+  "templateDescription": "## Intent\n\nAn unavailable RabbitMQ cluster should be handled gracefully and indicated appropriately by your application.\nSpecifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.\n\n## Motivation\n\nRabbitMQ downtime can lead to degraded system performance, lost data, and potentially long system recovery times.\nBy testing your system's resilience to RabbitMQ downtime, you can ensure that it can handle the outage gracefully and continue to deliver its intended functionality.\nAdditionally, you can identify any potential weaknesses in your system and take appropriate measures to improve its performance and resilience.\n\n## Structure\n\nWe will verify that a load-balanced user-facing endpoint fully works while having all pods ready.\nAs soon as we simulate RabbitMQ downtime, we expect the system to indicate unavailability appropriately and maintain its throughput.\nTo simulate downtime, we can shut down the RabbitMQ instance or cluster.\nThe experiment aims to ensure your system can gracefully handle the outage and continue delivering its intended functionality.\nThe performance should return to normal after the RabbitMQ instance or cluster is available again.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment connecting to RabbitMQ runs?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the deployment connecting to RabbitMQ runs?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment connecting to RabbitMQ?"
+    },
+    {
+      "key": "datadogMonitorTags",
+      "name": "Datadog Monitor Tags",
+      "description": "Which Datadog Monitors (identified via Tags) should identify the unavailability of RabbitMQ?"
+    }
+  ],
+  "tags": [
+    "RabbitMQ",
+    "Datadog",
+    "Recoverability",
+    "Kubernetes"
+  ],
+  "experimentName": "Graceful degradation of [[k8sDeployment]] while RabbitMQ is down",
+  "hypothesis": "The deployment [[k8sDeployment]] can gracefully handle an outage of RabbitMQ and continue to deliver its intended functionality.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "INVARIANT: Pods survive a RabbitMQ downtime",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK",
+              "No Data"
+            ]
+          },
+          "customLabel": "GIVEN: Monitors are green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "2m",
+            "failOnHostNetwork": "true",
+            "hostname": [],
+            "port": [
+              "5672"
+            ]
+          },
+          "customLabel": "WHEN: RabbitMQ is not available",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK"
+            ]
+          },
+          "customLabel": "THEN: Monitors should go back to green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "service:test"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "40s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": true,
+          "parameters": {
+            "duration": "100s",
+            "statusCheckMode": "atLeastOnce",
+            "expectedStatusList": [
+              "Alert"
+            ]
+          },
+          "customLabel": "THEN: Monitor should alert on RabbitMQ being unavailable",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.tags",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

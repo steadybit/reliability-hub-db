@@ -5,7 +5,7 @@
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "What is the Kubernetes Namespace in which the deployment under test is running?"
+      "description": "What is the Kubernetes namespace in which the deployment under test is running?"
     },
     {
       "key": "k8sDeployment",
@@ -15,7 +15,7 @@
     {
       "key": "redisPort",
       "name": "Redis Port",
-      "description": "Which port is used by the Kubernetes Deployment to communicate with Redis?\n\n**Default**: `6379`"
+      "description": "Which port is used by the Kubernetes deployment to communicate with Redis?\n\n**Default**: `6379`"
     },
     {
       "key": "datadogMonitorTags",
@@ -39,6 +39,7 @@
     "Datadog"
   ],
   "experimentName": "Kubernetes deployment [[k8sDeployment]] survives Redis latency",
+  "hypothesis": "Whenever Redis has a latency, the deployment [[k8sDeployment]] doesn't crash, and a load-balanced HTTP endpoint works within a given success rate.",
   "lanes": [
     {
       "steps": [

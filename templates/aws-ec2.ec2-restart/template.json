@@ -35,7 +35,7 @@
     "AWS"
   ],
   "experimentName": "Load-balanced endpoint works when EC2 [[awsEC2InstanceName]] restarts",
-  "hypothesis": "Whenever we restart EC2 [[awsEC2InstanceName]], the load-balanced HTTP endpoint works within a given success rate.",
+  "hypothesis": "Whenever we restart EC2 [[awsEC2InstanceName]], a load-balanced HTTP endpoint works within a given success rate.",
   "lanes": [
     {
       "steps": [

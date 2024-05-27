@@ -5,22 +5,22 @@
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "What is the Kubernetes Namespace in which the Kubernetes workload under test is running?"
+      "description": "What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
     },
     {
-      "key": "k8sWorkloadOwner",
-      "name": "Kubernetes Workload Owner",
-      "description": "What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "databaseHostname",
       "name": "Postgres Database Hostname",
-      "description": "What is the hostname of the Postgres database used by the Kubernetes Workload owner to reach the database?\n\nPlease note that we only block traffic from the Kubernetes Workload on that specific hostname to simulate the database unavailability."
+      "description": "What is the hostname of the Postgres database used by the Kubernetes deployment to reach the database?\n\nPlease note that we only block traffic from the Kubernetes deployment on that specific hostname to simulate the database unavailability."
     },
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes deployment?"
     },
     {
       "key": "httpResponseStatusCode",
@@ -37,7 +37,8 @@
     "Postgres",
     "Recoverability"
   ],
-  "experimentName": "Graceful degradation of [[k8sWorkloadOwner]] when Postgres database can not be reached",
+  "experimentName": "Graceful degradation of [[k8sDeployment]] when Postgres database can not be reached",
+  "hypothesis": "Whenever the Postgres database is down, the deployment [[k8sDeployment]] fails gracefully, and a load-balanced HTTP endpoint works within a given success rate.",
   "lanes": [
     {
       "steps": [
@@ -116,10 +117,10 @@
                   ]
                 },
                 {
-                  "key": "k8s.workload-owner",
+                  "key": "k8s.deployment",
                   "operator": "EQUALS",
                   "values": [
-                    "[[k8sWorkloadOwner]]"
+                    "[[k8sDeployment]]"
                   ]
                 }
               ]

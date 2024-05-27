@@ -5,7 +5,7 @@
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "What is the Kubernetes Namespace in which the pod under test is running?"
+      "description": "What is the Kubernetes namespace in which the pod under test is running?"
     },
     {
       "key": "k8sWorkloadOwner",
@@ -26,6 +26,7 @@
     "Kubernetes"
   ],
   "experimentName": "Datadog should alert about crash looping of [[k8sWorkloadOwner]]",
+  "hypothesis": "Whenever a pod of [[k8sWorkloadOwner]] is crash looping, Datadog notifies us.",
   "lanes": [
     {
       "steps": [

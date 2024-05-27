@@ -5,12 +5,12 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "What is the Kubernetes Cluster in which the pod under test is running?"
+      "description": "What is the Kubernetes cluster in which the pod under test is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "What is the Kubernetes Namespace in which the pod under test is running?"
+      "description": "What is the Kubernetes namespace in which the pod under test is running?"
     },
     {
       "key": "k8sWorkloadOwner",
@@ -34,6 +34,7 @@
     "Kubernetes"
   ],
   "experimentName": "New Relic should detect a disrupted workflow when [[k8sWorkloadOwner]] is unavailable",
+  "hypothesis": "Whenever all pods of [[k8sWorkloadOwner]] can't be reached, the New Relic workload [[newRelicWorkloadName]] is disrupted.",
   "lanes": [
     {
       "steps": [

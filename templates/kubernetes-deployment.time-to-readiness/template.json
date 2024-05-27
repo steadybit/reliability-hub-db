@@ -1,0 +1,185 @@
+{
+  "templateTitle": "Reasonable recovery time in case of container failures",
+  "templateDescription": "## Intent\nQuick startup times are favorable in Cloud environments to enable fast recovery and improve scaling.\n\n## Motivation\nIn Cloud environments, it is accepted that a pod or container may crash - the more important principle is that it should recover quickly.\nA faster startup time is beneficial in that case as it results in a smaller Mean Time To Recover (MTTR) and reduces user-facing downtime.\nAlso, in case of request peaks, a reasonably short startup time allows scaling the deployment properly.\n\n## Structure\n\nWe simply stop a container of one of the pods to measure the time until it is marked as ready again. Therefore, before stopping the container, we ensure that the deployment is ready. If so, we stop the container and expect the number of ready pods to drop.\nWithin a reasonable time (e.g., 60 seconds), the container should start up again, and all desirable pods should be marked as ready.\n\n## Solution Sketch\n\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the pod under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the pod under test is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "k8sContainerName",
+      "name": "Container Name of Kubernetes Deployment",
+      "description": "What is the container's name, running in the Kubernetes Deployment, that should be stopped?"
+    },
+    {
+      "key": "k8sRecoveryTime",
+      "name": "Deployment's Recovery Time",
+      "description": "How long do you expect it to take until a newly started pod is ready again?"
+    }
+  ],
+  "tags": [
+    "Scalability",
+    "Recoverability",
+    "Kubernetes"
+  ],
+  "experimentName": "Reasonable recovery time in case of container failures of [[k8sContainerName]]",
+  "hypothesis": "A failing pod caused by a crashed container recovers within [[k8sRecoveryTime]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "graceful": "true"
+          },
+          "customLabel": "WHEN: Container {{containerName}} is stopped",
+          "actionType": "com.steadybit.extension_container.stop",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\" AND (k8s.container.name=\"[[k8sContainerName]]\" or container.name=\"[[k8sContainerName]]\"))"
+            },
+            "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\" AND (k8s.container.name=\"[[k8sContainerName]]\" or container.name=\"[[k8sContainerName]]\"))",
+            "maximum": 1
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s",
+            "podCountCheckMode": "podCountLessThanDesiredCount"
+          },
+          "customLabel": "THEN: Ready Pod Count decreases",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sRecoveryTime]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: All pods are ready again within [[k8sRecoveryTime]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

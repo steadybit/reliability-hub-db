@@ -1,0 +1,280 @@
+{
+  "templateTitle": "Kubernetes node shutdown results in new node startup",
+  "templateDescription": "## Intent\nA resilient Kubernetes cluster can cope with a crashing node and simply starts a new one.\n\n## Motivation\n\nA changing number of nodes in your Kubernetes cluster is expected, as you may update your nodes from time to time or simply scale the cluster depending on traffic peaks.\nThis is especially true when using spot instances in a Cloud environment.\nThis requires the deployments to be node-independent and properly configured to be rescheduled on a newly started node or a node that still has free resources.\n\n## Structure\nBefore restarting a node, we verify that the cluster is healthy and that the deployments are ready.\nAfterward, we trigger the shutdown of the node of a specific Kubernetes deployment and expect the deployment to be rescheduled on any other node and a new node to start up within a reasonable amount of time.\n\n## Solution Sketch\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n \n## Warning\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which you want to restart a node?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "In which Kubernetes namespace do you want to validate a deployment to recover within a given duration?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment under test, whose node will be shut down and expected to recover within a given duration?\n\n**Note**: Please be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward."
+    },
+    {
+      "key": "k8sDeploymentRecoveryTime",
+      "name": "Kubernetes deployment Recovery Time",
+      "description": "How long do you expect it to take until the Kubernetes deployment is up and ready again?"
+    },
+    {
+      "key": "k8sNodeRecoveryTime",
+      "name": "Kubernetes Node Recovery Time",
+      "description": "How long will it take until a new node has started and is available in the Kubernetes cluster?"
+    }
+  ],
+  "tags": [
+    "Elasticity",
+    "Kubernetes"
+  ],
+  "experimentName": "Kubernetes node shutdown running [[k8sDeployment]] results in new node startup",
+  "hypothesis": "When a single node running Kubernetes deployment [[k8sDeployment]] is restarted, then the deployment is recovering [[k8sDeploymentRecoveryTime]] within and the node within [[k8sNodeRecoveryTime]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "reboot": false,
+            "delay": "0m"
+          },
+          "customLabel": "WHEN: A node is rebooted",
+          "actionType": "com.steadybit.extension_host.shutdown",
+          "radius": {
+            "targetType": "com.steadybit.extension_host.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "maximum": 1
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "2m",
+            "podCountCheckMode": "podCountLessThanDesiredCount"
+          },
+          "customLabel": "THEN: Ready Pod Count of [[k8sDeployment]] decreases",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sDeploymentRecoveryTime]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: Pods of [[k8sDeployment]] are back again within [[k8sDeploymentRecoveryTime]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "2m",
+            "nodeCountCheckMode": "nodeCountDecreasedBy",
+            "nodeCount": 1
+          },
+          "customLabel": "THEN: Node count decreases",
+          "actionType": "com.steadybit.extension_kubernetes.node_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sNodeRecoveryTime]]",
+            "nodeCountCheckMode": "nodeCountIncreasedBy",
+            "nodeCount": 1
+          },
+          "customLabel": "THEN: New node is started up and joins the cluster within [[k8sNodeRecoveryTime]]",
+          "actionType": "com.steadybit.extension_kubernetes.node_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

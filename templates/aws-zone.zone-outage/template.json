@@ -5,7 +5,7 @@
     {
       "key": "awsAccount",
       "name": "AWS Account",
-      "description": "What is the AWS Account in which the EC2 is running?"
+      "description": "What is the AWS Account in which your services are running?"
     },
     {
       "key": "awsZone",
@@ -15,12 +15,12 @@
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?  \n\n**Note**: The HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
+      "description": "What is the URL of a **load-balanced HTTP endpoint** served by a service running in your multi-AZ environment?  \n\n**Note**: The HTTP endpoint should be served by a system deployed into at least 2 availability zones. We will block one availability zone and check whether the load balancer appropriately routes requests to the running zone."
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "What is the expected success rate of HTTP requests while the EC2 is rebooting?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "What is the expected success rate of HTTP requests while one of the AZ is down?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
       "key": "recoveryTime",
@@ -33,6 +33,7 @@
     "AWS"
   ],
   "experimentName": "Load balancer covers zone outage of [[awsZone]]",
+  "hypothesis": "Whenever we have a zone outage, a load-balanced HTTP endpoint works within a given success rate and eventually the system recovers within [[recoveryTime]].",
   "lanes": [
     {
       "steps": [
