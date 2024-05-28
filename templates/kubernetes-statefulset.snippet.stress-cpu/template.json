@@ -1,0 +1,82 @@
+{
+  "templateTitle": "Stress CPU of Kubernetes StatefulSet",
+  "templateDescription": "## Intent\nLearn how easy you can stress CPU of an entire Kubernetes StatefulSet.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the StatefulSet is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the StatefulSet is running?"
+    },
+    {
+      "key": "k8sStatefulSet",
+      "name": "Kubernetes StatefulSet",
+      "description": "What is the Kubernetes StatefulSet under test?"
+    },
+    {
+      "key": "cpuLoad",
+      "name": "CPU Load",
+      "description": "How much load do you want to put on all CPU cores? E.g., `100%`"
+    }
+  ],
+  "tags": [
+    "StatefulSet",
+    "Starter",
+    "Snippet",
+    "Kubernetes",
+    "CPU"
+  ],
+  "experimentName": "Stress CPU of Kubernetes StatefulSet [[k8sStatefulSet]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "workers": 0,
+            "cpuLoad": "[[cpuLoad]]"
+          },
+          "customLabel": "WHEN: StatefulSet [[k8sStatefulSet]] has high CPU usage",
+          "actionType": "com.steadybit.extension_container.stress_cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulSet]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ]
+}

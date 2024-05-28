@@ -1,0 +1,82 @@
+{
+  "templateTitle": "Stress Memory of Kubernetes DaemonSet",
+  "templateDescription": "## Intent\nLearn how easy you can stress memory of an entire Kubernetes DaemonSet.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the DaemonSet is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the DaemonSet is running?"
+    },
+    {
+      "key": "k8sDaemonSet",
+      "name": "Kubernetes DaemonSet",
+      "description": "What is the Kubernetes DaemonSet under test?"
+    },
+    {
+      "key": "memoryLoad",
+      "name": "Memory Load",
+      "description": "How much of the total memory should be allocated? E.g., `200%`"
+    }
+  ],
+  "tags": [
+    "Memory",
+    "DaemonSet",
+    "Snippet",
+    "Starter",
+    "Kubernetes"
+  ],
+  "experimentName": "Stress Memory of Kubernetes DaemonSet [[k8sDaemonSet]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "failOnOomKill": false,
+            "percentage": "[[memoryLoad]]"
+          },
+          "customLabel": "Stress memory of Kubernetes DaemonSet [[k8sDaemonSet]]",
+          "actionType": "com.steadybit.extension_container.stress_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.daemonset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDaemonSet]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ]
+}

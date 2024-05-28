@@ -31,7 +31,8 @@
   "tags": [
     "Scalability",
     "Recoverability",
-    "Kubernetes"
+    "Kubernetes",
+    "Starter"
   ],
   "experimentName": "Reasonable recovery time in case of container failures of [[k8sContainerName]]",
   "hypothesis": "A failing pod caused by a crashed container recovers within [[k8sRecoveryTime]].",

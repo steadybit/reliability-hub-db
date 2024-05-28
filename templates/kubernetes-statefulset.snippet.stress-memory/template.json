@@ -1,0 +1,82 @@
+{
+  "templateTitle": "Stress Memory of Kubernetes StatefulSet",
+  "templateDescription": "## Intent\nLearn how easy you can stress memory of an entire Kubernetes StatefulSet.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the StatefulSet is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the StatefulSet is running?"
+    },
+    {
+      "key": "k8sStatefulSet",
+      "name": "Kubernetes StatefulSet",
+      "description": "What is the Kubernetes StatefulSet under test?"
+    },
+    {
+      "key": "memoryLoad",
+      "name": "Memory Load",
+      "description": "How much of the total memory should be allocated? E.g., `200%`"
+    }
+  ],
+  "tags": [
+    "Memory",
+    "StatefulSet",
+    "Snippet",
+    "Starter",
+    "Kubernetes"
+  ],
+  "experimentName": "Stress Memory of Kubernetes StatefulSet [[k8sStatefulSet]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "failOnOomKill": false,
+            "percentage": "[[memoryLoad]]"
+          },
+          "customLabel": "Stress memory of Kubernetes StatefulSet [[k8sStatefulSet]]",
+          "actionType": "com.steadybit.extension_container.stress_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulSet]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ]
+}

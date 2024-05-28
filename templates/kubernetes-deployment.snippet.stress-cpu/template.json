@@ -1,0 +1,82 @@
+{
+  "templateTitle": "Stress CPU of Kubernetes Deployment",
+  "templateDescription": "## Intent\nLearn how easy you can stress CPU of an entire Kubernetes deployment.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the deployment is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "cpuLoad",
+      "name": "CPU Load",
+      "description": "How much load do you want to put on all CPU cores? E.g., `100%`"
+    }
+  ],
+  "tags": [
+    "Deployment",
+    "Starter",
+    "Snippet",
+    "Kubernetes",
+    "CPU"
+  ],
+  "experimentName": "Stress CPU of Kubernetes Deployment [[k8sDeployment]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "workers": 0,
+            "cpuLoad": "[[cpuLoad]]"
+          },
+          "customLabel": "WHEN: Deployment [[k8sDeployment]] has high CPU usage",
+          "actionType": "com.steadybit.extension_container.stress_cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ]
+}

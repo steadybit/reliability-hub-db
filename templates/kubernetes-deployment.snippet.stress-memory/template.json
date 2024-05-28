@@ -1,0 +1,82 @@
+{
+  "templateTitle": "Stress Memory of Kubernetes Deployment",
+  "templateDescription": "## Intent\nLearn how easy you can stress memory of an entire Kubernetes deployment.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "What is the Kubernetes namespace in which the deployment is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "memoryLoad",
+      "name": "Memory Load",
+      "description": "How much of the total memory should be allocated? E.g., `200%`"
+    }
+  ],
+  "tags": [
+    "Memory",
+    "Deployment",
+    "Snippet",
+    "Starter",
+    "Kubernetes"
+  ],
+  "experimentName": "Stress Memory of Kubernetes Deployment [[k8sDeployment]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "failOnOomKill": false,
+            "percentage": "[[memoryLoad]]"
+          },
+          "customLabel": "Stress memory of Kubernetes Deployment [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.stress_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ]
+}
