@@ -1,6 +1,31 @@
 {
-    "lastChange": 1716283767,
+    "lastChange": 1716902470,
     "templates": [
-        "/templates/aws-zone.zone-outage/template.json"
+        "/templates/aws-ec2.ec2-restart/template.json",
+        "/templates/aws-zone.zone-outage/template.json",
+        "/templates/caching-redis.redis-high-latency-datadog-check/template.json",
+        "/templates/caching-redis.redis-unavailable-datadog-check/template.json",
+        "/templates/datadog.monitor-alerts-on-pod-crash-loop/template.json",
+        "/templates/db-mssql.mssql-unavailable/template.json",
+        "/templates/db-oracle.oracle-unavailable/template.json",
+        "/templates/db-postgresql.postgresql-latency-datadog-check/template.json",
+        "/templates/db-postgresql.postgresql-unavailable/template.json",
+        "/templates/db-postgresql.postgresql-unavailable-datadog-check/template.json",
+        "/templates/dynatrace.problem-check-pod-crashloop/template.json",
+        "/templates/instana.event-check-pod-crashloop/template.json",
+        "/templates/kubernetes-deployment.ephemeral-storage/template.json",
+        "/templates/kubernetes-deployment.load-balancing-pod-crash/template.json",
+        "/templates/kubernetes-deployment.rolling-rollout/template.json",
+        "/templates/kubernetes-deployment.scaling-error-free/template.json",
+        "/templates/kubernetes-deployment.time-to-readiness/template.json",
+        "/templates/kubernetes-node.drain-node/template.json",
+        "/templates/kubernetes-nodes.node-shutdown/template.json",
+        "/templates/messaging-kafka.kafka-high-latency-datadog-check/template.json",
+        "/templates/messaging-kafka.kafka-unavailable/template.json",
+        "/templates/messaging-kafka.kafka-unavailable-datadog-check/template.json",
+        "/templates/messaging-rabbitmq.rabbitmq-high-latency-datadog-check/template.json",
+        "/templates/messaging-rabbitmq.rabbitmq-unavailable-datadog-check/template.json",
+        "/templates/new-relic.incident-check-pod-crashloop/template.json",
+        "/templates/new-relic.workflow-deployment-unavailable/template.json"
     ]
 }
