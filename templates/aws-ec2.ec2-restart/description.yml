@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/aws-ec2.ec2-restart
+maintainer: com.steadybit
