@@ -86,7 +86,7 @@
             "duration": "60s",
             "replicaCount": 3
           },
-          "customLabel": "WHEN: Deployment Hot-Deals is scaling up",
+          "customLabel": "WHEN: Deployment [[k8sDeployment]] is scaling up",
           "actionType": "com.steadybit.extension_kubernetes.scale_deployment",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",

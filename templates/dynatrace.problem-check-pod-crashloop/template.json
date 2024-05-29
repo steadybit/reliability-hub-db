@@ -58,7 +58,7 @@
           "ignoreFailure": false,
           "parameters": {
             "duration": "180s",
-            "container": "hot-deals"
+            "container": ""
           },
           "customLabel": "WHEN: Kubernetes pod crash loops",
           "actionType": "com.steadybit.extension_kubernetes.crash_loop_pod",

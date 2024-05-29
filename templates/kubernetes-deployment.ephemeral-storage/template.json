@@ -124,7 +124,7 @@
             "duration": "1m",
             "podCountCheckMode": "podCountDecreased"
           },
-          "customLabel": "THEN: Gateway pod count decreases",
+          "customLabel": "THEN: [[k8sDeployment]] pod count decreases",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
@@ -164,7 +164,7 @@
             "duration": "60s",
             "podCountCheckMode": "podCountEqualsDesiredCount"
           },
-          "customLabel": "THEN: All gateways pods become ready eventually",
+          "customLabel": "THEN: All pods of [[k8sDeployment]] become ready eventually",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",

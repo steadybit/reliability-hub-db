@@ -73,7 +73,7 @@
             "duration": "30s",
             "podCountCheckMode": "podCountEqualsDesiredCount"
           },
-          "customLabel": "Given: All Pods of gateway are ready",
+          "customLabel": "Given: All Pods of [[k8sDeployment]] are ready",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
@@ -112,7 +112,7 @@
           "parameters": {
             "duration": "60s"
           },
-          "customLabel": "WHEN: Draining a node of gateway",
+          "customLabel": "WHEN: Draining a node of [[k8sDeployment]]",
           "actionType": "com.steadybit.extension_kubernetes.drain_node",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-node",
@@ -206,7 +206,7 @@
                   "key": "k8s.cluster-name",
                   "operator": "EQUALS",
                   "values": [
-                    "prod-demo"
+                    "[[k8sClusterName]]"
                   ]
                 }
               ]

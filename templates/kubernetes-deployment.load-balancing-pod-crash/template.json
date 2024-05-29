@@ -123,7 +123,7 @@
           "parameters": {
             "graceful": "true"
           },
-          "customLabel": "WHEN: Container gateway is stopped",
+          "customLabel": "WHEN: Container [[k8sContainerName]] of [[k8sDeployment]] is stopped",
           "actionType": "com.steadybit.extension_container.stop",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
