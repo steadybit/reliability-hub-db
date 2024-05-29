@@ -1,5 +1,5 @@
 {
-    "lastChange": 1716906965,
+    "lastChange": 1716975151,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-zone.zone-outage/template.json",
@@ -24,6 +24,7 @@
         "/templates/kubernetes-deployment.snippet.stress-cpu/template.json",
         "/templates/kubernetes-deployment.snippet.stress-memory/template.json",
         "/templates/kubernetes-deployment.time-to-readiness/template.json",
+        "/templates/kubernetes-deployment.unavailable-down-stream-service/template.json",
         "/templates/kubernetes-node.drain-node/template.json",
         "/templates/kubernetes-nodes.node-shutdown/template.json",
         "/templates/kubernetes-statefulset.snippet.block-traffic/template.json",
