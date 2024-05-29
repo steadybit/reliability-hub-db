@@ -1,5 +1,5 @@
 {
-  "templateTitle": "Unavailable downstream-service shouldn't result in user-visible errors",
+  "templateTitle": "Unavailable downstream service doesn't result in user-visible errors",
   "templateDescription": "## Intent\nVerify that an unavailable downstream service doesn't result in user-visible errors.\n\n## Motivation\n\nWhen offering a service that is dependent on downstream services, you should ensure that the offered service also works fine whenever one of the downstream services can't be reached. This is especially true when multiple downstream services are involved and the responses of each downstream service are considered optional.\n\n## Structure\n\nFor the duration of the experiment and the deployment's upscaling, verify that a user-visible endpoint offered is responding within expected success rates and that no monitors are alerting.\nAs soon as the deployment is scaled up, the newly scheduled pod should be ready to receive traffic within a reasonable time, e.g., 60 seconds.\n\n## Read more\nThis experiment template is used in our quick start on running an experiment and is especially useful for the shopping demo example. To learn more, check out the [quick start in the Steadybit docs](https://docs.steadybit.com/quick-start/run-experiment).",
   "placeholders": [
     {
@@ -18,9 +18,9 @@
       "description": "What is the Kubernetes deployment under test?"
     },
     {
-      "key": "httpLoadBalancedEndpoint",
-      "name": "HTTP Load Balanced Endpoint",
-      "description": "What is the URL of a **load-balanced HTTP endpoint** served by another Kubernetes deployment, that results in requests to the blocked Kubernetes deployment?\n\n**Note**: We will block the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
+      "key": "httpUpstreamEndpoint",
+      "name": "HTTP Upstream Endpoint",
+      "description": "What is the URL of an **upstream HTTP endpoint** served by **another** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\n\n**Note**: We will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
     },
     {
       "key": "httpSuccessRate",
@@ -38,8 +38,8 @@
     "Block Traffic",
     "Kubernetes"
   ],
-  "experimentName": "Unavailable downstream deployment of [[k8sDeployment]] shouldn't result in user-visible errors",
-  "hypothesis": "When AWS Availability Zone eu-central-1a is down for toys-bestseller, Kubernetes manages this accordingly by routing the traffic within expected failure rates so that the offered features still work. As soon as the zone is available again, the pod is ready within 60s.",
+  "experimentName": "Unavailable downstream deployment of [[k8sDeployment]] doesn't result in user-visible errors",
+  "hypothesis": "When the downstream service of Kubernetes deployment [[k8sDeployment]] is not available, an HTTP endpoint offered upstream should still work within the success rate [[httpSuccessRate]].",
   "lanes": [
     {
       "steps": [
@@ -47,7 +47,7 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "104s",
+            "duration": "180s",
             "headers": [],
             "method": "GET",
             "successRate": "[[httpSuccessRate]]",
@@ -56,10 +56,10 @@
             "readTimeout": "5s",
             "connectTimeout": "5s",
             "requestsPerSecond": 10,
-            "url": "[[httpLoadBalancedEndpoint]]",
+            "url": "[[httpUpstreamEndpoint]]",
             "statusCode": "200-299"
           },
-          "customLabel": "Load-balanced HTTP API is working all the time",
+          "customLabel": "Upstream HTTP API is working within [[httpSuccessRate]]% success rate",
           "actionType": "com.steadybit.extension_http.check.periodically",
           "radius": {}
         }
@@ -128,7 +128,7 @@
             "port": [],
             "ip": []
           },
-          "customLabel": "WHEN: All pods of [[k8sDeployment]] can't be reached",
+          "customLabel": "WHEN: One pod of [[k8sDeployment]] can't be reached",
           "actionType": "com.steadybit.extension_container.network_blackhole",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
@@ -159,14 +159,14 @@
               ]
             },
             "query": null,
-            "percentage": 50
+            "percentage": 100
           }
         },
         {
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "60s",
+            "duration": "[[recoveryTime]]",
             "podCountCheckMode": "podCountEqualsDesiredCount"
           },
           "customLabel": "THEN: All pods of [[k8sDeployment]] become ready again within [[recoveryTime]]",
@@ -220,7 +220,7 @@
             "duration": "30s",
             "podCountCheckMode": "podCountLessThanDesiredCount"
           },
-          "customLabel": "THEN: Pods of [[k8sDeployment]] are detected as down",
+          "customLabel": "THEN: One Pod of [[k8sDeployment]] is detected as down",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
