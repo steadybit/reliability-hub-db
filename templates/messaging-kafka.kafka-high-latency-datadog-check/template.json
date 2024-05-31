@@ -18,6 +18,11 @@
       "description": "What is the Kubernetes deployment connecting to Kafka?"
     },
     {
+      "key": "kafkaHostname",
+      "name": "Kafka Hostname",
+      "description": "What is the hostname of the Kafka message broker used by the Kubernetes workload owner?\n\nPlease note that we only block traffic from the Kubernetes workload for that specific hostname to simulate Kafka unavailability."
+    },
+    {
       "key": "datadogMonitorTags",
       "name": "Datadog Monitor Tags",
       "description": "Which Datadog Monitors (identified via Tags) should identify the latency in Kafka?"
@@ -37,10 +42,10 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "3m",
+            "duration": "4m",
             "podCountCheckMode": "podCountEqualsDesiredCount"
           },
-          "customLabel": "INVARIANT: The pod should survive a kafka latency",
+          "customLabel": "INVARIANT: Pods survive a Kafka latency",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
@@ -89,7 +94,9 @@
           "ignoreFailure": false,
           "parameters": {
             "duration": "2m",
-            "failOnHostNetwork": "true",
+            "hostname": [
+              "[[kafkaHostname]]"
+            ],
             "port": [
               "9094"
             ],
@@ -97,6 +104,7 @@
             "networkInterface": [
               "eth0"
             ],
+            "failOnHostNetwork": "true",
             "networkDelayJitter": true
           },
           "customLabel": "WHEN: Kafka is slow because of a network issue",
@@ -149,7 +157,6 @@
             "expectedStatusList": [
               "OK"
             ]
-
           },
           "customLabel": "THEN: Monitor should go back to green",
           "actionType": "com.steadybit.extension_datadog.monitor.status_check",
@@ -220,7 +227,6 @@
             "expectedStatusList": [
               "Alert"
             ]
-
           },
           "customLabel": "THEN: Monitor should alert a latency issue",
           "actionType": "com.steadybit.extension_datadog.monitor.status_check",
@@ -234,6 +240,64 @@
                   "operator": "EQUALS",
                   "values": [
                     "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "4m"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "4m"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
                   ]
                 }
               ]

@@ -3,6 +3,11 @@
   "templateDescription": "## Intent\n\nAn unavailable Microsoft SQL Server database might be too severe for suitable fallbacks and requires your system to indicate unavailability appropriately\n\n## Motivation\n\nDepending on your context, an unavailable Microsoft SQL Server database may be considered so severe that there are no suitable fallbacks.\nIn this case, ensuring that your system indicates an appropriate error message is essential.\nAfter the Microsoft SQL Server database returns, your system should recover automatically.\n\n# Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate an unavailable Microsoft SQL Server database, we expect the user-facing endpoint to indicate unavailability by responding with a \"Service unavailable\" status.\nTo simulate the unavailability, we can block the Microsoft SQL Server database client connection on its hostname so that no incoming or outgoing traffic goes through.\nThe endpoint should recover automatically once the Microsoft SQL Server database is reachable again.",
   "placeholders": [
     {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
       "description": "What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
@@ -81,6 +86,13 @@
               "operator": "AND",
               "predicates": [
                 {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
                   "values": [
@@ -109,6 +121,13 @@
             "predicate": {
               "operator": "AND",
               "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
                 {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
@@ -179,6 +198,64 @@
           "customLabel": "THEN: All HTTP requests are successful again",
           "actionType": "com.steadybit.extension_http.check.periodically",
           "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
         }
       ]
     }

@@ -3,6 +3,11 @@
   "templateDescription": "## Intent\nVerify that Dynatrace alerts you on pods not being ready to accept traffic for a certain amount of time.\n\n## Motivation\n\nKubernetes features a readiness probe to determine whether your pod is ready to accept traffic.\nIf it isn't becoming ready, Kubernetes tries to solve it by restarting the underlying container and hoping to achieve its readiness eventually.\nIf this isn't working, Kubernetes will eventually back off to restart the container, and the Kubernetes resource remains non-functional.\n\n\n## Structure\n\nFirst, check that Dynatrace has no problems for an entity and doesn't alert already on non-ready containers.\nAs soon as one of the containers is crash looping, caused by the Steadybit attack [crash loop](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.crash_loop_pod), Dynatrace should detect the problem and alert to ensure your on-call team is taking action.\n\n## Solution Sketch\n\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
   "placeholders": [
     {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
       "description": "What is the Kubernetes namespace in which the pod under test is running?"
@@ -68,6 +73,13 @@
               "operator": "AND",
               "predicates": [
                 {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
                   "values": [
@@ -132,6 +144,64 @@
           "customLabel": "WHILE: Mute alerting problems to avoid escalations",
           "actionType": "com.steadybit.extension_dynatrace.create_maintenance_window",
           "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "315s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "315s"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
         }
       ]
     }

@@ -18,6 +18,11 @@
       "description": "What is the Kubernetes deployment connecting to RabbitMQ?"
     },
     {
+      "key": "rabbitMQHostname",
+      "name": "RabbitMQ Hostname",
+      "description": "What is the hostname of RabbitMQ used by the Kubernetes deployment?\n\nPlease note that we inject latency into the traffic from the Kubernetes deployment for that specific hostname."
+    },
+    {
       "key": "datadogMonitorTags",
       "name": "Datadog Monitor Tags",
       "description": "Which Datadog Monitors (identified via Tags) should identify the latency to RabbitMQ?"
@@ -38,7 +43,7 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "3m",
+            "duration": "4m",
             "podCountCheckMode": "podCountEqualsDesiredCount"
           },
           "customLabel": "INVARIANT: Pods should survive a RabbitMQ latency",
@@ -90,7 +95,9 @@
           "ignoreFailure": false,
           "parameters": {
             "duration": "2m",
-            "failOnHostNetwork": "true",
+            "hostname": [
+              "[[rabbitMQHostname]]"
+            ],
             "port": [
               "5672"
             ],
@@ -98,6 +105,7 @@
             "networkInterface": [
               "eth0"
             ],
+            "failOnHostNetwork": "true",
             "networkDelayJitter": true
           },
           "customLabel": "WHEN: RabbitMQ is slow because of a network issue",
@@ -233,6 +241,64 @@
                   "operator": "EQUALS",
                   "values": [
                     "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "4m"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "4m"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
                   ]
                 }
               ]

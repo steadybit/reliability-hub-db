@@ -3,6 +3,11 @@
   "templateDescription": "## Intent\n\nYour application should continue functioning properly and indicate unavailability appropriately in case of increased connection latency to PostgreSQL.\nAdditionally, this experiment can highlight requests that need optimization of timeouts to prevent dropped requests.\n\n## Motivation\n\nLatencies in shared or overloaded databases are common and can significantly impact the performance of your application.\nBy conducting this experiment, you can gain insights into the robustness of your application and identify areas for improvement.\n\n## Structure\n\nTo conduct this experiment, we will ensure that all pods are ready and that the load-balanced user-facing endpoint is fully functional.\nWe will then simulate a latency attack on the PostgreSQL database by adding a delay of 100 milliseconds to all traffic to the database hostname.\nDuring the attack, we will monitor the system's behavior to ensure the service remains operational and can deliver its purpose.\nWe will also analyze the performance metrics to identify any request types most affected by the latency and optimize them accordingly.\nFinally, we will end the attack and monitor the system's recovery time to ensure it returns to its normal state promptly.\nBy conducting this experiment, we can gain valuable insights into our application's resilience to database latencies and make informed decisions to optimize its performance under stress.",
   "placeholders": [
     {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
       "description": "What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
@@ -82,6 +87,13 @@
               "operator": "AND",
               "predicates": [
                 {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
                   "values": [
@@ -115,6 +127,13 @@
             "predicate": {
               "operator": "AND",
               "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
                 {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
@@ -222,6 +241,64 @@
                   "operator": "EQUALS",
                   "values": [
                     "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
                   ]
                 }
               ]

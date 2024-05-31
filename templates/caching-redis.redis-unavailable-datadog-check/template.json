@@ -3,6 +3,11 @@
   "templateDescription": "## Intent\n\nCheck that your application gracefully handles a Redis cache downtime and continues to deliver its intended functionality. The cache downtime may be caused by an unavailable Redis instance or a complete cluster.\n\n## Motivation\n\nRedis downtime can lead to degraded system performance, lost data, and potentially long system recovery times.\nBy testing your system's resilience to Redis downtime, you can ensure that it can handle the outage gracefully and continue to deliver its intended functionality.\nAdditionally, you can identify any potential weaknesses in your system and take appropriate measures to improve its performance and resilience.\n\n## Structure\n\nWe will verify that a load-balanced user-facing endpoint fully works while having all pods ready.\nAs soon as we simulate Redis downtime, we expect the system to indicate unavailability appropriately and maintain its throughput.\nWe can block the traffic to the Redis instance to simulate downtime. The experiment aims to ensure that your system can gracefully handle the outage and continue delivering its intended functionality.\nThe performance should return to normal after the Redis instance is available again.",
   "placeholders": [
     {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
       "description": "What is the Kubernetes namespace in which the deployment under test is running?"
@@ -115,6 +120,13 @@
               "operator": "AND",
               "predicates": [
                 {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
                   "values": [
@@ -159,6 +171,13 @@
             "predicate": {
               "operator": "AND",
               "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
                 {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
@@ -240,6 +259,64 @@
                   "operator": "EQUALS",
                   "values": [
                     "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
                   ]
                 }
               ]

@@ -3,6 +3,11 @@
   "templateDescription": "## Intent\n\nAn unavailable database should be handled by your application gracefully and indicated appropriately\nSpecifically, we want to ensure that at least one monitor in Datadog is alerting us to the outage.\nYou can address a potential impact on your system by implementing, e.g., a failover or caching mechanism.\n\n## Motivation\n\nDatabase outages can occur for various reasons, including hardware failures, software bugs, network connectivity issues, or even intentional attacks. Such outages can severely affect your application, such as lost revenue, dissatisfied customers, and reputational damage. By testing your application's resilience to a database outage, you can identify areas for improvement and implement measures to minimize the impact of such outages on your system.\n\n## Structure\n\nTo conduct this experiment, we will ensure that all pods are ready and that the load-balanced user-facing endpoint is fully functional. We will then simulate an unavailable PostgreSQL database by blocking the PostgreSQL database client connection on a given hostname.\nDuring the outage, we will monitor the system and ensure that the user-facing endpoint indicates unavailability by responding with a \"Service unavailable\" status. We will also verify that at least one monitor in Datadog is alerting us to the database outage.\nOnce the database becomes available again, we will verify that the endpoint automatically recovers and resumes its normal operation. We will also analyze the monitoring data to identify any potential weaknesses in the system and take appropriate measures to address them.\nBy conducting this experiment, we can identify any weaknesses in our system's resilience to database outages and take appropriate measures to minimize their impact.",
   "placeholders": [
     {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
       "description": "What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
@@ -87,6 +92,13 @@
               "operator": "AND",
               "predicates": [
                 {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
                   "values": [
@@ -115,6 +127,13 @@
             "predicate": {
               "operator": "AND",
               "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
                 {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
@@ -302,6 +321,64 @@
                   "operator": "EQUALS",
                   "values": [
                     "[[datadogMonitorTags]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
                   ]
                 }
               ]
