@@ -1,6 +1,6 @@
 {
   "templateTitle": "Block Traffic of Kubernetes Deployment",
-  "templateDescription": "## Intent\nLearn how easy you can block traffic of an entire Kubernetes deployment.",
+  "templateDescription": "Learn how easy you can block traffic of an entire Kubernetes deployment.",
   "placeholders": [
     {
       "key": "k8sClusterName",

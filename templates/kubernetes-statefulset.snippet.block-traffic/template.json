@@ -1,6 +1,6 @@
 {
   "templateTitle": "Block Traffic of Kubernetes StatefulSet",
-  "templateDescription": "## Intent\nLearn how easy you can block traffic of an entire Kubernetes StatefulSet.",
+  "templateDescription": "Learn how easy you can block traffic of an entire Kubernetes StatefulSet.",
   "placeholders": [
     {
       "key": "k8sClusterName",

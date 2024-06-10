@@ -1,6 +1,6 @@
 {
   "templateTitle": "Stress Memory of Kubernetes Deployment",
-  "templateDescription": "## Intent\nLearn how easy you can stress memory of an entire Kubernetes deployment.",
+  "templateDescription": "Learn how easy you can stress memory of an entire Kubernetes deployment.",
   "placeholders": [
     {
       "key": "k8sClusterName",

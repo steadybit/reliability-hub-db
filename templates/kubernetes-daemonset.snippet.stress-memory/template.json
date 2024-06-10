@@ -1,6 +1,6 @@
 {
   "templateTitle": "Stress Memory of Kubernetes DaemonSet",
-  "templateDescription": "## Intent\nLearn how easy you can stress memory of an entire Kubernetes DaemonSet.",
+  "templateDescription": "Learn how easy you can stress memory of an entire Kubernetes DaemonSet.",
   "placeholders": [
     {
       "key": "k8sClusterName",

@@ -1,6 +1,6 @@
 {
   "templateTitle": "Block Traffic of Kubernetes DaemonSet",
-  "templateDescription": "## Intent\nLearn how easy you can block traffic of an entire Kubernetes DaemonSet.",
+  "templateDescription": "Learn how easy you can block traffic of an entire Kubernetes DaemonSet.",
   "placeholders": [
     {
       "key": "k8sClusterName",

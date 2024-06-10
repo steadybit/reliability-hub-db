@@ -1,6 +1,6 @@
 {
   "templateTitle": "Stress Memory of Kubernetes StatefulSet",
-  "templateDescription": "## Intent\nLearn how easy you can stress memory of an entire Kubernetes StatefulSet.",
+  "templateDescription": "Learn how easy you can stress memory of an entire Kubernetes StatefulSet.",
   "placeholders": [
     {
       "key": "k8sClusterName",
