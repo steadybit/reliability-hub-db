@@ -11,5 +11,5 @@ icon: |
   </svg>
 kind: attack
 category: application
-targetType: com.steadybit.extension_aws.lambda
+targetType: com.steadybit.extension_aws.alb
 extension: com.steadybit.extension_aws
