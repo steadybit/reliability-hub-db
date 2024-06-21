@@ -1,0 +1,30 @@
+# Introduction
+
+Checks if the count of running tasks in a service is matching your expectation.
+
+It compares the count of running tasks in a service with the desired count. It, therefore, assumes that the specified mode (see below) becomes true within the specified timeout.
+
+# Use Cases
+
+ - Check if the running count is equal to the desired count
+ - Check if the running count is below the desired count
+ - Check if there is at least one running task
+ - Check if the running count increases
+ - Check if the running count decreased
+
+# Parameters
+
+| Parameter          | Description                                                                 | Default |
+|--------------------|-----------------------------------------------------------------------------|---------|
+| Timeout            | How long should the check wait for the configured condition to become true? | 10s     |
+| Service task count | How should the running service task count change? (See values below)        |         |
+
+## Service Task Count
+
+You can use the service task count check in one of the following modes:
+
+- **running count = desired count**: Can be used to assure that the amount of desired tasks is equal to the actual running tasks in a service. Helpful to check e.g. after an attack whether tasks are recovering.
+- **running count > 0**: To assure that at least one task is available in a service to handle load.
+- **running count < desired count**: To make sure that tasks in a service matching the check's query are below the specified running count. This can be helpful in case you want to verify that attacks lead to restarts of tasks.
+- **running count increases**: Check if the running task count in a service increases compared to the actual number of running tasks when you started the action.
+- **running count decreases**: Check if the running task count decreases compared to the actual number of running tasks when you started the action.
