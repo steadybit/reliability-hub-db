@@ -1,31 +1,9 @@
-# Discovery in Cloud Context
+# Introduction
 
+The extension discovers the Availability Zones (AZ) to use as targets for the blackhole zone attack.
+The data is pulled from the AWS API periodically and includes the following information:
 
-## AWS
-If the agent is running on AWS it will query the AWS Metadata and add the following attributes to every target discovered:
- * AWS Account
- * AWS Region
- * AWS Zone
- * AWS Tags
- * AWS EKS Info
-
-
-## Azure
-
-If the agent is running on Azure it will query the Azure VM Metadata and add the following attributes to every target discovered:
- * Azure Account
- * Azure Zone
- * Azure Region
- * Azure Environment
- * Azure Tags
- * Azure AKS Info
-
-
-## Google Cloud
-
-If the agent is running on Google Cloud it will query the Google Metadata and add the following attributes to every target discovered:
- * Google Project Id
- * Google Numeric Project Id
- * Google Zone
- * Google Tags
- * Google GKE Tags
+ - Region
+ - Zone Name
+ - Zone ID
+ - Account Number

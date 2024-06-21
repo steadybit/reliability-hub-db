@@ -1,5 +1,5 @@
 {
-    "lastChange": 1718012326,
+    "lastChange": 1718957876,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-zone.zone-outage/template.json",
@@ -9,8 +9,8 @@
         "/templates/db-mssql.mssql-unavailable/template.json",
         "/templates/db-oracle.oracle-unavailable/template.json",
         "/templates/db-postgresql.postgresql-latency-datadog-check/template.json",
-        "/templates/db-postgresql.postgresql-unavailable/template.json",
         "/templates/db-postgresql.postgresql-unavailable-datadog-check/template.json",
+        "/templates/db-postgresql.postgresql-unavailable/template.json",
         "/templates/dynatrace.problem-check-pod-crashloop/template.json",
         "/templates/instana.event-check-pod-crashloop/template.json",
         "/templates/kubernetes-daemonset.snippet.block-traffic/template.json",
@@ -31,8 +31,8 @@
         "/templates/kubernetes-statefulset.snippet.stress-cpu/template.json",
         "/templates/kubernetes-statefulset.snippet.stress-memory/template.json",
         "/templates/messaging-kafka.kafka-high-latency-datadog-check/template.json",
-        "/templates/messaging-kafka.kafka-unavailable/template.json",
         "/templates/messaging-kafka.kafka-unavailable-datadog-check/template.json",
+        "/templates/messaging-kafka.kafka-unavailable/template.json",
         "/templates/messaging-rabbitmq.rabbitmq-high-latency-datadog-check/template.json",
         "/templates/messaging-rabbitmq.rabbitmq-unavailable-datadog-check/template.json",
         "/templates/new-relic.incident-check-pod-crashloop/template.json",
