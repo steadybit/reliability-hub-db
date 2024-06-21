@@ -1,0 +1,28 @@
+# Introduction
+
+This action will return a static response for a given Application Load Balancer.
+
+# Use Cases
+
+- Simulate Errors when using a service behind an Application Load Balancer
+
+# Parameters
+
+If no condition is specified, the static response will be returned for all paths that match `*`.
+
+| Parameter              | Description                                                             | Default    |
+|------------------------|-------------------------------------------------------------------------|------------|
+| Duration               | The duration of the attack.                                             | 180s       |
+| Listener Port          | The Port of the Listener for which the static response should be added. |            |
+| Listener Port          | The Port of the Listener for which the static response should be added. |            |
+| Response Status Code   | The HTTP Status code which should get returned                          | 503        |
+| Response Content Type  | (optional) The content type of the response                             | text/plain |
+| Response Body          | (optional) The body of the response                                     |            |
+| Condition Host Header  | (optional) Limit to a list of host headers                              |            |
+| Condition Path Pattern | (optional) Limit to a list of path patterns                             |            |
+| Condition HTTP Method  | (optional) Limit to a list of HTTP methods                              |            |
+| Condition Source IP    | (optional) Limit to a list of Source IPs                                |            |
+| Condition Query String | (optional) Limit to a list of Query Parameters                          |            |
+| Condition HTTP Header  | (optional) Limit to a specific HTTP Header                              |            |
+
+You can find more information about the conditions in the [AWS Documentation](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html#rule-condition-types).
