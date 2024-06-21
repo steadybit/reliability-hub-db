@@ -1,0 +1,34 @@
+# Introduction
+
+Stress the CPU of an ECS task.
+
+# Details
+
+This attack will run the AWSFIS-Run-CPU-Stress SSM Document on the target ECS task using the SSM agent.
+
+# Use Cases
+
+Test the behavior of the ECS task when the CPU is under high load.
+
+    * Will the application crash? Does it recover from the high load?
+    * Does the auto-scaling work as expected?
+    * Does the load balancing care for busy workers?
+    * Is your alerting properly configured?
+
+# Prerequisites
+
+    * [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
+    * The ECS task must use the Linux runtime platform
+    * The ECS taks must not have the `execute-command` feature enabled
+
+# Rollback
+
+The issued SSM command running on the SSM agent will be cancelled and the cpu stress will be stopped.
+
+# Parameters
+
+| Parameter             | Description                                        | Default    |
+|-----------------------|----------------------------------------------------|------------|
+| Load on Container CPU | How much CPU load should be inflicted?             | 100%       |
+| Container CPUs        | How many workers should be used to stress the CPU? | 1 per core |
+| Duration              | How long should the CPU be stressed?               | 30s        |
