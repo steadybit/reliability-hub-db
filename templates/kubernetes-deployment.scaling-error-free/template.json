@@ -1,4 +1,5 @@
 {
+  "id": "0363a90e-9563-494c-bd25-81da6e4c3d38",
   "templateTitle": "Faultless scaling of Kubernetes Deployment",
   "templateDescription": "Ensure that you can scale your deployment in a reasonable time without noticeable errors.\n\n## Motivation\nFor an elastic and resilient cloud infrastructure, ensure that you can scale your deployments without user-visible errors and within a reasonable amount of time.\nLong startup times, hiccups in the load balancer, or resource misallocation are undesirable but sometimes unnoticed and unexpected.\n\n## Structure\n\nFor the duration of the experiment and the deployment's upscaling, verify that a user-visible endpoint offered is responding within expected success rates and that no monitors are alerting.\nAs soon as the deployment is scaled up, the newly scheduled pod should be ready to receive traffic within a reasonable time, e.g., 60 seconds.",
   "placeholders": [

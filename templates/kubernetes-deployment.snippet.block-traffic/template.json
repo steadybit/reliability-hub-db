@@ -1,4 +1,5 @@
 {
+  "id": "0363a90e-9563-494c-bd25-81da6e4c3d39",
   "templateTitle": "Block Traffic of Kubernetes Deployment",
   "templateDescription": "Learn how easy you can block traffic of an entire Kubernetes deployment.",
   "placeholders": [

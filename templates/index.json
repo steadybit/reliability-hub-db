@@ -1,5 +1,5 @@
 {
-    "lastChange": 1719399011,
+    "lastChange": 1719486454,
     "templates": [
         "/aws-ec2.ec2-restart/template.json",
         "/aws-zone.zone-outage/template.json",
