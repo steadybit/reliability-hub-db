@@ -1,22 +1,36 @@
-echo '{' > templates/index.json
-echo '    "lastChange": '$(date +%s)',' >> templates/index.json
-echo '    "templates": [' >> templates/index.json
+echo '{' > index.json
+echo '    "lastChange": '$(date +%s)',' >> index.json
 
+echo '    "templates": [' >> index.json
 directory="templates"
 for folder in "$directory"/*/; do
     if [ -d "${folder}" ]; then
         folder_name=$(basename "$folder")
         # Check if it's the last subfolder
         if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
-            echo '        "/'${folder_name}'/template.json",' >> templates/index.json
+            echo '        "/'${folder}'template.json",' >> index.json
         else
-            echo '        "/'${folder_name}'/template.json"' >> templates/index.json
+            echo '        "/'${folder}'template.json"' >> index.json
         fi
     fi
 done
+echo '    ],' >> index.json
 
+echo '    "actions": [' >> index.json
+directory="actions"
+for folder in "$directory"/*/; do
+    if [ -d "${folder}" ]; then
+        folder_name=$(basename "$folder")
+        # Check if it's the last subfolder
+        if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
+            echo '        "/'${folder}'summary.mdx",' >> index.json
+        else
+            echo '        "/'${folder}'summary.mdx"' >> index.json
+        fi
+    fi
+done
+echo '    ]' >> index.json
 
-echo '    ]' >> templates/index.json
-echo '}' >> templates/index.json
+echo '}' >> index.json
 
-git add templates/index.json
+git add index.json
