@@ -1,0 +1,13 @@
+---
+- type: image
+  src: steadybit_experiment_editor.png
+  alt: Steadybit's "Alert Rule Check" allows you to verify the behaviour of your Grafana alert rules.
+- type: image
+  src: steadybit_grafana_experiment_execution_run_log.png
+  alt: The run log showing that an experiment completed because the alert rule state is the one expected for this kind of failure.
+- type: image
+  src: grafana_annotations.png
+  alt: Steadybit events are reported to Grafana as annotations with tags to filter them easily.
+- type: image
+  src: grafana_steadybit_events.png
+  alt: Steadybit events as Grafana annotations can be showed on dashboards to ease analyzing causes and effects.
