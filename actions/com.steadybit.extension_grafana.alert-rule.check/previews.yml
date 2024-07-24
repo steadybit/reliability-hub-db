@@ -4,13 +4,13 @@
   alt: The alert rule check within the experiment editor.
 - type: image
   src: 2.png
-  alt: The run log showing that an experiment failed because of an unexpected monitor status.
+  alt: The run log shows an experiment failed because of an unexpected monitor status.
 - type: image
   src: 3.png
   alt: Part of the run view is a visualization of the alert rule state over time.
 - type: image
   src: 4.png
-  alt: Events are reported to Grafana in the form of annotations to indicate when a chaos engineering experiment is executed.
+  alt: Events are reported to Grafana as annotations to indicate when a chaos engineering experiment is executed.
 - type: image
   src: 5.png
   alt: Overlay the annotations to your dashboards or panels in Grafana.
