@@ -6,32 +6,32 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "## What is the Kubernetes cluster in which the pod under test is running?"
+      "description": "### What is the Kubernetes cluster in which the pod under test is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "## What is the Kubernetes namespace in which the pod under test is running?"
+      "description": "### What is the Kubernetes namespace in which the pod under test is running?"
     },
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "## Which Kubernetes deployment is running on the node you want to drain, and you want to emsure it is rescheduled within a reasonable time?"
+      "description": "### Which Kubernetes deployment is running on the node you want to drain, and you want to emsure it is rescheduled within a reasonable time?"
     },
     {
       "key": "k8sDeploymentRecoveryTime",
       "name": "Deployment's Recovery Time",
-      "description": "## How long do you expect it to take until the deployment's pod is rescheduled on another node in the cluster?"
+      "description": "### How long do you expect it to take until the deployment's pod is rescheduled on another node in the cluster?"
     },
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "## What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
+      "description": "### What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "## What is the expected success rate of HTTP requests while the node is drained? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while the node is drained? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     }
   ],
   "tags": [

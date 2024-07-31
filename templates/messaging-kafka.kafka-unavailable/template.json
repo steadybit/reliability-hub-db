@@ -6,47 +6,47 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "## What is the Kubernetes cluster in which the pods accessing Kafka run?"
+      "description": "### What is the Kubernetes cluster in which the pods accessing Kafka run?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "## What is the Kubernetes namespace in which the pods accessing Kafka run?"
+      "description": "### What is the Kubernetes namespace in which the pods accessing Kafka run?"
     },
     {
       "key": "k8sWorkloadOwner",
       "name": "Kubernetes Workload Owner",
-      "description": "## What is the Kubernetes workload that schedules the pods accessing Kafka? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes workload that schedules the pods accessing Kafka? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "kafkaHostname",
       "name": "Kafka Hostname",
-      "description": "## What is the hostname of the Kafka message broker used by the Kubernetes workload owner?\n\nPlease note that we only block traffic from the Kubernetes workload for that specific hostname to simulate Kafka unavailability."
+      "description": "### What is the hostname of the Kafka message broker used by the Kubernetes workload owner?\n\nPlease note that we only block traffic from the Kubernetes workload for that specific hostname to simulate Kafka unavailability."
     },
     {
       "key": "postmanCollectionRequest",
       "name": "Postman Collection Requests",
-      "description": "## What is the name of the Postman collection that will send requests to your system?\n\nThese requests are sent while Kafka is unavailable. Later, we check their successful processing using another Postman collection."
+      "description": "### What is the name of the Postman collection that will send requests to your system?\n\nThese requests are sent while Kafka is unavailable. Later, we check their successful processing using another Postman collection."
     },
     {
       "key": "postmanCollectionRequestRunIterations",
       "name": "Postman Collection Run Iterations",
-      "description": "## How often do you want to run the Postman collection to send requests?\n\nWe recommend running the Postman collection several times to ensure it runs while Kafka is unavailable (30 seconds)."
+      "description": "### How often do you want to run the Postman collection to send requests?\n\nWe recommend running the Postman collection several times to ensure it runs while Kafka is unavailable (30 seconds)."
     },
     {
       "key": "processingTime",
       "name": "Processing Time",
-      "description": "## How much time do you want to give the system after Kafka is available again to process all received requests and before checking via a second Postman collection?"
+      "description": "### How much time do you want to give the system after Kafka is available again to process all received requests and before checking via a second Postman collection?"
     },
     {
       "key": "postmanCollectionCheck",
       "name": "Postman Collection Check",
-      "description": "## What is the name of the Postman collection that verifies whether all requests to your system where processed eventually?"
+      "description": "### What is the name of the Postman collection that verifies whether all requests to your system where processed eventually?"
     },
     {
       "key": "postmanEnvironmentName",
       "name": "Postman Environment Name",
-      "description": "## In which Postman environment do you want to run both Postman collections? (optional)"
+      "description": "### In which Postman environment do you want to run both Postman collections? (optional)"
     }
   ],
   "tags": [

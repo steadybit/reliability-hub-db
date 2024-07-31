@@ -6,17 +6,17 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "## What is the Kubernetes cluster in which the StatefulSet is running?"
+      "description": "### What is the Kubernetes cluster in which the StatefulSet is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "## What is the Kubernetes namespace in which the StatefulSet is running?"
+      "description": "### What is the Kubernetes namespace in which the StatefulSet is running?"
     },
     {
       "key": "k8sStatefulSet",
       "name": "Kubernetes StatefulSet",
-      "description": "## What is the Kubernetes StatefulSet under test?"
+      "description": "### What is the Kubernetes StatefulSet under test?"
     }
   ],
   "tags": [

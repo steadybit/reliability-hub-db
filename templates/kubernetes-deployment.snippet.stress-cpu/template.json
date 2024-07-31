@@ -6,22 +6,22 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "## What is the Kubernetes cluster in which the deployment is running?"
+      "description": "### What is the Kubernetes cluster in which the deployment is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "## What is the Kubernetes namespace in which the deployment is running?"
+      "description": "### What is the Kubernetes namespace in which the deployment is running?"
     },
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "## What is the Kubernetes deployment under test?"
+      "description": "### What is the Kubernetes deployment under test?"
     },
     {
       "key": "cpuLoad",
       "name": "CPU Load",
-      "description": "## How much load do you want to put on all CPU cores? E.g., `100%`"
+      "description": "### How much load do you want to put on all CPU cores? E.g., `100%`"
     }
   ],
   "tags": [

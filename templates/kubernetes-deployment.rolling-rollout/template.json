@@ -6,32 +6,32 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "## What is the Kubernetes cluster in which the pod under test is running?"
+      "description": "### What is the Kubernetes cluster in which the pod under test is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "## What is the Kubernetes namespace in which the pod under test is running?"
+      "description": "### What is the Kubernetes namespace in which the pod under test is running?"
     },
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "## What is the Kubernetes deployment under test?"
+      "description": "### What is the Kubernetes deployment under test?"
     },
     {
       "key": "k8sRollingUpdateDuration",
       "name": "Expected Duration for Rolling Update",
-      "description": "## How long do you expect to take for a rolling update on Kubernetes deployment?"
+      "description": "### How long do you expect to take for a rolling update on Kubernetes deployment?"
     },
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "## What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes deployment?"
+      "description": "### What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes deployment?"
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "## What is the expected success rate of HTTP requests while performing a rolling update? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while performing a rolling update? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     }
   ],
   "tags": [
