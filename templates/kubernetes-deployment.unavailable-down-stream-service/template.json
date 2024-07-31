@@ -6,32 +6,32 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "What is the Kubernetes cluster in which the deployment is running?"
+      "description": "## What is the Kubernetes cluster in which the deployment is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "What is the Kubernetes namespace in which the deployment is running?"
+      "description": "## What is the Kubernetes namespace in which the deployment is running?"
     },
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "What is the Kubernetes deployment under test?"
+      "description": "## What is the Kubernetes deployment under test?"
     },
     {
       "key": "httpUpstreamEndpoint",
       "name": "HTTP Upstream Endpoint",
-      "description": "What is the URL of an **upstream HTTP endpoint** served by **another** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\n\n**Note**: We will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
+      "description": "## What is the URL of an **upstream HTTP endpoint** served by **another** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\n\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "What is the expected success rate of HTTP requests while all pods of the downstream deployment are unavailable? E.g., `95%`\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "## What is the expected success rate of HTTP requests while all pods of the downstream deployment are unavailable? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
       "key": "recoveryTime",
       "name": "Recovery Time",
-      "description": "How long do you expect it to take before the blocked Kubernetes deployment can recover and is ready again?"
+      "description": "## How long do you expect it to take before the blocked Kubernetes deployment can recover and is ready again?"
     }
   ],
   "tags": [

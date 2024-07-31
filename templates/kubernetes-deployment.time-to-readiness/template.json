@@ -6,27 +6,27 @@
     {
       "key": "k8sClusterName",
       "name": "Kubernetes Cluster Name",
-      "description": "What is the Kubernetes cluster in which the pod under test is running?"
+      "description": "## What is the Kubernetes cluster in which the pod under test is running?"
     },
     {
       "key": "k8sNamespace",
       "name": "Kubernetes Namespace",
-      "description": "What is the Kubernetes namespace in which the pod under test is running?"
+      "description": "## What is the Kubernetes namespace in which the pod under test is running?"
     },
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "What is the Kubernetes deployment under test?"
+      "description": "## What is the Kubernetes deployment under test?"
     },
     {
       "key": "k8sContainerName",
       "name": "Container Name of Kubernetes Deployment",
-      "description": "What is the container's name, running in the Kubernetes Deployment, that should be stopped?"
+      "description": "## What is the container's name, running in the Kubernetes Deployment, that should be stopped?"
     },
     {
       "key": "k8sRecoveryTime",
       "name": "Deployment's Recovery Time",
-      "description": "How long do you expect it to take until a newly started pod is ready again?"
+      "description": "## How long do you expect it to take until a newly started pod is ready again?"
     }
   ],
   "tags": [

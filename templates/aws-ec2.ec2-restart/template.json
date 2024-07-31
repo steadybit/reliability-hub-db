@@ -6,27 +6,27 @@
     {
       "key": "awsAccount",
       "name": "AWS Account",
-      "description": "What is the AWS Account in which the EC2 is running?"
+      "description": "## What is the AWS Account in which the EC2 is running?"
     },
     {
       "key": "awsEC2InstanceName",
       "name": "AWS EC2 Instance Name",
-      "description": "What is the instance name of the EC2 that should be rebooted?"
+      "description": "## What is the instance name of the EC2 that should be rebooted?"
     },
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?\n\n**Note**: The HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
+      "description": "## What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?\n\nThe HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "What is the expected success rate of HTTP requests while the EC2 is rebooting?\n\n**Note:** Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "## What is the expected success rate of HTTP requests while the EC2 is rebooting?\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
       "key": "ec2RecoveryTime",
       "name": "EC2 Recovery Time",
-      "description": "How long do you expect it to take before EC2 is available again and the HTTP service works faultlessly?"
+      "description": "## How long do you expect it to take before EC2 is available again and the HTTP service works faultlessly?"
     }
   ],
   "tags": [
