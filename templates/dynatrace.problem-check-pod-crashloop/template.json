@@ -21,7 +21,7 @@
     {
       "key": "dynatraceEntitySelector",
       "name": "Dynatrace Entity Selector",
-      "description": "### What entity selector selects the entity on which Dynatrace should detect the problem? E.g., `entityId(\"CLOUD_APPLICATION-29ACDA7FF58FF097\")`"
+      "description": "### What entity selector selects the entity on which Dynatrace should detect the problem?\n\nE.g., `entityId(\"CLOUD_APPLICATION-29ACDA7FF58FF097\")`"
     }
   ],
   "tags": [
