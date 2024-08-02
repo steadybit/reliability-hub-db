@@ -19,6 +19,7 @@ helmChart:
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_grafana
 installation: https://github.com/steadybit/extension-grafana#installation
 changelog: https://github.com/steadybit/extension-grafana/blob/main/CHANGELOG.md
+releaseDate: '2024-08-01'
 tags:
   - Grafana
   - Kubernetes

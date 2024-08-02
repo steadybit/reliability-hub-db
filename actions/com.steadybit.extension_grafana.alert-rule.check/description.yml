@@ -10,3 +10,4 @@ kind: check
 category: monitoring
 targetType: com.steadybit.extension_grafana.alert-rule
 extension: com.steadybit.extension_grafana
+releaseDate: '2024-08-01'
