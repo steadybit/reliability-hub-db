@@ -138,7 +138,7 @@
               "Warn"
             ]
           },
-          "customLabel": "THEN: Monitor should be in 'Alert' state because of Non-Ready PODs for more than 2 minutes",
+          "customLabel": "THEN: Monitor should be in 'Alert' state because of non-ready pods for more than 2 minutes",
           "actionType": "com.steadybit.extension_datadog.monitor.status_check",
           "radius": {
             "targetType": "com.steadybit.extension_datadog.monitor",
