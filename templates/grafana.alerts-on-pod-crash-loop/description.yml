@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/grafana.alerts-on-pod-crash-loop
+maintainer: com.steadybit
