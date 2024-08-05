@@ -135,7 +135,7 @@
             "duration": "6m",
             "stateCheckMode": "atLeastOnce",
             "expectedStateList": [
-              "firing",
+              "firing"
             ]
           },
           "customLabel": "THEN: Alert Rule is firing because of non-ready pods for more than 2 minutes",
