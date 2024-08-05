@@ -1,5 +1,5 @@
 {
-    "lastChange": 1722867052,
+    "lastChange": 1722871709,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-zone.zone-outage/template.json",
@@ -12,6 +12,7 @@
         "/templates/db-postgresql.postgresql-unavailable-datadog-check/template.json",
         "/templates/db-postgresql.postgresql-unavailable/template.json",
         "/templates/dynatrace.problem-check-pod-crashloop/template.json",
+        "/templates/grafana.alerts-on-pod-crash-loop/template.json",
         "/templates/instana.event-check-pod-crashloop/template.json",
         "/templates/kubernetes-daemonset.snippet.block-traffic/template.json",
         "/templates/kubernetes-daemonset.snippet.stress-cpu/template.json",
