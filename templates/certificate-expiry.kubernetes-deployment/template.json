@@ -1,0 +1,169 @@
+{
+  "id": "019127d4-37a9-7e33-86ef-f25f8da9f4eb",
+  "templateTitle": "Certificate TLS/SSL expiry for Kubernetes deployment",
+  "templateDescription": "TODO\n## Motivation\n\nTODO\n## Structure\nTODO\n## Solution Sketch\nTODO\n\n## Warning\nTODO\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward.",
+  "placeholders": [
+    {
+      "key": "httpEndpoint",
+      "name": "Secured HTTP Endpoint",
+      "description": "### What is the secured HTTP endpoint URL that should still work in the future?\nThe HTTP endpoint should be secured with an SSL certificate to validate the certificate expiry.\nWe will perform requests before and while changing a host's time to validate that this endpoint works fine today and in the future and that the SSL certificate hasn't expired."
+    },
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment providing the HTTP endpoint runs?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the deployment providing the HTTP endpoint runs?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment providing the secured HTTP endpoint?"
+    },
+    {
+      "key": "days",
+      "name": "Expiration in Days",
+      "description": "### How many days in the future would you like to validate the expiry date of the certificate?"
+    }
+  ],
+  "tags": [
+    "Certificate Expiry"
+  ],
+  "experimentName": "TLS/SSL Certificate doesn't expire within next [[days]] for [[k8sDeployment]]",
+  "hypothesis": "When a host's time is +[[days]] days, the secured HTTP endpoint should still be working and no certificates are expired.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: HTTP requests are valid for today",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: HTTP requests continue to be valid in +[[days]] days",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "offset": "[[days]]",
+            "duration": "60s",
+            "disableNtp": true
+          },
+          "customLabel": "WHEN: Host's time is +[[days]] days",
+          "actionType": "com.steadybit.extension_host.timetravel",
+          "radius": {
+            "targetType": "com.steadybit.extension_host.host",
+            "predicate": {
+              "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\")"
+            },
+            "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\")",
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
