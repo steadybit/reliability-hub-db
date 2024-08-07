@@ -42,6 +42,7 @@
   "tags": [
     "Postgres",
     "Recoverability",
+    "RDS",
     "Datadog"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] and Datadog alerts when Postgres database suffers latency",

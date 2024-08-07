@@ -41,7 +41,8 @@
   ],
   "tags": [
     "Microsoft SQL Server",
-    "Recoverability"
+    "Recoverability",
+    "RDS"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] when Microsoft SQL Server database can not be reached",
   "hypothesis": "Whenever Microsoft SQL Server database is down, the deployment [[k8sDeployment]] fails gracefully and a load-balanced HTTP endpoint works within a given success rate.",
