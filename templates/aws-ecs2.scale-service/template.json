@@ -1,6 +1,6 @@
 {
   "id": "0191284e-fd72-7632-8549-5773c2e675d2",
-  "templateTitle": "Scaling up of Ecs Service Within Given Time",
+  "templateTitle": "Scaling up of ECS Service Within Given Time",
   "templateDescription": "Ensure that you can scale up your ECS service in a reasonable time.\n\n## Motivation\nFor an elastic and resilient cloud infrastructure, ensure you can scale up your ECS services within a reasonable time. Long startup times are undesirable but sometimes unnoticed and unexpected.\n\n## Structure\nValidate that all ECS tasks of an ECS service are running. Once we scale the ECS service up, the newly scheduled task should be ready within a reasonable time.",
   "placeholders": [
     {
