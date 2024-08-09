@@ -1,0 +1,299 @@
+{
+  "id": "01913267-96c0-7368-ad08-dc5f39f6ce31",
+  "templateTitle": "Kubernetes Horizontal Pod Autoscaler Scales up Within Reasonable Time",
+  "templateDescription": "Verify that your horizontal pod autoscaler scales up your Kubernetes deployment on increased CPU usage.\n\n## Motivation\nImportant deployments should be scaled up within a reasonable time for an elastic and resilient cloud infrastructure. Undetected high CPU spikes and long startup times are undesirable in these infrastructures.\n\n## Structure\nFirst, we ensure that all pods are ready to serve traffic. Afterward, we inject high CPU usage into the pods' container and expect that within a reasonable amount of time, the horizontal pod auto scaler will increase the number of pods and become ready to handle incoming traffic.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "containerCPUStress",
+      "name": "CPU Utilization",
+      "description": "### How much do you want to stress the containers' CPU?\nPlease ensure that you are using a CPU utilization that is large enough to trigger your HorizontalPodAutoscaler (e.g., `90%`)."
+    },
+    {
+      "key": "cpuStressDuration",
+      "name": "CPU Stress Duration",
+      "description": "### How long do you want to stress the CPU until the horizontal pod autoscaler should scale up?"
+    },
+    {
+      "key": "scaleUpPodTimeout",
+      "name": "Timeout for Pod Readiness",
+      "description": "### How long do you expect it to take till upscaling is successful?\nPlease make sure that you choose a value that is **larger than the duration of the CPU stress** and also include the time **until the pod is ready**."
+    }
+  ],
+  "tags": [
+    "Scalability",
+    "Horizontal Pod Autoscaler",
+    "CPU",
+    "Kubernetes"
+  ],
+  "experimentName": "Scaling via Stress CPU",
+  "hypothesis": "When stressing the CPU of [[k8sDeployment]], the HPA should scale the deployment up within [[scaleUpPodTimeout]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[cpuStressDuration]]",
+            "workers": 0,
+            "cpuLoad": "[[containerCPUStress]]"
+          },
+          "customLabel": "WHEN: Stressing CPU of [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.stress_cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[scaleUpPodTimeout]]",
+            "podCountCheckMode": "podCountIncreased"
+          },
+          "customLabel": "THEN: Scaled up pod is becoming ready within [[scaleUpPodTimeout]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[scaleUpPodTimeout]]"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[scaleUpPodTimeout]]"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
