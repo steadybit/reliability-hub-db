@@ -26,8 +26,8 @@
   ],
   "tags": [
     "Scalability",
-    "ECS",
     "Elasticity",
+    "AWS ECS",
     "AWS"
   ],
   "experimentName": "ECS up-scaling of [[ecsServiceName]]",
