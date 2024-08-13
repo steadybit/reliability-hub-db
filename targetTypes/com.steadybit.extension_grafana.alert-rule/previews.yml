@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: dd2jbbW2yyI
 - type: image
   src: 1.png
   alt: Identified information about a Grafana alert rule that can later be used within experiments.
