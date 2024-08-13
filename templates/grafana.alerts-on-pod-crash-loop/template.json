@@ -143,7 +143,7 @@
             ],
             "stateCheckMode": "atLeastOnce"
           },
-          "customLabel": "THEN: Alert Rule is firing because of non-ready pods for more than 2 minutes",
+          "customLabel": "THEN: Alert Rule is firing because of non-ready pods for more than [[grafanaAlertRuleTimeout]]",
           "actionType": "com.steadybit.extension_grafana.alert-rule.check",
           "radius": {
             "targetType": "com.steadybit.extension_grafana.alert-rule",
