@@ -8,9 +8,10 @@ The exception is thrown before the method is executed, so the attackedw´ method
 
 # Parameters
 
-| Parameter           | Description                                                      | Default |
-|---------------------|------------------------------------------------------------------|---------|
-| Class Name          | Which Java class should be attacked?                             |         |
-| Method Name         | Which public method should be attacked?                          |         |
-| Duration            | How long should the method be intercepted to throw an exception? | 30s     |
-| Erroneous Call Rate | How many percent of requests should trigger an exception?        | 100     |
+| Parameter                      | Description                                                                 | Default |
+|--------------------------------|-----------------------------------------------------------------------------|---------|
+| Class Name                     | Which Java class should be attacked?                                        |         |
+| Method Name                    | Which public method should be attacked?                                     |         |
+| Duration                       | How long should the method be intercepted to throw an exception?            | 30s     |
+| Erroneous Call Rate            | How many percent of requests should trigger an exception?                   | 100     |
+| Validate class and method name |Should the action fail if the specified class and method could not be found? | true    |
