@@ -116,7 +116,7 @@
             "networkInterface": [
               "eth0"
             ],
-            "networkDelayJitter": true
+            "networkDelayJitter": false
           },
           "customLabel": "WHEN: Redis is slow because of a network issue",
           "actionType": "com.steadybit.extension_container.network_delay",

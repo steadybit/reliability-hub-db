@@ -107,7 +107,7 @@
               "eth0"
             ],
             "failOnHostNetwork": "true",
-            "networkDelayJitter": true
+            "networkDelayJitter": false
           },
           "customLabel": "WHEN: RabbitMQ is slow because of a network issue",
           "actionType": "com.steadybit.extension_container.network_delay",

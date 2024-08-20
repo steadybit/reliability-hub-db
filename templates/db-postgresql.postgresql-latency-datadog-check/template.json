@@ -131,7 +131,7 @@
             "networkInterface": [],
             "ip": [],
             "failOnHostNetwork": true,
-            "networkDelayJitter": true
+            "networkDelayJitter": false
           },
           "customLabel": "WHEN: PostgreSQL suffers latencies",
           "actionType": "com.steadybit.extension_container.network_delay",
