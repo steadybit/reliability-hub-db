@@ -105,6 +105,17 @@
             },
             "query": null
           }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
         },
         {
           "type": "action",

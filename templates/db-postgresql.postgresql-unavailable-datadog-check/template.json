@@ -45,9 +45,9 @@
     }
   ],
   "tags": [
+    "RDS",
     "Postgres",
     "Recoverability",
-    "RDS",
     "Datadog"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] and Datadog alerts when Postgres database can not be reached",
@@ -110,6 +110,17 @@
               ]
             },
             "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
           }
         },
         {

@@ -198,14 +198,14 @@
           "type": "wait",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "40s"
+            "duration": "30s"
           }
         },
         {
           "type": "action",
           "ignoreFailure": true,
           "parameters": {
-            "duration": "100s",
+            "duration": "2m",
             "statusCheckMode": "atLeastOnce",
             "expectedStatusList": [
               "Alert"

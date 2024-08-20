@@ -170,7 +170,7 @@
               "OK"
             ]
           },
-          "customLabel": "GIVEN: Monitors are all green again",
+          "customLabel": "THEN: Monitors are all green again",
           "actionType": "com.steadybit.extension_datadog.monitor.status_check",
           "radius": {
             "targetType": "com.steadybit.extension_datadog.monitor",
@@ -197,14 +197,14 @@
           "type": "wait",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "40s"
+            "duration": "30s"
           }
         },
         {
           "type": "action",
           "ignoreFailure": true,
           "parameters": {
-            "duration": "100s",
+            "duration": "2m",
             "statusCheckMode": "atLeastOnce",
             "expectedStatusList": [
               "Alert"

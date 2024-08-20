@@ -143,17 +143,10 @@
           }
         },
         {
-          "type": "wait",
-          "ignoreFailure": false,
-          "parameters": {
-            "duration": "20s"
-          }
-        },
-        {
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "30s",
+            "duration": "60s",
             "statusCheckMode": "allTheTime",
             "expectedStatusList": [
               "OK"
@@ -213,17 +206,10 @@
           }
         },
         {
-          "type": "wait",
-          "ignoreFailure": false,
-          "parameters": {
-            "duration": "30s"
-          }
-        },
-        {
           "type": "action",
           "ignoreFailure": true,
           "parameters": {
-            "duration": "100s",
+            "duration": "2m",
             "statusCheckMode": "atLeastOnce",
             "expectedStatusList": [
               "Alert"

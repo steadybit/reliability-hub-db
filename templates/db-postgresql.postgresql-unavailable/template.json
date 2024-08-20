@@ -40,9 +40,9 @@
     }
   ],
   "tags": [
+    "RDS",
     "Postgres",
-    "Recoverability",
-    "RDS"
+    "Recoverability"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] when Postgres database can not be reached",
   "hypothesis": "Whenever the Postgres database is down, the deployment [[k8sDeployment]] fails gracefully, and a load-balanced HTTP endpoint works within a given success rate.",
@@ -104,6 +104,17 @@
               ]
             },
             "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
           }
         },
         {
