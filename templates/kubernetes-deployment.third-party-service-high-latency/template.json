@@ -1,7 +1,7 @@
 {
-  "id": "d5d9a162-4c24-419c-959a-80b9cdbfba2d",
-  "templateTitle": "Third-party service is unavailable for a Kubernetes Deployment",
-  "templateDescription": "Identify the effect of an unavailable third-party service on your deployment's service's success metrics.\n\n## Motivation\n\nWhen you provide a synchronous service via HTTP that requires the availability of other downstream third-party services, you absolutely should check how your service behaves in case the third-party service is unavailable. Also, you want to validate whether your service is working again as soon as the third-party service is working again.\n\n## Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate the third-party service being unavailable, we expect the user-facing endpoint to work within specified HTTP success rates..\nTo simulate the unavailability, we can block the traffic to the third-party service on the client side using its hostname.\nThe endpoint should recover automatically once the third-party service is reachable again.",
+  "id": "127edf03-a09f-4f36-ade1-6de84d854b2d",
+  "templateTitle": "Third-party service suffers high latency for a Kubernetes Deployment",
+  "templateDescription": "Identify the effect of high latency of a third-party service on your deployment's service's success metrics.\n\n## Motivation\n\nWhen you provide a synchronous service via HTTP that requires the availability of other downstream third-party services, you absolutely should check how your service behaves in case the third-party service suffers high latency. Also, you want to validate whether your service is working again as soon as the third-party service is working again.\n\n## Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate the third-party service's high latency, we expect the user-facing endpoint to work within specified HTTP success rates..\nTo simulate the high latency, we can delay the traffic to the third-party service on the client side using its hostname.\nThe endpoint should recover automatically once the third-party service is reachable again.",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -26,7 +26,7 @@
     {
       "key": "thirdPartyHostname",
       "name": "Third-Party Hostname",
-      "description": "### What is the hostname of the third-party service used by the Kubernetes deployment?\n\nJust so you know, we only block traffic from the Kubernetes deployment on that specific hostname to simulate the unavailability of the third-party service. This has the beauty that no other deployments are affected, and you don't need to install anything in the third-party.\n\nPlease note that this approach might not work out if you use a reverse proxy or service mesh."
+      "description": "### What is the hostname of the third-party service used by the Kubernetes deployment?\n\nJust so you know, we only delay traffic from the Kubernetes deployment on that specific hostname to simulate the high latency of the third-party service. This has the beauty that no other deployments are affected, and you don't need to install anything in the third-party.\n\nPlease note that this approach might not work out if you use a reverse proxy or service mesh."
     },
     {
       "key": "httpLoadBalancedEndpoint",
@@ -36,7 +36,7 @@
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests while third-party service is unavailable?\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while third-party services suffers high latency?\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     }
   ],
   "tags": [
@@ -44,8 +44,8 @@
     "Downstream Service",
     "Recoverability"
   ],
-  "experimentName": "[[k8sDeployment]] survives unavailability of third-party service [[thirdPartyServiceName]]",
-  "hypothesis": "Whenever third-party service [[thirdPartyServiceName]] is unavailable, the deployment [[k8sDeployment]]'s load-balanced HTTP endpoint works within a given success rate.",
+  "experimentName": "[[k8sDeployment]] survives high latency of third-party service [[thirdPartyServiceName]]",
+  "hypothesis": "Whenever third-party service [[thirdPartyServiceName]] has high latency, the deployment [[k8sDeployment]]'s load-balanced HTTP endpoint works within a given success rate.",
   "lanes": [
     {
       "steps": [
@@ -122,13 +122,18 @@
           "ignoreFailure": false,
           "parameters": {
             "duration": "60s",
-            "failOnHostNetwork": "true",
             "hostname": [
               "[[thirdPartyHostname]]"
-            ]
+            ],
+            "networkDelay": "300ms",
+            "networkInterface": [
+              "eth0"
+            ],
+            "failOnHostNetwork": "true",
+            "networkDelayJitter": false
           },
           "customLabel": "WHEN: Third-party service [[thirdPartyServiceName]] is not available",
-          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "actionType": "com.steadybit.extension_container.network_delay",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
             "predicate": {

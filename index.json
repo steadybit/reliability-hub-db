@@ -26,6 +26,7 @@
         "/templates/kubernetes-deployment.snippet.block-traffic/template.json",
         "/templates/kubernetes-deployment.snippet.stress-cpu/template.json",
         "/templates/kubernetes-deployment.snippet.stress-memory/template.json",
+        "/templates/kubernetes-deployment.third-party-service-high-latency/template.json",
         "/templates/kubernetes-deployment.third-party-service-unavailable/template.json",
         "/templates/kubernetes-deployment.time-to-readiness/template.json",
         "/templates/kubernetes-deployment.unavailable-down-stream-service/template.json",
