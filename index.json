@@ -1,5 +1,5 @@
 {
-    "lastChange": 1724331843,
+    "lastChange": 1724665594,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -68,6 +68,7 @@
         "/actions/com.steadybit.extension_azure.scale_set.instance.state/summary.mdx",
         "/actions/com.steadybit.extension_azure.vm.state/summary.mdx",
         "/actions/com.steadybit.extension_container.fill_disk/summary.mdx",
+        "/actions/com.steadybit.extension_container.fill_mem/summary.mdx",
         "/actions/com.steadybit.extension_container.network_bandwidth/summary.mdx",
         "/actions/com.steadybit.extension_container.network_blackhole/summary.mdx",
         "/actions/com.steadybit.extension_container.network_block_dns/summary.mdx",
@@ -87,6 +88,7 @@
         "/actions/com.steadybit.extension_gcp.vm.state/summary.mdx",
         "/actions/com.steadybit.extension_grafana.alert-rule.check/summary.mdx",
         "/actions/com.steadybit.extension_host.fill_disk/summary.mdx",
+        "/actions/com.steadybit.extension_host.fill_mem/summary.mdx",
         "/actions/com.steadybit.extension_host.network_bandwidth/summary.mdx",
         "/actions/com.steadybit.extension_host.network_blackhole/summary.mdx",
         "/actions/com.steadybit.extension_host.network_block_dns/summary.mdx",
