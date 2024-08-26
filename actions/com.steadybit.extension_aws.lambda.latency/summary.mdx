@@ -10,6 +10,8 @@ This action leverages [steadybit/failure-lambda](https://github.com/steadybit/fa
 
 The AWS Lambda Function to attack must [be wrapped with the failure-lambda library](https://github.com/steadybit/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
 
+Please note that multiple parallel failure injections on the same lambda function are not supported.
+
 # Parameters
 
 | Parameter       | Description                                                                       | Default |
