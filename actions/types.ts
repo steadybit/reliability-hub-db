@@ -2,38 +2,39 @@
  * Copyright 2023 steadybit GmbH. All rights reserved.
  */
 
-import { ActionDescription as ActionKitActionDescription } from "@steadybit/action-kit-api";
-
-import { ExtensionId } from "../extensions/types";
+import {ExtensionId} from "../extensions/types";
 
 export type Deprecation = ReplacementDeprecation | FullDeprecation;
 
 export interface ReplacementDeprecation {
-  type: "replacement";
-  newActionId: string;
+    type: "replacement";
+    newActionId: string;
 }
 
 export interface FullDeprecation {
-  type: "deprecated";
+    type: "deprecated";
 }
 
 export function isReplacementDeprecation(
-  d: Deprecation,
+    d: Deprecation,
 ): d is ReplacementDeprecation {
-  return d.type === "replacement";
+    return d.type === "replacement";
 }
 
 export function isFullDeprecation(d: Deprecation): d is FullDeprecation {
-  return d.type === "deprecated";
+    return d.type === "deprecated";
 }
 
-export interface ActionDescription
-  extends Pick<
-    ActionKitActionDescription,
-    "id" | "label" | "icon" | "kind" | "category" | "targetType" | "description"
-  > {
-  extension: ExtensionId;
-  deprecation?: Deprecation;
-  promotedActions: string[];
-  releaseDate?: string;
+export interface ActionDescription {
+    id: string;
+    label: string;
+    icon: string;
+    kind: 'attack' | 'check' | 'load_test' | 'other';
+    category: string | null;
+    targetType?: string | null;
+    description: string;
+    extension: ExtensionId;
+    deprecation?: Deprecation;
+    promotedActions: string[];
+    releaseDate?: string;
 }

@@ -2,16 +2,14 @@
  * Copyright 2023 steadybit GmbH. All rights reserved.
  */
 
-import { TargetDescription as DiscoveryKitTargetDescription } from "@steadybit/discovery-kit-api";
+import {ExtensionId} from "../extensions/types";
 
-import { ExtensionId } from "../extensions/types";
-
-export interface TargetTypeDescription
-  extends Pick<
-    DiscoveryKitTargetDescription,
-    "id" | "label" | "icon" | "category"
-  > {
-  description?: string;
-  extension: ExtensionId;
-  releaseDate?: string;
+export interface TargetTypeDescription {
+    id: string;
+    label: { one: string, other: string };
+    icon?: string ;
+    category?: string | null;
+    description?: string;
+    extension: ExtensionId;
+    releaseDate?: string;
 }
