@@ -13,9 +13,6 @@ ghcr:
   owner: steadybit
   repository: extension-grafana
   package: extension-grafana
-helmChart:
-  repository: https://steadybit.github.io/extension-grafana
-  name: steadybit-extension-grafana
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_grafana
 installation: https://github.com/steadybit/extension-grafana#installation
 changelog: https://github.com/steadybit/extension-grafana/blob/main/CHANGELOG.md

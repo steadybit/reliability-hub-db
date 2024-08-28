@@ -14,9 +14,6 @@ ghcr:
   owner: steadybit
   repository: extension-dynatrace
   package: extension-dynatrace
-helmChart:
-  repository: https://steadybit.github.io/extension-dynatrace
-  name: steadybit-extension-dynatrace
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_dynatrace
 installation: https://github.com/steadybit/extension-dynatrace#installation
 changelog: https://github.com/steadybit/extension-dynatrace/blob/main/CHANGELOG.md

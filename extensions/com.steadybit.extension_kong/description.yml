@@ -19,9 +19,6 @@ ghcr:
   owner: steadybit
   repository: extension-kong
   package: extension-kong
-helmChart:
-  repository: https://steadybit.github.io/extension-kong
-  name: steadybit-extension-kong
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_kong
 installation: https://github.com/steadybit/extension-kong#installation
 changelog: https://github.com/steadybit/extension-kong/blob/main/CHANGELOG.md

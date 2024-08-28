@@ -19,9 +19,6 @@ ghcr:
   owner: steadybit
   repository: extension-istio
   package: extension-istio
-helmChart:
-  repository: https://steadybit.github.io/extension-istio
-  name: steadybit-extension-istio
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_istio
 installation: https://github.com/steadybit/extension-istio#installation
 changelog: https://github.com/steadybit/extension-istio/blob/main/CHANGELOG.md

@@ -13,9 +13,6 @@ ghcr:
   owner: steadybit
   repository: extension-jmeter
   package: extension-jmeter
-helmChart:
-  repository: https://steadybit.github.io/extension-jmeter
-  name: steadybit-extension-jmeter
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_jmeter
 installation: https://github.com/steadybit/extension-jmeter#installation
 changelog: https://github.com/steadybit/extension-jmeter/blob/main/CHANGELOG.md

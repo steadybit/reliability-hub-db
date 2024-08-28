@@ -24,9 +24,6 @@ ghcr:
   owner: steadybit
   repository: extension-aws
   package: extension-aws
-helmChart:
-  repository: https://steadybit.github.io/extension-aws
-  name: steadybit-extension-aws
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_aws
 installation: https://github.com/steadybit/extension-aws#installation
 changelog: https://github.com/steadybit/extension-aws/blob/main/CHANGELOG.md

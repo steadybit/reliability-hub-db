@@ -14,9 +14,6 @@ ghcr:
   owner: steadybit
   repository: extension-instana
   package: extension-instana
-helmChart:
-  repository: https://steadybit.github.io/extension-instana
-  name: steadybit-extension-instana
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_instana
 installation: https://github.com/steadybit/extension-instana#installation
 changelog: https://github.com/steadybit/extension-instana/blob/main/CHANGELOG.md

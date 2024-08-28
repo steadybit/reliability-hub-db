@@ -16,9 +16,6 @@ ghcr:
   owner: steadybit
   repository: extension-http
   package: extension-http
-helmChart:
-  repository: https://steadybit.github.io/extension-http
-  name: steadybit-extension-http
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_http
 installation: https://github.com/steadybit/extension-http#installation
 changelog: https://github.com/steadybit/extension-http/blob/main/CHANGELOG.md
