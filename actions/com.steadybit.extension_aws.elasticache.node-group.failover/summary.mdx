@@ -1,0 +1,16 @@
+# Introduction
+
+This action leverages AWS Elasticache API to trigger an Elasticache Nodegroup failover. This is done by promoting a replica to the primary role.
+
+# Use Cases
+
+- Understand how a service behaves when elasticache nodegroup is performing a failover
+- Understand the performance impact when elasticache performs a failover, e.g., cold caches.
+
+# Rollback
+
+Note that this attack does not support any rollback. The attack triggers the [failover via API](https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_TestFailover.html). The failover can't be canceled.
+
+# Parameters
+
+*No parameters.*
