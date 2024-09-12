@@ -1,5 +1,5 @@
 {
-    "lastChange": 1724856684,
+    "lastChange": 1726133230,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -56,6 +56,7 @@
         "/actions/com.steadybit.extension_aws.ecs-task.stress_cpu/summary.mdx",
         "/actions/com.steadybit.extension_aws.ecs-task.stress_io/summary.mdx",
         "/actions/com.steadybit.extension_aws.ecs-task.stress_mem/summary.mdx",
+        "/actions/com.steadybit.extension_aws.elasticache.node-group.failover/summary.mdx",
         "/actions/com.steadybit.extension_aws.fis.start_experiment/summary.mdx",
         "/actions/com.steadybit.extension_aws.lambda.denylist/summary.mdx",
         "/actions/com.steadybit.extension_aws.lambda.diskspace/summary.mdx",
