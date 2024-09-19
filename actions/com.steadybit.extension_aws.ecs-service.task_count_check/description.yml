@@ -12,3 +12,4 @@ kind: check
 category: AWS ECS
 targetType: com.steadybit.extension_aws.ecs-service
 extension: com.steadybit.extension_aws
+releaseDate: '2024-06-21'
