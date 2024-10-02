@@ -20,6 +20,7 @@ targetType: com.steadybit.extension_azure.vm
 extension: com.steadybit.extension_azure
 tags:
   - Azure
+  - Azure Virtual Machines
   - Cloud
-  - Virtual machine
+  - Virtual machines
   - VM

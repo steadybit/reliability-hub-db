@@ -11,3 +11,4 @@ extension: com.steadybit.extension_host
 tags:
   - Host
   - Kubernetes
+  - Memory

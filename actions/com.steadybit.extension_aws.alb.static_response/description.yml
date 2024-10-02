@@ -14,4 +14,5 @@ targetType: com.steadybit.extension_aws.alb
 extension: com.steadybit.extension_aws
 tags:
   - AWS
+  - AWS ALB
   - Cloud

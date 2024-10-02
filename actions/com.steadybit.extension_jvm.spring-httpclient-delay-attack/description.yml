@@ -10,3 +10,4 @@ extension: com.steadybit.extension_jvm
 tags:
   - JVM
   - Java
+  - Latency

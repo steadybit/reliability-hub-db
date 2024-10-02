@@ -11,3 +11,4 @@ extension: com.steadybit.extension_container
 tags:
   - Container
   - Kubernetes
+  - Memory

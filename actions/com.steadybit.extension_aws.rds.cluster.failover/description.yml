@@ -22,4 +22,5 @@ targetType: com.steadybit.extension_aws.rds.cluster
 extension: com.steadybit.extension_aws
 tags:
   - AWS
+  - AWS RDS
   - Cloud

@@ -11,4 +11,5 @@ extension: com.steadybit.extension_aws
 releaseDate: '2024-09-15'
 tags:
   - AWS
+  - AWS MSK
   - Cloud

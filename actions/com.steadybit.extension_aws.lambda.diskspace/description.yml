@@ -12,4 +12,5 @@ targetType: com.steadybit.extension_aws.lambda
 extension: com.steadybit.extension_aws
 tags:
   - AWS
+  - AWS Lambda
   - Cloud

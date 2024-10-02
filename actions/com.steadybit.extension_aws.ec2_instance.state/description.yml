@@ -16,4 +16,5 @@ targetType: com.steadybit.extension_aws.ec2-instance
 extension: com.steadybit.extension_aws
 tags:
   - AWS
+  - AWS EC2
   - Cloud

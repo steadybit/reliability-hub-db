@@ -20,6 +20,7 @@ targetType: com.steadybit.extension_azure.scale_set.instance
 extension: com.steadybit.extension_azure
 tags:
   - Azure
+  - Azure Virtual Machines
   - Cloud
-  - Virtual machine
+  - Virtual machines
   - VM
