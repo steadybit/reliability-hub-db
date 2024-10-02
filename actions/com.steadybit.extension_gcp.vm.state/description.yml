@@ -15,3 +15,8 @@ kind: attack
 category: state
 targetType: com.steadybit.extension_gcp.vm
 extension: com.steadybit.extension_gcp
+tags:
+  - Google Cloud (GCP)
+  - Cloud
+  - Virtual machine
+  - VM

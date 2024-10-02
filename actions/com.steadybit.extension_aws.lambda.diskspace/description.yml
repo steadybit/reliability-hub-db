@@ -10,3 +10,6 @@ kind: attack
 category: application
 targetType: com.steadybit.extension_aws.lambda
 extension: com.steadybit.extension_aws
+tags:
+  - AWS
+  - Cloud

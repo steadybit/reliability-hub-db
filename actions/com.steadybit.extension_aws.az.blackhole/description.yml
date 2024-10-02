@@ -15,3 +15,6 @@ kind: attack
 category: network
 targetType: com.steadybit.extension_aws.zone
 extension: com.steadybit.extension_aws
+tags:
+  - AWS
+  - Cloud

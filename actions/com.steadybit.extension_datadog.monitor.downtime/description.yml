@@ -14,3 +14,8 @@ kind: other
 category: monitoring
 targetType: com.steadybit.extension_datadog.monitor
 extension: com.steadybit.extension_datadog
+tags:
+  - Datadog
+  - Check
+  - Observability
+  - Monitoring

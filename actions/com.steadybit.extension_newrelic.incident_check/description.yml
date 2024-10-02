@@ -12,3 +12,9 @@ category: monitoring
 releaseDate: '2023-01-22'
 targetType: com.steadybit.extension_newrelic.account
 extension: com.steadybit.extension_newrelic
+tags:
+  - New Relic
+  - Check
+  - Observability
+  - Monitoring
+

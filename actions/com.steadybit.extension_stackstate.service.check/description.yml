@@ -8,3 +8,9 @@ kind: check
 category: monitoring
 targetType: com.steadybit.extension_stackstate.service
 extension: com.steadybit.extension_stackstate
+tags:
+  - StackState
+  - Kubernetes
+  - Check
+  - Observability
+  - Monitoring

@@ -12,3 +12,6 @@ icon: |
 kind: attack
 targetType: com.steadybit.extension_aws.alb
 extension: com.steadybit.extension_aws
+tags:
+  - AWS
+  - Cloud

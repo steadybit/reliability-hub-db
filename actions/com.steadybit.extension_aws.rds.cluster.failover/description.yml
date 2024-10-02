@@ -20,3 +20,6 @@ kind: attack
 category: resource
 targetType: com.steadybit.extension_aws.rds.cluster
 extension: com.steadybit.extension_aws
+tags:
+  - AWS
+  - Cloud

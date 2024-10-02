@@ -22,3 +22,7 @@ icon: |
 
 kind: check
 extension: com.steadybit.extension_http
+tags:
+  - Http
+  - Check
+

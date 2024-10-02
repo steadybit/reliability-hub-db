@@ -9,3 +9,6 @@ category: resource
 targetType: com.steadybit.extension_aws.elasticache.node-group
 extension: com.steadybit.extension_aws
 releaseDate: '2024-09-15'
+tags:
+  - AWS
+  - Cloud

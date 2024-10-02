@@ -9,3 +9,8 @@ kind: check
 category: monitoring
 releaseDate: '2023-12-01'
 extension: com.steadybit.extension_dynatrace
+tags:
+  - Dynatrace
+  - Check
+  - Observability
+  - Monitoring

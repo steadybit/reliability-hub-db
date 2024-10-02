@@ -7,3 +7,6 @@ kind: attack
 category: application
 targetType: com.steadybit.extension_jvm.jvm-instance
 extension: com.steadybit.extension_jvm
+tags:
+  - JVM
+  - Java

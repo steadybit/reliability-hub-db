@@ -12,3 +12,6 @@ kind: attack
 targetType: com.steadybit.extension_aws.ecs-task
 extension: com.steadybit.extension_aws
 releaseDate: '2024-06-21'
+tags:
+  - AWS
+  - Cloud
