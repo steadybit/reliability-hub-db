@@ -4,16 +4,6 @@
   "templateDescription": "Learn how easy you can block traffic of an entire Kubernetes deployment.",
   "placeholders": [
     {
-      "key": "k8sClusterName",
-      "name": "Kubernetes Cluster Name",
-      "description": "### What is the Kubernetes cluster in which the deployment is running?"
-    },
-    {
-      "key": "k8sNamespace",
-      "name": "Kubernetes Namespace",
-      "description": "### What is the Kubernetes namespace in which the deployment is running?"
-    },
-    {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
       "description": "### What is the Kubernetes deployment under test?"
@@ -45,9 +35,18 @@
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
             "predicate": {
-              "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\")"
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
             },
-            "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\")",
+            "query": null,
             "percentage": 100
           }
         }

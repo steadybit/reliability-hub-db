@@ -4,16 +4,6 @@
   "templateDescription": "Learn how easy you can block traffic of an entire Kubernetes DaemonSet.",
   "placeholders": [
     {
-      "key": "k8sClusterName",
-      "name": "Kubernetes Cluster Name",
-      "description": "### What is the Kubernetes cluster in which the DaemonSet is running?"
-    },
-    {
-      "key": "k8sNamespace",
-      "name": "Kubernetes Namespace",
-      "description": "### What is the Kubernetes namespace in which the DaemonSet is running?"
-    },
-    {
       "key": "k8sDaemonSet",
       "name": "Kubernetes DaemonSet",
       "description": "### What is the Kubernetes DaemonSet under test?"
@@ -47,20 +37,6 @@
             "predicate": {
               "operator": "AND",
               "predicates": [
-                {
-                  "key": "k8s.cluster-name",
-                  "operator": "EQUALS",
-                  "values": [
-                    "[[k8sClusterName]]"
-                  ]
-                },
-                {
-                  "key": "k8s.namespace",
-                  "operator": "EQUALS",
-                  "values": [
-                    "[[k8sNamespace]]"
-                  ]
-                },
                 {
                   "key": "k8s.daemonset",
                   "operator": "EQUALS",
