@@ -1,9 +1,17 @@
 # Introduction
 
-The AWS (Amazon Web Services) extension bundles various attack, target discovery, and check capabilities for the AWS product pallet.
+The AWS (Amazon Web Services) extension bundles various attacks, target discovery, and check capabilities for AWS managed services.
 For example, you can use the AWS extension to change the state of EC2 instances, trigger reboot or failover for RDS instances, mess around with ECS tasks and services, or inject failures into lambdas.
 
 The AWS extension is, in essence, an adapter for the AWS APIs.
-If you need additional capabilities, please consider contributing these directly via GitHub.
 
 To set up the extension and the needed IAM permissions, please consult the [steadybit/extension-aws/README.md](https://github.com/steadybit/extension-aws/blob/main/README.md)
+
+# Further Support for Managed Services
+While the AWS extension provides integrations to managed services via AWS APIs, we also offer deeper integration for the following services based on the underlying technology.
+
+## Elastic Kubernetes Service (EKS)
+Benefit in AWS EKS from the same integration we offer for unmanaged Kubernetes clusters by installing the following extensions in your Kubernetes cluster: [extension-kubernetes](/extension/com.steadybit.extension_kubernetes), [extension-container](/extension/com.steadybit.extension_container), [extension-host](/extension/com.steadybit.extension_host).
+
+## Elastic Compute Cloud (EC2)
+When using Linux-based hosts in EC2, you can also benefit from [extension-host](/extension/com.steadybit.extension_host)'s capabilities.

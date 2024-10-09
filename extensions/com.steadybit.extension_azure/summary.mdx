@@ -1,6 +1,14 @@
 # Introduction
 
-The Azure (cloud computing platform run by Microsoft) extension bundles attack, target discovery for the Azure product pallet.
-At the moment you can use the Azure extension to change the state of virtual machines and scale set instances of managed Kubernetes cluster.
+The Azure (cloud computing platform run by Microsoft) extension bundles attack, target discovery for Azure managed services.
 
-The Azure extension is essentially an adapter for the Azure APIs. It currently only supports a small set of Azure APIs. If you need additional capabilities, please consider contributing these directly via GitHub.
+The Azure extension is essentially an adapter for the Azure APIs. It currently only supports a small set of Azure APIs.
+
+# Further Support for Managed Services
+While the Azure extension provides integrations to managed services via Azure APIs, we also offer deeper integration for the following services based on the underlying technology.
+
+## Azure Kubernetes Service (AKS)
+Benefit in AKS from the same integration we offer for unmanaged Kubernetes clusters by installing the following extensions in your Kubernetes cluster: [extension-kubernetes](/extension/com.steadybit.extension_kubernetes), [extension-container](/extension/com.steadybit.extension_container), [extension-host](/extension/com.steadybit.extension_host).
+
+## Azure Virtual Machines
+When using Linux-based VMs in Azure, you can also benefit from [extension-host](/extension/com.steadybit.extension_host)'s capabilities.

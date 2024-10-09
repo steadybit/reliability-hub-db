@@ -1,6 +1,14 @@
 # Introduction
 
-The GCP (Google Cloud Platform) extension bundles attack, target discovery for the GCP product pallet.
-At the moment you can use the GCP extension to change the state of virtual machines itself and of managed Kubernetes cluster.
+The GCP (Google Cloud Platform) extension bundles various attacks, target discovery, and check capabilities for GCP managed services.
 
-The GCP extension is essentially an adapter for the GCP APIs. It currently only supports a small set of GCP APIs. If you need additional capabilities, please consider contributing these directly via GitHub.
+The GCP extension is essentially an adapter for the GCP APIs. It currently only supports a small set of GCP APIs.
+
+# Further Support for Managed Services
+While the GCP extension provides integrations to managed services via GCP APIs, we also offer deeper integration for the following services based on the underlying technology.
+
+## Google Kubernetes Engine (GKE)
+Benefit in GKE from the same integration we offer for unmanaged Kubernetes clusters by installing the following extensions in your Kubernetes cluster: [extension-kubernetes](/extension/com.steadybit.extension_kubernetes), [extension-container](/extension/com.steadybit.extension_container), [extension-host](/extension/com.steadybit.extension_host).
+
+## Compute Engine
+When using Linux-based VMs in GCP, you can also benefit from [extension-host](/extension/com.steadybit.extension_host)'s capabilities.
