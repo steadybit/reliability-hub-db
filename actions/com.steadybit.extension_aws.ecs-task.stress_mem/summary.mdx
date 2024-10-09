@@ -10,16 +10,16 @@ This attack will run the AWSFIS-Run-Memory-Stress SSM Document on the target ECS
 
 Test the behavior of the ECS task when the memory is under pressure.
 
-    * Will the application crash? Does it recover from the high memory consumption?
-    * Does the auto-scaling work as expected?
-    * Does the load balancing care for busy workers?
-    * Is your alerting properly configured?
+* Will the application crash? Does it recover from the high memory consumption?
+* Does the auto-scaling work as expected?
+* Does the load balancing care for busy workers?
+* Is your alerting properly configured?
 
 # Prerequisites
 
-    * [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
-    * The ECS task must use the Linux runtime platform
-    * The ECS task must not have the `execute-command` feature enabled
+* [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
+* The ECS task must use the Linux runtime platform
+* The ECS task must not have the `execute-command` feature enabled
 
 # Rollback
 

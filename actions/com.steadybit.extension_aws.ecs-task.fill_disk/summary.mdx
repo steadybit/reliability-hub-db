@@ -10,15 +10,15 @@ This attack will run the AWSFIS-Run-Disk-Fill SSM Document on the target ECS tas
 
 Test the behavior of the ECS task when the ephemeral storage is full.
 
-    * Applications using the ephemeral storage for caching or temporary storage might fail.
-    * Does the application recover from the full disk?
-    * Is your alerting properly configured?
+* Applications using the ephemeral storage for caching or temporary storage might fail.
+* Does the application recover from the full disk?
+* Is your alerting properly configured?
 
 # Prerequisites
 
-    * [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
-    * The ECS task must use the Linux runtime platform
-    * The ECS task must not have the `execute-command` feature enabled
+* [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
+* The ECS task must use the Linux runtime platform
+* The ECS task must not have the `execute-command` feature enabled
 
 # Rollback
 
