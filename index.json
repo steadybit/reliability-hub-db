@@ -10,6 +10,7 @@
         "/templates/datadog.monitor-alerts-on-pod-crash-loop/template.json",
         "/templates/db-mssql.mssql-unavailable/template.json",
         "/templates/db-oracle.oracle-unavailable/template.json",
+        "/templates/db.unavailable/template.json",
         "/templates/db-postgresql.postgresql-latency-datadog-check/template.json",
         "/templates/db-postgresql.postgresql-unavailable-datadog-check/template.json",
         "/templates/db-postgresql.postgresql-unavailable/template.json",
