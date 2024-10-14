@@ -42,7 +42,8 @@
   "tags": [
     "RDS",
     "Oracle",
-    "Recoverability"
+    "Recoverability",
+    "Database"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] when Oracle database can not be reached",
   "hypothesis": "Whenever Oracle database is down, the deployment [[k8sDeployment]] fails gracefully, and a load-balanced HTTP endpoint works within a given success rate.",

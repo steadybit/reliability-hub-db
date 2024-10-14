@@ -48,7 +48,8 @@
     "RDS",
     "Postgres",
     "Recoverability",
-    "Datadog"
+    "Datadog",
+    "Database"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] and Datadog alerts when Postgres database can not be reached",
   "hypothesis": "Whenever the Postgres database is down, [[k8sDeployment]] fails gracefully, and a load-balanced HTTP endpoint works within a given success rate. Also, Datadog should notify us.",
