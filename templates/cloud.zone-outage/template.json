@@ -1,0 +1,203 @@
+{
+  "id": "01929487-5235-76c4-80f0-0c40689d0320",
+  "templateTitle": "Network outage for Kubernetes nodes in an availability zone",
+  "templateDescription": "Achieve high availability of your Kubernetes cluster via redundancy across different Availability Zones. Check what happens to your Kubernetes cluster when one of the zones is down.\n\n## Motivation\n\nCloud providers host your deployments and services across multiple locations worldwide.\nFrom a reliability standpoint, regions and availability zones are most interesting.\nWhile the former refers to separate geographic areas spread worldwide, the latter refers to an isolated location within a region.\nFor most use cases, applying deployments across availability zones is sufficient.\nGiven that failures may happen at this level quite frequently, you should verify that your applications are still working in case of an outage.\n\n## Structure\n\nWe leverage the block traffic attack to simulate a full network loss in an availability zone. While the zone outage happens, we observe changes in the Kubernetes cluster with Steadybit's built-in visibility. Once the zone outage is over, we expect that all deployments will recover again within a specified time.\n\n## Solution Sketch\n\n- [AWS Regions and Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)\n- [Azure Regions and Zones](https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview?tabs=azure-cli)\n- [GCP Regions and Zones](https://cloud.google.com/compute/docs/regions-zones)\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+  "placeholders": [
+    {
+      "key": "availabilityZone",
+      "name": "Availability Zone",
+      "description": "### Which availability zone would you like to simulate to be unavailable for your Kubernetes nodes?"
+    },
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster that you want to observe while simulating the zone outage?"
+    },
+    {
+      "key": "k8sRecoveryTime",
+      "name": "Deployment's Recovery Time",
+      "description": "### How long do you expect it to take for all your deployments to be ready again after the zone outage?\n\nWhile zone outage takes place, we expect to see some unready deployments. After the zone outage, we can check how long it takes for the deployments to be ready again. Specify a reasonable startup time for your deployments, e.g., `200` seconds."
+    }
+  ],
+  "tags": [
+    "Azure",
+    "GCP",
+    "Redundancy",
+    "AWS",
+    "Availability Zone"
+  ],
+  "experimentName": "Outage of availability zone [[availabilityZone]]",
+  "hypothesis": "When experiencing an outage of availability zone [[availabilityZone]], all affected deployments become ready again within [[k8sRecoveryTime]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: Host's traffic in zone [[availabilityZone]]  is blocked",
+          "actionType": "com.steadybit.extension_host.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_host.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.label.topology.kubernetes.io/zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[availabilityZone]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sRecoveryTime]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: All deployments in the [[k8sClusterName]] are recovering within 120 seconds",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sRecoveryTime]]"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sRecoveryTime]]"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -31,7 +31,8 @@
   ],
   "tags": [
     "Redundancy",
-    "AWS"
+    "AWS",
+    "Availability Zone"
   ],
   "experimentName": "Load balancer covers zone outage of [[awsZone]]",
   "hypothesis": "Whenever we have a zone outage, a load-balanced HTTP endpoint works within a given success rate and eventually the system recovers within [[recoveryTime]].",
