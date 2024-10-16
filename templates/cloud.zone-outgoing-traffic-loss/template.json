@@ -82,7 +82,7 @@
             "duration": "[[k8sRecoveryTime]]",
             "podCountCheckMode": "podCountEqualsDesiredCount"
           },
-          "customLabel": "THEN: All deployments in the [[k8sClusterName]] are recovering within 120 seconds",
+          "customLabel": "THEN: All deployments in the [[k8sClusterName]] are recovering within [[k8sRecoveryTime]] seconds",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
