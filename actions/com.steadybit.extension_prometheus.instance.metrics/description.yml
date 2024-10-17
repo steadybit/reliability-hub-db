@@ -20,6 +20,5 @@ extension: com.steadybit.extension_prometheus
 tags:
   - Prometheus
   - PromQL
-  - Check
   - Observability
   - Monitoring

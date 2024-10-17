@@ -17,4 +17,3 @@ targetType: com.steadybit.extension_postman.collection
 extension: com.steadybit.extension_postman
 tags:
   - Postman
-  - Check

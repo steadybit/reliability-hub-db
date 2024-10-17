@@ -11,6 +11,5 @@ extension: com.steadybit.extension_stackstate
 tags:
   - StackState
   - Kubernetes
-  - Check
   - Observability
   - Monitoring
