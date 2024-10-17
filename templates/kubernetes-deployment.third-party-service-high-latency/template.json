@@ -132,7 +132,7 @@
             "failOnHostNetwork": "true",
             "networkDelayJitter": false
           },
-          "customLabel": "WHEN: Third-party service [[thirdPartyServiceName]] is not available",
+          "customLabel": "WHEN: Third-party service [[thirdPartyServiceName]] suffers high latency",
           "actionType": "com.steadybit.extension_container.network_delay",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
