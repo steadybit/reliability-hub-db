@@ -1,0 +1,212 @@
+{
+  "id": "0192af0f-082b-75c2-bd8a-2e8aee1aab7c",
+  "templateTitle": "Validate Kubernetes probes for an unavailable downstream service",
+  "templateDescription": "Failing downstream service (e.g., message broker, database, or cache) shouldn't cause liveness or readiness probe failures in Kubernetes to avoid cascading restarts.\n\n### Motivation\nIn Kubernetes, liveness and readiness probes indicate whether a container is alive and able to serve incoming requests. These are especially helpful for load balancers. However, it is best practice in Kubernetes not to include downstream services in the probes. Otherwise, as soon as, e.g., a Kubernetes deployment's downstream service has issues, the deployment restarts a well, which may cause a cascade of failures in the Kubernetes cluster.\n\n### Structure\nWhile blocking traffic from a deployment's container to a downstream service, we explicitly check the HTTP liveness and readiness probes of the Kubernetes deployment. Following best practices, we expect them not to be affected by the unavailable downstream service.\n\n### References\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n- [Readiness and Liveness Probes best practices by kube-score](https://github.com/zegl/kube-score/blob/master/README_PROBES.md)",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment under test runs?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the deployment under test runs?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "k8sProbeLiveness",
+      "name": "Kubernetes Deployment Liveness Probe",
+      "description": "### What is the HTTP URL used as a liveness probe in the Kubernetes deployment under test?\n\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
+    },
+    {
+      "key": "k8sProbeReadiness",
+      "name": "Kubernetes Deployment Readiness Probe",
+      "description": "### What is the HTTP URL used as a liveness probe in the Kubernetes deployment under test?\n\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
+    },
+    {
+      "key": "downstreamServiceHostname",
+      "name": "Downstream Service Hostname",
+      "description": "### What is the hostname of the downstream service that you want to simulate being unavailable?\n\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
+    }
+  ],
+  "tags": [
+    "Kubernetes Probes",
+    "Third-party",
+    "Downstream Service",
+    "Recoverability",
+    "Kubernetes"
+  ],
+  "experimentName": "Validate Liveness and Readiness Probes",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [
+              "[[downstreamServiceHostname]]"
+            ],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: Downstream service is not available",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[k8sProbeLiveness]]",
+            "duration": "100s",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: LIveness probe should continue to work to avoid restarting of pods",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": true,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[k8sProbeReadiness]]",
+            "duration": "100s",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: Readiness probe should continue to work to avoid bottlenecks in load-balancing",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "100s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "100s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
