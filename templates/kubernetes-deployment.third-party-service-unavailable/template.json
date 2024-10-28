@@ -1,7 +1,7 @@
 {
   "id": "d5d9a162-4c24-419c-959a-80b9cdbfba2d",
   "templateTitle": "Third-party service is unavailable for a Kubernetes Deployment",
-  "templateDescription": "Identify the effect of an unavailable third-party service on your deployment's service's success metrics.\n\n## Motivation\n\nWhen you provide a synchronous service via HTTP that requires the availability of other downstream third-party services, you absolutely should check how your service behaves in case the third-party service is unavailable. Also, you want to validate whether your service is working again as soon as the third-party service is working again.\n\n## Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate the third-party service being unavailable, we expect the user-facing endpoint to work within specified HTTP success rates..\nTo simulate the unavailability, we can block the traffic to the third-party service on the client side using its hostname.\nThe endpoint should recover automatically once the third-party service is reachable again.",
+  "templateDescription": "Identify the effect of an unavailable third-party service on your deployment's service's success metrics.\n\n## Motivation\n\nWhen you provide a synchronous service via HTTP that requires the availability of other upstream third-party services, you absolutely should check how your service behaves in case the third-party service is unavailable. Also, you want to validate whether your service is working again as soon as the third-party service is working again.\n\n## Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate the third-party service being unavailable, we expect the user-facing endpoint to work within specified HTTP success rates..\nTo simulate the unavailability, we can block the traffic to the third-party service on the client side using its hostname.\nThe endpoint should recover automatically once the third-party service is reachable again.",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -41,7 +41,7 @@
   ],
   "tags": [
     "Third-party",
-    "Downstream Service",
+    "Upstream Service",
     "Recoverability"
   ],
   "experimentName": "[[k8sDeployment]] survives unavailability of third-party service [[thirdPartyServiceName]]",
