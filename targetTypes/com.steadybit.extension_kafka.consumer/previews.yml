@@ -1,0 +1,4 @@
+---
+- type: image
+  src: consumerDetail.png
+  alt: Identified information about a Kafka consumer that can later be used within experiments.

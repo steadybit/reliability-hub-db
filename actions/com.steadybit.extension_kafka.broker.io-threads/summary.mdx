@@ -1,0 +1,15 @@
+# Introduction
+
+With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [num.io.threads](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#num-io-threads).
+
+# Use Cases
+
+ - Reduce the number of I/O threads to limit the broker’s capacity to perform disk operations, potentially causing increased latency or request timeouts.
+
+# Parameters
+
+| Parameter            | Description                                                                                | Default |
+|----------------------|--------------------------------------------------------------------------------------------|---------|
+| Duration             | The duration of the attack.                                                                | 60s     |
+| Number of IO Threads | The number of io threads per broker. The value is rollback to the previous one at the end. |         |
+

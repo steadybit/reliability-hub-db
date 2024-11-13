@@ -1,0 +1,16 @@
+---
+- type: image
+  src: actions.png
+  alt: Use the different actions of the extension-kafka to uncover new insights and see how it affects the lags of your topics.
+- type: image
+  src: design.png
+  alt: You can bring chaos engineering to kafka through experiment design, and mix actions to trigger side effects.
+- type: image
+  src: run.png
+  alt: You can follow in near real time the impact on the topic lag thanks to our check lag action and widget.
+- type: image
+  src: targets.png
+  alt: The extension can discover brokers, consumer groups and topics.
+- type: image
+  src: target.png
+  alt: The discovered targets come with attributes to easily filter them.

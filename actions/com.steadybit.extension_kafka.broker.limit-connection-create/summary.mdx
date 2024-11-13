@@ -1,0 +1,15 @@
+# Introduction
+
+With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [max.connection.creation.rate](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#max-connection-creation-rate).
+
+# Use Cases
+
+ - Limit the connection creation rate to simulate slow acceptance of new connections.
+
+# Parameters
+
+| Parameter                | Description                                                                                      | Default |
+|--------------------------|--------------------------------------------------------------------------------------------------|---------|
+| Duration                 | The duration of the attack.                                                                      | 60s     |
+| Connection creation rate | The rate of connection creation permitted. The value is rollback to the previous one at the end. |         |
+

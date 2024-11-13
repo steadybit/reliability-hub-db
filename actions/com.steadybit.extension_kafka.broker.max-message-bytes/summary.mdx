@@ -1,0 +1,15 @@
+# Introduction
+
+With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [message.max.bytes](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#message-max-bytes).
+
+# Use Cases
+
+ - Set a very low max bytes per message to simulate message size rejections.
+
+# Parameters
+
+| Parameter             | Description                                                                                    | Default |
+|-----------------------|------------------------------------------------------------------------------------------------|---------|
+| Duration              | The duration of the attack.                                                                    | 60s     |
+| Max bytes per message | The number of bytes per message allowed. The value is rollback to the previous one at the end. |         |
+
