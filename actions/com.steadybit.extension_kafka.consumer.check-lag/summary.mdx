@@ -1,0 +1,18 @@
+# Introduction
+
+With this action, Steadybit can check the lag of a consumer for a topic for a given time.
+
+# Use Cases
+
+ - You can check the topic lag of your consumer during your experiments.
+ - You can fail the experiment if the lag is over a certain threshold.
+
+# Parameters
+
+| Parameter           | Description                                                                                              | Default |
+|---------------------|----------------------------------------------------------------------------------------------------------|---------|
+| Duration            | The duration of the attack.                                                                              | 10s     |
+| Topic to track lag  | Required. The topic to check the lag                                                                     |         |
+| Lag alert threshold | Required. The acceptable threshold of offset difference between the topic offset and the consumer offset |         |
+
+

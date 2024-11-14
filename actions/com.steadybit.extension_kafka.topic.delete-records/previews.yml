@@ -1,0 +1,4 @@
+---
+- type: image
+  src: delete.png
+  alt: The action "Trigger Delete Records" within the experiment editor.

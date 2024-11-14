@@ -1,0 +1,17 @@
+# Introduction
+
+With this action, Steadybit can delete records, you specify the number of last records that needs to be deleted (warning: by last records we are referring to the topic ones, not the consumed ones).
+
+To avoid kafka issues, we recommend to block the consumers of the topic targeted either by a block network or a kafka deny access action and during this time to trigger the delete records action.
+
+# Use Cases
+
+ - While blocking a consumer, delete some records to see how consumer reacts when records are missing or there is a gap in the records consumed.
+
+# Parameters
+
+| Parameter                                  | Description                                                                                                            | Default |
+|--------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------|
+| X from newest Offset                       | To move the offset in the past, 0 means to the last known offset (skipping every records from where the consumer was). |         |
+| Partition to issue delete records requests | One or more partitions to delete the records.                                                                          |         |
+

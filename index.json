@@ -1,5 +1,5 @@
 {
-    "lastChange": 1731571480,
+    "lastChange": 1731577578,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -130,6 +130,10 @@
         "/actions/com.steadybit.extension_kafka.broker.limit-io-threads/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.limit-network-threads/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.reduce-message-max-bytes/description.yml",
+        "/actions/com.steadybit.extension_kafka.consumer.check-lag/description.yml",
+        "/actions/com.steadybit.extension_kafka.consumer.check/description.yml",
+        "/actions/com.steadybit.extension_kafka.topic.delete-records/description.yml",
+        "/actions/com.steadybit.extension_kafka.topic.elect-new-leader/description.yml",
         "/actions/com.steadybit.extension_kafka.topic.produce-fixed-amount/description.yml",
         "/actions/com.steadybit.extension_kafka.topic.produce-periodically/description.yml",
         "/actions/com.steadybit.extension_kong.request_termination/description.yml",
