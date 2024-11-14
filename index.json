@@ -1,5 +1,5 @@
 {
-    "lastChange": 1731577578,
+    "lastChange": 1731596295,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -126,7 +126,7 @@
         "/actions/com.steadybit.extension_k6.cloud/description.yml",
         "/actions/com.steadybit.extension_k6.run/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.deny-access/description.yml",
-        "/actions/com.steadybit.extension_kafka.broker.limit-connection-create/description.yml",
+        "/actions/com.steadybit.extension_kafka.broker.limit-connection-creation/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.limit-io-threads/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.limit-network-threads/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.reduce-message-max-bytes/description.yml",
