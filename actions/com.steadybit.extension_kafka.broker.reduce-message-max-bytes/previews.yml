@@ -1,0 +1,4 @@
+---
+- type: image
+  src: maxbytes.png
+  alt: The action "Reduce Message Batch Size" within the experiment editor.

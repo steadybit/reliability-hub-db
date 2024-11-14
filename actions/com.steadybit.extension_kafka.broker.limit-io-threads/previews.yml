@@ -1,0 +1,4 @@
+---
+- type: image
+  src: iothreads.png
+  alt: The action "Limit IO Threads Number" within the experiment editor.

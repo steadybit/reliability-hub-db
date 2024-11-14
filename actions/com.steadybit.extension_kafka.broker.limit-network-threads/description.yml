@@ -1,5 +1,5 @@
 ---
-id: com.steadybit.extension_kafka.broker.network-threads
+id: com.steadybit.extension_kafka.broker.limit-network-threads
 label: Alter Network Threads Number
 description: Change the number of network threads per broker
 icon: |

@@ -13,9 +13,8 @@ The extension-kafka utilizes these capabilities and may require elevated rights 
 ## Integration of Kafka in Steadybit
 
 Alter Broker configuration in various ways:
-- Restriction on size of messages
-- Change the number of IO threads
-- Change the number of Network threads
+- Reduce the max batch size of messages
+- Limit the IO/Network threads per broker
 - Limit the rate of creation of new connections
 
 You can also run these actions:

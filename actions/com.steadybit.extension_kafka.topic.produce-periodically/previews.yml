@@ -1,0 +1,4 @@
+---
+- type: image
+  src: produce_periodically.png
+  alt: The action "Produce (Records / s)" within the experiment editor.

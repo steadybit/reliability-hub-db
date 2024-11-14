@@ -1,0 +1,4 @@
+---
+- type: image
+  src: produce_fixed.png
+  alt: The action "Produce (# of Records)" within the experiment editor.
