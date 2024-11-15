@@ -1,5 +1,5 @@
 ---
-id: com.steadybit.extension_kafka.broker.deny-access
+id: com.steadybit.extension_kafka.consumer.deny-access
 label: Deny Access
 description: Deny access for a user used by a consumer group and regarding a certain topic.
 icon: |
