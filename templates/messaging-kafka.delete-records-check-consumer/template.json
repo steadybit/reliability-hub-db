@@ -19,7 +19,11 @@
       "description": "### Which topic do we need to block access to?"
     }
   ],
-  "tags": [],
+  "tags": [
+    "Message Queue",
+    "Kafka",
+    "Recoverability"
+  ],
   "experimentName": "Extension-kafka - Delete Records",
   "hypothesis": "Simulate the loss of records to see how the consumer recovers. For our demo purpose, we should look at the logs of the dummy consumer after the deny to see that he begins to consume records with value corresponding only to the last records after the delete.",
   "lanes": [
