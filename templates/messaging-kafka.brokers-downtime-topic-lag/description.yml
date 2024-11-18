@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/messaging-kafka.brokers-downtime-topic-lag
+maintainer: com.steadybit

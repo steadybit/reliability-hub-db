@@ -1,0 +1,206 @@
+{
+  "id": "01932aef-e200-79b3-8bb4-e6064ea532ba",
+  "templateTitle": "Simulate Kafka brokers downtime and see how consumers are handling topic lag",
+  "templateDescription": "An experiment to block access to brokers for consumers while producing records in the topic. The consumers should get back to consume when the kafka brokers are available again and the accumulated lag must be deal with quickly.",
+  "placeholders": [
+    {
+      "key": "KafkaBrokerPorts",
+      "name": "Kafka Broker Ports",
+      "description": "### Which kafka broker ports should we block the access to ?"
+    },
+    {
+      "key": "KafkaConsumer",
+      "name": "Kafka consumer",
+      "description": "### Which consumer should we target?"
+    },
+    {
+      "key": "KafkaTopic",
+      "name": "Kafka Topic",
+      "description": "### Which topic should we track the lag ?"
+    }
+  ],
+  "tags": [
+    "Message Queue",
+    "Kafka",
+    "Recoverability"
+  ],
+  "experimentName": "Extension-kafka - Consumer  [[KafkaConsumer]] should be able to recover from huge lag on topic [[KafkaTopic]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "80s",
+            "recordHeaders": [],
+            "successRate": "100",
+            "maxConcurrent": 5,
+            "recordsPerSecond": 5,
+            "recordValue": "test"
+          },
+          "customLabel": "Produce With High throughput",
+          "actionType": "com.steadybit.extension_kafka.topic.produce-periodically",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "steadybit-demo"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "recordHeaders": [],
+            "successRate": "100",
+            "maxConcurrent": 5,
+            "recordsPerSecond": 2,
+            "recordValue": "test"
+          },
+          "customLabel": "Low throughput",
+          "actionType": "com.steadybit.extension_kafka.topic.produce-periodically",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "steadybit-demo"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "50s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [
+              "[[KafkaBrokerPorts]]"
+            ],
+            "ip": []
+          },
+          "customLabel": "Simulating Brokers unavailable",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaConsumer]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "120s",
+            "acceptableLag": 10,
+            "topic": "[[KafkaTopic]]"
+          },
+          "customLabel": "Check Topic [[KafkaTopic]] Lag",
+          "actionType": "com.steadybit.extension_kafka.consumer.check-lag",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.consumer",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.consumer-group.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaConsumer]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": true,
+          "parameters": {
+            "duration": "120s",
+            "expectedStateList": [
+              "Stable",
+              "Empty",
+              "PreparingRebalance",
+              "CompletingRebalance"
+            ],
+            "stateCheckMode": "allTheTime"
+          },
+          "customLabel": "Consumer group should be stable then empty, and rebalancing when back then stable again",
+          "actionType": "com.steadybit.extension_kafka.consumer.check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.consumer",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.consumer-group.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaConsumer]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

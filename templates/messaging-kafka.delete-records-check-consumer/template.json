@@ -1,0 +1,230 @@
+{
+  "id": "01933e81-e060-78f6-9175-326acb13fae3",
+  "templateTitle": "Check Kafka consumer's reaction to record loss",
+  "templateDescription": "### Intent\n\nIntentionally deny access to the topic for consumers and during this time where consumption is stopped, delete records.\n\nWe can check the logs of the consumers to see how they handle the loss of records and also authorization access issues.",
+  "placeholders": [
+    {
+      "key": "KafkaConsumer",
+      "name": "Kafka consumer to target",
+      "description": "### Which consumer group do you want to target for the deny access attack?"
+    },
+    {
+      "key": "KafkaConsumerUser",
+      "name": "KafkaConsumerUser",
+      "description": "### Which user is using the consumer to add to the deny access attack definition (Kafka ACL)?"
+    },
+    {
+      "key": "KafkaTopic",
+      "name": "Kafka Topic",
+      "description": "### Which topic do we need to block access to?"
+    }
+  ],
+  "tags": [],
+  "experimentName": "Extension-kafka - Delete Records",
+  "hypothesis": "Simulate the loss of records to see how the consumer recovers. For our demo purpose, we should look at the logs of the dummy consumer after the deny to see that he begins to consume records with value corresponding only to the last records after the delete.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "recordHeaders": [],
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "numberOfRecords": 30,
+            "recordValue": "Before deny"
+          },
+          "customLabel": "Before Deny",
+          "actionType": "com.steadybit.extension_kafka.topic.produce-fixed-amount",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "recordHeaders": [],
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "numberOfRecords": 20,
+            "recordValue": "During deny"
+          },
+          "customLabel": "During Deny",
+          "actionType": "com.steadybit.extension_kafka.topic.produce-fixed-amount",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "offset": 0,
+            "partitions": [
+              "0",
+              "1"
+            ]
+          },
+          "customLabel": "Delete Records",
+          "actionType": "com.steadybit.extension_kafka.topic.delete-records",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "recordHeaders": [],
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "numberOfRecords": 20,
+            "recordValue": "After deny"
+          },
+          "customLabel": "After deny",
+          "actionType": "com.steadybit.extension_kafka.topic.produce-fixed-amount",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "25s",
+            "user": "[[KafkaConsumerUser]]",
+            "topic": "[[KafkaTopic]]"
+          },
+          "customLabel": "Deny Access to user for consumer",
+          "actionType": "com.steadybit.extension_kafka.consumer.deny-access",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.consumer",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.consumer-group.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaConsumer]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "80s",
+            "acceptableLag": 10,
+            "topic": "[[KafkaTopic]]"
+          },
+          "actionType": "com.steadybit.extension_kafka.consumer.check-lag",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.consumer",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.consumer-group.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaConsumer]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
