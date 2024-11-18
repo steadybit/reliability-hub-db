@@ -16,7 +16,7 @@ ghcr:
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_kafka
 installation: https://github.com/steadybit/extension-kafka#installation
 changelog: https://github.com/steadybit/extension-kafka/blob/main/CHANGELOG.md
-releaseDate: '2024-08-01'
+releaseDate: '2024-11-18'
 tags:
   - Kafka
   - Message Queue
