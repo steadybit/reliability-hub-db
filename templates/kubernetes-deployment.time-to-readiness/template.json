@@ -86,7 +86,7 @@
           "parameters": {
             "graceful": "true"
           },
-          "customLabel": "WHEN: Container {{containerName}} is stopped",
+          "customLabel": "WHEN: Container [[k8sContainerName]] is stopped",
           "actionType": "com.steadybit.extension_container.stop",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
