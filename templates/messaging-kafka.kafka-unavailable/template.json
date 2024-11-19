@@ -56,7 +56,7 @@
     "Kubernetes"
   ],
   "experimentName": "Verify graceful degradation while Kafka is unavailable",
-  "hypothesis": "Whenever Kafka is unavailable, [[k8sWorkloadOwner]] doesn't loose any requests and processes them eventually.",
+  "hypothesis": "Whenever Kafka is unavailable, [[k8sWorkloadOwner]] doesn't lose any requests and processes them eventually.",
   "lanes": [
     {
       "steps": [
