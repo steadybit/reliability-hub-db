@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: sMMAkpTQi98
 - type: image
   src: run.png
   alt: You can follow in near real time the impact on the topic lag thanks to our check lag action and widget.
