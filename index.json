@@ -1,5 +1,5 @@
 {
-    "lastChange": 1732268351,
+    "lastChange": 1732719656,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -31,8 +31,8 @@
         "/templates/kubernetes-deployment.snippet.stress-memory/template.json",
         "/templates/kubernetes-deployment.third-party-service-high-latency/template.json",
         "/templates/kubernetes-deployment.third-party-service-unavailable/template.json",
-        "/templates/kubernetes-deployment.time-to-readiness/template.json",
         "/templates/kubernetes-deployment.time-to-readiness-pod-loss/template.json",
+        "/templates/kubernetes-deployment.time-to-readiness/template.json",
         "/templates/kubernetes-deployment.unavailable-upstream-service/template.json",
         "/templates/kubernetes-node.drain-node/template.json",
         "/templates/kubernetes-nodes.node-shutdown/template.json",
@@ -135,6 +135,7 @@
         "/actions/com.steadybit.extension_kafka.consumer.check-lag/description.yml",
         "/actions/com.steadybit.extension_kafka.consumer.check/description.yml",
         "/actions/com.steadybit.extension_kafka.consumer.deny-access/description.yml",
+        "/actions/com.steadybit.extension_kafka.topic.check-partitions/description.yml",
         "/actions/com.steadybit.extension_kafka.topic.delete-records/description.yml",
         "/actions/com.steadybit.extension_kafka.topic.elect-new-leader/description.yml",
         "/actions/com.steadybit.extension_kafka.topic.produce-fixed-amount/description.yml",

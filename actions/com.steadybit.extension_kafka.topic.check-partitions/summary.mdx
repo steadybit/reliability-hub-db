@@ -1,0 +1,17 @@
+# Introduction
+
+With this action, Steadybit can check the partition activity for a given topic (leader election, replicas going offline or in-sync, new replica order).
+
+# Use Cases
+
+ - Verify the behaviour of kafka regarding partitions management when unexpected events occurs.
+
+# Parameters
+
+| Parameter             | Description                                                                                                                                      | Default |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration              | The duration of the attack.                                                                                                                      | 10s     |
+| Expected Changes List | Required. The type of partition changes expected (new leader, partition replicas going in-sync or offlines, change in the order of the replicas) |         |
+| Change Check Mode     | How often should the change be expected. "At least once" or "All the time"                                                                       |         |
+
+
