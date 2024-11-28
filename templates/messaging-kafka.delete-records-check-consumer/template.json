@@ -4,11 +4,6 @@
   "templateDescription": "### Intent\n\nIntentionally deny access to the topic for consumers and during this time where consumption is stopped, delete records.\n\nWe can check the logs of the consumers to see how they handle the loss of records and also authorization access issues.",
   "placeholders": [
     {
-      "key": "KafkaConsumer",
-      "name": "Kafka consumer to target",
-      "description": "### Which consumer group do you want to target for the deny access attack?"
-    },
-    {
       "key": "KafkaConsumerUser",
       "name": "KafkaConsumerUser",
       "description": "### Which user is using the consumer to add to the deny access attack definition (Kafka ACL)?"
@@ -24,7 +19,7 @@
     "Kafka",
     "Recoverability"
   ],
-  "experimentName": "Extension-kafka - Delete Records",
+  "experimentName": "Delete Records for [[KafkaTopic]]",
   "hypothesis": "Simulate the loss of records to see how the consumer recovers. For our demo purpose, we should look at the logs of the dummy consumer after the deny to see that he begins to consume records with value corresponding only to the last records after the delete.",
   "lanes": [
     {
@@ -186,10 +181,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "kafka.consumer-group.name",
+                  "key": "kafka.consumer-group.topics",
                   "operator": "EQUALS",
                   "values": [
-                    "[[KafkaConsumer]]"
+                    "[[KafkaTopic]]"
                   ]
                 }
               ]
@@ -217,10 +212,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "kafka.consumer-group.name",
+                  "key": "kafka.consumer-group.topics",
                   "operator": "EQUALS",
                   "values": [
-                    "[[KafkaConsumer]]"
+                    "[[KafkaTopic]]"
                   ]
                 }
               ]

@@ -24,7 +24,7 @@
     "Kafka",
     "Recoverability"
   ],
-  "experimentName": "Extension-kafka - Consumer  [[KafkaConsumer]] should be able to recover from huge lag on topic [[KafkaTopic]]",
+  "experimentName": "Consumer [[KafkaConsumer]] should be able to recover from huge lag on topic [[KafkaTopic]]",
   "lanes": [
     {
       "steps": [
