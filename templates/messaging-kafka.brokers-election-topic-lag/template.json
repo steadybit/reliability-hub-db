@@ -70,7 +70,7 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "partitions": "0"
+            "partitions": ["0"]
           },
           "customLabel": "THEN: Electing New Partition Leader",
           "actionType": "com.steadybit.extension_kafka.topic.elect-new-leader",
