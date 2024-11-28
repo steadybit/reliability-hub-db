@@ -6,7 +6,12 @@
     {
       "key": "KafkaTopic",
       "name": "Kafka Topic",
-      "description": "### Which topic should we track the lag?"
+      "description": "### For which topic should we elect a new leader?  \n We will elect a new leader for partition `0`, but you can change the partition in the experiment."
+    },
+    {
+      "key": "KafkaConsumer",
+      "name": "Kafka consumer",
+      "description": "### Which consumer should we check?"
     }
   ],
   "tags": [
@@ -65,8 +70,7 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "partitions": "0",
-            "election_method": "0"
+            "partitions": "0"
           },
           "customLabel": "THEN: Electing New Partition Leader",
           "actionType": "com.steadybit.extension_kafka.topic.elect-new-leader",
@@ -143,10 +147,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "kafka.consumer-group.topics",
+                  "key": "kafka.consumer-group.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[KafkaTopic]]"
+                    "[[KafkaConsumer]]"
                   ]
                 }
               ]
@@ -174,10 +178,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "kafka.consumer-group.topics",
+                  "key": "kafka.consumer-group.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[KafkaTopic]]"
+                    "[[KafkaConsumer]]"
                   ]
                 }
               ]

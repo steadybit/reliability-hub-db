@@ -4,6 +4,11 @@
   "templateDescription": "### Intent\n\nIntentionally deny access to the topic for consumers and during this time where consumption is stopped, delete records.\n\nWe can check the logs of the consumers to see how they handle the loss of records and also authorization access issues.",
   "placeholders": [
     {
+      "key": "KafkaConsumer",
+      "name": "Kafka consumer to target",
+      "description": "### Which consumer group do you want to target for the deny access attack?"
+    },
+    {
       "key": "KafkaConsumerUser",
       "name": "KafkaConsumerUser",
       "description": "### Which user is using the consumer to add to the deny access attack definition (Kafka ACL)?"
@@ -181,10 +186,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "kafka.consumer-group.topics",
+                  "key": "kafka.consumer-group.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[KafkaTopic]]"
+                    "[[KafkaConsumer]]"
                   ]
                 }
               ]
@@ -212,10 +217,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "kafka.consumer-group.topics",
+                  "key": "kafka.consumer-group.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[KafkaTopic]]"
+                    "[[KafkaConsumer]]"
                   ]
                 }
               ]

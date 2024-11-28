@@ -1,5 +1,5 @@
 {
-    "lastChange": 1732799189,
+    "lastChange": 1732802199,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
