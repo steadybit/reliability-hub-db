@@ -1,0 +1,191 @@
+{
+  "id": "019372dc-71c4-7d5a-bf6e-6029212493c7",
+  "templateTitle": "Validate consumer's behavior when new leader is elected",
+  "templateDescription": "Verify that your application handles a change of the leader properly.\n\n## Motivation\n\nBy testing your system's resilience to Kafka leader changes in a partition, you can identify potential weaknesses and take appropriate measures to improve its performance.\n\n## Structure\n\nTo conduct this experiment, we will ensure that all Kafka topics and producers are ready and that the consumer receives and processes messages correctly. We will then elect a new leader for one partition in Kafka and expect the system to work fine.",
+  "placeholders": [
+    {
+      "key": "KafkaTopic",
+      "name": "Kafka Topic",
+      "description": "### Which topic should we track the lag?"
+    }
+  ],
+  "tags": [
+    "Message Queue",
+    "Kafka",
+    "Recoverability"
+  ],
+  "experimentName": "Electing a new leader for [[KafkaTopic]] shouldn't cause too much lag",
+  "hypothesis": "When electing a new leader for a Kafka partition, we shouldn't see too much topic lag, and consumers should remain stable.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "80s",
+            "recordHeaders": [],
+            "successRate": "100",
+            "maxConcurrent": 5,
+            "recordsPerSecond": 10,
+            "recordValue": "Chaos Engineering Test by Steadybit"
+          },
+          "customLabel": "WHILE: Producing records for the topic",
+          "actionType": "com.steadybit.extension_kafka.topic.produce-periodically",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "partitions": "0",
+            "election_method": "0"
+          },
+          "customLabel": "THEN: Electing New Partition Leader",
+          "actionType": "com.steadybit.extension_kafka.topic.elect-new-leader",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": true,
+          "parameters": {
+            "duration": "80s",
+            "expectedChanges": [
+              "replicas changed"
+            ],
+            "changeCheckMode": "atLeastOnce"
+          },
+          "customLabel": "THEN: Expect a replica change",
+          "actionType": "com.steadybit.extension_kafka.topic.check-partitions",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.topic",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.topic.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "80s",
+            "expectedStateList": [
+              "Stable"
+            ],
+            "stateCheckMode": "allTheTime"
+          },
+          "customLabel": "THEN: Consumers remain stable",
+          "actionType": "com.steadybit.extension_kafka.consumer.check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.consumer",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.consumer-group.topics",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "80s",
+            "acceptableLag": 10,
+            "topic": "steadybit-demo"
+          },
+          "customLabel": "THEN: Check Topic Lag",
+          "actionType": "com.steadybit.extension_kafka.consumer.check-lag",
+          "radius": {
+            "targetType": "com.steadybit.extension_kafka.consumer",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.consumer-group.topics",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[KafkaTopic]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
