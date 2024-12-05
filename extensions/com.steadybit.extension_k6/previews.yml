@@ -1,0 +1,10 @@
+---
+- type: image
+  src: design.png
+  alt: Steadybit's k6 action to run a k6 load test in the experiment
+- type: image
+  src: run.png
+  alt: The experiment run view with the k6 load test results.
+- type: image
+  src: design-locations.png
+  alt: Optionally, the k6 action supports the selection of the k6 execution location in the experiment's design.
