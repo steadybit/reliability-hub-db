@@ -18,8 +18,8 @@ If you want to fill up the Memory without stressing the CPU, use the [Fill Memor
 
 # Parameters
 
-| Parameter           | Description                                                                     | Default |
-|---------------------|---------------------------------------------------------------------------------|---------|
-| Duration            | How long should memory be wasted?                                               | 30s     |
-| Load on Host Memory | How much of the **total container memory** should be used to stress the memory? | 80%     |
-| Fail on OOM Kill    | Should it be treated as a failure when the attacked container was oomkilled?    | False   |
+| Parameter           | Description                                                                                                                                                                                                  | Default |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration            | How long should memory be wasted?                                                                                                                                                                            | 30s     |
+| Load on Host Memory | How much of the **total container memory** should be used to stress the memory? The used memory percentage is calculated based on the memory limit of the container (or the host memory if no limit is set). | 80%     |
+| Fail on OOM Kill    | Should it be treated as a failure when the attacked container was oomkilled?                                                                                                                                 | False   |
