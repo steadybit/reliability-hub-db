@@ -6,7 +6,7 @@
     {
       "key": "KafkaTopic",
       "name": "Kafka Topic",
-      "description": "### For which topic should we elect a new leader?  \n We will elect a new leader for partition `0`, but you can change the partition in the experiment."
+      "description": "### For which topic should we elect a new leader? \n We will elect a new leader for partition `0`, but you can change the partition in the experiment."
     },
     {
       "key": "KafkaConsumer",

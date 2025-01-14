@@ -21,7 +21,7 @@
     {
       "key": "k8sRecoveryTime",
       "name": "Deployment's Recovery Time",
-      "description": "### How long do you expect it to take for all your deployments to be ready again after the network loss?\n\nWhile network loss happens in a zone, we expect to see some unready deployments. After the network loss is over, we can check how long it takes for the deployments to be ready again. Specify a reasonable startup time for your deployments, e.g., `200` seconds."
+      "description": "### How long do you expect it to take for all your deployments to be ready again after the network loss?\nWhile network loss happens in a zone, we expect to see some unready deployments. After the network loss is over, we can check how long it takes for the deployments to be ready again. Specify a reasonable startup time for your deployments, e.g., `200` seconds."
     }
   ],
   "tags": [

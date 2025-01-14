@@ -16,7 +16,7 @@
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "### What is the Kubernetes deployment under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes deployment under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "thirdPartyServiceName",
@@ -26,7 +26,7 @@
     {
       "key": "thirdPartyHostname",
       "name": "Third-Party Hostname",
-      "description": "### What is the hostname of the third-party service used by the Kubernetes deployment?\n\nJust so you know, we only delay traffic from the Kubernetes deployment on that specific hostname to simulate the high latency of the third-party service. This has the beauty that no other deployments are affected, and you don't need to install anything in the third-party.\n\nPlease note that this approach might not work out if you use a reverse proxy or service mesh."
+      "description": "### What is the hostname of the third-party service used by the Kubernetes deployment?\nJust so you know, we only delay traffic from the Kubernetes deployment on that specific hostname to simulate the high latency of the third-party service. This has the beauty that no other deployments are affected, and you don't need to install anything in the third-party.\n\nPlease note that this approach might not work out if you use a reverse proxy or service mesh."
     },
     {
       "key": "httpLoadBalancedEndpoint",
@@ -36,7 +36,7 @@
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests while third-party services suffers high latency?\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while third-party services suffers high latency?\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     }
   ],
   "tags": [

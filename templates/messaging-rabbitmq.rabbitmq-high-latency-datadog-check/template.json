@@ -21,7 +21,7 @@
     {
       "key": "rabbitMQHostname",
       "name": "RabbitMQ Hostname",
-      "description": "### What is the hostname of RabbitMQ used by the Kubernetes deployment?\n\nPlease note that we inject latency into the traffic from the Kubernetes deployment for that specific hostname."
+      "description": "### What is the hostname of RabbitMQ used by the Kubernetes deployment?\nPlease note that we inject latency into the traffic from the Kubernetes deployment for that specific hostname."
     },
     {
       "key": "datadogMonitorName",

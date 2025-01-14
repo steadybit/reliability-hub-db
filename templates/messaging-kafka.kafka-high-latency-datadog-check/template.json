@@ -21,7 +21,7 @@
     {
       "key": "kafkaHostname",
       "name": "Kafka Hostname",
-      "description": "### What is the hostname of the Kafka message broker used by the Kubernetes workload owner?\n\nPlease note that we only block traffic from the Kubernetes workload for that specific hostname to simulate Kafka unavailability."
+      "description": "### What is the hostname of the Kafka message broker used by the Kubernetes workload owner?\nPlease note that we only block traffic from the Kubernetes workload for that specific hostname to simulate Kafka unavailability."
     },
     {
       "key": "datadogMonitorName",

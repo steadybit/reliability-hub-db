@@ -16,7 +16,7 @@
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "### What is the Kubernetes deployment under test, whose node will be shut down and expected to recover within a given duration?\n\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward."
+      "description": "### What is the Kubernetes deployment under test, whose node will be shut down and expected to recover within a given duration?\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward."
     },
     {
       "key": "k8sDeploymentRecoveryTime",

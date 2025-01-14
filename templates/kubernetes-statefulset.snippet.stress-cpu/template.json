@@ -11,7 +11,7 @@
     {
       "key": "cpuLoad",
       "name": "CPU Load",
-      "description": "### How much load do you want to put on all CPU cores? E.g., `100%`"
+      "description": "### How much load do you want to put on all CPU cores?\nStress the CPU, e.g., by `100%`"
     }
   ],
   "tags": [

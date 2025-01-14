@@ -16,7 +16,7 @@
     {
       "key": "k8sWorkloadOwner",
       "name": "Kubernetes Workload Owner",
-      "description": "### What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes workload under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "newRelicAccountId",
@@ -26,12 +26,12 @@
     {
       "key": "newRelicEntityTagFilterKey",
       "name": "New Relic Entity Tag Filter - Key",
-      "description": "### Which key in an entity filter selects the entity on which New Relic should detect the problem? E.g., `k8s.deployment`"
+      "description": "### Which key in an entity filter selects the entity on which New Relic should detect the problem?\nFor instance `k8s.deployment`"
     },
     {
       "key": "newRelicEntityTagFilterValue",
       "name": "New Relic Entity Tag Filter - Value",
-      "description": "### Which value in an entity filter selects the entity on which New Relic should detect the problem? E.g., same value as for the `Kubernetes Workload Owner`"
+      "description": "### Which value in an entity filter selects the entity on which New Relic should detect the problem?\nFor instance same value as for the `Kubernetes Workload Owner`"
     }
   ],
   "tags": [

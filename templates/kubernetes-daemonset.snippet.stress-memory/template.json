@@ -11,7 +11,7 @@
     {
       "key": "memoryLoad",
       "name": "Memory Load",
-      "description": "### How much of the total memory should be allocated? E.g., `200%`"
+      "description": "### How much of the total memory should be allocated?\nFor instance `200%`"
     }
   ],
   "tags": [

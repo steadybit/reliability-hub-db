@@ -6,7 +6,7 @@
     {
       "key": "KafkaBrokerPorts",
       "name": "Kafka Broker Ports",
-      "description": "### Which kafka broker ports should we block the access to ?"
+      "description": "### Which kafka broker ports should we block the access to?"
     },
     {
       "key": "KafkaConsumer",
@@ -16,7 +16,7 @@
     {
       "key": "KafkaTopic",
       "name": "Kafka Topic",
-      "description": "### Which topic should we track the lag ?"
+      "description": "### Which topic should we track the lag?"
     }
   ],
   "tags": [

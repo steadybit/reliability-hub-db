@@ -21,7 +21,7 @@
     {
       "key": "rabbitMQHostname",
       "name": "RabbitMQ Hostname",
-      "description": "### What is the hostname of the RabbitMQ used by the Kubernetes deployment?\n\nPlease note that we only block traffic from the Kubernetes deployment for that specific hostname to simulate RabbitMQ unavailability."
+      "description": "### What is the hostname of the RabbitMQ used by the Kubernetes deployment?\nPlease note that we only block traffic from the Kubernetes deployment for that specific hostname to simulate RabbitMQ unavailability."
     },
     {
       "key": "datadogMonitorName",

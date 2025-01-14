@@ -16,12 +16,12 @@
     {
       "key": "httpLoadBalancedEndpoint",
       "name": "HTTP Load Balanced Endpoint",
-      "description": "### What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?\n\nThe HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
+      "description": "### What is the URL of a **load-balanced HTTP endpoint** served by a service running on one of the EC2 instances?\nThe HTTP endpoint should be served by at least one other EC2 instance. We will reboot one EC2 instance and check whether the load balancer appropriately routes requests to the running EC2 instance."
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests while the EC2 is rebooting?\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while the EC2 is rebooting?\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
       "key": "ec2RecoveryTime",

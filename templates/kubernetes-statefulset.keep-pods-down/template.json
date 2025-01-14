@@ -21,7 +21,7 @@
     {
       "key": "k8sPodDownDuration",
       "name": "Duration Pods Down",
-      "description": "### How long should we keep the pods down?Specify how long you want to keep the pods down, e.g., 3 minutes."
+      "description": "### How long should we keep the pods down?\nSpecify how long you want to keep the pods down, e.g., 3 minutes."
     }
   ],
   "tags": [

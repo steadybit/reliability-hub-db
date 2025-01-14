@@ -16,12 +16,12 @@
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "### What is the Kubernetes deployment under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes deployment under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "databaseHostname",
       "name": "Database Hostname",
-      "description": "### What is the hostname of the database used by the Kubernetes deployment to reach the database?\n\nPlease note that we only block traffic from the Kubernetes deployment on that specific hostname to simulate the database unavailability."
+      "description": "### What is the hostname of the database used by the Kubernetes deployment to reach the database?\nPlease note that we only block traffic from the Kubernetes deployment on that specific hostname to simulate the database unavailability."
     },
     {
       "key": "httpLoadBalancedEndpoint",
@@ -31,12 +31,12 @@
     {
       "key": "httpResponseStatusCode",
       "name": "HTTP Response Status Code",
-      "description": "### What is the expected HTTP status code while the database can't be reached? E.g., `503` (Service unavailable) to indicate an unavailable service."
+      "description": "### What is the expected HTTP status code while the database can't be reached?\nFor instance `503` (Service unavailable) to indicate an unavailable service."
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests indicating a graceful degradation when the database is unavailable?\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests indicating a graceful degradation when the database is unavailable?\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     }
   ],
   "tags": [

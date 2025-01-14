@@ -1,7 +1,7 @@
 {
   "id": "01933e81-e060-78f6-9175-326acb13fae3",
   "templateTitle": "Check Kafka consumer's reaction to record loss",
-  "templateDescription": "### Intent\n\nIntentionally deny access to the topic for consumers and during this time where consumption is stopped, delete records.\n\nWe can check the logs of the consumers to see how they handle the loss of records and also authorization access issues.",
+  "templateDescription": "## Intent\n\nIntentionally deny access to the topic for consumers and during this time where consumption is stopped, delete records.\n\nWe can check the logs of the consumers to see how they handle the loss of records and also authorization access issues.",
   "placeholders": [
     {
       "key": "KafkaConsumer",

@@ -16,7 +16,7 @@
     {
       "key": "k8sWorkloadOwner",
       "name": "Kubernetes Workload Owner",
-      "description": "### What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes workload under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "instanaApplicationLabel",
