@@ -1,0 +1,18 @@
+# Introduction
+
+Block all traffic for a selected subnet.
+
+This action is similiar to the [blackhole zone attack](https://hub.steadybit.com/action/com.steadybit.extension_aws.az.blackhole) but is using a single subnet as a target to allow more fine grained control.
+
+Steadybit will create and assign a network ACL to the selected subnet(s).
+
+
+# Use Cases
+
+* Understand how your services behave if network is blocked
+
+# Parameters
+
+| Parameter | Description                           | Default |
+|-----------|---------------------------------------|---------|
+| Duration  | How long should traffic been blocked? | 30s     |
