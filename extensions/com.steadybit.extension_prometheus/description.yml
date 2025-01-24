@@ -27,6 +27,7 @@ installation: https://github.com/steadybit/extension-prometheus#installation
 changelog: https://github.com/steadybit/extension-prometheus/blob/main/CHANGELOG.md
 tags:
   - Prometheus
+  - Kubernetes
   - PromQL
   - Check
   - Observability
