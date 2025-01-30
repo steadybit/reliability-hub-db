@@ -1,9 +1,13 @@
 {
   "id": "0194b186-7ffa-710e-b6c8-1195ae41f9c3",
-  "templateTitle": "Kafka Controller Blackout To Force Election Process",
+  "templateTitle": "Validate Kafka election process when the controller is unavailable",
   "templateDescription": "In a Kafka cluster with zookeeper enabled, we can block the network traffic to the Kafka broker, which is the current controller, to force the zookeeper to elect a new one. The \"check brokers\" can help us seing this change and the downtime from the old controller broker during this experiment.",
   "placeholders": [],
-  "tags": [],
+  "tags": [
+    "Message Queue",
+    "Kafka",
+    "Recoverability"
+  ],
   "experimentName": "Blackout kafka controller to get new election",
   "lanes": [
     {
