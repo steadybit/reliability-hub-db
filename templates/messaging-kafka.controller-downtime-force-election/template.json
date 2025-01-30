@@ -1,0 +1,69 @@
+{
+  "id": "0194b186-7ffa-710e-b6c8-1195ae41f9c3",
+  "templateTitle": "Kafka Controller Blackout To Force Election Process",
+  "templateDescription": "In a Kafka cluster with zookeeper enabled, we can block the network traffic to the Kafka broker, which is the current controller, to force the zookeeper to elect a new one. The \"check brokers\" can help us seing this change and the downtime from the old controller broker during this experiment.",
+  "placeholders": [],
+  "tags": [],
+  "experimentName": "Blackout kafka controller to get new election",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "Block Traffic for Controller",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.broker.is-controller",
+                  "operator": "EQUALS",
+                  "values": [
+                    "true"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "120s",
+            "expectedChanges": [
+              "kafka broker with downtime",
+              "kafka controller changed"
+            ],
+            "changeCheckMode": "allTheTime"
+          },
+          "actionType": "com.steadybit.extension_kafka.broker.check",
+          "radius": {}
+        }
+      ]
+    }
+  ]
+}
