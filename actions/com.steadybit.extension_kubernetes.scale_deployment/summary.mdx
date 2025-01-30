@@ -1,6 +1,8 @@
 # Introduction
 
 Use this action to up or downscale a Kubernetes deployment.
+The attack scales the deployment to the specified replica count at the beginning of the attack and rolls it back to the old replica count whenever the attack stops.
+Intermediate changes of the replica count, i.e., by third-party tools, don't cause a re-scaling by the attack.
 
 # Use Cases
 - Verify that your deployment is successfully scaled up and the new pod is taken into account by your load balancer
