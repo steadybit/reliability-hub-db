@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: rUlKBkfV-UM
 - type: image
   src: design.png
   alt: Steadybit's k6 action to run a k6 load test in the experiment

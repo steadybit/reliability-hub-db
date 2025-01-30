@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: c5ni5gcqk7o
 - type: image
   src: design.png
   alt: Steadybit's JMeter action to run a JMeter load test in the experiment

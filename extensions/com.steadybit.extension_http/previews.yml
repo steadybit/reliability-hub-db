@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: Tmj7-0hoypw
 - type: image
   src: design.png
   alt: Steadybit's HTTP Check to validate an HTTP-based endpoint and check for response time, content etc.

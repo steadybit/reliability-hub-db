@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: yh1mruZsxMs
 - type: image
   src: design.png
   alt: Steadybit's Gatling action to run a Gatling load test in the experiment
