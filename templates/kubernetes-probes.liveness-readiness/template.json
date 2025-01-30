@@ -1,7 +1,7 @@
 {
   "id": "0192af0f-082b-75c2-bd8a-2e8aee1aab7c",
-  "templateTitle": "Validate Kubernetes probes for an unavailable upstream service",
-  "templateDescription": "Failing upstream service (e.g., message broker, database, or cache) shouldn't cause liveness or readiness probe failures in Kubernetes to avoid cascading restarts.\n\n## Motivation\nIn Kubernetes, liveness and readiness probes indicate whether a container is alive and able to serve incoming requests. These are especially helpful for load balancers. However, it is best practice in Kubernetes not to include upstream services in the probes. Otherwise, as soon as, e.g., a Kubernetes deployment's upstream service has issues, the deployment restarts a well, which may cause a cascade of failures in the Kubernetes cluster.\n\n## Structure\nWhile blocking traffic from a deployment's container to a upstream service, we explicitly check the HTTP liveness and readiness probes of the Kubernetes deployment. Following best practices, we expect them not to be affected by the unavailable upstream service.\n\n## References\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n- [Readiness and Liveness Probes best practices by kube-score](https://github.com/zegl/kube-score/blob/master/README_PROBES.md)",
+  "templateTitle": "Validate Kubernetes probes for an unavailable downstream service",
+  "templateDescription": "Failing downstream service (e.g., message broker, database, or cache) shouldn't cause liveness or readiness probe failures in Kubernetes to avoid cascading restarts.\n\n## Motivation\nIn Kubernetes, liveness and readiness probes indicate whether a container is alive and able to serve incoming requests. These are especially helpful for load balancers. However, it is best practice in Kubernetes not to include downstream services in the probes. Otherwise, as soon as, e.g., a Kubernetes deployment's downstream service has issues, the deployment restarts a well, which may cause a cascade of failures in the Kubernetes cluster.\n\n## Structure\nWhile blocking traffic from a deployment's container to a downstream service, we explicitly check the HTTP liveness and readiness probes of the Kubernetes deployment. Following best practices, we expect them not to be affected by the unavailable downstream service.\n\n## References\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n- [Readiness and Liveness Probes best practices by kube-score](https://github.com/zegl/kube-score/blob/master/README_PROBES.md)",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -29,9 +29,9 @@
       "description": "### What is the HTTP URL used as a liveness probe in the Kubernetes deployment under test?\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
     },
     {
-      "key": "upstreamServiceHostname",
+      "key": "downstreamServiceHostname",
       "name": "Upstream Service Hostname",
-      "description": "### What is the hostname of the upstream service that you want to simulate being unavailable?\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
+      "description": "### What is the hostname of the downstream service that you want to simulate being unavailable?\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
     }
   ],
   "tags": [
@@ -59,7 +59,7 @@
             "duration": "60s",
             "failOnHostNetwork": true,
             "hostname": [
-              "[[upstreamServiceHostname]]"
+              "[[downstreamServiceHostname]]"
             ],
             "port": [],
             "ip": []

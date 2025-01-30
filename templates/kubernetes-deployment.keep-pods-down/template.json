@@ -1,7 +1,7 @@
 {
   "id": "01942b60-803f-714e-95f9-f357a7cfbe36",
   "templateTitle": "Keep Deployment's pods down",
-  "templateDescription": "Check what happens when all pods of a Kubernetes deployment aren't coming up again. \n## Motivation\nTypically, Kubernetes tries to keep as many pods running as desired for a Kubernetes deployment. However, some circumstances may prevent Kubernetes from achieving this, like missing resources in the cluster, problems with the deployment's probes, or a CrashLoopBackOff.\nYou should validate what happens to your overall provided service when a given deployment is directly affected by this or one of the upstream services used by your deployment.\n\n## Structure\nTo keep the pods down for a given deployment, we first kill all the pods in the deployment. Simultaneously, we will scale down the Kubernetes deployment to 0 to simulate that these pods can't be scheduled again.\nAt the of the experiment, we automatically roll back the deployment's scale to the initial value.",
+  "templateDescription": "Check what happens when all pods of a Kubernetes deployment aren't coming up again. \n## Motivation\nTypically, Kubernetes tries to keep as many pods running as desired for a Kubernetes deployment. However, some circumstances may prevent Kubernetes from achieving this, like missing resources in the cluster, problems with the deployment's probes, or a CrashLoopBackOff.\nYou should validate what happens to your upstream services that are using the given deployment as a downstream service.\n\n## Structure\nTo keep the pods down for a given deployment, we first kill all the pods in the deployment. Simultaneously, we will scale down the Kubernetes deployment to 0 to simulate that these pods can't be scheduled again.\nAt the of the experiment, we automatically roll back the deployment's scale to the initial value.",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -30,7 +30,7 @@
     "Kubernetes"
   ],
   "experimentName": "Keep pods down of deployment [[k8sDeployment]]",
-  "hypothesis": "Validate what happens when pods aren't coming up for a given time, e.g., 3 minutes. Validate what happens to the given deployment as well as downstream service depending on the unavailable service as upstream.",
+  "hypothesis": "Validate what happens when pods aren't coming up for a given time, e.g., 3 minutes. Validate what happens to the given deployment as well as upstream services that depend on this unavailable service as downstream.",
   "lanes": [
     {
       "steps": [

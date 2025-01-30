@@ -1,7 +1,7 @@
 {
   "id": "0363a90e-9563-494c-bd25-81da6e4c3d43",
-  "templateTitle": "Unavailable upstream service doesn't result in user-visible errors",
-  "templateDescription": "Verify that an unavailable upstream service doesn't result in user-visible errors.\n\n## Motivation\n\nWhen offering a service that is dependent on upstream services, you should ensure that the offered service also works fine whenever one of the upstream services can't be reached. This is especially true when multiple upstream services are involved and the responses of each upstream service are considered optional.\n\n## Structure\n\nFor the duration of the experiment and the deployment's upscaling, verify that a user-visible endpoint offered is responding within expected success rates and that no monitors are alerting.\nAs soon as the deployment is scaled up, the newly scheduled pod should be ready to receive traffic within a reasonable time, e.g., 60 seconds.\n\n## Read more\nThis experiment template is used in our quick start on running an experiment and is especially useful for the shopping demo example. To learn more, check out the [quick start in the Steadybit docs](https://docs.steadybit.com/quick-start/run-experiment).",
+  "templateTitle": "Unavailable downstream service doesn't result in user-visible errors",
+  "templateDescription": "Verify that an unavailable downstream service doesn't result in user-visible errors.\n\n## Motivation\n\nWhen offering a service that is dependent on downstream services, you should ensure that the offered service also works fine whenever one of the downstream services can't be reached. This is especially true when multiple downstream services are involved and the responses of each downstream service are considered optional.\n\n## Structure\n\nFor the duration of the experiment and the deployment's upscaling, verify that a user-visible endpoint offered is responding within expected success rates and that no monitors are alerting.\nAs soon as the deployment is scaled up, the newly scheduled pod should be ready to receive traffic within a reasonable time, e.g., 60 seconds.\n\n## Read more\nThis experiment template is used in our quick start on running an experiment and is especially useful for the shopping demo example. To learn more, check out the [quick start in the Steadybit docs](https://docs.steadybit.com/quick-start/run-experiment).",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -21,12 +21,12 @@
     {
       "key": "httpUpstreamEndpoint",
       "name": "HTTP Upstream Endpoint",
-      "description": "### What is the URL of an **upstream HTTP endpoint** served by **another** Kubernetes deployment that results in requests to the blocked upstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a upstream service, is failing gracefully."
+      "description": "### What is the URL of an **HTTP endpoint** served by **another upstream** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
     },
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests while all pods of the upstream deployment are unavailable?\nFor instance `95%`.\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while all pods of the downstream deployment are unavailable?\nFor instance `95%`.\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
       "key": "recoveryTime",
@@ -39,8 +39,8 @@
     "Block Traffic",
     "Kubernetes"
   ],
-  "experimentName": "Unavailable upstream deployment of [[k8sDeployment]] doesn't result in user-visible errors",
-  "hypothesis": "When the upstream service of Kubernetes deployment [[k8sDeployment]] is not available, an HTTP endpoint offered upstream should still work within the success rate [[httpSuccessRate]].",
+  "experimentName": "Unavailable downstream deployment of [[k8sDeployment]] doesn't result in user-visible errors",
+  "hypothesis": "When the downstream service of Kubernetes deployment [[k8sDeployment]] is not available, an HTTP endpoint offered upstream should still work within the success rate [[httpSuccessRate]].",
   "lanes": [
     {
       "steps": [

@@ -1,7 +1,7 @@
 {
   "id": "01943b13-80d8-7ba5-b04c-2bf91c6add7d",
   "templateTitle": "Keep StatefulSet's pods down",
-  "templateDescription": "Check what happens when all pods of a Kubernetes StatefulSet aren't coming up again. \n## Motivation\nTypically, Kubernetes tries to keep as many pods running as desired for a Kubernetes StatefulSet. However, some circumstances may prevent Kubernetes from achieving this, like missing resources in the cluster, problems with the StatefulSet's probes, or a CrashLoopBackOff.\nYou should validate what happens to your overall provided service when a given StatefulSet is directly affected by this or one of the upstream services used by your StatefulSet.\n\n## Structure\nTo keep the pods down for a given StatefulSet, we first kill all the pods in the StatefulSet. Simultaneously, we will scale down the Kubernetes StatefulSet to `0` to simulate that these pods can't be scheduled again.\nAt the of the experiment, we automatically roll back the StatefulSet's scale to the initial value.",
+  "templateDescription": "Check what happens when all pods of a Kubernetes StatefulSet aren't coming up again. \n## Motivation\nTypically, Kubernetes tries to keep as many pods running as desired for a Kubernetes StatefulSet. However, some circumstances may prevent Kubernetes from achieving this, like missing resources in the cluster, problems with the StatefulSet's probes, or a CrashLoopBackOff.\nYou should validate what happens to your upstream services that are using the given StatefulSet as a downstream service.\n\n## Structure\nTo keep the pods down for a given StatefulSet, we first kill all the pods in the StatefulSet. Simultaneously, we will scale down the Kubernetes StatefulSet to `0` to simulate that these pods can't be scheduled again.\nAt the of the experiment, we automatically roll back the StatefulSet's scale to the initial value.",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -25,7 +25,7 @@
     }
   ],
   "tags": [
-    "Upstream Service",
+    "Downstream Service",
     "StatefulSet",
     "Kubernetes"
   ],
