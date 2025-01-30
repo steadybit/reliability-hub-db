@@ -1,5 +1,5 @@
 {
-    "lastChange": 1737727548,
+    "lastChange": 1738226167,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -132,6 +132,7 @@
         "/actions/com.steadybit.extension_jvm.spring-mvc-exception-attack/description.yml",
         "/actions/com.steadybit.extension_k6.cloud/description.yml",
         "/actions/com.steadybit.extension_k6.run/description.yml",
+        "/actions/com.steadybit.extension_kafka.broker.check/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.limit-connection-creation/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.limit-io-threads/description.yml",
         "/actions/com.steadybit.extension_kafka.broker.limit-network-threads/description.yml",
