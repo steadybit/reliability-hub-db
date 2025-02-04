@@ -1,0 +1,179 @@
+{
+  "id": "019127d4-37a9-7e33-86ef-f25f8da9f4eb",
+  "templateTitle": "Certificate TLS/SSL expiry for Kubernetes deployment",
+  "templateDescription": "Turn time forward and check whether your TLS/SSL certificates are valid.\n\n## Motivation\n\nNoticing the TLS/SSL certification expiry too late is one problem you can easily avoid by frequently checking your expiry dates. While observability tools already handle this job nicely, you can't know whether they are working in your environment.\nWith this experiment, you can turn the time forward to check whether your HTTPS endpoint works at a given date in the future. Additionally, you can configure one of the [observability integrations](https://hub.steadybit.com/extensions?tags=Observability) to validate your observability tool's alerting.\n\n## Structure\nFirst, we validate that the given HTTPS endpoint is working today. Next, we will travel with the host in time to validate that the HTTPS endpoint continues to work on a given date. If the TLS/SSL certificate has already expired at that date, the HTTP check will throw failures.\n\n## Warning\nPlease be aware that we will manipulate the time for a given Kubernetes node. Containers running at that host may struggle to deal with the change in the clock correctly, and you may experience other side effects.",
+  "placeholders": [
+    {
+      "key": "httpEndpoint",
+      "name": "Secured HTTP Endpoint",
+      "description": "### What is the secured HTTP endpoint URL that should still work in the future?\nThe HTTP endpoint should be secured with an SSL certificate to validate the certificate expiry.\nWe will perform requests before and while changing a host's time to validate that this endpoint works fine today and in the future and that the SSL certificate hasn't expired."
+    },
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment providing the HTTP endpoint runs?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the deployment providing the HTTP endpoint runs?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment providing the secured HTTP endpoint?"
+    },
+    {
+      "key": "expiration",
+      "name": "Expiration",
+      "description": "### Which time frame in the future would you like to validate the certificate's expiration date?\nWe'll use a time travel attack to turn time forward the given duration and check whether the TLS certificate is still valid."
+    }
+  ],
+  "tags": [
+    "Certificate Expiry"
+  ],
+  "experimentName": "TLS/SSL Certificate doesn't expire within next [[expiration]] for [[k8sDeployment]]",
+  "hypothesis": "When a host's time is +[[expiration]] days, the secured HTTP endpoint still works and no certificates are expired.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpEndpoint]]",
+            "duration": "10s",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: HTTP requests are valid for today",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {
+            "targetType": "com.steadybit.extension_http.client-location",
+            "maximum": 1
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpEndpoint]]",
+            "duration": "60s",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: HTTP requests continue to be valid in +[[expiration]] days",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {
+            "targetType": "com.steadybit.extension_http.client-location",
+            "maximum": 1
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "offset": "[[expiration]]",
+            "duration": "60s",
+            "disableNtp": true
+          },
+          "customLabel": "WHEN: Host's time is +[[expiration]] days",
+          "actionType": "com.steadybit.extension_host.timetravel",
+          "radius": {
+            "targetType": "com.steadybit.extension_host.host",
+            "predicate": {
+              "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\")"
+            },
+            "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\")",
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "70s"
+          },
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
