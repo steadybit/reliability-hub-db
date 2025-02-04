@@ -86,7 +86,7 @@
           "parameters": {
             "graceful": "true"
           },
-          "customLabel": "WHEN: Container {{containerName}} is stopped",
+          "customLabel": "WHEN: Container [[k8sContainerName]] is stopped",
           "actionType": "com.steadybit.extension_container.stop",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
@@ -220,7 +220,7 @@
           "parameters": {
             "duration": "2m"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

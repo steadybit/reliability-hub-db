@@ -6,8 +6,8 @@ You can use this step to continuously kill all (or a given) container in a selec
 - Simulate failure of container startups and Kubernetes backing off to restart the container
 
 # Known limitations
-- Pods using `hostPID=true` are currently not supported
-- Containers without `kill` binary are currently not supported
+- Pods using `hostPID=true` are currently unsupported
+- Containers without a shell and no `kill` binary are currently unsupported
 
 # Rollback
 

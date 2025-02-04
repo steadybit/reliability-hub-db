@@ -10,3 +10,5 @@ kind: other
 category: kubernetes
 targetType: com.steadybit.extension_kubernetes.kubernetes-cluster
 extension: com.steadybit.extension_kubernetes
+tags:
+  - Kubernetes

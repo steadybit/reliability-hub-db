@@ -1,0 +1,4 @@
+---
+- type: image
+  src: elect.png
+  alt: The action "Trigger Partition Leader Election" within the experiment editor.

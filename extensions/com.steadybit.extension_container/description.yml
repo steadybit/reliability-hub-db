@@ -15,9 +15,6 @@ ghcr:
   owner: steadybit
   repository: extension-container
   package: extension-container
-helmChart:
-  repository: https://steadybit.github.io/extension-container
-  name: steadybit-extension-container
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_container
 installation: https://github.com/steadybit/extension-container#installation
 changelog: https://github.com/steadybit/extension-container/blob/main/CHANGELOG.md
@@ -25,3 +22,6 @@ tags:
   - Container
   - Kubernetes
   - Network
+  - AWS
+  - Azure
+  - GCP

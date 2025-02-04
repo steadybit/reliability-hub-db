@@ -1,5 +1,0 @@
-license: MIT
-gitHub:
-  owner: steadybit
-  repository: reliability-hub-db/tree/main/templates/kubernetes-deployment.unavailable-down-stream-service
-maintainer: com.steadybit

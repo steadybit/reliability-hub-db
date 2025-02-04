@@ -4,14 +4,22 @@ Drops all network traffic (IN/OUT/FORWARDED).
 
 # Prerequisites
 
-If you are not using our container images for the extension, you need install the `tc` (from the iproute2 package) tool to use the attack.
+If you are not using our container images for the extension, the attack requires `tc` (from the iproute2 package).
+
+# Restrictions
+
+This attack is not supported on hosts using Cilium.
+
 
 # Use Cases
 
-    * Understand how your services behave under network outages
+* Understand how your services behave under network outages
 
 # Parameters
 
-| Parameter | Description                           | Default |
-|-----------|---------------------------------------|---------|
-| Duration  | How long should traffic been blocked? | 30s     |
+| Parameter  | Description                                         | Default |
+|------------|-----------------------------------------------------|---------|
+| Duration   | How long should traffic been blocked?               | 30s     |
+| Hostname   | Restrict to which hosts the traffic is reduced      |         |
+| IP Address | Restrict to which IP address the traffic is reduced |         |
+| Ports      | Restrict to which ports the traffic is reduced      |         |

@@ -16,12 +16,12 @@
     {
       "key": "k8sWorkloadOwner",
       "name": "Kubernetes Workload Owner",
-      "description": "### What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes workload under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
-      "key": "datadogMonitorTags",
-      "name": "Datadog Monitor Tags",
-      "description": "### Which Datadog Monitors (identified via Tags) should notice the crash loop?"
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should notice the crash loop?"
     }
   ],
   "tags": [
@@ -54,10 +54,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -113,7 +113,7 @@
               ]
             },
             "query": null,
-            "percentage": 50
+            "percentage": 100
           }
         }
       ]
@@ -138,7 +138,7 @@
               "Warn"
             ]
           },
-          "customLabel": "THEN: Monitor should be in 'Alert' state because of non-ready pods for more than 2 minutes",
+          "customLabel": "THEN: Monitor should turn into 'Alert' state because of non-ready pods",
           "actionType": "com.steadybit.extension_datadog.monitor.status_check",
           "radius": {
             "targetType": "com.steadybit.extension_datadog.monitor",
@@ -146,10 +146,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -176,10 +176,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -226,7 +226,7 @@
           "parameters": {
             "duration": "190s"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

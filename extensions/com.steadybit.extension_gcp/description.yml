@@ -16,14 +16,11 @@ ghcr:
   owner: steadybit
   repository: extension-gcp
   package: extension-gcp
-helmChart:
-  repository: https://steadybit.github.io/extension-gcp
-  name: steadybit-extension-gcp
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_gcp
 installation: https://github.com/steadybit/extension-gcp#installation
 changelog: https://github.com/steadybit/extension-gcp/blob/main/CHANGELOG.md
 tags:
   - Google Cloud (GCP)
   - Cloud
-  - Virtual machine
+  - Virtual machines
   - VM

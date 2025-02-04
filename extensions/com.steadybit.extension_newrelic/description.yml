@@ -16,9 +16,6 @@ ghcr:
   owner: steadybit
   repository: extension-newrelic
   package: extension-newrelic
-helmChart:
-  repository: https://steadybit.github.io/extension-newrelic
-  name: steadybit-extension-newrelic
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_newrelic
 installation: https://github.com/steadybit/extension-newrelic#installation
 changelog: https://github.com/steadybit/extension-newrelic/blob/main/CHANGELOG.md

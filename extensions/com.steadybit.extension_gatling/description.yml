@@ -13,9 +13,6 @@ ghcr:
   owner: steadybit
   repository: extension-gatling
   package: extension-gatling
-helmChart:
-  repository: https://steadybit.github.io/extension-gatling
-  name: steadybit-extension-gatling
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_gatling
 installation: https://github.com/steadybit/extension-gatling#installation
 changelog: https://github.com/steadybit/extension-gatling/blob/main/CHANGELOG.md

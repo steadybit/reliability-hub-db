@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_host.fill_disk
 label: Fill Disk
-description: Fill available disk space
+description: Writes data to the disk.
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g clip-path="url(#clip0_2810_382)">
@@ -19,3 +19,7 @@ category: resource
 targetType: com.steadybit.extension_host.host
 extension: com.steadybit.extension_host
 releaseDate: '2023-12-07'
+tags:
+  - Host
+  - Kubernetes
+

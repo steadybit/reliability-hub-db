@@ -14,3 +14,7 @@ kind: attack
 category: network
 targetType: com.steadybit.extension_kong.service
 extension: com.steadybit.extension_kong
+tags:
+  - Kong
+  - API gateway
+  - Http

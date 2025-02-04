@@ -24,11 +24,13 @@ ghcr:
   owner: steadybit
   repository: extension-kubernetes
   package: extension-kubernetes
-helmChart:
-  repository: https://steadybit.github.io/extension-kubernetes
-  name: steadybit-extension-kubernetes
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_kubernetes
 installation: https://github.com/steadybit/extension-kubernetes#installation
 changelog: https://github.com/steadybit/extension-kubernetes/blob/main/CHANGELOG.md
 tags:
   - Kubernetes
+  - Container
+  - AWS
+  - Azure
+  - GCP
+  - Advice

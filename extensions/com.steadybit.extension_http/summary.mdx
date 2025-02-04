@@ -1,3 +1,12 @@
 # Introduction
 
-With this extension you are able to check your http endpoints for availability and response time. You can also check the response body for specific strings.
+With this extension, you can check your HTTP endpoints for availability and response time.
+You can also check the response body for specific strings or validate the response time.
+
+You need to deploy the extension in your system, which allows users to easily validate non-public URLs.
+For instance, you can check Kubernetes internal URLs or validate URLs requiring a VPN connection otherwise.
+
+## Support Multiple Client Locations
+Optionally, you can activate the extension's support for multiple client locations.
+Once you have activated it, you can configure available client locations for a team via environments and ensure you're always running the HTTP check from the right internal location to verify non-public URLs.
+See [extension-http's readme](https://github.com/steadybit/extension-http) for further information and migration guidelines.

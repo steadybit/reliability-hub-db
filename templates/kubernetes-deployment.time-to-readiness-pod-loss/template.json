@@ -1,0 +1,216 @@
+{
+  "id": "01931a78-085e-7058-af13-b2d7fed85d17",
+  "templateTitle": "Reasonable recovery time when losing a pod",
+  "templateDescription": "When deleting a pod, Kubernetes should bring up a new pod to ensure system stability.\n\n## Motivation\nDeleting a pod simulates situations in which, for any reason, a pod stops working properly and needs to be rescheduled. This experiment makes sure that rescheduling works as expected and newly scheduled pods become ready within the expected timeframe.\n\n## Structure\n\nAll pods should be ready to accept traffic at the beginning of the experiment. Rescheduling should start as soon as a pod is deleted.\nEventually, after the allotted time, all pods should be ready again.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the pod under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the pod under test is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### Which Kubernetes deployment should have one of its pods deleted, and you want to emsure it is rescheduled within a reasonable time?"
+    },
+    {
+      "key": "k8sDeploymentRecoveryTime",
+      "name": "Deployment's Recovery Time",
+      "description": "### How long do you expect it to take until the deployment's pod is rescheduled?"
+    }
+  ],
+  "tags": [
+    "Elasticity",
+    "Recoverability",
+    "Kubernetes"
+  ],
+  "experimentName": "Pods of [[k8sDeployment]] are rescheduled quickly",
+  "hypothesis": "When draining a node of [[k8sDeployment]], the Kubernetes deployment becomes ready again within [[k8sDeploymentRecoveryTime]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All Pods of [[k8sDeployment]] are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {},
+          "customLabel": "WHEN: Deleting a Pod running [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_kubernetes.delete_pod",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-pod",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "maximum": 1
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sDeploymentRecoveryTime]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: All Pods should be ready again within [[k8sDeploymentRecoveryTime]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "210s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "210s"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

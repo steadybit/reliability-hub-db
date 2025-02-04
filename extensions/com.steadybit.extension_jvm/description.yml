@@ -16,9 +16,6 @@ ghcr:
   owner: steadybit
   repository: extension-jvm
   package: extension-jvm
-helmChart:
-  repository: https://steadybit.github.io/extension-jvm
-  name: steadybit-extension-jvm
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_jvm
 installation: https://github.com/steadybit/extension-jvm#installation
 changelog: https://github.com/steadybit/extension-jvm/blob/main/CHANGELOG.md

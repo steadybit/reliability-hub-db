@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: dd2jbbW2yyI
 - type: image
   src: 1.png
   alt: The alert rule check within the experiment editor.

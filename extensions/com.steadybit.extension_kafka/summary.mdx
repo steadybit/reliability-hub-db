@@ -1,0 +1,32 @@
+# Introduction to the Kafka Extension
+The Steadybit Kafka Extension allows you to create chaos and simultaneously check the behavior of your consumer groups.
+
+# Integration and Functionality
+Integration of Kafka into Steadybit works via the [franz-go](https://github.com/twmb/franz-go/tree/master) client library.
+The extension-kafka utilizes these capabilities and may require elevated rights on the Kafka side to:
+- List brokers, topics, consumer groups, and offsets
+- Elect leaders for partitions
+- Alter broker configurations
+- Create and delete ACLs
+- Delete records
+
+## Integration of Kafka in Steadybit
+
+Alter Broker configuration in various ways:
+- Reduce the max batch size of messages
+- Limit the IO/Network threads per broker
+- Limit the rate of creation of new connections
+
+You can also run these actions:
+- Elect new leaders for partitions
+- Produce records either with a fixed amount or with a fixed rate per second
+- Deny access to a topic for a consumer
+- Trigger a delete record request
+
+In parallel, you can check:
+- The current lag of a topic for a consumer group
+- The state of a consumer group
+- The partition activity for a given topic (leader election, replicas going offline or in-sync, new replica order)
+
+# Installation and Setup
+To integrate the Kafka extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-kafka#installation).

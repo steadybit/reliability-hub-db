@@ -1,0 +1,4 @@
+---
+- type: image
+  src: topicDetail.png
+  alt: Identified information about a Kafka topic that can later be used within experiments.

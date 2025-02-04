@@ -21,12 +21,12 @@
     {
       "key": "rabbitMQHostname",
       "name": "RabbitMQ Hostname",
-      "description": "### What is the hostname of the RabbitMQ used by the Kubernetes deployment?\n\nPlease note that we only block traffic from the Kubernetes deployment for that specific hostname to simulate RabbitMQ unavailability."
+      "description": "### What is the hostname of the RabbitMQ used by the Kubernetes deployment?\nPlease note that we only block traffic from the Kubernetes deployment for that specific hostname to simulate RabbitMQ unavailability."
     },
     {
-      "key": "datadogMonitorTags",
-      "name": "Datadog Monitor Tags",
-      "description": "### Which Datadog Monitors (identified via Tags) should identify the unavailability of RabbitMQ?"
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should identify the unavailability of RabbitMQ?"
     }
   ],
   "tags": [
@@ -103,10 +103,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -179,7 +179,7 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
                     "service:test"
@@ -198,14 +198,14 @@
           "type": "wait",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "40s"
+            "duration": "30s"
           }
         },
         {
           "type": "action",
           "ignoreFailure": true,
           "parameters": {
-            "duration": "100s",
+            "duration": "2m",
             "statusCheckMode": "atLeastOnce",
             "expectedStatusList": [
               "Alert"
@@ -219,10 +219,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -269,7 +269,7 @@
           "parameters": {
             "duration": "3m"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

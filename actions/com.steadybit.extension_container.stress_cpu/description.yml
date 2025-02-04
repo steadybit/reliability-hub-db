@@ -8,3 +8,7 @@ kind: attack
 category: resource
 targetType: com.steadybit.extension_container.container
 extension: com.steadybit.extension_container
+tags:
+  - Container
+  - Kubernetes
+  - CPU

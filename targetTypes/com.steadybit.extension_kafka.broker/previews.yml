@@ -1,0 +1,4 @@
+---
+- type: image
+  src: brokerDetail.png
+  alt: Identified information about a Kafka broker that can later be used within experiments.

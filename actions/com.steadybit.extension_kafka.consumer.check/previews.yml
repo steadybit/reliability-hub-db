@@ -1,0 +1,4 @@
+---
+- type: image
+  src: check.png
+  alt: The action "Check Consumer State" within the experiment editor.

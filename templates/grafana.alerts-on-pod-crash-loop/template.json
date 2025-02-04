@@ -16,12 +16,17 @@
     {
       "key": "k8sWorkloadOwner",
       "name": "Kubernetes Workload Owner",
-      "description": "### What is the Kubernetes workload under test? It can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+      "description": "### What is the Kubernetes workload under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
     },
     {
       "key": "grafanaAlertRuleName",
       "name": "Grafana Alert Rule Name",
       "description": "### Which Grafana Alert Rule (identified via name) should fire due to the crash loop?"
+    },
+    {
+      "key": "grafanaAlertRuleTimeout",
+      "name": "Grafana Alert Rule Timeout",
+      "description": "### How long do you expect it will take until the Grafana Rule is alerting?\nWe will also use this time to crash-loop the container and await Grafana's alert.\nPlease note that, depending on your configuration, the Grafana rule may stay in a pending state for a longer time before firing (e.g., 15 minutes). If that's not your expectation, choose a smaller timeout."
     }
   ],
   "tags": [
@@ -41,11 +46,11 @@
           "ignoreFailure": false,
           "parameters": {
             "duration": "10s",
-            "stateCheckMode": "allTheTime",
             "expectedStateList": [
               "normal",
               "inactive"
-            ]
+            ],
+            "stateCheckMode": "allTheTime"
           },
           "customLabel": "GIVEN: Alert Rule is 'normal' or 'inactive'",
           "actionType": "com.steadybit.extension_grafana.alert-rule.check",
@@ -81,7 +86,7 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "5m"
+            "duration": "[[grafanaAlertRuleTimeout]]"
           },
           "customLabel": "WHEN: Kubernetes pod crash loops",
           "actionType": "com.steadybit.extension_kubernetes.crash_loop_pod",
@@ -114,7 +119,7 @@
               ]
             },
             "query": null,
-            "percentage": 50
+            "percentage": 100
           }
         }
       ]
@@ -132,13 +137,13 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "6m",
-            "stateCheckMode": "atLeastOnce",
+            "duration": "[[grafanaAlertRuleTimeout]]",
             "expectedStateList": [
               "firing"
-            ]
+            ],
+            "stateCheckMode": "atLeastOnce"
           },
-          "customLabel": "THEN: Alert Rule is firing because of non-ready pods for more than 2 minutes",
+          "customLabel": "THEN: Alert Rule is firing because of non-ready pods for more than [[grafanaAlertRuleTimeout]]",
           "actionType": "com.steadybit.extension_grafana.alert-rule.check",
           "radius": {
             "targetType": "com.steadybit.extension_grafana.alert-rule",
@@ -165,7 +170,32 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "370s"
+            "duration": "10s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[grafanaAlertRuleTimeout]]"
           },
           "customLabel": "Show Kubernetes events from the cluster",
           "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
@@ -194,9 +224,34 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "370s"
+            "duration": "10s"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[grafanaAlertRuleTimeout]]"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

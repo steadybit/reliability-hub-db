@@ -8,6 +8,16 @@ The advice automatically discovers whether a Kubernetes deployment has at least 
 ## Validation Needed
 Asks you to validate with an automatically created experiment that provided features work as expected when a container of a single pod is restarting.
 
+By default, the experiment contains a TODO step to add validation logic for your service. We highly recommend resolving this step to facilitate the discussion of whether your service works as expected from a user's point of view.
+You can also tag your Kubernetes Deployment with the label `tags.steadybit.com/service-validation` to support different validations:
+
+* `http`: For an HTTP check on a GET endpoint
+* `k6`: For running a k6 load test
+* `gatling`: For running a Gatling load test
+* `jmeter`: For running a JMeter load test
+
+Once you create the experiment, the user is asked to specify the corresponding validation, and Steadybit runs it throughout the experiment.
+
 ## Implemented
 Once you have configured Kubernetes to have at least two pods or the deployment is targeted by a HorizontalPodAutoscaler.
 

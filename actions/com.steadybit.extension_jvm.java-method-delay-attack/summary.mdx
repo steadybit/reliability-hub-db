@@ -8,10 +8,11 @@ The delay is applied before the handler method is executed.
 
 # Parameters
 
-| Parameter   | Description                             | Default |
-|-------------|-----------------------------------------|---------|
-| Class Name  | Which Java class should be attacked?    |         |
-| Method Name | Which public method should be attacked? |         |
-| Duration    | How long should the traffic be delayed? | 30s     |
-| Delay       | How much should the traffic be delayed? | 500ms   |
-| Jitter      | Random +-30% jitter to network delay    | true    |
+| Parameter                      | Description                                                                 | Default |
+|--------------------------------|-----------------------------------------------------------------------------|---------|
+| Class Name                     | Which Java class should be attacked?                                        |         |
+| Method Name                    | Which public method should be attacked?                                     |         |
+| Duration                       | How long should the traffic be delayed?                                     | 30s     |
+| Delay                          | How much should the traffic be delayed?                                     | 500ms   |
+| Jitter                         | Random +-30% jitter to network delay                                        | true    |
+| Validate class and method name |Should the action fail if the specified class and method could not be found? | true    |

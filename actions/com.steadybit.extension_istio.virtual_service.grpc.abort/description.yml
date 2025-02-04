@@ -14,3 +14,10 @@ kind: attack
 category: kubernetes
 targetType: com.steadybit.extension_istio.virtual_service
 extension: com.steadybit.extension_istio
+tags:
+  - Istio
+  - Service Mesh
+  - Kubernetes
+  - Http
+  - gRPC
+

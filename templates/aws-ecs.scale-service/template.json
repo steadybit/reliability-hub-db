@@ -1,0 +1,218 @@
+{
+  "id": "0191284e-fd72-7632-8549-5773c2e675d2",
+  "templateTitle": "Scaling up of ECS Service Within Given Time",
+  "templateDescription": "Ensure that you can scale up your ECS service in a reasonable time.\n\n## Motivation\nFor an elastic and resilient cloud infrastructure, ensure you can scale up your ECS services within a reasonable time. Long startup times are undesirable but sometimes unnoticed and unexpected.\n\n## Structure\nValidate that all ECS tasks of an ECS service are running. Once we scale the ECS service up, the newly scheduled task should be ready within a reasonable time.",
+  "placeholders": [
+    {
+      "key": "ecsClusterName",
+      "name": "ECS Cluster Name",
+      "description": "### What is the ECS cluster in which the service under test is running?"
+    },
+    {
+      "key": "ecsServiceName",
+      "name": "ECS Service Name",
+      "description": "### What is the ECS service name under test?"
+    },
+    {
+      "key": "ecsServiceDesiredCount",
+      "name": "ECS Service Desired Count",
+      "description": "### What is the desired count of the ECS Service that you want to scale up to?\nPlease ensure that the desired count is larger than the current scaling. At the end of the experiment, we'll automatically roll it back to the original count."
+    },
+    {
+      "key": "ecsServiceStartupTime",
+      "name": "ECS Service Startup Time",
+      "description": "### How long do you expect the service to take until fully scaled up?"
+    }
+  ],
+  "tags": [
+    "Scalability",
+    "Elasticity",
+    "AWS ECS",
+    "AWS"
+  ],
+  "experimentName": "ECS up-scaling of [[ecsServiceName]]",
+  "hypothesis": "When scaling up the ECS Service [[ecsServiceName]], the tasks are up and running within [[ecsServiceStartupTime]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[ecsServiceStartupTime]]",
+            "runningCountCheckMode": "runningCountIncreased"
+          },
+          "customLabel": "THEN: All tasks are up and running within [[ecsServiceStartupTime]]",
+          "actionType": "com.steadybit.extension_aws.ecs-service.task_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "runningCountCheckMode": "runningCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All tasks are running",
+          "actionType": "com.steadybit.extension_aws.ecs-service.task_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[ecsServiceStartupTime]]",
+            "desiredCount": "[[ecsServiceDesiredCount]]"
+          },
+          "customLabel": "WHEN: Scaling service up",
+          "actionType": "com.steadybit.extension_aws.ecs-service.scale",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "actionType": "com.steadybit.extension_aws.ecs-service.event_log",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[ecsServiceStartupTime]]"
+          },
+          "actionType": "com.steadybit.extension_aws.ecs-service.event_log",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

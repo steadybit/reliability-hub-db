@@ -1,0 +1,93 @@
+{
+  "id": "0194b186-7ffa-710e-b6c8-1195ae41f9c3",
+  "templateTitle": "Validate Kafka election process when the controller is unavailable",
+  "templateDescription": "Verify a Kafka's broker re-election when the current controller is isolated\n\n## Motivation\n\nTesting your Zookeeper re-election process of a new controller broker helps to ensure high availability in your Kafka cluster. In addition, verify the behavior of your producers and consumers and verify what happens, e.g., to your message throughput while the re-election is happening or whether messages are lost.\n\n## Structure\nWe enforce the re-election of Kafka controller broker by blocking the network traffic to the current controller. By leveraging the 'check brokers'-step, we can validate that the new controller is elected and the old controller is detected as being down.",
+  "placeholders": [],
+  "tags": [
+    "Message Queue",
+    "Zookeeper",
+    "Kafka",
+    "Recoverability"
+  ],
+  "experimentName": "Blackout kafka controller to get new election",
+  "hypothesis": "Whenever the controller's traffic is blocked, we expect a re-election of the controller. Additionally, we might want to check the effect on the application's behavior.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: Controller's traffic is blocked",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "kafka.broker.is-controller",
+                  "operator": "EQUALS",
+                  "values": [
+                    "true"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "120s",
+            "expectedChanges": [
+              "kafka broker with downtime"
+            ],
+            "changeCheckMode": "atLeastOnce"
+          },
+          "customLabel": "THEN: Expect old controller to be detected as down",
+          "actionType": "com.steadybit.extension_kafka.broker.check",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "120s",
+            "expectedChanges": [
+              "kafka controller changed"
+            ],
+            "changeCheckMode": "atLeastOnce"
+          },
+          "customLabel": "THEN: Expect a new controller to be elected",
+          "actionType": "com.steadybit.extension_kafka.broker.check",
+          "radius": {}
+        }
+      ]
+    }
+  ]
+}

@@ -8,3 +8,6 @@ kind: attack
 category: state
 targetType: com.steadybit.extension_container.container
 extension: com.steadybit.extension_container
+tags:
+  - Container
+  - Kubernetes

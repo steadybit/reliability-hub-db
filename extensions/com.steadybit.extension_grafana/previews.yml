@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: dd2jbbW2yyI
 - type: image
   src: steadybit_experiment_editor.png
   alt: Steadybit's "Alert Rule Check" allows you to verify the behaviour of your Grafana alert rules.

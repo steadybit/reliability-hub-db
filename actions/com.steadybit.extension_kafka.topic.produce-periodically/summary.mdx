@@ -1,0 +1,21 @@
+# Introduction
+
+With this action, Steadybit can become a producer and send records at the desired rate.
+
+# Use Cases
+
+ - You can check the behaviour of your consumer under various types of messages
+ - You can artificially create lags for your topic by producing messages at a high throughput
+
+# Parameters
+
+| Parameter           | Description                                                                                                                                 | Default |
+|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Record Key          | Optional. You can define a key, that could define the partitions used based on the partitions logics in place (default is round robin).     |         |
+| Record Value        | Required. The value of the record to generate                                                                                               |         |
+| Record Headers      | The Record Headers.                                                                                                                         |         |
+| Duration            | The duration of the attack.                                                                                                                 | 10s     |
+| Records per seconds | The number of records per second. Should be between 1 and 10.                                                                               |         |
+| Success Rate        | How many percent of the records must be at least successful, that means not encountering any errors while sending the record to the broker. | 100%    |
+| MaxConcurrent       | Maximum count on parallel running requests. (min 1, max 10)                                                                                 | 5       |
+

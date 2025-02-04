@@ -1,0 +1,4 @@
+---
+- type: image
+  src: networkthreads.png
+  alt: The action "Limit Network Threads" within the experiment editor.

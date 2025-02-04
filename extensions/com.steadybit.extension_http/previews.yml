@@ -1,0 +1,15 @@
+---
+- type: youtube
+  id: Tmj7-0hoypw
+- type: image
+  src: design.png
+  alt: Steadybit's HTTP Check to validate an HTTP-based endpoint and check for response time, content etc.
+- type: image
+  src: run.png
+  alt: The experiment run view with the HTTP check widget to validate endpoint's behavior.
+- type: image
+  src: explore-client-locations.png
+  alt: Optionally, the HTTP check discovers multiple client execution locations to ease testing of cluster-internal URLs.
+- type: image
+  src: design-client-locations.png
+  alt: Optionally, the HTTP check supports the selection of the client execution location in the experiment's design.

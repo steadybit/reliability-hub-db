@@ -1,0 +1,176 @@
+{
+  "id": "0191363b-a312-7054-ba58-9f38d4a18fa3",
+  "templateTitle": "AWS ECS Service Is Scaled up Within Reasonable Time",
+  "templateDescription": "Verify that your ECS service is scaled up on increased CPU usage.\n\n## Motivation\nImportant ECS services should be scaled up within a reasonable time for an elastic and resilient cloud infrastructure. Undetected high CPU spikes and long startup times are undesirable in these infrastructures.\n\n## Structure\nFirst, we ensure that all ECS service's tasks are ready to serve traffic. Afterward, we inject high CPU usage into the ECS task and expect that within a reasonable amount of time, ECS increases the number of ECS tasks and they become ready to handle incoming traffic.",
+  "placeholders": [
+    {
+      "key": "ecsClusterName",
+      "name": "ECS Cluster Name",
+      "description": "### What is the ECS cluster in which the service under test is running?"
+    },
+    {
+      "key": "ecsServiceName",
+      "name": "ECS Service Name",
+      "description": "### What is the ECS service name under test?"
+    },
+    {
+      "key": "taskCPUStress",
+      "name": "CPU Utilization",
+      "description": "### How much do you want to stress the containers' CPU?\nPlease ensure that you are using a CPU utilization that is large enough to trigger your HorizontalPodAutoscaler (e.g., `90%`)."
+    },
+    {
+      "key": "cpuStressDuration",
+      "name": "CPU Stress Duration",
+      "description": "### How long do you want to stress the CPU until the horizontal pod autoscaler should scale up?"
+    },
+    {
+      "key": "scaleUpTaskTimeout",
+      "name": "Timeout for Task Readiness",
+      "description": "### How long do you expect it to take till upscaling is successful?\nPlease make sure that you choose a value that is **larger than the duration of the CPU stress** and also include the time **until the pod is ready**."
+    }
+  ],
+  "tags": [
+    "Scalability",
+    "CPU",
+    "AWS ECS",
+    "AWS"
+  ],
+  "experimentName": "Scaling via Stress CPU",
+  "hypothesis": "When stressing the CPU of [[ecsServiceName]], ECS should scale the deployment up within [[scaleUpTaskTimeout]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "runningCountCheckMode": "runningCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All tasks are running",
+          "actionType": "com.steadybit.extension_aws.ecs-service.task_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[cpuStressDuration]]",
+            "workers": 0,
+            "cpuLoad": "[[taskCPUStress]]"
+          },
+          "customLabel": "WHEN: Stressing CPU of [[ecsServiceName]]",
+          "actionType": "com.steadybit.extension_aws.ecs-task.stress_cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-task",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.task.amazon-ssm-agent",
+                  "operator": "EQUALS",
+                  "values": [
+                    "true"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[scaleUpTaskTimeout]]",
+            "runningCountCheckMode": "runningCountIncreased"
+          },
+          "customLabel": "THEN: Scaled up task becomes ready within [[scaleUpTaskTimeout]]",
+          "actionType": "com.steadybit.extension_aws.ecs-service.task_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-service",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

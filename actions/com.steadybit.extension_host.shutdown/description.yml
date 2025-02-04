@@ -10,3 +10,6 @@ targetType: com.steadybit.extension_host.host
 extension: com.steadybit.extension_host
 promotedActions:
   - com.steadybit.extension_aws.ec2_instance.state
+tags:
+  - Host
+  - Kubernetes

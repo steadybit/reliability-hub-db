@@ -1,0 +1,4 @@
+---
+- type: image
+  src: check-lag.png
+  alt: The action "Check Topic Lag" within the experiment editor.

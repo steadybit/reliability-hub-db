@@ -21,12 +21,12 @@
     {
       "key": "rabbitMQHostname",
       "name": "RabbitMQ Hostname",
-      "description": "### What is the hostname of RabbitMQ used by the Kubernetes deployment?\n\nPlease note that we inject latency into the traffic from the Kubernetes deployment for that specific hostname."
+      "description": "### What is the hostname of RabbitMQ used by the Kubernetes deployment?\nPlease note that we inject latency into the traffic from the Kubernetes deployment for that specific hostname."
     },
     {
-      "key": "datadogMonitorTags",
-      "name": "Datadog Monitor Tags",
-      "description": "### Which Datadog Monitors (identified via Tags) should identify the latency to RabbitMQ?"
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should identify the latency to RabbitMQ?"
     }
   ],
   "tags": [
@@ -107,7 +107,7 @@
               "eth0"
             ],
             "failOnHostNetwork": "true",
-            "networkDelayJitter": true
+            "networkDelayJitter": false
           },
           "customLabel": "WHEN: RabbitMQ is slow because of a network issue",
           "actionType": "com.steadybit.extension_container.network_delay",
@@ -144,17 +144,10 @@
           }
         },
         {
-          "type": "wait",
-          "ignoreFailure": false,
-          "parameters": {
-            "duration": "20s"
-          }
-        },
-        {
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "30s",
+            "duration": "60s",
             "statusCheckMode": "allTheTime",
             "expectedStatusList": [
               "OK"
@@ -168,10 +161,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -202,10 +195,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -214,17 +207,10 @@
           }
         },
         {
-          "type": "wait",
-          "ignoreFailure": false,
-          "parameters": {
-            "duration": "30s"
-          }
-        },
-        {
           "type": "action",
           "ignoreFailure": true,
           "parameters": {
-            "duration": "100s",
+            "duration": "2m",
             "statusCheckMode": "atLeastOnce",
             "expectedStatusList": [
               "Alert"
@@ -238,10 +224,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -288,7 +274,7 @@
           "parameters": {
             "duration": "4m"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

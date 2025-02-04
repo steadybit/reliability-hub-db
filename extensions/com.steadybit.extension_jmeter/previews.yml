@@ -1,0 +1,12 @@
+---
+- type: youtube
+  id: c5ni5gcqk7o
+- type: image
+  src: design.png
+  alt: Steadybit's JMeter action to run a JMeter load test in the experiment
+- type: image
+  src: run.png
+  alt: The experiment run view with the JMeter load test results.
+- type: image
+  src: design-locations.png
+  alt: Optionally, the JMeter action supports the selection of the JMeter execution location in the experiment's design.

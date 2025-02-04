@@ -1,7 +1,7 @@
 {
   "id": "0363a90e-9563-494c-bd25-81da6e4c3d45",
   "templateTitle": "Kubernetes node shutdown results in new node startup",
-  "templateDescription": "A resilient Kubernetes cluster can cope with a crashing node and simply starts a new one.\n\n## Motivation\n\nA changing number of nodes in your Kubernetes cluster is expected, as you may update your nodes from time to time or simply scale the cluster depending on traffic peaks.\nThis is especially true when using spot instances in a Cloud environment.\nThis requires the deployments to be node-independent and properly configured to be rescheduled on a newly started node or a node that still has free resources.\n\n## Structure\nBefore restarting a node, we verify that the cluster is healthy and that the deployments are ready.\nAfterward, we trigger the shutdown of the node of a specific Kubernetes deployment and expect the deployment to be rescheduled on any other node and a new node to start up within a reasonable amount of time.\n\n## Solution Sketch\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n \n## Warning\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward.",
+  "templateDescription": "A resilient Kubernetes cluster can cope with a crashing node and simply starts a new one.\n\n## Motivation\n\nA changing number of nodes in your Kubernetes cluster is expected, as you may update your nodes from time to time or simply scale the cluster depending on traffic peaks.\nThis is especially true when using spot instances in a Cloud environment.\nThis requires the deployments to be node-independent and properly configured to be rescheduled on a newly started node or a node that still has free resources.\n\n## Structure\nBefore restarting a node, we verify that the cluster is healthy and that the deployments are ready.\nAfterward, we trigger the shutdown of the node of a specific Kubernetes deployment and expect the deployment to be rescheduled on any other node and a new node to start up within a reasonable amount of time.\n\n## Solution Sketch\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n\n## Warning\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward.",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -16,7 +16,7 @@
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "### What is the Kubernetes deployment under test, whose node will be shut down and expected to recover within a given duration?\n\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward."
+      "description": "### What is the Kubernetes deployment under test, whose node will be shut down and expected to recover within a given duration?\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward."
     },
     {
       "key": "k8sDeploymentRecoveryTime",
@@ -114,7 +114,7 @@
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
                   "values": [
-                    "[[k8sClusterName]]"
+                    "[[k8sNamespace]]"
                   ]
                 },
                 {
@@ -314,7 +314,7 @@
           "parameters": {
             "duration": "5m"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

@@ -7,3 +7,7 @@ kind: attack
 category: network
 targetType: com.steadybit.extension_host.host
 extension:  com.steadybit.extension_host
+tags:
+  - Host
+  - Kubernetes
+  - Block Traffic

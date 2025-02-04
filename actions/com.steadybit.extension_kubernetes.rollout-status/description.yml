@@ -10,3 +10,6 @@ kind: check
 category: state
 targetType: com.steadybit.extension_kubernetes.kubernetes-deployment
 extension: com.steadybit.extension_kubernetes
+tags:
+  - Kubernetes
+  - Rolling Update

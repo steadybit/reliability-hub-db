@@ -14,3 +14,7 @@ kind: attack
 category: state
 targetType: com.steadybit.extension_aws.fis-experiment-template
 extension: com.steadybit.extension_aws
+tags:
+  - AWS
+  - AWS FIS
+  - Cloud

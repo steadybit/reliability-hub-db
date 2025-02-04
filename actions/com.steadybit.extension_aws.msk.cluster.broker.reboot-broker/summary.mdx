@@ -1,0 +1,16 @@
+# Introduction
+
+This action leverages AWS MSK API to trigger a broker reboot. Only one broker at a time can be rebooted.
+
+# Use Cases
+
+- Understand how a service behaves when a AWS MSK broker is rebooted.
+- Understand the performance impact when AWS MSK performs a broker reboot.
+
+# Rollback
+
+Note that this attack does not support any rollback. The attack triggers the [reboot via API](https://docs.aws.amazon.com/msk/1.0/apireference/clusters-clusterarn-reboot-broker.html). The reboot can't be canceled.
+
+# Parameters
+
+*No parameters.*

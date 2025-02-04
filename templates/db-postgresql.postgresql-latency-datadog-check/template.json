@@ -21,12 +21,12 @@
     {
       "key": "databaseHostname",
       "name": "Postgres Database Hostname",
-      "description": "### What is the hostname of the Postgres database used by the Kubernetes deployment to reach the database?\n\nPlease note that we only block traffic from the Kubernetes deployment on that specific hostname to simulate the database unavailability."
+      "description": "### What is the hostname of the Postgres database used by the Kubernetes deployment to reach the database?\nPlease note that we only block traffic from the Kubernetes deployment on that specific hostname to simulate the database unavailability."
     },
     {
-      "key": "datadogMonitorTags",
-      "name": "Datadog Monitor Tags",
-      "description": "### Which Datadog Monitors (identified via Tags) should notice the latency to the Postgres database?"
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should notice the latency to the Postgres database?"
     },
     {
       "key": "httpLoadBalancedEndpoint",
@@ -36,13 +36,15 @@
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests while having latency to the Postgres database? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while having latency to the Postgres database?\nFor instance `95%`\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     }
   ],
   "tags": [
+    "RDS",
     "Postgres",
     "Recoverability",
-    "Datadog"
+    "Datadog",
+    "Database"
   ],
   "experimentName": "Graceful degradation of [[k8sDeployment]] and Datadog alerts when Postgres database suffers latency",
   "hypothesis": "Whenever the Postgres database suffers high latency, the deployment [[k8sDeployment]] fails gracefully, and a load-balanced HTTP endpoint works within a given success rate. Also, Datadog should notify us.",
@@ -105,6 +107,17 @@
             },
             "query": null
           }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
         },
         {
           "type": "action",
@@ -119,7 +132,7 @@
             "networkInterface": [],
             "ip": [],
             "failOnHostNetwork": true,
-            "networkDelayJitter": true
+            "networkDelayJitter": false
           },
           "customLabel": "WHEN: PostgreSQL suffers latencies",
           "actionType": "com.steadybit.extension_container.network_delay",
@@ -208,10 +221,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -238,10 +251,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -288,7 +301,7 @@
           "parameters": {
             "duration": "70s"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

@@ -31,12 +31,12 @@
     {
       "key": "httpSuccessRate",
       "name": "HTTP Success Rate",
-      "description": "### What is the expected success rate of HTTP requests while scaling? E.g., `95%`\n\n Finding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+      "description": "### What is the expected success rate of HTTP requests while scaling?\nFor instance `95%`.\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
     },
     {
-      "key": "datadogMonitorTags",
-      "name": "Datadog Monitor Tags",
-      "description": "### Which Datadog Monitors (identified via Tags) should stay green?"
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should stay green?"
     }
   ],
   "tags": [
@@ -203,10 +203,10 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "datadog.monitor.tags",
+                  "key": "datadog.monitor.name",
                   "operator": "EQUALS",
                   "values": [
-                    "[[datadogMonitorTags]]"
+                    "[[datadogMonitorName]]"
                   ]
                 }
               ]
@@ -253,7 +253,7 @@
           "parameters": {
             "duration": "130s"
           },
-          "customLabel": "Show Pod Count Metrics for the cluster",
+          "customLabel": "Show pod count metrics for the cluster",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",

@@ -1,0 +1,276 @@
+{
+  "id": "d5d9a162-4c24-419c-959a-80b9cdbfba2d",
+  "templateTitle": "Third-party service is unavailable for a Kubernetes Deployment",
+  "templateDescription": "Identify the effect of an unavailable third-party service on your deployment's service's success metrics.\n\n## Motivation\n\nWhen you provide a synchronous service via HTTP that requires the availability of other downstream third-party services, you absolutely should check how your service behaves in case the third-party service is unavailable. Also, you want to validate whether your service is working again as soon as the third-party service is working again.\n\n## Structure\n\nWe ensure that a load-balanced user-facing endpoint fully works while having all pods ready.\nWhen we simulate the third-party service being unavailable, we expect the user-facing endpoint to work within specified HTTP success rates..\nTo simulate the unavailability, we can block the traffic to the third-party service on the client side using its hostname.\nThe endpoint should recover automatically once the third-party service is reachable again.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "thirdPartyServiceName",
+      "name": "Third-Party Service Name",
+      "description": "### What is the name of the third-party service used by the Kubernetes deployment?"
+    },
+    {
+      "key": "thirdPartyHostname",
+      "name": "Third-Party Hostname",
+      "description": "### What is the hostname of the third-party service used by the Kubernetes deployment?\nJust so you know, we only block traffic from the Kubernetes deployment on that specific hostname to simulate the unavailability of the third-party service. This has the beauty that no other deployments are affected, and you don't need to install anything in the third-party.\n\nPlease note that this approach might not work out if you use a reverse proxy or service mesh."
+    },
+    {
+      "key": "httpLoadBalancedEndpoint",
+      "name": "HTTP Load Balanced Endpoint",
+      "description": "### What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes deployment?"
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "### What is the expected success rate of HTTP requests while third-party service is unavailable?\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    }
+  ],
+  "tags": [
+    "Third-party",
+    "Upstream Service",
+    "Recoverability"
+  ],
+  "experimentName": "[[k8sDeployment]] survives unavailability of third-party service [[thirdPartyServiceName]]",
+  "hypothesis": "Whenever third-party service [[thirdPartyServiceName]] is unavailable, the deployment [[k8sDeployment]]'s load-balanced HTTP endpoint works within a given success rate.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: All HTTP requests are successful",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": "true",
+            "hostname": [
+              "[[thirdPartyHostname]]"
+            ]
+          },
+          "customLabel": "WHEN: Third-party service [[thirdPartyServiceName]] is not available",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: At least [[httpSuccessRate]]% of the HTTP calls are successful",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: All HTTP requests are successful again",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "90s"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

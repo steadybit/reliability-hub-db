@@ -1,0 +1,318 @@
+{
+  "id": "0363a90e-9563-494c-bd25-81da6e4c3d43",
+  "templateTitle": "Unavailable downstream service doesn't result in user-visible errors",
+  "templateDescription": "Verify that an unavailable downstream service doesn't result in user-visible errors.\n\n## Motivation\n\nWhen offering a service that is dependent on downstream services, you should ensure that the offered service also works fine whenever one of the downstream services can't be reached. This is especially true when multiple downstream services are involved and the responses of each downstream service are considered optional.\n\n## Structure\n\nFor the duration of the experiment and the deployment's upscaling, verify that a user-visible endpoint offered is responding within expected success rates and that no monitors are alerting.\nAs soon as the deployment is scaled up, the newly scheduled pod should be ready to receive traffic within a reasonable time, e.g., 60 seconds.\n\n## Read more\nThis experiment template is used in our quick start on running an experiment and is especially useful for the shopping demo example. To learn more, check out the [quick start in the Steadybit docs](https://docs.steadybit.com/quick-start/run-experiment).",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the deployment is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?"
+    },
+    {
+      "key": "httpUpstreamEndpoint",
+      "name": "HTTP Upstream Endpoint",
+      "description": "### What is the URL of an **HTTP endpoint** served by **another upstream** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "### What is the expected success rate of HTTP requests while all pods of the downstream deployment are unavailable?\nFor instance `95%`.\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    },
+    {
+      "key": "recoveryTime",
+      "name": "Recovery Time",
+      "description": "### How long do you expect it to take before the blocked Kubernetes deployment can recover and is ready again?"
+    }
+  ],
+  "tags": [
+    "Shopping Demo Quick Start",
+    "Block Traffic",
+    "Kubernetes"
+  ],
+  "experimentName": "Unavailable downstream deployment of [[k8sDeployment]] doesn't result in user-visible errors",
+  "hypothesis": "When the downstream service of Kubernetes deployment [[k8sDeployment]] is not available, an HTTP endpoint offered upstream should still work within the success rate [[httpSuccessRate]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "180s",
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "requestsPerSecond": 10,
+            "url": "[[httpUpstreamEndpoint]]",
+            "statusCode": "200-299"
+          },
+          "customLabel": "Upstream HTTP API is working within [[httpSuccessRate]]% success rate",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods of [[k8sDeployment]] are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: One pod of [[k8sDeployment]] can't be reached",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[recoveryTime]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: All pods of [[k8sDeployment]] become ready again within [[recoveryTime]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "podCountCheckMode": "podCountLessThanDesiredCount"
+          },
+          "customLabel": "THEN: One Pod of [[k8sDeployment]] is detected as down",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "140s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "140s"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -23,9 +23,9 @@ for folder in "$directory"/*/; do
         folder_name=$(basename "$folder")
         # Check if it's the last subfolder
         if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
-            echo '        "/'${folder}'summary.mdx",' >> index.json
+            echo '        "/'${folder}'description.yml",' >> index.json
         else
-            echo '        "/'${folder}'summary.mdx"' >> index.json
+            echo '        "/'${folder}'description.yml"' >> index.json
         fi
     fi
 done

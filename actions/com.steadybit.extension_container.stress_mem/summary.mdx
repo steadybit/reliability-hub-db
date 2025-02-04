@@ -1,19 +1,25 @@
 # Introduction
 
-Allocate a specific amount of memory.
+Stresses a specific amount of memory using ongoing memory allocations, reads and writes.
 
 # Usage
 
-Note that this can cause systems to trip the kernel OOM killer on Linux if not enough physical memory and swap is available.
+Note that this can cause systems to trip the Linux Kernel OOM killer without enough physical or swap Memory.
+
+> This action uses `stress-ng` to stress the Memory. In addition to memory consumption, due to the ongoing memory allocations, reads, and writes, CPU usage will also increase.
+> If not enough CPU is available, then this attack might fail to allocate all specified Memory.
+
+If you want to fill up the Memory without stressing the CPU, use the [Fill Memory](/action/com.steadybit.extension_container.fill_mem) action.
 
 # Use Cases
 
-    * Test the system's ability to handle a large amount of memory
-    * Observe the system's behavior when it runs out of memory
+* Test the system's ability to handle memory spikes.
+* Observe the system's behavior when it runs out of memory or the memory bandwidth is exhausted.
 
 # Parameters
 
-| Parameter      | Description                       | Default |
-|----------------|-----------------------------------|---------|
-| Duration       | How long should memory be wasted? | 30s     |
-| Load on Memory | How much memory should be wasted? | 200%    |
+| Parameter           | Description                                                                                                                                                                                                  | Default |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration            | How long should memory be wasted?                                                                                                                                                                            | 30s     |
+| Load on Host Memory | How much of the **total container memory** should be used to stress the memory? The used memory percentage is calculated based on the memory limit of the container (or the host memory if no limit is set). | 80%     |
+| Fail on OOM Kill    | Should it be treated as a failure when the attacked container was oomkilled?                                                                                                                                 | False   |

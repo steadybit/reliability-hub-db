@@ -1,0 +1,4 @@
+---
+- type: image
+  src: deny.png
+  alt: The action "Alter Max Bytes Per Message" within the experiment editor.

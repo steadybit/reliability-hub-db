@@ -1,0 +1,4 @@
+---
+- type: image
+  src: limit.png
+  alt: The action "Limit Connection Creation Rate" within the experiment editor.
