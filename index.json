@@ -1,5 +1,5 @@
 {
-    "lastChange": 1738674136,
+    "lastChange": 1738677385,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -7,6 +7,8 @@
         "/templates/aws-zone.zone-outage/template.json",
         "/templates/caching-redis.redis-high-latency-datadog-check/template.json",
         "/templates/caching-redis.redis-unavailable-datadog-check/template.json",
+        "/templates/certificate-expiry.host/template.json",
+        "/templates/certificate-expiry.kubernetes-deployment/template.json",
         "/templates/cloud.zone-outage/template.json",
         "/templates/cloud.zone-outgoing-traffic-loss/template.json",
         "/templates/datadog.monitor-alerts-on-pod-crash-loop/template.json",
