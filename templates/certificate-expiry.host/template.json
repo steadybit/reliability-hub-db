@@ -1,7 +1,7 @@
 {
   "id": "19c0d7ae-c3a7-44ba-9892-1dff8f665deb",
   "templateTitle": "Certificate TLS/SSL expiry",
-  "templateDescription": "TODO\n## Motivation\n\nTODO\n## Structure\nTODO\n## Solution Sketch\nTODO\n\n## Warning\nTODO\nPlease be aware that we will shut down a node. Please ensure this is fine and your node is either virtual or can somehow be started up afterward.",
+  "templateDescription": "Turn time forward and check whether your TLS/SSL certificates are valid.\n\n## Motivation\n\nNoticing the TLS/SSL certification expiry too late is one problem you can easily avoid by frequently checking your expiry dates. While observability tools already handle this job nicely, you can't know whether they are working in your environment.\nWith this experiment, you can turn the time forward to check whether your HTTPS endpoint works at a given date in the future. Additionally, you can configure one of the [observability integrations](https://hub.steadybit.com/extensions?tags=Observability) to validate your observability tool's alerting.\n\n## Structure\nFirst, we validate that the given HTTPS endpoint is working today. Next, we will travel with the host in time to validate that the HTTPS endpoint continues to work on a given date. If the TLS/SSL certificate has already expired at that date, the HTTP check will throw failures.\n\n## Warning\nPlease be aware that we will manipulate the time for a given host. Applications running at that host may struggle to deal with the change in the clock correctly, and you may experience other side effects.",
   "placeholders": [
     {
       "key": "httpEndpoint",
@@ -14,16 +14,16 @@
       "description": "### What is the hostname of the host providing the secured HTTP endpoint?"
     },
     {
-      "key": "days",
-      "name": "Expiration in Days",
-      "description": "### How many days in the future would you like to validate the expiry date of the certificate?"
+      "key": "expiration",
+      "name": "Expiration",
+      "description": "### Which time frame in the future would you like to validate the certificate's expiration date?\nWe'll use a time travel attack to turn time forward the given duration and check whether the TLS certificate is still valid."
     }
   ],
   "tags": [
     "Certificate Expiry"
   ],
-  "experimentName": "TLS/SSL Certificate doesn't expire within next [[days]] for [[hostname]]",
-  "hypothesis": "When a host's time is +[[days]] days, the secured HTTP endpoint should still be working and no certificates are expired.",
+  "experimentName": "TLS/SSL Certificate doesn't expire within next [[expiration]] for [[hostname]]",
+  "hypothesis": "When a host's time is +[[expiration]], the secured HTTP endpoint still works and no certificates are expired.",
   "lanes": [
     {
       "steps": [
@@ -31,41 +31,51 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "10s",
             "headers": [],
             "method": "GET",
             "successRate": 100,
             "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpEndpoint]]",
+            "duration": "10s",
             "followRedirects": false,
             "readTimeout": "5s",
             "connectTimeout": "5s",
-            "requestsPerSecond": 10,
-            "url": "[[httpEndpoint]]",
+            "responseTimeMode": "NO_VERIFICATION",
             "statusCode": "200-299"
           },
           "customLabel": "GIVEN: HTTP requests are valid for today",
           "actionType": "com.steadybit.extension_http.check.periodically",
-          "radius": {}
+          "radius": {
+            "targetType": "com.steadybit.extension_http.client-location",
+            "maximum": 1
+          }
         },
         {
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "60s",
             "headers": [],
             "method": "GET",
             "successRate": 100,
             "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpEndpoint]]",
+            "duration": "60s",
             "followRedirects": false,
             "readTimeout": "5s",
             "connectTimeout": "5s",
-            "requestsPerSecond": 10,
-            "url": "[[httpEndpoint]]",
+            "responseTimeMode": "NO_VERIFICATION",
             "statusCode": "200-299"
           },
-          "customLabel": "THEN: HTTP requests continue to be valid in +[[days]] days",
+          "customLabel": "THEN: HTTP requests continue to be valid in +[[expiration]]",
           "actionType": "com.steadybit.extension_http.check.periodically",
-          "radius": {}
+          "radius": {
+            "targetType": "com.steadybit.extension_http.client-location",
+            "maximum": 1
+          }
         }
       ]
     },
@@ -82,11 +92,11 @@
           "type": "action",
           "ignoreFailure": false,
           "parameters": {
-            "offset": "[[days]]",
+            "offset": "[[expiration]]",
             "duration": "60s",
             "disableNtp": true
           },
-          "customLabel": "WHEN: Host's time is +[[days]] days",
+          "customLabel": "WHEN: Host's time is +[[expiration]]",
           "actionType": "com.steadybit.extension_host.timetravel",
           "radius": {
             "targetType": "com.steadybit.extension_host.host",
