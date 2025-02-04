@@ -47,10 +47,7 @@
           },
           "customLabel": "GIVEN: HTTP requests are valid for today",
           "actionType": "com.steadybit.extension_http.check.periodically",
-          "radius": {
-            "targetType": "com.steadybit.extension_http.client-location",
-            "maximum": 1
-          }
+          "radius": {}
         },
         {
           "type": "action",
@@ -72,10 +69,7 @@
           },
           "customLabel": "THEN: HTTP requests continue to be valid in +[[expiration]]",
           "actionType": "com.steadybit.extension_http.check.periodically",
-          "radius": {
-            "targetType": "com.steadybit.extension_http.client-location",
-            "maximum": 1
-          }
+          "radius": {}
         }
       ]
     },
