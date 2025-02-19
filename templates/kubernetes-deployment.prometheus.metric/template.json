@@ -126,7 +126,7 @@
           "type": "wait",
           "ignoreFailure": false,
           "parameters": {
-            "duration": "10s"
+            "duration": "20s"
           },
           "customLabel": "Wait for Prometheus to catch this"
         },
