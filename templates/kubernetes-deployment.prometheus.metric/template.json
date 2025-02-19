@@ -1,0 +1,235 @@
+{
+  "id": "01951e73-d032-7509-9c17-3fd9113a5483",
+  "templateTitle": "Prometheus detect unhealthy deployments",
+  "templateDescription": "Verify that your Prometheus metrics are catching unready pods in a Kubernetes deployment.\n\n### Motivation\nWhenever important deployments aren't available your Prometheus metric should catch this in order to alert properly.\n\n### Structure\nBy blocking the traffic to all containers of the deployment, we expected failing probes and eventually, Kubernetes detecting the pods as being down. After a short time frame, Prometheus should detect this as well in the specified Prometheus metric.",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the Kubernetes deployment under test is running?"
+    },
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?\nWe will block all traffic to this Kubernetes deployment, which we expect to be noted by Kubernetes (due to unhealthy probes) and Prometheus (a drop in a Prometheus metric)."
+    },
+    {
+      "key": "prometheusMetric",
+      "name": "Prometheus Metric via PromQL",
+      "description": "### Which Prometheus metric, identified via PromQL query, should be validated?\nWe expect that this metric is at `0` as soon as the Kubernetes deployments are down and no container is ready.\nAn example for this PromQL query would be `kube_pod_container_status_ready{namespace=\"<<your-namespace>>\",pod=~\"<<your-pod-prefix>.*\"}`.\n\nFor instance, for the namespace `steadybit-demo` and a pod-prefix of the deployment `gateway` the PromQL query would look like: `kube_pod_container_status_ready{namespace=\"steadybit-demo\",pod=~\"gateway.*\"}`"
+    }
+  ],
+  "tags": [
+    "Deployment",
+    "Prometheus",
+    "Kubernetes"
+  ],
+  "experimentName": "An unhealthy deployment of [[k8sDeployment]] is detected by Prometheus metrics",
+  "hypothesis": "Prometheus metrics are catching unhealthy deployments of [[k8sDeployment]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: Blocking traffic for deployment [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "40s",
+            "podCountCheckMode": "podCountLessThanDesiredCount"
+          },
+          "customLabel": "THEN: Expecting Deployment's ready count to drop for [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "customLabel": "Wait for Prometheus to catch this"
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s"
+          },
+          "metricQueries": [
+            {
+              "id": "954f8e17-d25a-42e8-aa85-3d3bac21e913",
+              "label": "Container Ready Status",
+              "parameters": {
+                "query": "[[prometheusMetric]]"
+              }
+            }
+          ],
+          "metricChecks": [
+            {
+              "id": "330382c8-b53e-48e9-afcd-b64af06058e5",
+              "a": {
+                "metric": {
+                  "steadybit_metric_query_id": "954f8e17-d25a-42e8-aa85-3d3bac21e913"
+                },
+                "type": "metric"
+              },
+              "condition": "NEQ",
+              "b": {
+                "value": 0,
+                "type": "scalar"
+              }
+            }
+          ],
+          "customLabel": "THEN: Prometheus metric of ready pods should drop",
+          "actionType": "com.steadybit.extension_prometheus.instance.metrics",
+          "radius": {
+            "targetType": "com.steadybit.extension_prometheus.instance",
+            "predicate": {
+              "query": "prometheus.instance.name IS PRESENT"
+            },
+            "query": "prometheus.instance.name IS PRESENT"
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "120s"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "120s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}
