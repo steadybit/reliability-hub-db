@@ -18,7 +18,7 @@ icon: |
   
   </svg>
 kind: attack
-category: resource
+category: state
 targetType: com.steadybit.extension_aws.rds.instance
 extension: com.steadybit.extension_aws
 tags:
