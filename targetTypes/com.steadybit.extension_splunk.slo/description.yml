@@ -1,0 +1,10 @@
+---
+id: com.steadybit.extension_splunk.slo
+label:
+  one: Splunk slo
+  other: Splunk slos
+icon: |
+  <svg version="1.1" viewBox="0 0 1 1" width="20px" height="20px" style="min-width: 20px; min-height: 20px;"><defs><mask id="icon-mask-18e10c7915cbba1a8d6c22881a6d23fd9b97d7b1"><image href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikljb24gLyBBbGVydHMiPgo8cGF0aCBpZD0iRGVmYXVsdCIgZD0iTTQuOTk5OTYgOS41QzQuOTk5OTYgNS42MzQwMSA4LjEzMzk2IDIuNSAxMiAyLjVDMTUuODY1OSAyLjUgMTkgNS42MzQwMSAxOSA5LjVWMTIuNUwyMC4yNzYzIDE1LjA1MjhDMjAuNjA4OCAxNS43MTc3IDIwLjEyNTMgMTYuNSAxOS4zODE5IDE2LjVINC42MTc5OUMzLjg3NDYxIDE2LjUgMy4zOTExMSAxNS43MTc3IDMuNzIzNTYgMTUuMDUyOEw0Ljk5OTk2IDEyLjVWOS41WiIgZmlsbD0iY3VycmVudENvbG9yIi8+CjxwYXRoIGlkPSJXZWFrIiBkPSJNOSAxOC41SDE1QzE1IDIwLjE1NjkgMTMuNjU2OSAyMS41IDEyIDIxLjVDMTAuMzQzMSAyMS41IDkgMjAuMTU2OSA5IDE4LjVaIiBmaWxsPSJjdXJyZW50Q29sb3IiLz4KPC9nPgo8L3N2Zz4=" x="0" y="0" height="100%" width="100%" style="filter: brightness(0) invert(1);"></image></mask></defs><rect fill="currentColor" x="0" y="0" height="100%" width="100%" mask="url(#icon-mask-18e10c7915cbba1a8d6c22881a6d23fd9b97d7b1)"></rect></svg>
+category: monitoring
+extension: com.steadybit.extension_splunk
+releaseDate: '2025-04-01'

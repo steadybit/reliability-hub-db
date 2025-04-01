@@ -1,0 +1,17 @@
+# Introduction to the Splunk Extension
+The Steadybit Splunk Extension bridges the world of Steadybit and Splunk.
+The extension adds checks to your Chaos Engineering experiments to validate Splunk Detector / SLO state and reports events of your experiments to Splunk [as custom events to ease correlation](https://docs.splunk.com/observability/en/metrics-and-metadata/view-data-events.html#custom-events).
+
+# Integration and Functionality
+Integration of Splunk into Steadybit works via the Splunk Observability Cloud API.
+Thus, all you need is a Splunk's [Access Token](https://docs.splunk.com/observability/en/admin/authentication/authentication-tokens/tokens.html) with api and ingest permissions.
+
+## Integration of Splunk in Steadybit
+With the [Detector Check](/action/com.steadybit.extension_splunk.detector.check) and [SLO Check](/action/com.steadybit.extension_splunk.slo.check) you can integrate your Splunk detectors/SLOs into your experiments.
+Verify that the Splunk Detector or SLO notice a fault injected by Steadybit to check that your observability strategy is working as expected.
+
+## Integration of Steadybit in Splunk
+The extension automatically reports experiment executions to Splunk Observability Cloud, which helps you to correlate experiments with your dashboards.
+
+# Installation and Setup
+To integrate the Splunk extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-splunk#installation).

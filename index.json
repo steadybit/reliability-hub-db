@@ -1,5 +1,5 @@
 {
-    "lastChange": 1741176568,
+    "lastChange": 1743519020,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -170,6 +170,8 @@
         "/actions/com.steadybit.extension_newrelic.workload_check/description.yml",
         "/actions/com.steadybit.extension_postman.collection.run/description.yml",
         "/actions/com.steadybit.extension_prometheus.instance.metrics/description.yml",
+        "/actions/com.steadybit.extension_splunk.detector.check/description.yml",
+        "/actions/com.steadybit.extension_splunk.slo.check/description.yml",
         "/actions/com.steadybit.extension_stackstate.service.check/description.yml"
     ]
 }

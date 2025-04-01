@@ -1,0 +1,20 @@
+# Introduction
+
+The detector check step can be dragged&dropped into the experiment editor. Once done, you can use it to collect information about the state of the Splunk detectors and, optionally, to verify that they are within the expected state.
+
+Experiments can be aborted and marked as failed when the Splunk detector check's actual state diverges from the expected state. This helps implement pre-/post-conditions and invariants. For example, to only start an experiment when the system is healthy.
+
+At last, to help you understand the detector states and how they evolved, the run view also contains a state visualization. Through this visualization, you can see what states the Detector had throughout the experiment execution.
+
+# Use Cases
+
+ - Pre-/postcondition or invariant for any experiment.
+ - Verify that alerts are triggered during incidents.
+
+# Parameters
+
+| Parameter | Description                           | Default |
+| --------- | ------------------------------------- | ------- |
+| Duration  | How long should the state of the alert rule be checked | 30s     |
+| Expected Incident Anomaly State  | The expected state of the detector. One of No incidents At All, Anomalous, Manually Resolved, Ok. |      |
+| State Check Mode | How often should the state be expected. "At least once" or "All the time" | "All the time" |

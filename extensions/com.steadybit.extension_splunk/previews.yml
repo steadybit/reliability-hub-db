@@ -1,0 +1,10 @@
+---
+- type: image
+  src: experiment_editor.png
+  alt: Steadybit's "Detector Check" allows you to verify the behaviour of your Splunk Detectors.
+- type: image
+  src: experiment_run.png
+  alt: The run log showing that an experiment completed because the detector state is the one expected for this kind of failure.
+- type: image
+  src: splunk_overlay.png
+  alt: Steadybit events as Splunk custom events can be showed on dashboards to ease analyzing causes and effects.
