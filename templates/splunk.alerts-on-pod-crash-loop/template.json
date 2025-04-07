@@ -1,0 +1,272 @@
+{
+  "id": "01960f60-296c-7430-9684-b67986dad147",
+  "templateTitle": "Splunk Detector fires when a Kubernetes pod is in crash loop",
+  "templateDescription": "Verify that a Splunk detector alerts you when pods are not ready to accept traffic for a certain time.\n\n## Motivation\n\nKubernetes features a readiness probe to determine whether your pod is ready to accept traffic.\nIf it isn't becoming ready, Kubernetes tries to solve it by restarting the underlying container and hoping to achieve its readiness eventually.\nIf this isn't working, Kubernetes will eventually back off to restart the container, and the Kubernetes resource remains non-functional.\n\n## Structure\n\nFirst, check that the Splunk detector responsible for tracking non-ready containers is in an 'okay' state.\nAs soon as one of the containers is crash looping, caused by the [crash loop](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.crash_loop_pod) attack, the Splunk alert rule should fire and escalate it to your on-call team.\n\n## Solution Sketch\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the deployment under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the pod under test is running?"
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "### What is the Kubernetes workload under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "splunkDetectorName",
+      "name": "Splunk Detector Name",
+      "description": "### Which Splunk Detector (identified via name) should fire due to the crash loop?"
+    },
+    {
+      "key": "splunkDetectorTimeout",
+      "name": "Splunk Detector Timeout",
+      "description": "### How long do you expect it will take until the Splunk Detector is alerting?\nWe will also use this time to crash-loop the container and await Splunk's alert.\nPlease note that, depending on your configuration, the Splunk detector may take a longer time before firing (e.g., 15 minutes). If that's not your expectation, choose a smaller timeout."
+    }
+  ],
+  "tags": [
+    "Crash loop",
+    "Harden Observability",
+    "Restart",
+    "Splunk",
+    "Kubernetes"
+  ],
+  "experimentName": "Splunk detector should fire due to crash looping of [[k8sWorkloadOwner]]",
+  "hypothesis": "Whenever a pod of [[k8sWorkloadOwner]] is crash looping, Splunk notifies us.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "stateCheckMode": "allTheTime",
+            "expectedStateList": "No Incidents",
+            "checkNewIncidentsOnly": false
+          },
+          "customLabel": "GIVEN: Detector have no incidents",
+          "actionType": "com.steadybit.extension_splunk.detector.check",
+          "radius": {
+            "targetType": "com.steadybit.extension_splunk.detector",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "splunk.detector.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[splunkDetectorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[splunkDetectorTimeout]]"
+          },
+          "customLabel": "WHEN: Kubernetes pod crash loops",
+          "actionType": "com.steadybit.extension_kubernetes.crash_loop_pod",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-pod",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[splunkDetectorTimeout]]",
+            "stateCheckMode": "allTheTime",
+            "expectedStateList": "ANOMALOUS",
+            "checkNewIncidentsOnly": false
+          },
+          "actionType": "com.steadybit.extension_splunk.detector.check",
+          "radius": {
+            "targetType": "com.steadybit.extension_splunk.detector",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "splunk.detector.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[splunkDetectorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[splunkDetectorTimeout]]"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[splunkDetectorTimeout]]"
+          },
+          "customLabel": "Show pod count metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ]
+}

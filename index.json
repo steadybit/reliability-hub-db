@@ -1,5 +1,5 @@
 {
-    "lastChange": 1743746282,
+    "lastChange": 1744015607,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.scale-cpu-stress/template.json",
@@ -56,7 +56,8 @@
         "/templates/messaging-rabbitmq.rabbitmq-high-latency-datadog-check/template.json",
         "/templates/messaging-rabbitmq.rabbitmq-unavailable-datadog-check/template.json",
         "/templates/new-relic.incident-check-pod-crashloop/template.json",
-        "/templates/new-relic.workflow-deployment-unavailable/template.json"
+        "/templates/new-relic.workflow-deployment-unavailable/template.json",
+        "/templates/splunk.alerts-on-pod-crash-loop/template.json"
     ],
     "actions": [
         "/actions/com.steadybit.extension_aws.alb.static_response/description.yml",
