@@ -1,4 +1,4 @@
 ---
 - type: image
   src: 1.png
-  alt: Identified information about a Splunk slo that can later be used within experiments.
+  alt: Identified information about a Splunk SLO that can later be used within experiments.

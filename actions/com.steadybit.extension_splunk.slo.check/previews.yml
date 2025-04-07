@@ -1,7 +1,7 @@
 ---
 - type: image
   src: experiment_editor.png
-  alt: Steadybit's "SLO Check" allows you to verify the behaviour of your Splunk Slos.
+  alt: Steadybit's "SLO Check" allows you to verify the behaviour of your Splunk SLOs.
 - type: image
   src: experiment_run.png
-  alt: The run log showing that an experiment completed because the slo state is the one expected for this kind of alert.
+  alt: The run log showing that an experiment completed because the SLO state is the one expected for this kind of alert.
