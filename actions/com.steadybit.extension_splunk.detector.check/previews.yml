@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: xOB9I8q8W0c
 - type: image
   src: experiment_editor.png
   alt: Steadybit's "Detector Check" allows you to verify the behaviour of your Splunk Detectors.

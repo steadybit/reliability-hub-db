@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: xOB9I8q8W0c
 - type: image
   src: 1.png
   alt: Identified information about a Splunk detector that can later be used within experiments.
