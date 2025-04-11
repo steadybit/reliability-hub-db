@@ -86,7 +86,7 @@
           "parameters": {
             "duration": "[[splunkDetectorTimeout]]"
           },
-          "customLabel": "WHEN: Kubernetes pod crash loops",
+          "customLabel": "WHEN: Kubernetes pod of [[k8sWorkloadOwner]] crash loops",
           "actionType": "com.steadybit.extension_kubernetes.crash_loop_pod",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-pod",
@@ -136,10 +136,11 @@
           "ignoreFailure": false,
           "parameters": {
             "duration": "[[splunkDetectorTimeout]]",
-            "stateCheckMode": "allTheTime",
+            "stateCheckMode": "atLeastOnce",
             "expectedStateList": "ANOMALOUS",
             "checkNewIncidentsOnly": false
           },
+          "customLabel": "THEN: Detector has an incident",
           "actionType": "com.steadybit.extension_splunk.detector.check",
           "radius": {
             "targetType": "com.steadybit.extension_splunk.detector",
