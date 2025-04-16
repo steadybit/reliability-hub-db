@@ -17,3 +17,7 @@ Running a resource attack for a container is executed in the containers cgroup, 
 | CPU Load       | How many CPU should be consumed?                   | 100       |
 | Container CPUs | How many workers should be used to stress the CPU? | All Cores |
 | Duration       | How long should CPU be consumed?                   | 30s       |
+
+# Frequently Asked Questions (FAQs)
+## Q: My container has a limit of 500m, set the attack to 100% load but only observe 35-45% CPU usage. Why?
+**A:** `stress-ng` under the hood generates the load and tries to meet the targeted load, but the Kernel scheduler may assign fewer CPU time slots to the process, resulting in lower CPU usage than desired. For target containers with a higher limit, the desired CPU load is more likely to be met.

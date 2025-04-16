@@ -27,3 +27,8 @@ When using the attack to meet a specific memory usage, it may allocate or free m
 | Mode                | **Fill and meet specified usage:** Fill up the memory until the desired usage is met. Memory allocation will be adjusted constantly to meet the target.<br/> **Fill the specified amount**: Allocate and hold the specified amount of Memory. | Fill and meet specified usage |
 | Load on Host Memory | How much of the **total container memory** should be used to stress the memory? The used memory percentage is calculated based on the memory limit of the container (or the host memory if no limit is set).                                  | 80%                           || Size             | **Percentage of total container memory** or **Megabytes**.                                                                                                                                                                                                | % of total memory             |
 | Fail on OOM Kill    | Should it be treated as a failure when the attacked container was oomkilled?                                                                                                                                                                  | False                         |
+
+# Frequently Asked Questions (FAQs)
+## Q: I've set the attack to 100% of memory usage, but don't see the expected memory usage. Why?
+**A:** When targeting 100% of memory usage, the attack will immediately try to allocate memory until 0 bytes are left. That typically happens within milliseconds.
+When 0 bytes are left, the OOM-Killer will kill some or all processes in the container to free up memory. That may happen so fast that you don't observe a memory usage of 100%.
