@@ -1,0 +1,22 @@
+# Introduction
+
+Cause packet loss for matching outgoing network traffic.
+
+# Prerequisites
+
+The Extension Windows Host needs to be installed on the target system.
+
+# Use Cases
+
+* Understand how your services behave under specific / flaky network conditions
+
+# Parameters
+
+| Parameter         | Description                                          | Default |
+|-------------------|------------------------------------------------------|---------|
+| Duration          | How long should the traffic be lost?                 | 30s     |
+| Network Loss      | How much percentage of traffic should be lost?       | 70      |
+| Hostname          | Restrict to which hosts the traffic is lost          |         |
+| IP Address        | Restrict to which IP address the traffic is lost     |         |
+| Port Number       | Restrict to which port number the traffic is delayed |         |
+| Network Interface | Target Network Interface which should be attacked    |         |

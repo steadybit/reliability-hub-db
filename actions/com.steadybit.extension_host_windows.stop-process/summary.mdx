@@ -1,0 +1,16 @@
+# Introduction
+
+This action stops a process by pid or name
+
+# Details
+
+It stops a process over a given time period and then kills it if it also spawns again.
+
+# Parameters
+
+| Parameter | Description                                           | Default |
+|-----------|-------------------------------------------------------|---------|
+| process   | PID or string to match the process name or command.   |         |
+| graceful  | If true a TERM signal is sent before the KILL signal. | true    |
+| duration  | Over this period the matching processes are killed.   | 30s     |
+| delay     | The delay before the kill signal is sent.             | 5s      |
