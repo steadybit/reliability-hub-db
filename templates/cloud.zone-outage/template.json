@@ -87,6 +87,13 @@
                   "values": [
                     "[[k8sClusterName]]"
                   ]
+                },
+                {
+                  "key": "k8s.label.topology.kubernetes.io/zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[availabilityZone]]"
+                  ]
                 }
               ]
             },
