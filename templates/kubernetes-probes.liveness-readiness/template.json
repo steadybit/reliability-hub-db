@@ -30,14 +30,14 @@
     },
     {
       "key": "downstreamServiceHostname",
-      "name": "Upstream Service Hostname",
+      "name": "Downstream Service Hostname",
       "description": "### What is the hostname of the downstream service that you want to simulate being unavailable?\nPlease note that you can also specify cluster-local URLs like `<service>.<namespace>.svc.cluster.local`."
     }
   ],
   "tags": [
     "Kubernetes Probes",
     "Third-party",
-    "Upstream Service",
+    "Downstream Service",
     "Recoverability",
     "Kubernetes"
   ],
@@ -64,7 +64,7 @@
             "port": [],
             "ip": []
           },
-          "customLabel": "WHEN: Upstream service is not available",
+          "customLabel": "WHEN: Downstream service is not available",
           "actionType": "com.steadybit.extension_container.network_blackhole",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",

@@ -41,7 +41,7 @@
   ],
   "tags": [
     "Third-party",
-    "Upstream Service",
+    "Downstream Service",
     "Recoverability"
   ],
   "experimentName": "[[k8sDeployment]] survives high latency of third-party service [[thirdPartyServiceName]]",

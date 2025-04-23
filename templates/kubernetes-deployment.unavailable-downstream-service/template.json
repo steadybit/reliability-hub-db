@@ -21,7 +21,7 @@
     {
       "key": "httpUpstreamEndpoint",
       "name": "HTTP Upstream Endpoint",
-      "description": "### What is the URL of an **HTTP endpoint** served by **another upstream** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
+      "description": "### What is the URL of an **HTTP endpoint** served by **the upstream** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
     },
     {
       "key": "httpSuccessRate",
