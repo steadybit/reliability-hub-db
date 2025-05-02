@@ -1,0 +1,25 @@
+# Introduction
+
+Inject latency into all matching outgoing traffic.
+
+# Prerequisites
+
+The Extension Windows Host needs to be installed on the target system.
+
+# Details
+
+The network delay operates at the ip level and affects single packets. Thus, you may encounter HTTP requests that are delayed by a multiple of the specified delay.
+
+
+# Parameters
+
+| Parameter         | Description                                          | Default |
+|-------------------|------------------------------------------------------|---------|
+| Duration          | How long should the traffic be delayed?              | 30s     |
+| Network Delay     | How much should the traffic be delayed?              | 500ms   |
+| Jitter            | Random +-30% jitter to network delay                 | true    |
+| Hostname          | Restrict to which hosts the traffic is delayed       |         |
+| IP Address        | Restrict to which IP address the traffic is delayed  |         |
+| Port Number       | Restrict to which port number the traffic is delayed |         |
+| Network Interface | Target Network Interface which should be attacked    |         |
+

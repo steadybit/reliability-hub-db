@@ -1,0 +1,204 @@
+{
+  "id": "0196903c-b796-750c-bb1f-1fa08af7d73c",
+  "templateTitle": "Windows host losing network connection is detected by Datadog",
+  "templateDescription": "When a host suddenly loses connection to the network and your system, Datadog should alert about this. Eventually, everything should recover once the network is back again.\n\n## Motivation\n\nWhen you're working in a less volatile system environment, a loss of network can be crucial as there is likely no backup host that will enable faster recovery. Thus, you should check your observability tools to catch this.\n\n## Structure\nBefore blocking a host from the network, we verify that the Datadog monitor is in an ok state\nAfterward, we block all traffic to and from a host and expect Datadog to alert about the isolated host. Eventually, when the host is online again, we expect Datadog to turn into an OK state again.\nWhile experimenting, we create a downtime for the Monitor so that it will not escalate due to the ongoing alert.",
+  "placeholders": [
+    {
+      "key": "hostname",
+      "name": "Windows Hostname",
+      "description": "### Which Windows host do you want to isolate from the network?\nWe identify the host based on `host.hostname` and will block traffic to and from this host."
+    },
+    {
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should alert about the missing connectivtiy to one of your hosts?"
+    }
+  ],
+  "tags": [
+    "Legacy",
+    "VM",
+    "Host",
+    "Windows",
+    "Datadog"
+  ],
+  "experimentName": "Windows host [[hostname]] losing network is detected by Datadog monitor [[datadogMonitorName]]",
+  "hypothesis": "When the host [[hostname]] loses network connection, we expect Datadog monitor [[datadogMonitorName]] to notice and alert about this one. Eventually, everything should recover once the network loss is over, and the Datadog monitor turns into an OK state.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK"
+            ]
+          },
+          "customLabel": "GIVEN: Datadog Monitor is green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "hostname": [],
+            "port": [],
+            "networkInterface": [],
+            "ip": [],
+            "percentage": "100"
+          },
+          "customLabel": "WHEN: One host loses outgoing network connection",
+          "actionType": "com.steadybit.extension_host_windows.network_package_loss",
+          "radius": {
+            "targetType": "com.steadybit.extension_host_windows.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "host.hostname",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[hostname]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "statusCheckMode": "atLeastOnce",
+            "expectedStatusList": [
+              "Alert"
+            ]
+          },
+          "customLabel": "THEN: Datadog monitor alerts",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "statusCheckMode": "atLeastOnce",
+            "expectedStatusList": [
+              "Alert",
+              "OK"
+            ]
+          },
+          "customLabel": "THEN: Datadog monitor is OK again",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "Steadybit Swag Shop Availability"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "370s",
+            "notify": true
+          },
+          "customLabel": "Create Downtime for Datadog monitor to prevent alert escalation",
+          "actionType": "com.steadybit.extension_datadog.monitor.downtime",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}
