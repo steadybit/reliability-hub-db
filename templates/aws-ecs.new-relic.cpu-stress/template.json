@@ -1,0 +1,167 @@
+{
+  "id": "01969f9e-80e8-70bc-9067-9288dfb4d095",
+  "templateTitle": "New Relic detects an incident for CPU spikes in an ECS task",
+  "templateDescription": "Validate your observability to detect a CPU spike in your AWS ECS cluster\n\n## Motivation\nWhen you have New Relic configured to detect CPU spikes in your AWS ECS cluster, you can easily validate your observability strategy with this experiment template.\n\n## Structure\nFirst, we validate whether New Relic has no ongoing incident. After that, we inject the CPU spike for an ECS service and expected that New Relic detect this as an incident within the given time frame of 3 minutes.",
+  "placeholders": [
+    {
+      "key": "ecsClusterName",
+      "name": "ECS Cluster Name",
+      "description": "### What is the name of the ECS cluster where you want to inject a fault?"
+    },
+    {
+      "key": "ecsServiceName",
+      "name": "ECS Service Name",
+      "description": "### What is the name of the ECS service that you want to cause a CPU spike?"
+    },
+    {
+      "key": "newRelicAccountId",
+      "name": "New Relic Account Id",
+      "description": "### What is the New Relic Account Id in which you expect an incident?"
+    }
+  ],
+  "tags": [
+    "New Relic",
+    "AWS ECS",
+    "CPU"
+  ],
+  "experimentName": "New Relic detects an incident for CPU spikes in an ECS service [[ecsServiceName]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "entityTagFilter": [],
+            "conditionCheckMode": "allTheTime",
+            "condition": "noIncidents",
+            "incidentPriorityFilter": [
+              "CRITICAL",
+              "LOW",
+              "HIGH",
+              "MEDIUM"
+            ]
+          },
+          "customLabel": "GIVEN: No ongoing New Relic incident",
+          "actionType": "com.steadybit.extension_newrelic.incident_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_newrelic.account",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "new-relic.account.id",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[newRelicAccountId]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "workers": 0,
+            "cpuLoad": 100
+          },
+          "customLabel": "WHEN: Stressing CPU of an ECS Task",
+          "actionType": "com.steadybit.extension_aws.ecs-task.stress_cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_aws.ecs-task",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "aws-ecs.cluster.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsClusterName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.service.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[ecsServiceName]]"
+                  ]
+                },
+                {
+                  "key": "aws-ecs.task.amazon-ssm-agent",
+                  "operator": "EQUALS",
+                  "values": [
+                    "true"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "entityTagFilter": [],
+            "conditionCheckMode": "atLeastOnce",
+            "condition": "atLeastOneIncident",
+            "incidentPriorityFilter": [
+              "CRITICAL",
+              "LOW",
+              "HIGH",
+              "MEDIUM"
+            ]
+          },
+          "customLabel": "THEN: New Relic should detect an incident",
+          "actionType": "com.steadybit.extension_newrelic.incident_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_newrelic.account",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "new-relic.account.id",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[newRelicAccountId]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}
