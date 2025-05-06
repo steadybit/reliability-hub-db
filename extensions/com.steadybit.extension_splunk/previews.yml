@@ -10,3 +10,6 @@
 - type: image
   src: splunk_overlay.png
   alt: Steadybit events as Splunk custom events can be showed on dashboards to ease analyzing causes and effects.
+- type: image
+  src: splunk_dashboard.png
+  alt: Splunk dashboard to show Steadybit events to track Chaos Engineering activities.
