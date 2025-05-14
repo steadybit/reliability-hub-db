@@ -1,5 +1,5 @@
 {
-    "lastChange": 1746438486,
+    "lastChange": 1747215911,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.new-relic.cpu-stress/template.json",
@@ -63,8 +63,8 @@
     "actions": [
         "/actions/com.steadybit.extension_aws.alb.static_response/description.yml",
         "/actions/com.steadybit.extension_aws.az.blackhole/description.yml",
-        "/actions/com.steadybit.extension_aws.ec2-subnet.blackhole/description.yml",
         "/actions/com.steadybit.extension_aws.ec2_instance.state/description.yml",
+        "/actions/com.steadybit.extension_aws.ec2-subnet.blackhole/description.yml",
         "/actions/com.steadybit.extension_aws.ecs-service.event_log/description.yml",
         "/actions/com.steadybit.extension_aws.ecs-service.scale/description.yml",
         "/actions/com.steadybit.extension_aws.ecs-service.task_count_check/description.yml",
@@ -103,6 +103,7 @@
         "/actions/com.steadybit.extension_datadog.monitor.status_check/description.yml",
         "/actions/com.steadybit.extension_dynatrace.create_maintenance_window/description.yml",
         "/actions/com.steadybit.extension_dynatrace.problem_check/description.yml",
+        "/actions/com.steadybit.extension_gatling.enterprise.run/description.yml",
         "/actions/com.steadybit.extension_gatling.run/description.yml",
         "/actions/com.steadybit.extension_gcp.vm.state/description.yml",
         "/actions/com.steadybit.extension_grafana.alert-rule.check/description.yml",
@@ -158,9 +159,9 @@
         "/actions/com.steadybit.extension_kubernetes.drain_node/description.yml",
         "/actions/com.steadybit.extension_kubernetes.kubernetes_logs/description.yml",
         "/actions/com.steadybit.extension_kubernetes.node_count_check/description.yml",
-        "/actions/com.steadybit.extension_kubernetes.pod_count_check/description.yml",
         "/actions/com.steadybit.extension_kubernetes.pod_count_check_daemonset/description.yml",
         "/actions/com.steadybit.extension_kubernetes.pod_count_check_statefulset/description.yml",
+        "/actions/com.steadybit.extension_kubernetes.pod_count_check/description.yml",
         "/actions/com.steadybit.extension_kubernetes.pod_count_metric/description.yml",
         "/actions/com.steadybit.extension_kubernetes.rollout-restart/description.yml",
         "/actions/com.steadybit.extension_kubernetes.rollout-status/description.yml",
