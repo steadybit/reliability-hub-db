@@ -1,0 +1,18 @@
+# Introduction
+
+You can use the haproxy ingress block traffic action to block all traffic to specific HTTP paths in the ingress controller and give back specific http status. This is useful for testing how your application behaves when specific endpoints are not reachable.
+
+# Use Cases
+
+* Understand how your services behave under network outages
+
+# Rollback
+
+The annotation made to the ingress resource will be removed automatically after the action is finished. If you want to rollback manually, you can look for the annotation `haproxy-ingress.github.io/backend-config-snippet` in the ingress resource and remove the parts that are surrounded by `# BEGIN STEADYBIT -` and `# END STEADYBIT -`. The steadybit parts in the annotation will be removed automatically after the action is finished.
+
+# Parameters
+
+| Name            | Required | Description                                                             |
+|-----------------|----------|-------------------------------------------------------------------------|
+| Duration        | true     | How long should the traffic be affected?                                |
+| Path and Status | true     | The path to block and the status code to return.                        |
