@@ -1,0 +1,4 @@
+---
+- type: image
+  src: 1.png
+  alt: Experiment editor showing the haproxy ingress block traffic action
