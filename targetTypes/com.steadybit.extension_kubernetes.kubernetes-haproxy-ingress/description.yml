@@ -1,5 +1,5 @@
 ---
-id: com.steadybit.extension_kubernetes.extension_kubernetes-haproxy-ingress
+id: com.steadybit.extension_kubernetes.kubernetes-haproxy-ingress
 label:
   one: Kubernetes HAProxy Ingress
   other: Kubernetes HAProxy Ingresses
