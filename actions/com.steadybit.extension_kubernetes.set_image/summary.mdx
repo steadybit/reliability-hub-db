@@ -1,0 +1,19 @@
+# Introduction
+
+Use this action to change the image of a Kubernetes Deployment.
+The attack sets the image of the Deployment to the specified image at the beginning of the attack and rolls it back to the old image whenever the attack stops.
+
+# Use Cases
+- Verify that the new version of your application is working as expected
+
+# Parameters
+
+| Name          | Required | Description                                             | Default |
+|---------------|----------|---------------------------------------------------------|---------|
+| Duration      | true     | How long should the new image be used?                  |         |
+| Container     | true     | The container of the deployment that should be targeted |         |
+| Image         | true     | The new image name including the version                |         |
+
+# Rollback
+
+The old image will be restored after the action has ended.
