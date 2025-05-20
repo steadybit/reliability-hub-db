@@ -1,5 +1,5 @@
 {
-    "lastChange": 1747216667,
+    "lastChange": 1747753685,
     "templates": [
         "/templates/aws-ec2.ec2-restart/template.json",
         "/templates/aws-ecs.new-relic.cpu-stress/template.json",
@@ -61,6 +61,7 @@
         "/templates/splunk.alerts-on-pod-crash-loop/template.json"
     ],
     "actions": [
+        "/actions/com.steadybit.extension_appdynamics.health-rule.check/description.yml",
         "/actions/com.steadybit.extension_aws.alb.static_response/description.yml",
         "/actions/com.steadybit.extension_aws.az.blackhole/description.yml",
         "/actions/com.steadybit.extension_aws.ec2_instance.state/description.yml",

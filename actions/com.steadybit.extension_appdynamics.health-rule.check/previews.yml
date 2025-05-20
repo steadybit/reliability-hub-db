@@ -1,0 +1,13 @@
+---
+- type: image
+  src: steadybit_experiment_editor.png
+  alt: Steadybit's "Health Rule Check" allows you to verify the behaviour of your AppDynamics alert rules.
+- type: image
+  src: steadybit_AppDynamics_experiment_execution_run_log.png
+  alt: The run log showing that an experiment completed because the alert rule state is the one expected for this kind of failure.
+- type: image
+  src: AppDynamics_custom_events.png
+  alt: Steadybit events are reported to AppDynamics as custom events with properties to filter them easily.
+- type: image
+  src: AppDynamics_steadybit_events.png
+  alt: Steadybit events as AppDynamics annotations can be showed on application dashboards to ease analyzing causes and effects.
