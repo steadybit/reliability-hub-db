@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_appdynamics.health-rule.check
-label: health-rule check
+label: health rule check
 description: Collects information about the health-rule state and optionally verifies that the rule has an expected state.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
