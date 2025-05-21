@@ -1,0 +1,7 @@
+---
+- type: image
+  src: steadybit_experiment_editor.png
+  alt: Steadybit's "Create Action Suppression" allows you to disable actions related to events in AppDynamics.
+- type: image
+  src: action_suppression_appdynamics.png
+  alt: Steadybit will create an action suppression and delete it (put it in done in the UI) at the end of desired duration.

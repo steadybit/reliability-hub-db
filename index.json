@@ -61,6 +61,7 @@
         "/templates/splunk.alerts-on-pod-crash-loop/template.json"
     ],
     "actions": [
+        "/actions/com.steadybit.extension_appdynamics.application.action-suppression/description.yml",
         "/actions/com.steadybit.extension_appdynamics.health-rule.check/description.yml",
         "/actions/com.steadybit.extension_aws.alb.static_response/description.yml",
         "/actions/com.steadybit.extension_aws.az.blackhole/description.yml",
