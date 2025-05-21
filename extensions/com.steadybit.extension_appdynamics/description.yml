@@ -18,7 +18,7 @@ ghcr:
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_appdynamics
 installation: https://github.com/steadybit/extension-appdynamics#installation
 changelog: https://github.com/steadybit/extension-appdynamics/blob/main/CHANGELOG.md
-releaseDate: '2024-08-01'
+releaseDate: '2025-05-21'
 tags:
   - AppDynamics
   - Kubernetes
