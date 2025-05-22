@@ -5,8 +5,8 @@ label:
   other: Windows Hosts
 category: basic
 icon: |
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M 0 0 L 11.378906 0 L 11.378906 11.371094 L 0 11.371094 Z M 12.621094 0 L 24 0 L 24 11.371094 L 12.621094 11.371094 Z M 0 12.621094 L 11.378906 12.621094 L 11.378906 24 L 0 24 Z M 12.621094 12.621094 L 24 12.621094 L 24 24 L 12.621094 24 "/>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 11.53H11.53V3H3V11.53ZM3 21H11.53V12.47H3V21ZM12.47 21H21V12.47H12.47V21ZM12.47 3V11.53H21V3H12.47Z" fill="currentColor"/>
   </svg>
 extension: com.steadybit.extension_host_windows
 releaseDate: '2025-05-02'
