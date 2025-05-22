@@ -7,6 +7,7 @@ icon: |
 kind: load_test
 extension: com.steadybit.extension_gatling
 targetType: com.steadybit.extension_gatling.enterprise.simulation
+releaseDate: '2025-05-22'
 tags:
   - Gatling
   - Load test
