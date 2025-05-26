@@ -9,4 +9,5 @@ icon: |
     <path d="M3 11.53H11.53V3H3V11.53ZM3 21H11.53V12.47H3V21ZM12.47 21H21V12.47H12.47V21ZM12.47 3V11.53H21V3H12.47Z" fill="currentColor"/>
   </svg>
 extension: com.steadybit.extension_host_windows
+beta: yes
 releaseDate: '2025-05-02'
