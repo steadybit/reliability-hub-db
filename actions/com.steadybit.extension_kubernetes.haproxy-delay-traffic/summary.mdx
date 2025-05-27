@@ -6,6 +6,10 @@ You can use the haproxy ingress delay traffic action to delay all traffic to a s
 
 * Understand how your services behave under network latency
 
+# Usage
+
+You can *not* apply multiple actions to the same ingress resource.
+
 # Rollback
 
 The annotation made to the ingress resource will be removed automatically after the action is finished. If you want to rollback manually, you can look for the annotation `haproxy-ingress.github.io/backend-config-snippet` in the ingress resource and remove the parts that are surrounded by `# BEGIN STEADYBIT -` and `# END STEADYBIT -`. The steadybit parts in the annotation will be removed automatically after the action is finished.
