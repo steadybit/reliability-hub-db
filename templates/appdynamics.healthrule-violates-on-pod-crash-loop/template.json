@@ -138,7 +138,7 @@
             "stateCheckMode": "atLeastOnce",
             "violation": "true"
           },
-          "customLabel": "THEN: Health rule should turn into 'Alert' state because of non-ready pods",
+          "customLabel": "THEN: Health rule should turn into 'Violated' state because of non-ready pods",
           "actionType": "com.steadybit.extension_appdynamics.health-rule.check",
           "radius": {
             "targetType": "com.steadybit.extension_appdynamics.health-rule",

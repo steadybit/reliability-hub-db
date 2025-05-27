@@ -1,7 +1,9 @@
 ---
+- type: youtube
+  id: dGPvkbP6Iys
 - type: image
   src: steadybit_experiment_editor.png
-  alt: Steadybit's "Health Rule Check" allows you to verify the behaviour of your AppDynamics alert rules.
+  alt: Steadybit's 'Health Rule Check' allows you to verify the behaviour of your AppDynamics alert rules.
 - type: image
   src: steadybit_AppDynamics_experiment_execution_run_log.png
   alt: The run log showing that an experiment completed because the alert rule state is the one expected for this kind of failure.
