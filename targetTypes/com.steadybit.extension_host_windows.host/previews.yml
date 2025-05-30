@@ -1,16 +1,8 @@
 ---
-- type: youtube
-  id: 3Nj2L_sAvFk
 - type: image
   src: explorer-os-family.png
   alt: Explorer showing Linux and Windows hosts discovered by Linux and Windows host extensions.
 - type: image
   src: explorer-details.png
   alt: Identified information about a Windows Host that can later be used within experiments.
-- type: image
-  src: experiment-design-windows.png
-  alt: Experiment design using Windows-based attacks.
-- type: image
-  src: experiment-run-windows.png
-  alt: Experiment run using Windows-based attacks.
 
