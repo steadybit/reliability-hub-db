@@ -7,7 +7,8 @@ kind: attack
 category: network
 targetType: com.steadybit.extension_host_windows.host
 extension:  com.steadybit.extension_host_windows
-releaseDate: '2025-05-02'
+beta: true
+releaseDate: '2025-05-30'
 tags:
   - Host
   - Windows

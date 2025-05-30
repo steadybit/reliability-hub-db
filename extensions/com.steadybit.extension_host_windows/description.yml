@@ -15,7 +15,8 @@ ghcr:
   owner: steadybit
   repository: extension-host-windows
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_host_windows
-releaseDate: '2025-05-02'
+beta: true
+releaseDate: '2025-05-30'
 installation: https://github.com/steadybit/extension-host-windows#installation
 changelog: https://github.com/steadybit/extension-host-windows/blob/main/CHANGELOG.md
 tags:
