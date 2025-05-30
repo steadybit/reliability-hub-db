@@ -38,4 +38,5 @@ export interface ActionDescription {
   promotedActions: string[];
   releaseDate?: string;
   tags: string[];
+  beta?: boolean;
 }
