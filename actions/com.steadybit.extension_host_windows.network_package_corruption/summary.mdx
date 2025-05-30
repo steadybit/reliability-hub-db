@@ -1,0 +1,23 @@
+# Introduction
+
+Inject corrupt packets by introducing a single bit error at a random offset into outgoing network traffic.
+
+# Prerequisites
+
+The Extension Windows Host needs to be installed on the target system.
+
+# Use Cases
+
+* Testing network resilience to bit errors
+
+# Parameters
+
+| Parameter          | Description                                            | Default |
+|--------------------|--------------------------------------------------------|---------|
+| Duration           | How much of the traffic should be corrupted??          | 30s     |
+| Package Corruption | How much traffic should be corrupted?                  | 15%     |
+| Hostname           | Restrict to which hosts the traffic is corrupted?      |         |
+| IP Address         | Restrict to which IP address the traffic is corrupted  |         |
+| Port Number        | Restrict to which port number the traffic is corrupted |         |
+| Network Interface  | Target Network Interface which should be attacked      |         |
+

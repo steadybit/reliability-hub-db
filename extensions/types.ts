@@ -45,4 +45,5 @@ export interface ExtensionDescription {
   changelog?: string;
   tags: string[];
   releaseDate?: string;
+  beta?: boolean;
 }
