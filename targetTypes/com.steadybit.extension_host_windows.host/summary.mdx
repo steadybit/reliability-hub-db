@@ -1,15 +1,8 @@
 # Discovery of Windows Host Targets
 
-The extension's networking attacks are based on the [network driver](https://github.com/steadybit/WinDivert/) provided alongside the extension. The driver is not persistent and is only active during
-the duration of the attack. The driver passed all of the [HLK](https://learn.microsoft.com/en-us/windows-hardware/test/hlk/) tests, assuring safety.
+Each Windows host, with a connected Windows Host Extension, is reported as target.
 
-### Beta Release
-
-Microsoft is in the process of signing the driver; until then, test signing must be enabled on the machine. Check the [installation guide](https://github.com/steadybit/extension-host-windows?tab=readme-ov-file#pre-release-versions) for more information.
-
-### Windows Host Targets
-
-Each Windows host, with a connected Windows Host Extension, is reported as target. Following attributes are provided for Windows host targets:
+Following attributes are provided for Windows host targets:
 
 * Hostname
 * Domainname
