@@ -1,0 +1,17 @@
+# Introduction to the AppDynamics Extension
+The Steadybit AppDynamics Extension bridges the world of Steadybit and AppDynamics.
+The extension adds checks to your Chaos Engineering experiments to validate AppDynamics Health rules state and reports events of your experiments to AppDynamics [as custom events to ease correlation](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/monitor-events#id-.MonitorEventsv23.1-FilterCustomEvents).
+
+# Integration and Functionality
+Integration of AppDynamics into Steadybit works via the AppDynamics API.
+Thus, all you need is a AppDynamics's [Access token](https://docs.appdynamics.com/appd/23.x/latest/en/extend-appdynamics/appdynamics-apis/api-clients).
+
+## Integration of AppDynamics in Steadybit
+With the [Health Rule Check](/action/com.steadybit.extension_appdynamics.health-rule.check) you can integrate your AppDynamics health rules into your experiments.
+Verify that AppDynamics health rules notice a fault injected by Steadybit to check that your observability strategy is working as expected.
+
+## Integration of Steadybit in AppDynamics
+The extension reports experiment executions to AppDynamics if an Application Event ID (A manually created Steadybit App is sufficient) is given, which helps you to correlate experiments with your dashboards.
+
+# Installation and Setup
+To integrate the AppDynamics extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-appdynamics#installation).

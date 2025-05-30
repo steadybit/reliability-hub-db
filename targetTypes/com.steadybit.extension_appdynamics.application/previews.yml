@@ -1,0 +1,4 @@
+---
+- type: image
+  src: img.png
+  alt: Identified information about a AppDynamics application that can later be used within experiments.

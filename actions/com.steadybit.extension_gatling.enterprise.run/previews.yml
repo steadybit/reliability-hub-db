@@ -1,0 +1,10 @@
+---
+- type: image
+  src: gatling-enterprise-step.png
+  alt: Gatling Enterprise Step within the experiment editor.
+- type: image
+  src: gatling-enterprise-execution.png
+  alt: Gatling Enterprise Step in the experiment execution view.
+- type: image
+  src: gatling-enterprise.png
+  alt: Executed loadtest within the Gatling Enterprise UI.
