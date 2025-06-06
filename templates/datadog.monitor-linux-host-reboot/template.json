@@ -1,0 +1,190 @@
+{
+  "id": "0674d53a-b1a2-4ad1-acdb-79966253016e",
+  "templateTitle": "Linux Host reboot is alerted by Datadog",
+  "templateDescription": "When a Linux host is suddenly missing from your system, Datadog should alert you to this. Eventually, everything should recover when only rebooting the host.\n\n## Motivation\n\nWhen you're working in a less volatile system environment, where you expect hosts always to run, you should validate whether you notice whenever a host is rebooting.\n\n## Structure\nBefore restarting a host, we verify that the Datadog monitor is in an ok state\nAfterward, we trigger the shutdown of a host and expect Datadog to alert about the missing host. Eventually, the host should come back and Datadog turn into an OK state again.\nWhile experimenting, we create a downtime for the Monitor so that it will not escalate due to the ongoing alert.",
+  "placeholders": [
+    {
+      "key": "hostname",
+      "name": "Linux Hostname",
+      "description": "### Which Linux host do you want to shut down?\nWe identify the host based on `host.hostname`."
+    },
+    {
+      "key": "datadogMonitorName",
+      "name": "Datadog Monitor",
+      "description": "### Which Datadog Monitor should alert about a missing host in your system?"
+    }
+  ],
+  "tags": [
+    "Linux",
+    "Legacy",
+    "VM",
+    "Host",
+    "Datadog"
+  ],
+  "experimentName": "Linux host reboot of [[hostname]] is detected by Datadog monitor [[datadogMonitorName]]",
+  "hypothesis": "When rebooting the host [[hostname]] we expect Datadog monitor [[datadogMonitorName]] to notice and alert about this one. Eventually, everything should recover by having the host up and running again, and the Datadog monitor turning into an OK state.",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s",
+            "statusCheckMode": "allTheTime",
+            "expectedStatusList": [
+              "OK"
+            ]
+          },
+          "customLabel": "GIVEN: Datadog Monitor is green",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "reboot": true
+          },
+          "customLabel": "WHEN: One host is rebooting unexpectedly",
+          "actionType": "com.steadybit.extension_host.shutdown",
+          "radius": {
+            "targetType": "com.steadybit.extension_host.host",
+            "predicate": {
+              "query": "(host.hostname=\"[[hostname]]\" AND host.os.family!=\"debian\")"
+            },
+            "query": "(host.hostname=\"[[hostname]]\" AND host.os.family!=\"debian\")",
+            "percentage": 100
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "statusCheckMode": "atLeastOnce",
+            "expectedStatusList": [
+              "Alert"
+            ]
+          },
+          "customLabel": "THEN: Datadog monitor alerts for a missing host",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "3m",
+            "statusCheckMode": "atLeastOnce",
+            "expectedStatusList": [
+              "Alert",
+              "OK"
+            ]
+          },
+          "customLabel": "THEN: Host is starting up successfully andDatadog monitor is OK again",
+          "actionType": "com.steadybit.extension_datadog.monitor.status_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "Steadybit Swag Shop Availability"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "370s",
+            "notify": true
+          },
+          "customLabel": "Create Downtime for Datadog monitor to prevent alert escalation",
+          "actionType": "com.steadybit.extension_datadog.monitor.downtime",
+          "radius": {
+            "targetType": "com.steadybit.extension_datadog.monitor",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "datadog.monitor.name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[datadogMonitorName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}

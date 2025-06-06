@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_host.host
 label:
-  one: Host
-  other: Hosts
+  one: Linux Host
+  other: Linux Hosts
 category: basic
 icon: |
   <svg

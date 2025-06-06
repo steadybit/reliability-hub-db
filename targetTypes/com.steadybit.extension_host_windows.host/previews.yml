@@ -1,0 +1,8 @@
+---
+- type: image
+  src: explorer-os-family.png
+  alt: Explorer showing Linux and Windows hosts discovered by Linux and Windows host extensions.
+- type: image
+  src: explorer-details.png
+  alt: Identified information about a Windows Host that can later be used within experiments.
+
