@@ -1,0 +1,10 @@
+---
+- type: image
+  src: jenkins-editor.png
+  alt: Steadybit's Jenkins action to run a build job in the experiment
+- type: image
+  src: jenkins-run-view.png
+  alt: The experiment run view with the Jenkins job run results.
+- type: image
+  src: jenkins-target.png
+  alt: A Jenkins job with its properties in Steadybit
