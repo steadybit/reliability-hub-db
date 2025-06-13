@@ -1,0 +1,7 @@
+---
+- type: image
+  src: editor_design.png
+  alt: Steadybit's "Alert Check" allows you to verify the behaviour of your Splunk Alerts.
+- type: image
+  src: editor_execution.png
+  alt: The run log shows the Splunk Alert in action.
