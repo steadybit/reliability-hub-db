@@ -1,0 +1,4 @@
+---
+- type: image
+  src: attributes.png
+  alt: Identified information about a Splunk Alert that can be used within experiments.

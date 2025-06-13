@@ -1,0 +1,18 @@
+# Introduction to the Splunk Cloud Platform and Splunk Enterprise Extension
+The Steadybit Splunk Platform Extension bridges the world of Steadybit and Splunk Cloud Platform and Splunk Enterprise.
+
+The extension discovers Splunk Cloud Platform and Splunk Enterprise Alerts and allows to check their state during experiments.
+
+# Integration and Functionality
+Integration of Splunk Cloud Platform and Splunk Enterprise into Steadybit works via the [Splunk REST API](https://docs.splunk.com/Documentation/Splunk/latest/RESTREF/RESTprolog).
+The extension requires a Splunk [Access Token](https://docs.splunk.com/Documentation/Splunk/latest/Security/Setupauthenticationwithtokens) to use the REST API.
+
+There may be extra steps to access Splunk Cloud Platform. Details are available on the
+[Access requirements and limitations for the Splunk Cloud Platform REST API](https://docs.splunk.com/Documentation/Splunk/latest/RESTTUT/RESTandCloud) documentation page.
+
+## Integration in Steadybit
+With the [Alert Check](/action/com.steadybit.extension_splunk_platform.alert.check) you can integrate Splunk Alerts into experiments and verify
+that a Splunk Alert was fired due to other actions in your experiment.
+
+# Installation and Setup
+To integrate the Splunk Platform extension into your environment, follow our [setup guide](https://github.com/steadybit/extension-splunk-platform#installation).

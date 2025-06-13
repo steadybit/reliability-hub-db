@@ -1,0 +1,21 @@
+# Introduction
+
+The Alert Check step can be dragged&dropped into the experiment editor. Once done, you can use it to verify if an Alert has been fired, or not, during the execution time.
+
+Experiments can be aborted and marked as failed when the Alert Check's actual state diverges from the expected one. This helps implement pre-/post-conditions and invariants. For example, to only start an experiment when the system is healthy.
+
+At last, to help you understand the Alert states and how they evolved, the run view also contains a state visualization. Through this visualization, you can see during which time an Alert was fired.
+
+# Use Cases
+
+ - Pre-/postcondition or invariant for any experiment.
+ - Verify that alerts are triggered during incidents.
+
+# Parameters
+
+| Parameter        | Description                                                                                      | Default       |
+|------------------|--------------------------------------------------------------------------------------------------|---------------|
+| Duration         | How long should the state of the alert rule be checked                                           | 30s           |
+| New Alerts Only  | Only take Alerts fired after the start of the check into account or also already existing ones   | false         |
+| Expected State   | Verify if the Alert was fired or not                                                             | Alert fired   |
+| State Check Mode | Verify if the expected state needs to hold for the entire duration of the check or at least once | At least once |
