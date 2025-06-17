@@ -1,0 +1,29 @@
+# Introduction
+
+This action will stop a particular process by name in a task.
+
+# Details
+
+This attack will run the `AWSFIS-Run-Kill-Process` SSM document on the target ECS task using the SSM agent.
+
+# Use Cases
+
+ - Check if your application is still available if certain processes are stopped.
+
+# Prerequisites
+
+* [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
+* The ECS task must use the Linux runtime platform
+* The ECS task must not have the `execute-command` feature enabled
+* The ECS task must have the `pidMod` property set to `task`
+
+# Rollback
+
+The network attack will be stopped by cancelling the SSM command running on the SSM agent.
+
+# Parameters
+
+| Parameter | Description                                                 | Default |
+|-----------|-------------------------------------------------------------|---------|
+| Process   | Name of the process to stop.                                |         |
+| Graceful  | If true a `TERM` signal is sent, otherwise a `KILL` signal. | true    |

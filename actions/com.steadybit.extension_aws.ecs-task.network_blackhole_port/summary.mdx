@@ -1,0 +1,33 @@
+# Introduction
+
+Drop inbound or outbound traffic for the specified protocol and port.
+
+# Details
+
+This attack will run the `AWSFIS-Run-Network-Blackhole-Port-ECS` SSM document on the target ECS task using the SSM agent.
+
+# Use Cases
+
+* Understand how your services behave under network outages.
+
+# Prerequisites
+
+* [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
+* The ECS task must use the Linux runtime platform
+* The ECS task must not have the `execute-command` feature enabled
+* The ECS task must have the `enableFaultInjection` feature enabled
+* The ECS task must have the `pidMod` property set to `task`
+* The ECS task must have the `networkMode` property set to a value other than `bridge`
+
+# Rollback
+
+The network attack will be stopped by cancelling the SSM command running on the SSM agent.
+
+# Parameters
+
+| Parameter    | Description                                        | Default |
+|--------------|----------------------------------------------------|---------|
+| Duration     | Duration of the attack.                            | 30s     |
+| Protocol     | The affected protocol (`tcp` or `udp`).            | tcp     |
+| Port         | The affected port number.                          | 80      |
+| Traffic Type | The affected traffic type (`ingress` or `egress`). | ingress |
