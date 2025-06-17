@@ -9,5 +9,6 @@ icon: |
 kind: other
 targetType: com.steadybit.extension_jenkins.job
 extension: com.steadybit.extension_jenkins
+releaseDate: '2025-06-15'
 tags:
   - Jenkins

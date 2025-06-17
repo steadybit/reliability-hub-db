@@ -18,5 +18,6 @@ ghcr:
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_jenkins
 installation: https://github.com/steadybit/extension-jenkins#installation
 changelog: https://github.com/steadybit/extension-jenkins/blob/main/CHANGELOG.md
+releaseDate: '2025-06-15'
 tags:
   - Jenkins
