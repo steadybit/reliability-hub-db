@@ -1,5 +1,5 @@
 {
-    "lastChange": 1749751119,
+    "lastChange": 1750150336,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -51,6 +51,7 @@
         "/templates/kubernetes-statefulset.snippet.block-traffic/template.json",
         "/templates/kubernetes-statefulset.snippet.stress-cpu/template.json",
         "/templates/kubernetes-statefulset.snippet.stress-memory/template.json",
+        "/templates/kubernetes-workload.zone-unavailable/template.json",
         "/templates/kubernetes.hpa-cpu-stress/template.json",
         "/templates/messaging-kafka.brokers-downtime-topic-lag/template.json",
         "/templates/messaging-kafka.brokers-election-topic-lag/template.json",

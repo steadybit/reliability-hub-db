@@ -1,0 +1,408 @@
+{
+  "id": "01977d0c-64e4-762c-9b9b-81f54fa781a4",
+  "templateTitle": "Load balancer covers a zone outage of a Kubernetes workload",
+  "templateDescription": "Applications hosted in cloud providers achieve high availability via redundancy across different Availability Zones. Ensure that failover works seamlessly by simulating Zone outages.\n\n## Motivation\n\nCloud provider can host your deployments and services across multiple locations worldwide. From a reliability standpoint, cloud provider's regions and availability zones are most interesting. While the former refers to separate geographic areas spread worldwide, the latter refers to an isolated location within a region. For most use cases, applying deployments across availability zone is sufficient. Given that failures may happen at this level quite frequently, you should verify that your applications are still working in case of an outage.\n\n## Structure\n\nWe leverage the Container block traffic attack to simulate an availability zone outage just for a specific deployment. Before the simulated outage, we ensure that a load-balanced user-facing endpoint works appropriately. During an availability zone's unavailability, the HTTP endpoint must continue operating but may suffer from degraded performance (e.g., lower success rate or higher response time). The performance should recover as soon as the zone is back again.\n\n## Solution Sketch\n\n- [AWS regions and zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)\n- [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-overview)\n- [Azure availability zones](https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview?tabs=azure-cli)\n- [GCP regions and Zones](https://cloud.google.com/compute/docs/regions-zones)\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+  "placeholders": [
+    {
+      "key": "k8sClusterName",
+      "name": "Kubernetes Cluster Name",
+      "description": "### What is the Kubernetes cluster in which the pod under test is running?"
+    },
+    {
+      "key": "k8sNamespace",
+      "name": "Kubernetes Namespace",
+      "description": "### What is the Kubernetes namespace in which the pod under test is running?"
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "### What is the Kubernetes workload under test?\nIt can be anything that can schedule a pod (e.g., deployment, statefulset, ...)"
+    },
+    {
+      "key": "k8sRecoveryTime",
+      "name": "Deployment's Recovery Time",
+      "description": "### How long do you expect it to take until a newly started pod is ready again, after the zone outage is over?"
+    },
+    {
+      "key": "availabilityZone",
+      "name": "Availability Zone",
+      "description": "### For which availability zone would you like to simulate an outage?\nPlease ensure to choose one in which your Kubernetes workload has actually scheduled any pods."
+    },
+    {
+      "key": "httpLoadBalancedEndpoint",
+      "name": "HTTP Load Balanced Endpoint",
+      "description": "### What is the URL of a **load-balanced HTTP endpoint** served by the Kubernetes workload?"
+    },
+    {
+      "key": "httpSuccessRate",
+      "name": "HTTP Success Rate",
+      "description": "### What is the expected success rate of HTTP requests indicating a graceful degradation while the availability zone is unavailable?\nFor instance `95%`.\n\nFinding an appropriate success rate usually depends on the offered service's business criticality and retry mechanisms in place. If the service is, e.g., called by another application with an appropriate retry mechanism, the success rate may be lower compared to a user-visible endpoint."
+    }
+  ],
+  "tags": [
+    "Azure",
+    "GCP",
+    "Redundancy",
+    "AWS",
+    "Availability Zone",
+    "Kubernetes"
+  ],
+  "experimentName": "Zone Outage of [[availabilityZone]] for [[k8sWorkloadOwner]]",
+  "hypothesis": "When availability zone [[availabilityZone]] is down for [[k8sWorkloadOwner]], Kubernetes manages this accordingly by routing the traffic within expected failure rates so that the offered features still work. As soon as the zone is available again, the pod is ready within [[k8sRecoveryTime]].",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "duration": "20s",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "insecureSkipVerify": "false",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "GIVEN: HTTP Endpoint works",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "duration": "60s",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "insecureSkipVerify": "false",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: HTTP Endpoint works with degraded success rate ([[httpSuccessRate]])",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": "[[httpSuccessRate]]",
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 20,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "duration": "[[k8sRecoveryTime]]",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "insecureSkipVerify": "false",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: HTTP Endpoint starts to recover",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "headers": [],
+            "method": "GET",
+            "successRate": 100,
+            "maxConcurrent": 5,
+            "responseTime": "500ms",
+            "requestsPerSecond": 10,
+            "url": "[[httpLoadBalancedEndpoint]]",
+            "duration": "[[k8sRecoveryTime]]",
+            "followRedirects": false,
+            "readTimeout": "5s",
+            "connectTimeout": "5s",
+            "insecureSkipVerify": "false",
+            "responseTimeMode": "NO_VERIFICATION",
+            "statusCode": "200-299"
+          },
+          "customLabel": "THEN: HTTP Endpoint works consistently again",
+          "actionType": "com.steadybit.extension_http.check.periodically",
+          "radius": {}
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "GIVEN: All pods in [[availabilityZone]] are ready",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.label.topology.kubernetes.io/zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[availabilityZone]]"
+                  ]
+                },
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          },
+          "customLabel": "Wait for Zone outage"
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "60s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: Zone outage of [[availabilityZone]] for [[k8sWorkloadOwner]]",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.label.topology.kubernetes.io/zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[availabilityZone]]"
+                  ]
+                },
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "maximum": 1
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "[[k8sRecoveryTime]]",
+            "podCountCheckMode": "podCountEqualsDesiredCount"
+          },
+          "customLabel": "THEN: After Zone outage, all pods become ready again within [[k8sRecoveryTime]]",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.label.topology.kubernetes.io/zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[availabilityZone]]"
+                  ]
+                },
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "20s"
+          },
+          "customLabel": "Wait for Zone outage"
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "45s",
+            "podCountCheckMode": "podCountLessThanDesiredCount"
+          },
+          "customLabel": "THEN: Pods are detected as down",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.label.topology.kubernetes.io/zone",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[availabilityZone]]"
+                  ]
+                },
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                },
+                {
+                  "key": "k8s.namespace",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sNamespace]]"
+                  ]
+                },
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "180s"
+          },
+          "customLabel": "Show Kubernetes events from the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.kubernetes_logs",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "180s"
+          },
+          "customLabel": "Show Pod Count Metrics for the cluster",
+          "actionType": "com.steadybit.extension_kubernetes.pod_count_metric",
+          "radius": {
+            "targetType": "com.steadybit.extension_kubernetes.kubernetes-cluster",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.cluster-name",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sClusterName]]"
+                  ]
+                }
+              ]
+            },
+            "query": null
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}
