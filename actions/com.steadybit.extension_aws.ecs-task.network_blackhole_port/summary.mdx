@@ -1,0 +1,20 @@
+# Introduction
+
+Drop inbound or outbound traffic for the specified protocol and port.
+
+# Details
+
+This attack will run the `AWSFIS-Run-Network-Blackhole-Port-ECS` SSM document on the target ECS task using the SSM agent.
+
+# Use Cases
+
+* Understand how your services behave under network outages.
+
+# Parameters
+
+| Parameter    | Description                                        | Default |
+|--------------|----------------------------------------------------|---------|
+| Duration     | Duration of the attack.                            | 30s     |
+| Protocol     | The affected protocol (`tcp` or `udp`).            | tcp     |
+| Port         | The affected port number.                          | 80      |
+| Traffic Type | The affected traffic type (`ingress` or `egress`). | ingress |

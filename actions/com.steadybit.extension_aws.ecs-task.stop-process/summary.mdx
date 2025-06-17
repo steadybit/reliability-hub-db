@@ -1,0 +1,18 @@
+# Introduction
+
+This action will stop a particular process by name in a task.
+
+# Details
+
+This attack will run the `AWSFIS-Run-Kill-Process` SSM document on the target ECS task using the SSM agent.
+
+# Use Cases
+
+ - Check if your application is still available if certain processes are stopped.
+
+# Parameters
+
+| Parameter | Description                                                 | Default |
+|-----------|-------------------------------------------------------------|---------|
+| Process   | Name of the process to stop.                                |         |
+| Graceful  | If true a `TERM` signal is sent, otherwise a `KILL` signal. | true    |

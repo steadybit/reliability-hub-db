@@ -1,0 +1,20 @@
+# Introduction
+
+Inject latency into egress network traffic.
+
+# Details
+
+This attack will run the `AWSFIS-Run-Network-Latency-ECS` SSM document on the target ECS task using the SSM agent.
+
+# Use Cases
+
+* Evaluate how your services operate under different network latencies.
+
+# Parameters
+
+| Parameter       | Description                                                                                                                     | Default |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration        | Duration of the attack.                                                                                                         | 30s     |
+| Network Delay   | Amount of delay to add.                                                                                                         | 500ms   |
+| Jitter          | Add random +/-30% jitter to network delay?                                                                                      | false   |
+| IP Address/CIDR | Restrict to which IP addresses, CIDR blocks or domain names the traffic is affected. If not specified, all traffic is affected. |         |
