@@ -1,5 +1,5 @@
 {
-    "lastChange": 1750150336,
+    "lastChange": 1750169294,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -64,7 +64,8 @@
         "/templates/messaging-rabbitmq.rabbitmq-unavailable-datadog-check/template.json",
         "/templates/new-relic.incident-check-pod-crashloop/template.json",
         "/templates/new-relic.workflow-deployment-unavailable/template.json",
-        "/templates/splunk.alerts-on-pod-crash-loop/template.json"
+        "/templates/splunk.alerts-on-pod-crash-loop/template.json",
+        "/templates/splunk-platform.alerts-fire-on-pod-crash-loop/template.json"
     ],
     "actions": [
         "/actions/com.steadybit.extension_appdynamics.application.action-suppression/description.yml",
