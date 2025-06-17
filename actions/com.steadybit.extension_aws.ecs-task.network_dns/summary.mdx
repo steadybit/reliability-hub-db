@@ -1,0 +1,36 @@
+# Introduction
+
+Blocks access to DNS servers for a specific duration.
+
+# Details
+
+This attack will run the `AWSFIS-Run-Network-Blackhole-Port-ECS` SSM document on the target ECS task using the SSM agent.
+
+DNS queries to the specified UPD port are blocked. More advanced situation can be handled by the `Block Traffic` attack.
+
+# Use Cases
+
+* Understand how your services behave under DNS outages or failures
+* Simulate a DDoS attack on your DNS servers
+* Maintenance of the authoritative name servers
+* Simulate bad configuration of DNS servers
+
+# Prerequisites
+
+* [The ECS task must have the SSM agent installed and running.](https://github.com/steadybit/extension-aws/blob/main/README-ecs-ssm-setup.md)
+* The ECS task must use the Linux runtime platform
+* The ECS task must not have the `execute-command` feature enabled
+* The ECS task must have the `enableFaultInjection` feature enabled
+* The ECS task must have the `pidMod` property set to `task`
+* The ECS task must have the `networkMode` property set to a value other than `bridge`
+
+# Rollback
+
+The network attack will be stopped by cancelling the SSM command running on the SSM agent.
+
+# Parameters
+
+| Parameter | Description                                 | Default |
+|-----------|---------------------------------------------|---------|
+| Duration  | How long should the DNS traffic be blocked? | 30s     |
+| DNS Port  | DNS port number                             | 53      |
