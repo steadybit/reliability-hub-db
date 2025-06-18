@@ -4,7 +4,9 @@ Blocks access to DNS servers for a specific duration.
 
 # Details
 
-_Note:_ If you are going to attack containers using network attacks, **all containers in the target's linux network namespace** (e.g. all containers belonging to the same Kubernetes Pod or Replica Set) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
+This attack will run the `AWSFIS-Run-Network-Blackhole-Port-ECS` SSM document on the target ECS task using the SSM agent.
+
+DNS queries to the specified port via UDP are blocked.
 
 # Use Cases
 
@@ -12,10 +14,6 @@ _Note:_ If you are going to attack containers using network attacks, **all conta
 * Simulate a DDoS attack on your DNS servers
 * Maintenance of the authoritative name servers
 * Simulate bad configuration of DNS servers
-
-# Links
-
-* [Simulate DNS Outages with Steadybit](https://steadybit.com/blog/simulate-dns-outages-with-steadybit/)
 
 # Parameters
 
