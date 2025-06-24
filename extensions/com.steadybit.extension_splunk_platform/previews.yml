@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: 9L7ykn2_X-E
 - type: image
   src: editor_design.png
   alt: Steadybit's "Alert Check" allows you to verify the behaviour of your Splunk Alerts.
