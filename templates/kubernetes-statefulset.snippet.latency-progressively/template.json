@@ -1,0 +1,180 @@
+{
+  "id": "0197a713-0fcb-71ee-b38d-f4e5e35856f5",
+  "templateTitle": "Latency progressively increases for Kubernetes StatefulSet",
+  "templateDescription": "Latency a Kubernetes StatefulSet progressively increases to analyse at which point the communication breaks.\n\n### Structure\nWe start by adding a `250ms` latency on the Kubernetes StatefulSet's outgoing traffic for `30 seconds`. Next, we stepwise increase the latency to `500ms`, `750ms`, and `1s` - each for `30 seconds`. In between, we have small wait steps to ease analysis in external observability tools for each phase.",
+  "placeholders": [
+    {
+      "key": "k8sStatefulset",
+      "name": "Kubernetes StatefulSet",
+      "description": "### What is the Kubernetes StatefulSet under test?\nWe'll attack the same Kubernetes StatefulSet with the following configuration:\n\n- `30 seconds` a `250ms` latency on outgoing traffic\n- `30 seconds` a `500ms` latency on outgoing traffic\n- `30 seconds` a `750ms` latency on outgoing traffic\n- `30 seconds` a `1s` latency on outgoing traffic"
+    }
+  ],
+  "tags": [
+    "Progressive",
+    "Snippet",
+    "StatefulSet",
+    "Kubernetes",
+    "Latency"
+  ],
+  "experimentName": "Latency progressively increases for Kubernetes StatefulSet [[k8sStatefulset]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "250ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 250ms for Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "500ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 500ms for Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "750ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 750ms for Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "1s",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 1s for Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}

@@ -1,0 +1,168 @@
+{
+  "id": "0197a70a-ebca-715a-99dc-f75bd1c8b281",
+  "templateTitle": "Fill Memory progressively of Kubernetes StatefulSet",
+  "templateDescription": "Fill up the memory of a Kubernetes StatefulSet progressively to see at which percentage it will be killed by Kubernetes.\n\n### Structure\nWe start by filling `50%` of the Kubernetes StatefulSet's memory for `30 seconds`. Next, we stepwise fill the memory to `75%`, `90%`, and `100%` - each for `30 seconds`. In between, we have small wait steps to ease analysis in external observability tools for each phase.",
+  "placeholders": [
+    {
+      "key": "k8sStatefulset",
+      "name": "Kubernetes StatefulSet",
+      "description": "### What is the Kubernetes StatefulSet under test?\nWe'll attack the same Kubernetes StatefulSet with the following configuration:\n\n- `30 seconds` for `50%` memory filled\n- `30 seconds` for `75%` memory filled\n- `30 seconds` for `90%` memory filled\n- `30 seconds` for `100%` memory filled"
+    }
+  ],
+  "tags": [
+    "Progressive",
+    "Memory",
+    "Snippet",
+    "StatefulSet",
+    "Kubernetes"
+  ],
+  "experimentName": "Fill Memory progressively of Kubernetes StatefulSet [[k8sStatefulset]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "mode": "usage",
+            "duration": "30s",
+            "failOnOomKill": false,
+            "unit": "%",
+            "size": 50
+          },
+          "customLabel": "Fill 50% memory of Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.fill_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "mode": "usage",
+            "duration": "30s",
+            "failOnOomKill": false,
+            "unit": "%",
+            "size": 75
+          },
+          "customLabel": "Fill 75% memory of Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.fill_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "mode": "usage",
+            "duration": "30s",
+            "failOnOomKill": false,
+            "unit": "%",
+            "size": 90
+          },
+          "customLabel": "Fill 90% memory of Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.fill_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "mode": "usage",
+            "duration": "30s",
+            "failOnOomKill": false,
+            "unit": "%",
+            "size": 100
+          },
+          "customLabel": "Fill 100% memory of Kubernetes StatefulSet [[k8sStatefulset]]",
+          "actionType": "com.steadybit.extension_container.fill_mem",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.statefulset",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sStatefulset]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}

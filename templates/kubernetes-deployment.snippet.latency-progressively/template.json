@@ -1,0 +1,180 @@
+{
+  "id": "0197a70f-383a-7302-b09c-1089d2a7fed2",
+  "templateTitle": "Latency progressively increases for Kubernetes Deployment",
+  "templateDescription": "Latency a Kubernetes Deployment progressively increases to analyse at which point the communication breaks.\n\n### Structure\nWe start by adding a `250ms` latency on the Kubernetes Deployment's outgoing traffic for `30 seconds`. Next, we stepwise increase the latency to `500ms`, `750ms`, and `1s` - each for `30 seconds`. In between, we have small wait steps to ease analysis in external observability tools for each phase.",
+  "placeholders": [
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?\nWe'll attack the same Kubernetes deployment with the following configuration:\n\n- `30 seconds` a `250ms` latency on outgoing traffic\n- `30 seconds` a `500ms` latency on outgoing traffic\n- `30 seconds` a `750ms` latency on outgoing traffic\n- `30 seconds` a `1s` latency on outgoing traffic"
+    }
+  ],
+  "tags": [
+    "Progressive",
+    "Deployment",
+    "Snippet",
+    "Kubernetes",
+    "Latency"
+  ],
+  "experimentName": "Latency progressively increases for Kubernetes Deployment [[k8sDeployment]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "250ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 250ms for Kubernetes Deployment [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "500ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 500ms for Kubernetes Deployment [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "750ms",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 750ms for Kubernetes Deployment [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "hostname": [],
+            "port": [],
+            "networkDelay": "1s",
+            "networkInterface": [],
+            "ip": [],
+            "failOnHostNetwork": true,
+            "networkDelayJitter": false
+          },
+          "customLabel": "Delay Outgoing Traffic by 1s for Kubernetes Deployment [[k8sDeployment]]",
+          "actionType": "com.steadybit.extension_container.network_delay",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.deployment",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sDeployment]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {}
+}
