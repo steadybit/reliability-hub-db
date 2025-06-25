@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/kubernetes-statefulset.snippet.fill-memory-progressively
+maintainer: com.steadybit

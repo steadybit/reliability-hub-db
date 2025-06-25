@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/kubernetes-deployment.snippet.stress-cpu-progressively
+maintainer: com.steadybit
