@@ -1,0 +1,36 @@
+# Introduction
+
+Fill the host's disk with random data for a given duration.
+
+# Use Cases
+
+* Test your system's behavior when there is no free space left on the disk
+* Validate how much free disk space is needed to run your system reliably
+
+# Parameters
+
+| Parameter  | Description                                                                                                                                                                           | Default                                                        |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| Duration   | How long should the disk be filled?                                                                                                                                                   | 30s                                                            |
+| Mode       | Decide how to specify the amount to fill the disk: <br/> *overall percentage of filled disk space in percent*, <br/> *Megabytes to write*,<br/> *Megabytes to leave free on disk*     | overall percentage of filled disk space in percent (*PERCENT*) |
+| Size       | Depending on the mode, specify the percentage of filled disk space or the number of Megabytes to be written or left free.                                                             | 80                                                             |
+| Path       | Path where the file should be written                                                                                                                                                 | C:\                                                            |
+| Method     | Should the disk be filled all at once (using `fsutil new`) or gradually over time (using `dd`)?                                                                                       | at once (*AT_ONCE*)                                            |
+| Block Size | Only applicable for method over time (`dd`): The block size when writing the file. If the block size is larger than the size value, the attack uses the size value as the block size. | 5                                                              |
+
+# Frequently Asked Questions (FAQs)
+## Q: What is the difference between the available modes?
+**A:** The disk fill attack differentiates between two modes (at once and over time). Read further to understand the difference and which is the best choice for you.
+
+**Mode 'at once'** The mode is perfect if you want to check how your system behaves when the disk is almost full, and you don't need to simulate a gradual decrease in free space.
+However, if you want to write more than 100% of the disk space, the gradual approach (see below) might be a better fit as it works more reliably.
+The mode uses the `fsutil new` command, which allocates the disk space without writing actual data and, thus, results in the disk filling up very fast.
+
+**Mode 'over time'** The over-time approach is perfect when you want to simulate a more realistic case of a gradually filling disk or need to fill the disk more than available space.
+The mode uses the `dd` command, which writes actual data (zeros) to the disk and is thus slower than the at-once approach (see above).
+
+## Q: How can I check whether the disk is full?
+**A:** Select File Explorer from the taskbar, and then select "This PC" on the left.
+
+## Q: Why is my disk not filled up to the specified value/percentage even though the attack was executed without errors?
+**A:** The attack calculates the amount to write only once at the beginning of the attack using the formulas mentioned above. If other processes cause the used disk space or overall capacity to vary while running the attack, you may have a higher or lower filled disk percentage. Also, the 'over time' approach works more reliably if you need to write more to the disk than available space.
