@@ -46,7 +46,7 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "host.hostname",
+                  "key": "[[hostKey]]",
                   "operator": "EQUALS",
                   "values": [
                     "[[hostValue]]"
@@ -83,7 +83,7 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "host.hostname",
+                  "key": "[[hostKey]]",
                   "operator": "EQUALS",
                   "values": [
                     "[[hostValue]]"
@@ -120,7 +120,7 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "host.hostname",
+                  "key": "[[hostKey]]",
                   "operator": "EQUALS",
                   "values": [
                     "[[hostValue]]"
@@ -157,7 +157,7 @@
               "operator": "AND",
               "predicates": [
                 {
-                  "key": "host.hostname",
+                  "key": "[[hostKey]]",
                   "operator": "EQUALS",
                   "values": [
                     "[[hostValue]]"
