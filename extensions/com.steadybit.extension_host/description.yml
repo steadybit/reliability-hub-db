@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_host
-label: Host
-description: A Steadybit extension to discover hosts and attack them.
+label: Linux Host
+description: A Steadybit extension to discover linux hosts and attack them.
 icon: |
   <svg viewBox="0 0 24 24"
     fill="none"
