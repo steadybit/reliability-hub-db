@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/host-linux.snippet.latency-progressively
+maintainer: com.steadybit

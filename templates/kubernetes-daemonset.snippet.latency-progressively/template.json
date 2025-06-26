@@ -1,7 +1,7 @@
 {
   "id": "0197a714-9e18-784a-8984-1998e5e0150a",
   "templateTitle": "Latency progressively increases for Kubernetes DaemonSet",
-  "templateDescription": "Latency a Kubernetes DaemonSet progressively increases to analyse at which point the communication breaks.\n\n### Structure\nWe start by adding a `250ms` latency on the Kubernetes DaemonSet's outgoing traffic for `30 seconds`. Next, we stepwise increase the latency to `500ms`, `750ms`, and `1s` - each for `30 seconds`. In between, we have small wait steps to ease analysis in external observability tools for each phase.",
+  "templateDescription": "Latency of a Kubernetes DaemonSet progressively increases to analyse at which point the communication breaks.\n\n### Structure\nWe start by adding a `250ms` latency on the Kubernetes DaemonSet's outgoing traffic for `30 seconds`. Next, we stepwise increase the latency to `500ms`, `750ms`, and `1s` - each for `30 seconds`. In between, we have small wait steps to ease analysis in external observability tools for each phase.",
   "placeholders": [
     {
       "key": "k8sDaemonset",

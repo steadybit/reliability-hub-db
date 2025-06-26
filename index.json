@@ -1,5 +1,5 @@
 {
-    "lastChange": 1750855272,
+    "lastChange": 1750927083,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -26,6 +26,10 @@
         "/templates/db.unavailable/template.json",
         "/templates/dynatrace.problem-check-pod-crashloop/template.json",
         "/templates/grafana.alerts-on-pod-crash-loop/template.json",
+        "/templates/host-linux.snippet.fill-memory-progressively/template.json",
+        "/templates/host-linux.snippet.latency-progressively/template.json",
+        "/templates/host-linux.snippet.stress-cpu/template.json",
+        "/templates/host-windows.snippet.latency-progressively/template.json",
         "/templates/instana.event-check-pod-crashloop/template.json",
         "/templates/kubernetes-daemonset.snippet.block-traffic/template.json",
         "/templates/kubernetes-daemonset.snippet.fill-memory-progressively/template.json",
