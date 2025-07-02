@@ -21,6 +21,13 @@ export interface DockerHub {
   repository: string;
 }
 
+export interface S3Registry {
+  owner: string;
+  registry: string;
+  package: string;
+  icon: string;
+}
+
 export interface GitHubContainerRegistry {
   owner: string;
   repository: string;
@@ -40,6 +47,7 @@ export interface ExtensionDescription {
   dockerHub?: DockerHub;
   // will result in Docker statistics presentation
   ghcr?: GitHubContainerRegistry;
+  s3Registry?: S3Registry;
   homepage?: string;
   installation?: string;
   changelog?: string;

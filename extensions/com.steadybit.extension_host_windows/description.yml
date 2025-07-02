@@ -11,9 +11,11 @@ license: MIT
 gitHub:
   owner: steadybit
   repository: extension-host-windows
-ghcr:
+s3Registry:
+  icon: windows 
   owner: steadybit
-  repository: extension-host-windows
+  registry: windows-registry
+  package: steadybit-extension-host-windows
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_host_windows
 beta: true
 releaseDate: '2025-05-30'
