@@ -2,9 +2,35 @@
 
 You can use the nginx ingress delay traffic action to delay all traffic to a specific HTTP path / HTTP Method / HTTP Headers in the ingress controller for a given time. This is useful for testing how your application behaves when specific endpoints are slowly reachable.
 
+# Requirements
+
+**Important**: This action has two main requirements:
+
+## 1. Enable Snippets on NGINX Ingress Controller
+
+Snippets must be enabled on your NGINX Ingress Controller. This can be done by:
+- Adding `--enable-snippets` to the controller arguments
+- Or setting the `enable-snippets` ConfigMap option to `true`
+- Or for NGINX Ingress Operator: `kubectl patch NginxIngress nginxingress-controller -n nginx-ingress --type=merge -p '{"spec":{"controller":{"enableSnippets":true}}}'`
+
+## 2. Install Custom NGINX Module
+
+This action requires a custom NGINX module (`ngx_steadybit_sleep_module`) to be installed in your NGINX Ingress Controller. The module provides the `sb_sleep_ms` directive that enables artificial delays in HTTP request processing.
+
+The module must be:
+1. Built and installed in your NGINX Ingress Controller image
+2. Loaded in the nginx.conf via one of these methods:
+   - Add `load_module modules/ngx_steadybit_sleep_module.so;` directly to nginx.conf
+   - Or use ConfigMap: `kubectl patch configmap nginxingress-controller-nginx-ingress -n nginx-ingress --type=merge -p '{"data":{"main-snippets":"load_module /usr/lib/nginx/modules/ngx_steadybit_sleep_module.so;"}}'`
+3. Compatible with your NGINX Ingress Controller version
+
+For more information and build instructions, see the [nginx_steadybit_module repository](https://github.com/steadybit/nginx_steadybit_module).
+
 # Use Cases
 
 * Understand how your services behave under network latency
+* Test application resilience under slow network conditions
+* Simulate specific endpoint performance issues
 
 # Usage
 

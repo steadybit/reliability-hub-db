@@ -2,6 +2,13 @@
 
 You can use the nginx ingress block traffic action to block all traffic to a specific HTTP path / HTTP Method / HTTP Headers in the ingress controller by returning a specific HTTP status code. This is useful for testing how your application behaves when specific endpoints are not reachable.
 
+# Requirements
+
+**Important**: Snippets must be enabled on your NGINX Ingress Controller. This can be done by:
+- Adding `--enable-snippets` to the controller arguments
+- Or setting the `enable-snippets` ConfigMap option to `true`
+- Or for NGINX Ingress Operator: `kubectl patch NginxIngress nginxingress-controller -n nginx-ingress --type=merge -p '{"spec":{"controller":{"enableSnippets":true}}}'`
+
 # Use Cases
 
 * Test application resilience when specific endpoints are unavailable
