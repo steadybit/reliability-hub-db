@@ -1,0 +1,20 @@
+# Introduction
+
+Use this action to up or downscale a Kubernetes ReplicaSet.
+The attack scales the ReplicaSet to the specified replica count at the beginning of the attack and rolls it back to the old replica count whenever the attack stops.
+Intermediate changes of the replica count, i.e., by third-party tools, don't cause a re-scaling by the attack.
+
+# Use Cases
+- Verify that your ReplicaSet is successfully scaled up and the new pod is taken into account by your load balancer
+- Check how long it takes to scale your ReplicaSet to a desirable amount of pods
+
+# Parameters
+
+| Name          | Required | Description                            | Default |
+|---------------|----------|----------------------------------------|---------|
+| Duration      | true     | How long should the new scale be used? | 180s    |
+| Replica Count | true     | The desired replica count              | 1       |
+
+# Rollback
+
+The old desired replica count will be restored after the action has ended.
