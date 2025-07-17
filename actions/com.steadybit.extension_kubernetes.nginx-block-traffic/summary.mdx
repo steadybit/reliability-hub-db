@@ -15,6 +15,10 @@ You can use the nginx ingress block traffic action to block all traffic to a spe
 * Simulate partial service outages
 * Block specific clients identified by HTTP headers
 
+# Usage
+
+You can *not* apply the nginx delay and block actions to the same ingress resource at the same time.
+
 # Rollback
 
 The annotation made to the ingress resource will be removed automatically after the action is finished. If you want to rollback manually, you can look for the annotation `nginx.ingress.kubernetes.io/configuration-snippet` (or `nginx.org/server-snippets` for Enterprise NGINX) in the ingress resource and remove the parts that are surrounded by `# BEGIN STEADYBIT -` and `# END STEADYBIT -`. The steadybit parts in the annotation will be removed automatically after the action is finished.
