@@ -1,5 +1,5 @@
 {
-    "lastChange": 1752754512,
+    "lastChange": 1753274044,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -201,6 +201,8 @@
         "/actions/com.steadybit.extension_kubernetes.haproxy-block-traffic/description.yml",
         "/actions/com.steadybit.extension_kubernetes.haproxy-delay-traffic/description.yml",
         "/actions/com.steadybit.extension_kubernetes.kubernetes_logs/description.yml",
+        "/actions/com.steadybit.extension_kubernetes.nginx-block-traffic/description.yml",
+        "/actions/com.steadybit.extension_kubernetes.nginx-delay-traffic/description.yml",
         "/actions/com.steadybit.extension_kubernetes.node_count_check/description.yml",
         "/actions/com.steadybit.extension_kubernetes.pod_count_check_daemonset/description.yml",
         "/actions/com.steadybit.extension_kubernetes.pod_count_check_replicaset/description.yml",
@@ -223,5 +225,34 @@
         "/actions/com.steadybit.extension_splunk.detector.check/description.yml",
         "/actions/com.steadybit.extension_splunk.slo.check/description.yml",
         "/actions/com.steadybit.extension_stackstate.service.check/description.yml"
+    ],
+    "extensions": [
+        "/extensions/com.steadybit.extension_appdynamics/description.yml",
+        "/extensions/com.steadybit.extension_aws/description.yml",
+        "/extensions/com.steadybit.extension_azure/description.yml",
+        "/extensions/com.steadybit.extension_container/description.yml",
+        "/extensions/com.steadybit.extension_datadog/description.yml",
+        "/extensions/com.steadybit.extension_dynatrace/description.yml",
+        "/extensions/com.steadybit.extension_gatling/description.yml",
+        "/extensions/com.steadybit.extension_gcp/description.yml",
+        "/extensions/com.steadybit.extension_grafana/description.yml",
+        "/extensions/com.steadybit.extension_host_windows/description.yml",
+        "/extensions/com.steadybit.extension_host/description.yml",
+        "/extensions/com.steadybit.extension_http/description.yml",
+        "/extensions/com.steadybit.extension_instana/description.yml",
+        "/extensions/com.steadybit.extension_istio/description.yml",
+        "/extensions/com.steadybit.extension_jenkins/description.yml",
+        "/extensions/com.steadybit.extension_jmeter/description.yml",
+        "/extensions/com.steadybit.extension_jvm/description.yml",
+        "/extensions/com.steadybit.extension_k6/description.yml",
+        "/extensions/com.steadybit.extension_kafka/description.yml",
+        "/extensions/com.steadybit.extension_kong/description.yml",
+        "/extensions/com.steadybit.extension_kubernetes/description.yml",
+        "/extensions/com.steadybit.extension_newrelic/description.yml",
+        "/extensions/com.steadybit.extension_postman/description.yml",
+        "/extensions/com.steadybit.extension_prometheus/description.yml",
+        "/extensions/com.steadybit.extension_splunk_platform/description.yml",
+        "/extensions/com.steadybit.extension_splunk/description.yml",
+        "/extensions/com.steadybit.extension_stackstate/description.yml"
     ]
 }
