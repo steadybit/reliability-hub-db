@@ -1,7 +1,7 @@
 {
   "id": "0363a90e-9563-494c-bd25-81da6e4c3d43",
   "templateTitle": "Unavailable downstream service doesn't result in user-visible errors",
-  "templateDescription": "Verify that an unavailable downstream service doesn't result in user-visible errors.\n\n## Motivation\n\nWhen offering a service that is dependent on downstream services, you should ensure that the offered service also works fine whenever one of the downstream services can't be reached. This is especially true when multiple downstream services are involved and the responses of each downstream service are considered optional.\n\n## Structure\n\nFor the duration of the experiment and the deployment's upscaling, verify that a user-visible endpoint offered is responding within expected success rates and that no monitors are alerting.\nAs soon as the deployment is scaled up, the newly scheduled pod should be ready to receive traffic within a reasonable time, e.g., 60 seconds.\n\n## Read more\nThis experiment template is used in our quick start on running an experiment and is especially useful for the shopping demo example. To learn more, check out the [quick start in the Steadybit docs](https://docs.steadybit.com/quick-start/run-experiment).",
+  "templateDescription": "Verify that an unavailable downstream service doesn't result in user-visible errors.\n\n## Motivation\n\nWhen offering a service that is dependent on downstream services, you should ensure that the offered service also works fine whenever one of the downstream services can't be reached. This is especially true when multiple downstream services are involved and the responses of each downstream service are considered optional.\n\n## Structure\n\nFirst, we validate that the HTTP endpoint of the upstream service is working as expected. Then, we block the traffic of the downstream service and expect that the HTTP endpoint will still work within the expected success rate.\n\n\n\n## Read more\nThis experiment template is used in our quick start on running an experiment and is especially useful for the shopping demo example. To learn more, check out the [quick start in the Steadybit docs](https://docs.steadybit.com/quick-start/run-experiment).",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -21,7 +21,7 @@
     {
       "key": "httpUpstreamEndpoint",
       "name": "HTTP Upstream Endpoint",
-      "description": "### What is the URL of an **HTTP endpoint** served by **the upstream** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
+      "description": "### What is the URL of an **HTTP endpoint** served by **an upstream** Kubernetes deployment that results in requests to the blocked downstream Kubernetes deployment specified before?\nWe will block one pod of the Kubernetes deployment specified before and want to verify whether an HTTP endpoint, which requires the blocked Kubernetes deployment as a downstream service, is failing gracefully."
     },
     {
       "key": "httpSuccessRate",
@@ -160,7 +160,7 @@
               ]
             },
             "query": null,
-            "percentage": 100
+            "maximum": 1
           }
         },
         {
