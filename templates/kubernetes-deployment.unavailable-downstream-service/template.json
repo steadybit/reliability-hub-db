@@ -129,7 +129,7 @@
             "port": [],
             "ip": []
           },
-          "customLabel": "WHEN: One pod of [[k8sDeployment]] can't be reached",
+          "customLabel": "WHEN: All pods of [[k8sDeployment]] can't be reached",
           "actionType": "com.steadybit.extension_container.network_blackhole",
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
@@ -160,7 +160,7 @@
               ]
             },
             "query": null,
-            "maximum": 1
+            "percentage": 100
           }
         },
         {
@@ -221,7 +221,7 @@
             "duration": "30s",
             "podCountCheckMode": "podCountLessThanDesiredCount"
           },
-          "customLabel": "THEN: One Pod of [[k8sDeployment]] is detected as down",
+          "customLabel": "THEN: [[k8sDeployment]] is detected as down",
           "actionType": "com.steadybit.extension_kubernetes.pod_count_check",
           "radius": {
             "targetType": "com.steadybit.extension_kubernetes.kubernetes-deployment",
