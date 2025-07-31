@@ -2,6 +2,11 @@
 
 With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [num.io.threads](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#num-io-threads).
 
+# Details
+
+Kafka restricts large changes to its current configuration. If the requested number of network threads falls outside the permissible range,
+the extension applies intermediate adjustments incrementally until the target value is achieved.
+
 # Use Cases
 
  - Limit  I/O threads to reduce the broker’s capacity to perform disk operations, potentially causing increased latency or request timeouts.
