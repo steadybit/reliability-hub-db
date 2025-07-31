@@ -10,6 +10,7 @@ kind: attack
 category: application
 targetType: com.steadybit.extension_azure.azure_functions
 extension: com.steadybit.extension_azure
+releaseDate: '2025-07-01'
 tags:
   - Azure 
   - Azure Functions 
