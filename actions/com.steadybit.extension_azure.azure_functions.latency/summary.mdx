@@ -1,0 +1,24 @@
+# Introduction
+
+This action leverages [steadybit/failure-azure-functions-net](https://github.com/steadybit/failure-azure-functions-net) and the Azure App Configuration to inject latency into an Azure Function.
+
+# Use Cases
+
+- Understand how a azure function behaves when it experiences latency.
+
+# Prerequisites
+
+Azure Function must be using v4 isolated worker model and .NET 8 or higher.
+
+Azure Function must [be wrapped with the Steadybit Injection Middleware](https://github.com/steadybit/failure-azure-functions-net).
+
+Please note that multiple parallel failure injections on the same azure function are not supported.
+
+# Parameters
+
+| Parameter       | Description                                                                       | Default |
+| --------------- | --------------------------------------------------------------------------------- | ------- |
+| Duration        | The duration of the attack.                                                       | 30s     |
+| Rate            | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
+| Minimum Latency | Minimum latency to inject.                                                        | 500ms   |
+| Maximum Latency | Maximum latency to inject.                                                        | 500ms   |
