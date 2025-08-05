@@ -16,7 +16,7 @@
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "### Which Kubernetes deployment is running on the node you want to drain, and you want to emsure it is rescheduled within a reasonable time?"
+      "description": "### Which Kubernetes deployment is running on the node you want to drain, and you want to ensure it is rescheduled within a reasonable time?"
     },
     {
       "key": "k8sDeploymentRecoveryTime",

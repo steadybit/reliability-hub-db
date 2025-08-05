@@ -16,7 +16,7 @@
     {
       "key": "k8sDeployment",
       "name": "Kubernetes Deployment",
-      "description": "### Which Kubernetes deployment should have one of its pods deleted, and you want to emsure it is rescheduled within a reasonable time?"
+      "description": "### Which Kubernetes deployment should have one of its pods deleted, and you want to ensure it is rescheduled within a reasonable time?"
     },
     {
       "key": "k8sDeploymentRecoveryTime",
