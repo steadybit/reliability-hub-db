@@ -1,0 +1,5 @@
+license: MIT
+gitHub:
+  owner: steadybit
+  repository: reliability-hub-db/tree/main/templates/host-windows.snippet.fill-memory-progressively
+maintainer: com.steadybit

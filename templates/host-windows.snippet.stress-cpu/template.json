@@ -1,0 +1,172 @@
+{
+  "id": "01989de1-4ea6-78ca-81f1-974efeeee442",
+  "templateTitle": "Stress CPU progressively of a Windows Host",
+  "templateDescription": "Stress the CPU of a host progressively to see at which percentage it becomes unstable. Additionally, you may want to add one of our observability checks.\n\n### Structure\nWe start by stressing `50%` of the host's CPU for `30 seconds`. Next, we stepwise stress the CPU by `75%`, `90%`, and `100%` - each for `30 seconds`. In between, we have small wait steps to ease analysis in external observability tools for each phase.",
+  "placeholders": [
+    {
+      "key": "hostKey",
+      "name": "Host's Attribute Key",
+      "description": "### By which attribute's key, do you want to identify the targeted host?\nYou can choose which attribute describes your targeted host the best. For instance, `host.hostname`, or the `host.ipv4`. When attacking a node in Kubernetes, you can also choose Kubernetes attributes like `k8s.cluster-name`, or `k8s.deployment`."
+    },
+    {
+      "key": "hostValue",
+      "name": "Host's Attribute Value",
+      "description": "### By which attribute's value, do you want to identify the targeted host?\nWe'll attack the same Host, identified by the previously defined attribute's key, with the following configuration:\n\n- `30 seconds` for `50%` CPU stress\n- `30 seconds` for `75%` CPU stress\n- `30 seconds` for `90%` CPU stress\n- `30 seconds` for `100%` CPU stress"
+    }
+  ],
+  "tags": [
+    "Progressive",
+    "Legacy",
+    "VM",
+    "CPU",
+    "Host",
+    "Snippet",
+    "Windows"
+  ],
+  "experimentName": "Stress CPU progressively of Host ([[hostKey]]=[[hostValue]])",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "cpuLoad": "50",
+            "cores": 0,
+            "priority": "Normal"
+          },
+          "customLabel": "Stress 50% CPU of Host",
+          "actionType": "com.steadybit.extension_host_windows.stress-cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_host_windows.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "[[hostKey]]",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[hostValue]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "cpuLoad": "75",
+            "cores": 0,
+            "priority": "Normal"
+          },
+          "customLabel": "Stress 75% CPU of Host",
+          "actionType": "com.steadybit.extension_host_windows.stress-cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_host_windows.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "[[hostKey]]",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[hostValue]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "cpuLoad": "90",
+            "cores": 0,
+            "priority": "Normal"
+          },
+          "customLabel": "Stress 90% CPU of Host",
+          "actionType": "com.steadybit.extension_host_windows.stress-cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_host_windows.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "[[hostKey]]",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[hostValue]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        },
+        {
+          "type": "wait",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "10s"
+          }
+        },
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "cpuLoad": "100",
+            "cores": 0,
+            "priority": "Normal"
+          },
+          "customLabel": "Stress 100% CPU of Host",
+          "actionType": "com.steadybit.extension_host_windows.stress-cpu",
+          "radius": {
+            "targetType": "com.steadybit.extension_host_windows.host",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "[[hostKey]]",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[hostValue]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "percentage": 100
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {},
+  "propertiesMetadata": []
+}
