@@ -1,17 +1,17 @@
 {
-  "id": "19c0d7ae-c3a7-44ba-9892-1dff8f665deb",
-  "templateTitle": "Certificate TLS/SSL expiry for Linux Hosts",
-  "templateDescription": "Turn time forward and check whether your TLS/SSL certificates are valid.\n\n## Motivation\n\nNoticing the TLS/SSL certification expiry too late is one problem you can easily avoid by frequently checking your expiry dates. While observability tools already handle this job nicely, you can't know whether they are working in your environment.\nWith this experiment, you can turn the time forward to check whether your HTTPS endpoint works at a given date in the future. Additionally, you can configure one of the [observability integrations](https://hub.steadybit.com/extensions?tags=Observability) to validate your observability tool's alerting.\n\n## Structure\nFirst, we validate that the given HTTPS endpoint is working today. Next, we will travel with the Linux host in time to validate that the HTTPS endpoint continues to work on a given date. If the TLS/SSL certificate has already expired at that date, the HTTP check will throw failures.\n\n## Warning\nPlease be aware that we will manipulate the time for a given Linux host. Applications running at that Linux host may struggle to deal with the change in the clock correctly, and you may experience other side effects.",
+  "id": "01989d97-8f6b-7d2b-8ea2-98c3fc9eb7ec",
+  "templateTitle": "Certificate TLS/SSL expiry for Windows Hosts",
+  "templateDescription": "Turn time forward and check whether your TLS/SSL certificates are valid.\n\n## Motivation\n\nNoticing the TLS/SSL certification expiry too late is one problem you can easily avoid by frequently checking your expiry dates. While observability tools already handle this job nicely, you can't know whether they are working in your environment.\nWith this experiment, you can turn the time forward to check whether your HTTPS endpoint works at a given date in the future. Additionally, you can configure one of the [observability integrations](https://hub.steadybit.com/extensions?tags=Observability) to validate your observability tool's alerting.\n\n## Structure\nFirst, we validate that the given HTTPS endpoint is working today. Next, we will travel with the Windows host in time to validate that the HTTPS endpoint continues to work on a given date. If the TLS/SSL certificate has already expired at that date, the HTTP check will throw failures.\n\n## Warning\nPlease be aware that we will manipulate the time for a given Windows host. Applications running at that Windows host may struggle to deal with the change in the clock correctly, and you may experience other side effects.",
   "placeholders": [
     {
       "key": "httpEndpoint",
       "name": "Secured HTTP Endpoint",
-      "description": "### What is the secured HTTP endpoint URL that should still work in the future?\nThe HTTP endpoint should be secured with an SSL certificate to validate the certificate expiry.\nWe will perform requests before and while changing a Linux host's time to validate that this endpoint works fine today and in the future and that the SSL certificate hasn't expired."
+      "description": "### What is the secured HTTP endpoint URL that should still work in the future?\nThe HTTP endpoint should be secured with an SSL certificate to validate the certificate expiry.\nWe will perform requests before and while changing a host's time to validate that this endpoint works fine today and in the future and that the SSL certificate hasn't expired."
     },
     {
       "key": "hostname",
-      "name": "Linux Host Providing HTTP Endpoint",
-      "description": "### What is the hostname of the Linux host providing the secured HTTP endpoint?"
+      "name": "Windows Host Providing HTTP Endpoint",
+      "description": "### What is the hostname of the Windows host providing the secured HTTP endpoint?"
     },
     {
       "key": "expiration",
@@ -20,9 +20,9 @@
     }
   ],
   "tags": [
-    "Certificate Expiry",
     "Host",
-    "Linux"
+    "Windows",
+    "Certificate Expiry"
   ],
   "experimentName": "TLS/SSL Certificate doesn't expire within next [[expiration]] for [[hostname]]",
   "hypothesis": "When a host's time is +[[expiration]], the secured HTTP endpoint still works and no certificates are expired.",
@@ -44,12 +44,16 @@
             "followRedirects": false,
             "readTimeout": "5s",
             "connectTimeout": "5s",
+            "insecureSkipVerify": "false",
             "responseTimeMode": "NO_VERIFICATION",
             "statusCode": "200-299"
           },
           "customLabel": "GIVEN: HTTP requests are valid for today",
           "actionType": "com.steadybit.extension_http.check.periodically",
-          "radius": {}
+          "radius": {
+            "targetType": "com.steadybit.extension_http.client-location",
+            "maximum": 1
+          }
         },
         {
           "type": "action",
@@ -66,12 +70,16 @@
             "followRedirects": false,
             "readTimeout": "5s",
             "connectTimeout": "5s",
+            "insecureSkipVerify": "false",
             "responseTimeMode": "NO_VERIFICATION",
             "statusCode": "200-299"
           },
           "customLabel": "THEN: HTTP requests continue to be valid in +[[expiration]]",
           "actionType": "com.steadybit.extension_http.check.periodically",
-          "radius": {}
+          "radius": {
+            "targetType": "com.steadybit.extension_http.client-location",
+            "maximum": 1
+          }
         }
       ]
     },
@@ -93,9 +101,9 @@
             "disableNtp": true
           },
           "customLabel": "WHEN: Host's time is +[[expiration]]",
-          "actionType": "com.steadybit.extension_host.timetravel",
+          "actionType": "com.steadybit.extension_host_windows.timetravel",
           "radius": {
-            "targetType": "com.steadybit.extension_host.host",
+            "targetType": "com.steadybit.extension_host_windows.host",
             "predicate": {
               "operator": "AND",
               "predicates": [
@@ -114,5 +122,7 @@
         }
       ]
     }
-  ]
+  ],
+  "properties": {},
+  "propertiesMetadata": []
 }

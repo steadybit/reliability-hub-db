@@ -1,5 +1,5 @@
 license: MIT
 gitHub:
   owner: steadybit
-  repository: reliability-hub-db/tree/main/templates/certificate-expiry.host
+  repository: reliability-hub-db/tree/main/templates/certificate-expiry.host-linux
 maintainer: com.steadybit

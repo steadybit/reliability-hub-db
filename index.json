@@ -1,5 +1,5 @@
 {
-    "lastChange": 1754400924,
+    "lastChange": 1754990871,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -10,6 +10,7 @@
         "/templates/caching-redis.redis-high-latency-datadog-check/template.json",
         "/templates/caching-redis.redis-unavailable-datadog-check/template.json",
         "/templates/certificate-expiry.host-linux/template.json",
+        "/templates/certificate-expiry.host-windows/template.json",
         "/templates/certificate-expiry.kubernetes-deployment/template.json",
         "/templates/cloud.zone-outage/template.json",
         "/templates/cloud.zone-outgoing-traffic-loss/template.json",
