@@ -9,7 +9,7 @@
         "/templates/aws-zone.zone-outage/template.json",
         "/templates/caching-redis.redis-high-latency-datadog-check/template.json",
         "/templates/caching-redis.redis-unavailable-datadog-check/template.json",
-        "/templates/certificate-expiry.host/template.json",
+        "/templates/certificate-expiry.host-linux/template.json",
         "/templates/certificate-expiry.kubernetes-deployment/template.json",
         "/templates/cloud.zone-outage/template.json",
         "/templates/cloud.zone-outgoing-traffic-loss/template.json",
