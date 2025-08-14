@@ -96,7 +96,7 @@
             "reboot": false,
             "delay": "0m"
           },
-          "customLabel": "WHEN: A node is rebooted",
+          "customLabel": "WHEN: A node is shutdown",
           "actionType": "com.steadybit.extension_host.shutdown",
           "radius": {
             "targetType": "com.steadybit.extension_host.host",
