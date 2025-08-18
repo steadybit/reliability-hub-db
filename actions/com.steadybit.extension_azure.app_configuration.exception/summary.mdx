@@ -1,18 +1,26 @@
 # Introduction
 
-This action leverages [steadybit/failure-azure-functions-net](https://github.com/steadybit/failure-azure-functions-net) and the Azure App Configuration to inject an exception into an Azure Function. 
+This action leverages [steadybit/failure-azure-functions-net](https://github.com/steadybit/failure-azure-functions-net) and the Azure App Configuration to inject an exception into an Azure Function or ASP.NET application. 
 
 # Use Cases
 
-- Understand how a azure function behaves when it encounters an exception.
+- Understand how an Azure Function or ASP.NET application behaves when it encounters an exception.
 
 # Prerequisites
+
+## Azure Functions
 
 Azure Function must be using v4 isolated worker model and .NET 8 or higher.
 
 Azure Function must [be wrapped with the Steadybit Injection Middleware](https://github.com/steadybit/failure-azure-functions-net).
 
 Please note that multiple parallel failure injections on the same azure function are not supported.
+
+## ASP.NET
+
+ASP.NET application must use .NET 8 or higher.
+
+ASP.NET application must [be wrapped with the Steadybit Injection Middleware](https://github.com/steadybit/failure-azure-functions-net).
 
 # Parameters
 
