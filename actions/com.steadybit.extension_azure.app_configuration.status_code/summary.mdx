@@ -1,0 +1,31 @@
+# Introduction
+
+This action leverages [steadybit/failure-azure-functions-net](https://github.com/steadybit/failure-azure-functions-net) and the Azure App Configuration to inject status code into an Azure Function or ASP.NET application.
+
+# Use Cases
+
+- Understand how other services respond to Azure Function or ASP.NET application returning a specific status code.
+
+# Prerequisites
+
+## Azure Functions
+
+Azure Function must be using v4 isolated worker model and .NET 8 or higher.
+
+Azure Function must [be wrapped with the Steadybit Injection Middleware](https://github.com/steadybit/failure-azure-functions-net).
+
+Please note that multiple parallel failure injections on the same azure function are not supported.
+
+## ASP.NET
+
+ASP.NET application must use .NET 8 or higher.
+
+ASP.NET application must [be wrapped with the Steadybit Injection Middleware](https://github.com/steadybit/failure-azure-functions-net).
+
+# Parameters
+
+| Parameter   | Description                                                                       | Default |
+| ----------- | --------------------------------------------------------------------------------- | ------- |
+| Duration    | The duration of the attack.                                                       | 30s     |
+| Rate        | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
+| Status Code | The status code to return.                                                        | 500     |
