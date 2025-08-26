@@ -11,7 +11,7 @@ icon: |
     />
   </svg>
 kind: attack
-category: kubernetes
+category: network
 targetType: com.steadybit.extension_istio.virtual_service
 extension: com.steadybit.extension_istio
 tags:
