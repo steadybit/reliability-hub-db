@@ -1,5 +1,5 @@
 {
-    "lastChange": 1755157042,
+    "lastChange": 1756980899,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -114,6 +114,11 @@
         "/actions/com.steadybit.extension_aws.rds.cluster.failover/description.yml",
         "/actions/com.steadybit.extension_aws.rds.instance.reboot/description.yml",
         "/actions/com.steadybit.extension_aws.rds.instance.stop/description.yml",
+        "/actions/com.steadybit.extension_azure.app_configuration.exception/description.yml",
+        "/actions/com.steadybit.extension_azure.app_configuration.fill_disk/description.yml",
+        "/actions/com.steadybit.extension_azure.app_configuration.latency/description.yml",
+        "/actions/com.steadybit.extension_azure.app_configuration.status_code/description.yml",
+        "/actions/com.steadybit.extension_azure.network_security_groups.block_hosts/description.yml",
         "/actions/com.steadybit.extension_azure.scale_set.instance.state/description.yml",
         "/actions/com.steadybit.extension_azure.vm.state/description.yml",
         "/actions/com.steadybit.extension_container.fill_disk/description.yml",

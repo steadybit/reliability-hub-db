@@ -108,9 +108,7 @@
             "duration": "50s",
             "failOnHostNetwork": true,
             "hostname": [],
-            "port": [
-              "[[KafkaBrokerPorts]]"
-            ],
+            "port": "[[KafkaBrokerPorts]]",
             "ip": []
           },
           "customLabel": "Simulating Brokers unavailable",
