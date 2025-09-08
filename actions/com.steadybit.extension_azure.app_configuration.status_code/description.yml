@@ -11,6 +11,7 @@ category: application
 targetType: com.steadybit.extension_azure.app_configuration
 extension: com.steadybit.extension_azure
 releaseDate: '2025-07-01'
+beta: true
 tags:
   - Azure 
   - Azure Functions 
