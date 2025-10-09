@@ -1,5 +1,5 @@
 {
-    "lastChange": 1758794577,
+    "lastChange": 1760016678,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -59,6 +59,7 @@
         "/templates/kubernetes-deployment.unavailable-downstream-service/template.json",
         "/templates/kubernetes-node.drain-node/template.json",
         "/templates/kubernetes-nodes.node-shutdown/template.json",
+        "/templates/kubernetes-pod.snippet.block-traffic/template.json",
         "/templates/kubernetes-probes.liveness-readiness/template.json",
         "/templates/kubernetes-statefulset.keep-pods-down/template.json",
         "/templates/kubernetes-statefulset.snippet.block-traffic/template.json",

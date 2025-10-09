@@ -1,0 +1,71 @@
+{
+  "id": "0199c923-aca4-722a-8d21-a71c38473223",
+  "templateTitle": "Block Traffic of Kubernetes Pod",
+  "templateDescription": "Learn how easy you can block traffic of a random pod of a Kubernetes workload (deployment, StatefulSet, DaemonSet).",
+  "placeholders": [
+    {
+      "key": "k8sDeployment",
+      "name": "Kubernetes Deployment",
+      "description": "### What is the Kubernetes deployment under test?\nWe'll pick one random pod of this deployment and attack all containers of this pod."
+    },
+    {
+      "key": "k8sWorkloadOwner",
+      "name": "Kubernetes Workload Owner",
+      "description": "### What is the Kubernetes workload under test?\nWe'll attack all containers of one random pod, owned by the workload owner (deployment, StatefulSet, DaemonSet)."
+    }
+  ],
+  "tags": [
+    "Pod",
+    "Deployment",
+    "DaemonSet",
+    "Snippet",
+    "Starter",
+    "StatefulSet",
+    "Block Traffic",
+    "Kubernetes"
+  ],
+  "experimentName": "Block Traffic of Kubernetes Pod of [[k8sWorkloadOwner]]",
+  "lanes": [
+    {
+      "steps": [
+        {
+          "type": "action",
+          "ignoreFailure": false,
+          "parameters": {
+            "duration": "30s",
+            "failOnHostNetwork": true,
+            "hostname": [],
+            "port": [],
+            "ip": []
+          },
+          "customLabel": "WHEN: Blocking all traffic of one pod of [[k8sWorkloadOwner]]",
+          "actionType": "com.steadybit.extension_container.network_blackhole",
+          "radius": {
+            "targetType": "com.steadybit.extension_container.container",
+            "predicate": {
+              "operator": "AND",
+              "predicates": [
+                {
+                  "key": "k8s.workload-owner",
+                  "operator": "EQUALS",
+                  "values": [
+                    "[[k8sWorkloadOwner]]"
+                  ]
+                }
+              ]
+            },
+            "query": null,
+            "advanced": [
+              {
+                "attribute": "k8s.pod.name",
+                "value": "1#"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {},
+  "propertiesMetadata": []
+}
