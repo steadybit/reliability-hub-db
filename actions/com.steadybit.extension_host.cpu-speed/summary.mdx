@@ -1,0 +1,21 @@
+# Introduction
+
+Dynamically adjust the CPU frequency limits across all cores for a specified duration.
+
+# Prerequisites
+
+This feature is only supported on bare-metal hosts that expose CPU configuration interfaces under  
+`/sys/devices/system/cpu`.
+
+# Use Cases
+
+- Evaluate application performance under varying CPU frequencies.
+- Simulate CPU throttling scenarios caused by thermal or power constraints.
+
+# Parameters
+
+| Parameter                   | Description                                                                                       | Default |
+|-----------------------------|---------------------------------------------------------------------------------------------------|---------|
+| Minimum CPU Frequency (MHz) | Specifies the minimum CPU frequency (in MHz). Must be within the supported range of the host CPU. | 1000    |
+| Maximum CPU Frequency (MHz) | Specifies the maximum CPU frequency (in MHz). Must be within the supported range of the host CPU. | 2000    |
+| Duration                    | Defines how long the CPU frequency limits remain in effect.                                       | 60s     |

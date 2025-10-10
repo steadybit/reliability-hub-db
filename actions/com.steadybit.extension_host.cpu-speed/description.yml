@@ -1,0 +1,15 @@
+---
+id: com.steadybit.extension_host.cpu-speed
+label: Change CPU Frequency
+description: Changes the CPU frequency limits for all cores
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17.25.75a.75.75 0 0 1 .75.75V3h.75A2.25 2.25 0 0 1 21 5.25V6h1.5a.75.75 0 0 1 0 1.5H21v3.75h1.5a.75.75 0 0 1 0 1.5H21v3.75h1.5a.75.75 0 0 1 0 1.5H21v.75A2.25 2.25 0 0 1 18.75 21H18v1.5a.75.75 0 0 1-1.5 0V21h-3.75v1.5a.75.75 0 0 1-1.5 0V21H7.5v1.5a.75.75 0 0 1-1.5 0V21h-.75A2.25 2.25 0 0 1 3 18.75V18H1.5a.75.75 0 0 1 0-1.5H3v-3.75H1.5a.75.75 0 0 1 0-1.5H3V7.5H1.5a.75.75 0 0 1 0-1.5H3v-.75A2.25 2.25 0 0 1 5.25 3H6V1.5a.75.75 0 0 1 1.5 0V3h3.75V1.5a.75.75 0 0 1 1.5 0V3h3.75V1.5a.75.75 0 0 1 .75-.75Zm-12 3.75a.75.75 0 0 0-.75.75v13.5c0 .414.336.75.75.75h13.5a.75.75 0 0 0 .75-.75V5.25a.75.75 0 0 0-.75-.75H5.25ZM10.438 7c.254.004.479.165.563.405l2.648 7.53 1.324-2.447a.606.606 0 0 1 .533-.317h2.538a.606.606 0 1 1 0 1.213h-2.177l-1.802 3.33a.608.608 0 0 1-1.105-.086l-2.555-7.26-1.384 3.625a.607.607 0 0 1-.566.39H5.916a.607.607 0 0 1 0-1.212h2.121L9.862 7.39a.607.607 0 0 1 .575-.39Z"/></svg>
+kind: attack
+category: resource
+targetType: com.steadybit.extension_host.host
+extension: com.steadybit.extension_host
+releaseDate: '2025-10-10'
+tags:
+  - Host
+  - CPU
+  - Frequency
