@@ -1,21 +1,28 @@
 # Introduction
 
-This action leverages [steadybit/failure-lambda](https://github.com/steadybit/failure-lambda) and the AWS Systems Manager API to deny connections to other hosts for an AWS Lambda.
-
-# Use Cases
-
-- Understand how a lambda behaves when an external dependency is unavailable.
+This action injects network failures by blocking outbound connections to specified hosts during AWS Lambda function execution.
 
 # Prerequisites
 
-The AWS Lambda Function to attack must [be wrapped with the failure-lambda library](https://github.com/steadybit/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
+- The target AWS Lambda function must [be wrapped with the failure-lambda library](https://github.com/steadybit/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
+- Only one failure injection can be active per Lambda function at a time
 
-Please note that multiple parallel failure injections on the same lambda function are not supported.
+# Details
+
+This action uses the [steadybit/failure-lambda](https://github.com/steadybit/failure-lambda) library, a Node.js module that wraps AWS Lambda handlers to enable failure injection.
+Failure modes are configured via parameters stored in AWS Systems Manager Parameter Store, which are automatically removed after execution completes.
+
+Activation and deactivation of failure modes typically complete within 5 seconds. However, middleware layers or caching mechanisms may extend this duration during both injection and recovery phases.
+
+# Use Cases
+
+- Validate Lambda function behavior and error handling when external dependencies become unreachable
+- Test resilience patterns such as circuit breakers, retries, and fallback mechanisms
 
 # Parameters
 
-| Parameter | Description                                                                       | Default |
-| --------- | --------------------------------------------------------------------------------- | ------- |
-| Duration  | The duration of the attack.                                                       | 30s     |
-| Rate      | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
-| Deny List | List of regular expressions to match the hosts against                            |         |
+| Parameter | Description                                                           | Default |
+|-----------|-----------------------------------------------------------------------|---------|
+| Duration  | Duration of the attack                                                | 30s     |
+| Rate      | Percentage of invocations affected (100 = all invocations, 50 = half) | 100%    |
+| Deny List | Regular expressions matching hosts to block                           |         |

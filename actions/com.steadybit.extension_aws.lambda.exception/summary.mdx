@@ -1,21 +1,28 @@
 # Introduction
 
-This action leverages [steadybit/failure-lambda](https://github.com/steadybit/failure-lambda) and the AWS Systems Manager API to inject exceptions into AWS Lambdas.
-
-# Use Cases
-
-- Understand how other (e.g. upstream services, monitoring) behaves when the lambda is returning a failure.
+This action injects exceptions into AWS Lambdas function executions.
 
 # Prerequisites
 
-The AWS Lambda Function to attack must [be wrapped with the failure-lambda library](https://github.com/steadybit/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
+- The target AWS Lambda function must [be wrapped with the failure-lambda library](https://github.com/steadybit/failure-lambda#how-to-install-with-parameter-in-ssm-parameter-store).
+- Only one failure injection can be active per Lambda function at a time
 
-Please note that multiple parallel failure injections on the same lambda function are not supported.
+# Details
+
+This action uses the [steadybit/failure-lambda](https://github.com/steadybit/failure-lambda) library, a Node.js module that wraps AWS Lambda handlers to enable failure injection.
+Failure modes are configured via parameters stored in AWS Systems Manager Parameter Store, which are automatically removed after execution completes.
+
+Activation and deactivation of failure modes typically complete within 5 seconds. However, middleware layers or caching mechanisms may extend this duration during both injection and recovery phases.
+
+# Use Cases
+
+- Validate behavior of upstream services and monitoring systems when Lambda functions return errors
+- Test error propagation and handling across distributed systems
 
 # Parameters
 
-| Parameter | Description                                                                       | Default |
-| --------- | --------------------------------------------------------------------------------- | ------- |
-| Duration  | The duration of the attack.                                                       | 30s     |
-| Rate      | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
-| Message   | Message of the thrown exception                                                   |         |
+| Parameter | Description                                                           | Default |
+|-----------|-----------------------------------------------------------------------|---------|
+| Duration  | Duration of the attack                                                | 30s     |
+| Rate      | Percentage of invocations affected (100 = all invocations, 50 = half) | 100%    |
+| Message   | Exception message thrown during execution                             |         |
