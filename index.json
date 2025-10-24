@@ -1,5 +1,5 @@
 {
-    "lastChange": 1760016678,
+    "lastChange": 1761311000,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -160,6 +160,7 @@
         "/actions/com.steadybit.extension_host_windows.stress-cpu/description.yml",
         "/actions/com.steadybit.extension_host_windows.stress-io/description.yml",
         "/actions/com.steadybit.extension_host_windows.timetravel/description.yml",
+        "/actions/com.steadybit.extension_host.cpu-speed/description.yml",
         "/actions/com.steadybit.extension_host.fill_disk/description.yml",
         "/actions/com.steadybit.extension_host.fill_mem/description.yml",
         "/actions/com.steadybit.extension_host.network_bandwidth/description.yml",
@@ -264,6 +265,7 @@
         "/extensions/com.steadybit.extension_newrelic/description.yml",
         "/extensions/com.steadybit.extension_postman/description.yml",
         "/extensions/com.steadybit.extension_prometheus/description.yml",
+        "/extensions/com.steadybit.extension_rabbitmq/description.yml",
         "/extensions/com.steadybit.extension_splunk_platform/description.yml",
         "/extensions/com.steadybit.extension_splunk/description.yml",
         "/extensions/com.steadybit.extension_stackstate/description.yml"

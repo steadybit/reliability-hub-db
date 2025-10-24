@@ -1,0 +1,51 @@
+# Introduction to the RabbitMQ Extension
+
+The Steadybit RabbitMQ Extension allows you to inject chaos into RabbitMQ clusters and observe how your system behaves under stress conditions affecting queues, exchanges, nodes, and message flow.
+
+## Integration and Functionality
+
+Integration of RabbitMQ into Steadybit works via the official [RabbitMQ Management Plugin](https://www.rabbitmq.com/management.html) and its [HTTP API](https://rawcdn.githack.com/rabbitmq/rabbitmq-management/v3.12.0/priv/www/api/index.html), using the [rabbithole](https://github.com/michaelklishin/rabbit-hole) Go client library.
+
+The `extension-rabbitmq` leverages these APIs and AMQP connections to:
+- Discover clusters, nodes, vhosts and queues
+- Inspect queue metrics such as message backlog
+- Manage policies dynamically to inject constraints or change behaviors
+- Connect over AMQP(S) to simulate message producers and check message flow
+
+> Some actions and checks require **management access** and, optionally, **AMQP credentials** for interacting with queues.
+
+---
+
+## Integration of RabbitMQ in Steadybit
+
+### Discovery
+
+The RabbitMQ Extension automatically discovers:
+- **Clusters and nodes** (via management endpoints)
+- **Vhosts**
+- **Queues**, along with attributes like durability, auto-delete flags, bindings, and max length settings
+
+Each discovered resource becomes a Steadybit **target**, allowing you to apply attacks or checks.
+
+The extension supports dynamic chaos actions, including:
+
+- **Alter Queue Max Length (Policy)**
+Dynamically enforces a `max-length` limit on a queue using a temporary RabbitMQ policy.
+Useful to simulate queue overflow and message drops under constrained storage.
+
+- **Produce Messages**
+Sends messages to one or more queues at a fixed rate or in fixed quantity to simulate load and measure consumer throughput.
+
+---
+
+### Checks
+
+Monitor RabbitMQ system health or message flow:
+- **Queue Backlog Check** — Verify message number
+- **Cluster Node Check** — Detect node unavailability or unexpected cluster topology changes
+
+---
+
+## Installation and Setup
+
+To integrate the RabbitMQ extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-rabbitmq#installation).

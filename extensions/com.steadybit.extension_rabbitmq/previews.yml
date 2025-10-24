@@ -1,0 +1,10 @@
+---
+- type: image
+  src: run.png
+  alt: You can follow in near real time the impact on the queue backlog thanks to our check queue backlog and widget.
+- type: image
+  src: targets.png
+  alt: The extension can discover nodes, vhosts and queues.
+- type: image
+  src: target.png
+  alt: The discovered targets come with attributes to easily filter them.
