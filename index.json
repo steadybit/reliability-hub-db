@@ -1,5 +1,5 @@
 {
-    "lastChange": 1761311000,
+    "lastChange": 1761655448,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -235,6 +235,7 @@
         "/actions/com.steadybit.extension_newrelic.workload_check/description.yml",
         "/actions/com.steadybit.extension_postman.collection.run/description.yml",
         "/actions/com.steadybit.extension_prometheus.instance.metrics/description.yml",
+        "/actions/com.steadybit.extension_rabbitmq.node.check/description.yml",
         "/actions/com.steadybit.extension_splunk_platform.alert.check/description.yml",
         "/actions/com.steadybit.extension_splunk.detector.check/description.yml",
         "/actions/com.steadybit.extension_splunk.slo.check/description.yml",
