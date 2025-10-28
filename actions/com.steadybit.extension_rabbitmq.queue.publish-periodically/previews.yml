@@ -1,0 +1,4 @@
+---
+- type: image
+  src: publish_periodically.png
+  alt: The action "Publish (Messages /s)" within the experiment editor.

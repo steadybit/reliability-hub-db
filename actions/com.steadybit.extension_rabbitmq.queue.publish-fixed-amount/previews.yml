@@ -1,0 +1,4 @@
+---
+- type: image
+  src: publish_fixed.png
+  alt: The action "Publish (# of Messages)" within the experiment editor.

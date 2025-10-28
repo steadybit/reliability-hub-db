@@ -1,0 +1,22 @@
+# Introduction
+
+With this action, Steadybit can become a publisher and send the desired amount of messages.
+
+# Use Cases
+
+ - You can check the behaviour of your consumer under various types of messages
+ - You can artificially increase the backlog for your queue by producing messages at a high throughput
+
+# Parameters
+
+| Parameter          | Description                                                                                                                                 | Default      |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Exchange           | Optional. By default it will be the queue unless you specify a specific exchange.                                                           |              |
+| Routing Key        | Optional routing key used for message delivery; defaults to the queue name if empty.                                                        |              |
+| Body               | The message body.                                                                                                                           | test-message |
+| Duration           | The duration of the attack.                                                                                                                 | 60s          |
+| Message Headers    | Optional. The Message headers to include in AMQP properties.                                                                                |              |
+| Number of Messages | The number of messages to create, the rate will be defined by this number divided by the duration of the attack.                            |              |
+| Success Rate       | How many percent of the records must be at least successful, that means not encountering any errors while sending the record to the broker. | 100%         |
+| MaxConcurrent      | Maximum count on parallel running requests. (min 1, max 10)                                                                                 | 5            |
+
