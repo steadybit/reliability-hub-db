@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_rabbitmq
-label: rabbitmq
+label: RabbitMQ
 description: A Steadybit extension with various actions and check about RabbitMQ.
 icon: |
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
