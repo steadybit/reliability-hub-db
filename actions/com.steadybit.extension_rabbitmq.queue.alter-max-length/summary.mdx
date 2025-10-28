@@ -1,0 +1,16 @@
+# Introduction
+
+With this action, Steadybit can dynamically force with a policy the following configuration [max-length](https://www.rabbitmq.com/docs/maxlength#definition).
+The generated policy will always be given the highest priority then be deleted at the end of the attack.
+
+# Use Cases
+
+ - Alter the queue max length to check the behavior of the producers/consumers and tune prefetch.
+
+# Parameters
+
+| Parameter  | Description                                                          | Default |
+|------------|----------------------------------------------------------------------|---------|
+| Duration   | The duration of the attack.                                          | 60s     |
+| Max Length | Maximum number of messages the queue will hold. Set 0 for unlimited. |         |
+
