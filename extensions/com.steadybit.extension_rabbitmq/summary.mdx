@@ -10,7 +10,7 @@ The `extension-rabbitmq` leverages these APIs and AMQP connections to:
 - Discover clusters, nodes, vhosts and queues
 - Inspect queue metrics such as message backlog
 - Manage policies dynamically to inject constraints or change behaviors
-- Connect over AMQP(S) to simulate message producers and check message flow
+- Connect over AMQP(S) to simulate message publisher and check message flow
 
 > Some actions and checks require **management access** and, optionally, **AMQP credentials** for interacting with queues.
 
@@ -33,7 +33,7 @@ The extension supports dynamic chaos actions, including:
 Dynamically enforces a `max-length` limit on a queue using a temporary RabbitMQ policy.
 Useful to simulate queue overflow and message drops under constrained storage.
 
-- **Produce Messages**
+- **Publish Messages**
 Sends messages to one or more queues at a fixed rate or in fixed quantity to simulate load and measure consumer throughput.
 
 ---
