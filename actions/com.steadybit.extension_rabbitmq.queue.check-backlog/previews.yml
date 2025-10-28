@@ -1,0 +1,4 @@
+---
+- type: image
+  src: check-backlog.png
+  alt: The action "Check Queue Backlog" within the experiment editor.

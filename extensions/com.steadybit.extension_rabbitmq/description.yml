@@ -18,7 +18,7 @@ ghcr:
 homepage: https://hub.steadybit.com/extension/com.steadybit.extension_rabbitmq
 installation: https://github.com/steadybit/extension-rabbitmq#installation
 changelog: https://github.com/steadybit/extension-rabbitmq/blob/main/CHANGELOG.md
-releaseDate: '2025-09-24'
+releaseDate: '2025-10-28'
 tags:
   - RabbitMQ
   - Message Queue
