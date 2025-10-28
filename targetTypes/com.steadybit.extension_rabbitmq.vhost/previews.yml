@@ -1,0 +1,4 @@
+---
+- type: image
+  src: vhost.png
+  alt: Identified information about a RabbitMQ vhost that can later be used within experiments.

@@ -1,0 +1,4 @@
+---
+- type: image
+  src: queueDetail.png
+  alt: Identified information about a RabbitMQ queue that can later be used within experiments.

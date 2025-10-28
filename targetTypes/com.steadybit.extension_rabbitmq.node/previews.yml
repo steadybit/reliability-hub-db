@@ -1,0 +1,4 @@
+---
+- type: image
+  src: node.png
+  alt: Identified information about a RabbitMQ node that can later be used within experiments.
