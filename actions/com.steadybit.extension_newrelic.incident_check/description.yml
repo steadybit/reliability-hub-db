@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_newrelic.incident_check
 label: Incident Check
-description: Checks if there are any open incidents in New Relic.
+description: Checks if there are any open incidents in New Relic
 icon: |
   <?xml version="1.0" encoding="utf-8"?>
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

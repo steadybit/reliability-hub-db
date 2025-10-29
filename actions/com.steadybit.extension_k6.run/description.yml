@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_k6.run
 label: K6
-description: Runs a K6 load test.
+description: Runs a K6 load test
 icon: |
   <svg
     version="1.0"

@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_postman.collection.run
 label: Postman collection
-description: Execute a Postman collection through Postman's cloud API.
+description: Execute a Postman collection through Postman's cloud API
 icon: |
   <svg
     viewBox="0 0 24 24"

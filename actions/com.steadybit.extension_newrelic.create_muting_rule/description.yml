@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_newrelic.create_muting_rule
 label: Create Muting Rule
-description: Creates a muting rule in New Relic.
+description: Creates a muting rule in New Relic
 icon: |
   <?xml version="1.0" encoding="utf-8"?>
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

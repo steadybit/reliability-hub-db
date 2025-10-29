@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_http.check.periodically
 label: HTTP check periodically
-description: Execute HTTP calls and verify responses periodically.
+description: Execute HTTP calls and verify responses periodically
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M4.38098 13C4.17057 13 4 12.8294 4 12.619V9.38098C4 9.17057 4.17057 9 4.38098 9V9C4.59139 9 4.76196 9.17057 4.76196 9.38098V10.6934H6.71103V9.38201C6.71103 9.17103 6.88206 9 7.09304 9V9C7.30402 9 7.47505 9.17103 7.47505 9.38201V12.618C7.47505 12.829 7.30402 13 7.09304 13V13C6.88206 13 6.71103 12.829 6.71103 12.618V11.3008H4.76196V12.619C4.76196 12.8294 4.59139 13 4.38098 13V13Z" fill="currentColor"/>

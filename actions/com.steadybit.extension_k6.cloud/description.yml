@@ -1,7 +1,7 @@
 ---
 id: com.steadybit.extension_k6.cloud
 label: K6 Cloud
-description: Runs a K6 load test in the K6 cloud.
+description: Runs a K6 load test in the K6 cloud
 icon: |
   <svg
     version="1.0"
