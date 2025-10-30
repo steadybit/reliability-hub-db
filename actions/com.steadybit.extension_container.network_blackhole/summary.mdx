@@ -6,11 +6,11 @@ Drops all network traffic (IN/OUT/FORWARDED).
 
 _Note:_ If you are going to attack containers using network attacks, **all containers in the target's linux network namespace** (e.g. all containers belonging to the same Kubernetes Pod or Replica Set) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
 
+This attack affects network traffic for protocols that use port numbers (e.g., TCP, UDP). Protocols like ICMP, which do not use ports, remain unaffected and will continue to function normally.
 
 # Use Cases
 
 * Understand how your services behave under network outages
-
 
 # Parameters
 

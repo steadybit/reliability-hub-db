@@ -6,6 +6,10 @@ Limits bandwidth for all matching egress network traffic.
 
 If you are not using our container images for the extension, you need install the `tc` (from the iproute2 package) tool to use the attack.
 
+# Restrictions
+
+This attack affects network traffic for protocols that use port numbers (e.g., TCP, UDP). Protocols like ICMP, which do not use ports, remain unaffected and will continue to function normally.
+
 # Use Cases
 
 * Understand your service's performance under load
