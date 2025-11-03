@@ -1,5 +1,5 @@
 {
-    "lastChange": 1762180325,
+    "lastChange": 1762181934,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -42,7 +42,7 @@
         "/templates/kubernetes-daemonset.snippet.stress-memory/template.json",
         "/templates/kubernetes-deployment.ephemeral-storage/template.json",
         "/templates/kubernetes-deployment.keep-pods-down/template.json",
-        "/templates/kubernetes-deployment.load-balancing-pod-crash/template.json",
+        "/templates/kubernetes-deployment.load-balancer-pod-crash/template.json",
         "/templates/kubernetes-deployment.prometheus.metric/template.json",
         "/templates/kubernetes-deployment.rolling-rollout/template.json",
         "/templates/kubernetes-deployment.scaling-error-free/template.json",

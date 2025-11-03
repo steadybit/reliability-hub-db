@@ -1,6 +1,6 @@
 {
   "id": "0363a90e-9563-494c-bd25-81da6e4c3d36",
-  "templateTitle": "Load balancing hides a single container failure for end users",
+  "templateTitle": "Load balancer hides a single container failure for end users",
   "templateDescription": "If a pod becomes temporarily unavailable, you want to ensure that Kubernetes is properly reacting, excluding that pod from the Service and restarting it.\n\n## Motivation\n\nIf configured properly, Kubernetes can detect a non-responding pod and try to fix it by simply restarting the unresponsive pod.\nEven so, the exact configuration requires careful consideration to avoid killing your pods too early or flooding your cluster's traffic with liveness probes.\n\n## Structure\n\nBefore killing a container of a Kubernetes pod, we verify that a load-balanced user-facing endpoint is working properly and that all Kubernetes deployment's pods are marked as ready.\nAs soon as one container crashes, Kubernetes should detect the crashed container via a failing liveness probe and mark the related pod as not ready.\nNow, Kubernetes is expected to restart the container so the pod becomes ready within a certain time.\nThe user-facing HTTP endpoint may suffer from degraded performance when being under load (e.g., lower success rate or higher response time).\nEven so, this is expected to be within the SLA boundaries.\n\n## Solution Sketch\n\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
   "placeholders": [
     {
