@@ -129,9 +129,9 @@
           "radius": {
             "targetType": "com.steadybit.extension_container.container",
             "predicate": {
-              "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\" AND (k8s.container.name=\"[[k8sContainerName]]\" or container.name=\"[[k8sContainerName]]\"))"
+              "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\" AND k8s.container.name=\"[[k8sContainerName]]\")"
             },
-            "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\" AND (k8s.container.name=\"[[k8sContainerName]]\" or container.name=\"[[k8sContainerName]]\"))",
+            "query": "(k8s.cluster-name=\"[[k8sClusterName]]\" AND k8s.namespace=\"[[k8sNamespace]]\" AND k8s.deployment=\"[[k8sDeployment]]\" AND k8s.container.name=\"[[k8sContainerName]]\")",
             "maximum": 1
           }
         }
