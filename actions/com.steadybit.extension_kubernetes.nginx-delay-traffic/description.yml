@@ -12,7 +12,7 @@ targetType: com.steadybit.extension_kubernetes.kubernetes-nginx-ingress
 extension: com.steadybit.extension_kubernetes
 tags:
   - Kubernetes
-  - Delay traffic
   - Ingress
   - NGINX
   - Latency
+  - Delay

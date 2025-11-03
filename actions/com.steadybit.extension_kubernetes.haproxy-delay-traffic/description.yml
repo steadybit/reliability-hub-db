@@ -12,7 +12,7 @@ targetType: com.steadybit.extension_kubernetes.kubernetes-haproxy-ingress
 extension: com.steadybit.extension_kubernetes
 tags:
   - Kubernetes
-  - Delay traffic
   - Ingress
   - HAProxy
   - Latency
+  - Delay
