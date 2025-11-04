@@ -16,13 +16,14 @@ _Note:_ If you are going to attack containers using network attacks, **all conta
 
 # Parameters
 
-| Parameter            | Description                                                               | Default |
-|----------------------|---------------------------------------------------------------------------|---------|
-| Network Delay        | How much should the traffic be delayed?                                   | 500ms   |
-| Jitter               | Random +-30% jitter to network delay                                      | true    |
-| Fail on Host Network | Emit failure when the targeted container is using the host network        | true    |
-| Duration             | How long should the traffic be affected?                                  | 30s     |
-| Hostname             | Restrict to which hosts the traffic is reduced                            |         |
-| IP Address           | Restrict to which IP address the traffic is reduced                       |         |
-| Network Interface    | Target Network Interface which should be attacked. All if none specified. |         |
-| Ports                | Restrict to which ports the traffic is reduced                            |         |
+| Parameter             | Description                                                                                                                                                                                                                | Default |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Network Delay         | How much should the traffic be delayed?                                                                                                                                                                                    | 500ms   |
+| Jitter                | Random +-30% jitter to network delay                                                                                                                                                                                       | true    |
+| Fail on Host Network  | Emit failure when the targeted container is using the host network                                                                                                                                                         | true    |
+| Duration              | How long should the traffic be affected?                                                                                                                                                                                   | 30s     |
+| Hostname              | Restrict to which hosts the traffic is reduced                                                                                                                                                                             |         |
+| IP Address            | Restrict to which IP address the traffic is reduced                                                                                                                                                                        |         |
+| Network Interface     | Target Network Interface which should be attacked. All if none specified.                                                                                                                                                  |         |
+| Ports                 | Restrict to which ports the traffic is reduced                                                                                                                                                                             |         |
+| TCP Data Packets Only | `beta` Delay only TCP data packets (PSH flag heuristic). UDP is not delayed. When you observe the actual delay being a multiple of the configured delay, you might choose this option to avoid delaying the TCP handshake. | false   |
