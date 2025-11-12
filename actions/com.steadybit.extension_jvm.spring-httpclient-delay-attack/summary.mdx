@@ -9,9 +9,11 @@ Delays a response from a RestTemplate or WebClient by the given duration.
 
 # Parameters
 
-| Parameter    | Description                              | Default |
-|--------------|------------------------------------------|---------|
-| Duration     | How long should the response be delayed? | 30s     |
-| Delay        | How much should the response be delayed? | 500ms   |
-| Jitter       | Random +-30% jitter to response delay    | true    |
-| Host Address | Which host address should be attacked    | any     |
+| Parameter    | Description                                                                                                           | Default |
+|--------------|-----------------------------------------------------------------------------------------------------------------------|---------|
+| Duration     | How long should the response be delayed?                                                                              | 30s     |
+| Delay        | How much should the response be delayed?                                                                              | 500ms   |
+| Jitter       | Random +-30% jitter to response delay                                                                                 | true    |
+| HttpMethods  | Which HTTP methods should be attacked?                                                                                |         |
+| Host Address | Which host address should be attacked                                                                                 | any     |
+| Url Path     | Which URL path should be attacked? Use '*' or empty for any. All paths starting with the given value will be matched. | true    |

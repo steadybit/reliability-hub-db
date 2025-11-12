@@ -10,12 +10,12 @@ Returns the given status code for a RestTemplate or WebClient call. The original
 
 # Parameters
 
-| Parameter           | Description                                                                                 | Default |
-|---------------------|---------------------------------------------------------------------------------------------|---------|
-| Duration            | How long should the response be delayed?                                                    | 30s     |
-| HttpMethods         | Which HTTP methods should be attacked?                                                      |         |
-| Host Address        | Which host address should be attacked                                                       | any     |
-| Url Path            | Which URL paths should be attacked                                                          | true    |
-| Failure Types       | What HTTP client behavior should be simulated? Will overwrite any HttpStatus configuration  |         |
-| Http Status         | Which Http Status should be returned? Will be ignored when when failure cause is configured | 500     |
-| Erroneous Call Rate | How many percent of calls should trigger an exception                                       | 100     |
+| Parameter           | Description                                                                                                           | Default |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------|---------|
+| Duration            | How long should the response be delayed?                                                                              | 30s     |
+| HttpMethods         | Which HTTP methods should be attacked?                                                                                |         |
+| Host Address        | Which host address should be attacked                                                                                 | any     |
+| Url Path            | Which URL path should be attacked? Use '*' or empty for any. All paths starting with the given value will be matched. | true    |
+| Failure Types       | What HTTP client behavior should be simulated? Will overwrite any HttpStatus configuration                            |         |
+| Http Status         | Which Http Status should be returned? Will be ignored when when failure cause is configured                           | 500     |
+| Erroneous Call Rate | How many percent of calls should trigger an exception                                                                 | 100     |
