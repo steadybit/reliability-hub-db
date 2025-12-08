@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_datadog.monitor
 label:
-  one: Datadog monitor
-  other: Datadog monitors
+  one: Datadog Monitor
+  other: Datadog Monitors
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800.55 856.85">
     <path

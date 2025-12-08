@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_azure.vm.state
-label: Change Azure virtual machine state
+label: Change Azure Virtual Machine State
 description: Reboot, delete, stop or deallocate azure virtual machines
 icon: |
   <svg

@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_grafana.alert-rule.check
-label: alert-rule check
+label: Alert Rule Check
 description: Collects information about the alert-rule state and optionally verifies that the monitor has an expected state
 icon: |
   <svg fill="none"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_http.check.periodically
-label: HTTP check periodically
+label: HTTP Check Periodically
 description: Execute HTTP calls and verify responses periodically
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

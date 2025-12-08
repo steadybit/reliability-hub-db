@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_kubernetes.kubernetes-pod
 label:
-  one: Kubernetes pod
-  other: Kubernetes pods
+  one: Kubernetes Pod
+  other: Kubernetes Pods
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.448 2.656L4.655 5.56c-.066.034-.131.07-.195.107l6.569 3.65a2 2 0 001.942 0l6.53-3.628c-.07-.04-.14-.078-.214-.113L13.08 2.628a3 3 0 00-2.631.028zm10.366 4.591l-6.871 3.818a4 4 0 01-.943.376v9.967l.08-.036 6.207-2.949A3 3 0 0021 15.713V8.286c0-.36-.065-.712-.186-1.039zM11 21.555V11.441a4 4 0 01-.943-.376L3.172 7.239A2.997 2.997 0 003 8.242v7.516a3 3 0 001.655 2.681l5.793 2.904c.178.09.363.16.552.212z" fill="currentColor"/></svg>
 category: kubernetes

@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.haproxy-delay-traffic
-label: Delay traffic to backend
+label: Delay Traffic to Backend
 description: Delay traffic to a backend
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

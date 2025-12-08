@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_aws.rds.instance
 label:
-  one: RDS instance
-  other: RDS instances
+  one: RDS Instance
+  other: RDS Instances
 icon: |
   <svg
     viewBox="0 0 24 24"

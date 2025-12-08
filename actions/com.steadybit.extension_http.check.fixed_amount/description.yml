@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_http.check.fixed_amount
-label: HTTP check with fixed amount of calls
+label: HTTP Check With Fixed Amount of Calls
 description: Execute a specific amount of HTTP calls and verify responses
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

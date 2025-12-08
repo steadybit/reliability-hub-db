@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_aws.rds.instance.reboot
-label: reboot RDS instance
+label: Reboot RDS instance
 description: Reboot a single RDS database instance
 icon: |
   <svg

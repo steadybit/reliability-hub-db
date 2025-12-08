@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_prometheus.instance
 label:
-  one: Prometheus instance
-  other: Prometheus instances
+  one: Prometheus Instance
+  other: Prometheus Instances
 icon: |
   <svg
     viewBox="0 0 24 25"

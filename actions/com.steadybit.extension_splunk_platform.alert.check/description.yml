@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_splunk_platform.alert.check
-label: alert check
+label: Alert Check
 description: Verifies the Splunk Alert state
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">

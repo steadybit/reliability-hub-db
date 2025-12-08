@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_datadog.monitor.downtime
-label: create monitor downtime
+label: Create Monitor Downtime
 description: Creates a downtime for a Datadog monitor
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800.55 856.85">

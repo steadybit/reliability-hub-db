@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_aws.alb.static_response
-label: Return static response
+label: Return Static Response
 description: Return a static response for a given load balancer listener
 icon: |
   <?xml version="1.0" encoding="UTF-8"?>

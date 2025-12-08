@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.rollout-status
-label: deployment rollout status
+label: Deployment Rollout Status
 description: Check the rollout status of the deployment. The check succeeds when no rollout is pending, i.e., kubectl rollout status exits with status code 0.
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

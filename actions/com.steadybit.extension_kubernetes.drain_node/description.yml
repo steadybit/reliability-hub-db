@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.drain_node
-label: Drain node
+label: Drain Node
 description: Drains a node
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

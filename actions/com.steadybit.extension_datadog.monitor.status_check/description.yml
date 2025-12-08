@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_datadog.monitor.status_check
-label: monitor status
+label: Monitor Status
 description: Collects information about the monitor status and optionally verifies that the monitor has an expected status
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800.55 856.85">

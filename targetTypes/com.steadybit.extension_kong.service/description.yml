@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_kong.service
 label:
-  one: Kong service
-  other: Kong services
+  one: Kong Service
+  other: Kong Services
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 64 64">
     <path

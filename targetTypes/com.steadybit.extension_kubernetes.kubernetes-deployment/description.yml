@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_kubernetes.kubernetes-deployment
 label:
-  one: Kubernetes deployment
-  other: Kubernetes deployments
+  one: Kubernetes Deployment
+  other: Kubernetes Deployments
 icon: |
   <svg
     viewBox="0 0 24 24"

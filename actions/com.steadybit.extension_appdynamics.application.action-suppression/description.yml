@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_appdynamics.application.action-suppression
-label: create action suppression
+label: Create Action Suppression
 description: Create an action suppression "one time" during the desired duration
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">

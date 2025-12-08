@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_splunk.detector.check
-label: detector check
+label: Detector Check
 description: Collects information about the detector state and optionally verifies that the detector has an expected state
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">

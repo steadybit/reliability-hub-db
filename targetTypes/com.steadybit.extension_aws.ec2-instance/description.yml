@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_aws.ec2-instance
 label:
-  one: EC2-instance
-  other: EC2-instances
+  one: EC2 Instance
+  other: EC2 Instances
 icon: |
   <svg
     viewBox="0 0 24 24"

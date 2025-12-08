@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_kong.route
 label:
-  one: Kong route
-  other: Kong routes
+  one: Kong Route
+  other: Kong Routes
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 64 64">
     <path

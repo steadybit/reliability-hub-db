@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_kubernetes.kubernetes-cluster
 label:
-  one: Kubernetes cluster
-  other: Kubernetes cluster
+  one: Kubernetes Cluster
+  other: Kubernetes Cluster
 icon: |
   <svg
     viewBox="0 0 24 24"

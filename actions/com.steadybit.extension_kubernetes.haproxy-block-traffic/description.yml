@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.haproxy-block-traffic
-label: Block traffic to backend
+label: Block Traffic to Backend
 description: Block traffic to a backend
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

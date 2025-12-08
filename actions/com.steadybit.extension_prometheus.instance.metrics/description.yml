@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_prometheus.instance.metrics
-label: Prometheus metrics
+label: Prometheus Metrics
 description: Gather and check Prometheus metrics
 icon: |
   <svg

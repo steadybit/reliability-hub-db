@@ -1,8 +1,8 @@
 ---
 id: com.steadybit.extension_aws.fis-experiment-template
 label:
-  one: FIS experiment template
-  other: FIS experiment templates
+  one: FIS Experiment Template
+  other: FIS Experiment Templates
 icon: |
   <svg
     viewBox="0 0 24 24"

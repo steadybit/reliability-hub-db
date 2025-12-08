@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_istio.virtual_service.grpc.abort
-label: Istio gRPC abort
+label: Istio gRPC Abort
 description: Injects a gRPC abort fault into all gRPC routes of the targeted virtual services. Abort requests before forwarding, emulating various failures such as network issues, overloaded upstream service, etc.
 icon: |
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
