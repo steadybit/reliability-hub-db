@@ -29,6 +29,8 @@ installation: https://github.com/steadybit/extension-kubernetes#installation
 changelog: https://github.com/steadybit/extension-kubernetes/blob/main/CHANGELOG.md
 tags:
   - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
   - Container
   - AWS
   - Azure

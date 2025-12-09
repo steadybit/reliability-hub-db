@@ -28,7 +28,8 @@ changelog: https://github.com/steadybit/extension-prometheus/blob/main/CHANGELOG
 tags:
   - Prometheus
   - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
   - PromQL
-  - Check
   - Observability
   - Monitoring

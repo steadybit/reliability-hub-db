@@ -20,6 +20,5 @@ changelog: https://github.com/steadybit/extension-dynatrace/blob/main/CHANGELOG.
 releaseDate: '2023-12-01'
 tags:
   - Dynatrace
-  - Check
   - Observability
   - Monitoring

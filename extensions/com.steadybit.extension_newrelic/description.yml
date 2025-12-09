@@ -22,6 +22,5 @@ changelog: https://github.com/steadybit/extension-newrelic/blob/main/CHANGELOG.m
 releaseDate: '2024-01-22'
 tags:
   - New Relic
-  - Check
   - Observability
   - Monitoring

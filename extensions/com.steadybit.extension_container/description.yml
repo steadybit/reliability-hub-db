@@ -21,6 +21,8 @@ changelog: https://github.com/steadybit/extension-container/blob/main/CHANGELOG.
 tags:
   - Container
   - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
   - Network
   - AWS
   - Azure

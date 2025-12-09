@@ -20,6 +20,7 @@ releaseDate: '2024-08-01'
 tags:
   - Grafana
   - Kubernetes
-  - Check
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
   - Observability
   - Monitoring

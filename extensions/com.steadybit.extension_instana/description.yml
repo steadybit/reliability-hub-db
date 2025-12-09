@@ -20,6 +20,5 @@ changelog: https://github.com/steadybit/extension-instana/blob/main/CHANGELOG.md
 releaseDate: '2024-01-15'
 tags:
   - Instana
-  - Check
   - Observability
   - Monitoring

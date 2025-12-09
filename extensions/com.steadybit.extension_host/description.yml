@@ -27,6 +27,8 @@ changelog: https://github.com/steadybit/extension-host/blob/main/CHANGELOG.md
 tags:
   - Host
   - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
   - Network
   - AWS
   - Azure
