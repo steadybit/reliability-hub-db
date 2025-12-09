@@ -15,11 +15,11 @@ icon: |
   </svg>
 
 kind: attack
-category: resource
 targetType: com.steadybit.extension_host.host
 extension: com.steadybit.extension_host
 releaseDate: '2023-12-07'
 tags:
   - Host
   - Kubernetes
+  - Resource
 

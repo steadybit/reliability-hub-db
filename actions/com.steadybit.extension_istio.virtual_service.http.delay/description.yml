@@ -11,13 +11,13 @@ icon: |
     />
   </svg>
 kind: attack
-category: network
 targetType: com.steadybit.extension_istio.virtual_service
 extension: com.steadybit.extension_istio
 tags:
   - Istio
   - Service Mesh
   - Kubernetes
+  - Network
   - Http
   - gRPC
   - Latency

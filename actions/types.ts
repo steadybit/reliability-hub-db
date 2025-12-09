@@ -30,7 +30,6 @@ export interface ActionDescription {
   label: string;
   icon: string;
   kind: "attack" | "check" | "load_test" | "other";
-  category: string | null;
   targetType?: string | null;
   description: string;
   extension: ExtensionId;

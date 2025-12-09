@@ -9,7 +9,6 @@ icon: |
   </g>
   </svg>
 kind: attack
-category: network
 targetType: com.steadybit.extension_aws.ecs-task
 extension: com.steadybit.extension_aws
 releaseDate: '2025-06-23'

@@ -11,7 +11,6 @@ icon: |
     />
   </svg>
 kind: check
-category: monitoring
 targetType: com.steadybit.extension_datadog.monitor
 extension: com.steadybit.extension_datadog
 tags:

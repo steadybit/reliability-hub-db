@@ -5,7 +5,6 @@ description: Generate read/write operation on hard disks
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.375 17.625a.375.375 0 100 .75.375.375 0 000-.75zm-3.375 0a.375.375 0 100 .75.375.375 0 000-.75z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M14.375 17.065a1.125 1.125 0 111.25 1.87 1.125 1.125 0 01-1.25-1.87zm.768 1.281a.378.378 0 00.225-.42.376.376 0 10-.225.42z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.25 14.25a3.75 3.75 0 000 7.5h13.5a3.75 3.75 0 100-7.5H5.25zm-3.712.038A5.25 5.25 0 015.25 12.75h13.5a5.25 5.25 0 110 10.5H5.25a5.25 5.25 0 01-3.712-8.962z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.878.75h10.245a3.75 3.75 0 013.65 2.894l3.088 13.158a.75.75 0 11-1.46.342L19.313 3.986a2.25 2.25 0 00-2.19-1.736H6.878a2.25 2.25 0 00-2.19 1.736l-3.09 13.158a.75.75 0 01-1.46-.342L3.227 3.644A3.75 3.75 0 016.878.75z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 18a.75.75 0 01.75-.75H9a.75.75 0 010 1.5H5.25A.75.75 0 014.5 18z" fill="currentColor"/></svg>
 kind: attack
-category: resource
 targetType: com.steadybit.extension_host_windows.host
 extension: com.steadybit.extension_host_windows
 releaseDate: '2025-06-25'
@@ -13,3 +12,4 @@ beta: true
 tags:
   - Host
   - Windows
+  - Resource

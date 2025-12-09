@@ -11,10 +11,10 @@ icon: |
     />
   </svg>
 kind: attack
-category: network
 targetType: com.steadybit.extension_kong.route
 extension: com.steadybit.extension_kong
 tags:
   - Kong
   - API gateway
   - Http
+  - Network

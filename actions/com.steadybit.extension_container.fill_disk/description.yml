@@ -15,10 +15,10 @@ icon: |
   </svg>
 
 kind: attack
-category: resource
 targetType: com.steadybit.extension_container.container
 extension: com.steadybit.extension_container
 releaseDate: '2023-12-07'
 tags:
   - Container
   - Kubernetes
+  - Resource

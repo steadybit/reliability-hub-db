@@ -15,7 +15,6 @@ icon: |
   </svg>
 
 kind: attack
-category: resource
 targetType: com.steadybit.extension_host_windows.host
 extension: com.steadybit.extension_host_windows
 releaseDate: '2025-06-25'
@@ -23,4 +22,5 @@ beta: true
 tags:
   - Host
   - Windows
+  - Resource
 

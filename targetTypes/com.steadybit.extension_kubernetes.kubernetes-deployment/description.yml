@@ -16,5 +16,4 @@ icon: |
       fill="currentColor"
     />
   </svg>
-category: kubernetes
 extension: com.steadybit.extension_kubernetes

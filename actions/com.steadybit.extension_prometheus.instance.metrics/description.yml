@@ -14,7 +14,6 @@ icon: |
     />
   </svg>
 kind: check
-category: monitoring
 targetType: com.steadybit.extension_prometheus.instance
 extension: com.steadybit.extension_prometheus
 tags:

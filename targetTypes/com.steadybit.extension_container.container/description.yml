@@ -3,7 +3,6 @@ id: com.steadybit.extension_container.container
 label:
   one: Container
   other: Containers
-category: basic
 icon: |
   <svg
     viewBox="0 0 24 24"

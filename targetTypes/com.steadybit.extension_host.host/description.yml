@@ -3,7 +3,6 @@ id: com.steadybit.extension_host.host
 label:
   one: Linux Host
   other: Linux Hosts
-category: basic
 icon: |
   <svg
     viewBox="0 0 24 24"

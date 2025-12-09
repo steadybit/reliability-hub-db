@@ -8,7 +8,6 @@ icon: |
   <path fill-rule="evenodd" clip-rule="evenodd" d="M5 7.32003L12.5038 3L21 7.8925V17.6787L13.4975 22V18.2352L17.7314 15.7963V9.7749L12.5038 6.76479L8.26863 9.20242L5 7.32003ZM8.92156 20.2058V14.8721L4 12V8.33255L12 13V22L8.92156 20.2058Z" fill="currentColor"/>
   </svg>
 kind: check
-category: monitoring
 releaseDate: '2023-01-22'
 targetType: com.steadybit.extension_newrelic.account
 extension: com.steadybit.extension_newrelic

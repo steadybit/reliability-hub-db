@@ -4,11 +4,11 @@ label: Corrupt Outgoing Packages
 description: Inject corrupt packets by introducing single bit error at a random offset into ergress network traffic
 icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><g fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="8.75"><path d="M26.25 19.688a2.188 2.188 0 102.188 2.187 2.188 2.188 0 00-2.188-2.188h0m30.63 2.188h8.75m17.5 0h8.75M26.25 54.688a2.188 2.188 0 102.188 2.187 2.188 2.188 0 00-2.188-2.188h0m30.63 2.188h8.75m-39.374 52.5H48.13v-35M6.568 105a2.188 2.188 0 102.188 2.188A2.188 2.188 0 006.568 105h0"/><path d="M109.38 21.875a17.5 17.5 0 01-17.5 17.5h-70a17.5 17.5 0 010-35h70a17.5 17.5 0 0117.5 17.5z"/><path d="M70 74.375H21.88a17.5 17.5 0 010-35h70a17.5 17.5 0 0115.062 8.587m-6.312 70.163a2.188 2.188 0 102.188 2.188 2.188 2.188 0 00-2.187-2.188h0M100.63 105V87.5"/><path d="M134.54 120.645a10.348 10.348 0 01-9.257 14.98H75.978a10.348 10.348 0 01-9.257-14.98l24.651-49.298a10.348 10.348 0 0118.515 0z"/></g></svg>
 kind: attack
-category: network
 targetType: com.steadybit.extension_host_windows.host
 extension:  com.steadybit.extension_host_windows
 beta: true
 releaseDate: '2025-05-30'
 tags:
   - Host
+  - Network
   - Windows

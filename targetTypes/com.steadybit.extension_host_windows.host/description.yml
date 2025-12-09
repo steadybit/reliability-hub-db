@@ -3,7 +3,6 @@ id: com.steadybit.extension_host_windows.host
 label:
   one: Windows Host
   other: Windows Hosts
-category: basic
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M3 11.53H11.53V3H3V11.53ZM3 21H11.53V12.47H3V21ZM12.47 21H21V12.47H12.47V21ZM12.47 3V11.53H21V3H12.47Z" fill="currentColor"/>

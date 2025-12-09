@@ -3,7 +3,6 @@ id: com.steadybit.extension_postman.collection
 label:
   one: Postman Collection
   other: Postman Collections
-category: basic
 icon: |
   <svg
     viewBox="0 0 24 24"

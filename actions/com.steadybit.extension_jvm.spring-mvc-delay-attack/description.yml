@@ -4,10 +4,10 @@ label: Controller Delay
 description: Delay a Spring MVC controller http response by the given duration
 icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#icon-attack-controller-delay_svg__clip0)" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"><path d="M.672.662A2.25 2.25 0 012.263.003h18a2.25 2.25 0 012.25 2.25v6a.75.75 0 01-1.5 0v-6a.75.75 0 00-.75-.75h-18a.75.75 0 00-.75.75v16.5a.75.75 0 00.75.75h6a.75.75 0 010 1.5h-6a2.25 2.25 0 01-2.25-2.25v-16.5c0-.597.237-1.169.66-1.591z"/><path d="M.013 5.253a.75.75 0 01.75-.75h21a.75.75 0 010 1.5h-21a.75.75 0 01-.75-.75zm17.247 6.75a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5zm-6.75 5.25a6.75 6.75 0 1113.5 0 6.75 6.75 0 01-13.5 0z"/><path d="M17.26 13.852a.75.75 0 01.75.75v1.901h1.902a.75.75 0 010 1.5H17.26a.75.75 0 01-.75-.75v-2.651a.75.75 0 01.75-.75z"/></g><defs><clipPath id="icon-attack-controller-delay_svg__clip0"><path fill="currentColor" d="M0 0h24v24H0z"/></clipPath></defs></svg>
 kind: attack
-category: application
 targetType: com.steadybit.extension_jvm.jvm-instance
 extension: com.steadybit.extension_jvm
 tags:
+  - Application
   - JVM
   - Java
   - Latency

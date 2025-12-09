@@ -15,12 +15,12 @@ icon: |
   </svg>
 
 kind: attack
-category: state
 targetType: com.steadybit.extension_azure.vm
 extension: com.steadybit.extension_azure
 tags:
   - Azure
   - Azure Virtual Machines
   - Cloud
+  - State
   - Virtual machines
   - VM
