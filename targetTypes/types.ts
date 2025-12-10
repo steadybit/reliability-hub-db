@@ -8,7 +8,6 @@ export interface TargetTypeDescription {
   id: string;
   label: { one: string; other: string };
   icon?: string;
-  category?: string | null;
   description?: string;
   extension: ExtensionId;
   releaseDate?: string;
