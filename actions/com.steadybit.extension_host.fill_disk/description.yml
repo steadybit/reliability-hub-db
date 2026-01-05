@@ -22,4 +22,6 @@ tags:
   - Host
   - Kubernetes
   - Resource
-
+  - AWS
+  - Azure
+  - GCP

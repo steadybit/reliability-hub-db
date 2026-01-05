@@ -13,3 +13,6 @@ extension: com.steadybit.extension_kubernetes
 tags:
   - Kubernetes
   - State
+  - AWS
+  - Azure
+  - GCP

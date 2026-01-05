@@ -11,3 +11,6 @@ targetType: com.steadybit.extension_kubernetes.kubernetes-daemonset
 extension: com.steadybit.extension_kubernetes
 tags:
   - Kubernetes
+  - AWS
+  - Azure
+  - GCP

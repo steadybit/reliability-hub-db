@@ -12,3 +12,6 @@ releaseDate: '2023-11-01'
 extension: com.steadybit.extension_kubernetes
 tags:
   - Kubernetes
+  - AWS
+  - Azure
+  - GCP
