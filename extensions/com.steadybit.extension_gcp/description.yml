@@ -20,7 +20,7 @@ homepage: https://hub.steadybit.com/extension/com.steadybit.extension_gcp
 installation: https://github.com/steadybit/extension-gcp#installation
 changelog: https://github.com/steadybit/extension-gcp/blob/main/CHANGELOG.md
 tags:
-  - Google Cloud (GCP)
+  - GCP
   - Cloud
   - Virtual machines
   - VM
