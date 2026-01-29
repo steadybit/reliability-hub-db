@@ -8,7 +8,7 @@ targetTypes:
   - com.steadybit.extension_kubernetes.kubernetes-statefulset
 tags:
   - Kubernetes
-  - Availability Zones
+  - Availability Zone
   - Redundancy
 extension: com.steadybit.extension_kubernetes
 releaseDate: '2024-02-01'
