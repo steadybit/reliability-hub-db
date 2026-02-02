@@ -9,15 +9,17 @@ The advice automatically discovers whether a Kubernetes workload resource, right
 Asks you to validate with an automatically created experiment that your provided service works while one availability zone is simulated to go down.
 The experiment will block traffic to a container in one zone, which should be detected by Kubernetes via the configured liveness probe, causing Kubernetes to restart the container and eventually redirect traffic once it is up and running again.
 
-By default, the experiment contains a TODO step to add validation logic for your service. We highly recommend resolving this step to facilitate the discussion of whether your service works as expected from a user's point of view.
-You can also tag your Kubernetes Deployment with the label `tags.steadybit.com/service-validation` to support different validations:
+If the target is associated with a service, the experiment automatically includes a service validation step. This makes it easy to judge whether the service behaves as expected from a user’s perspective.
 
-* `http`: For an HTTP check on a GET endpoint
-* `k6`: For running a k6 load test
-* `gatling`: For running a Gatling load test
-* `jmeter`: For running a JMeter load test
+If you do not use Steadybit’s service feature, you can require the user to provide additional validations via a wizard when creating the experiment.
+For that, you need to tag your Kubernetes targets with the label `tags.steadybit.com/service-validation` and one of the following values:
 
-Once you create the experiment, the user is asked to specify the corresponding validation, and Steadybit runs it throughout the experiment.
+* `http`: Run an HTTP check on a `GET` endpoint
+* `k6`: Run a k6 load test
+* `gatling`: Run a Gatling load test
+* `jmeter`: Run a JMeter load test
+
+If none of these options apply, the experiment will include a `TODO` step prompting you to add custom validation logic for your service.
 
 ## Implemented
 Once you have configured Kubernetes to spread the pods across different availability zones.

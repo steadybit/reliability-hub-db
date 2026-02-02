@@ -8,13 +8,17 @@ Automatically discovers whether all Kubernetes container's `resources.limits.eph
 ## Validation Needed
 Asks you to validate with an automatically created experiment that provided features work as expected, fail gracefully, workload resources scale up or monitoring alerts while consuming a lot of ephemeral storage.
 
-By default, the experiment contains a TODO step to add validation logic for your service. We highly recommend resolving this step to facilitate the discussion of whether your service works as expected from a user's point of view.
-You can also tag your Kubernetes Deployment with the label `tags.steadybit.com/service-validation` to support different validations:
+If the target is associated with a service, the experiment automatically includes a service validation step. This makes it easy to judge whether the service behaves as expected from a user’s perspective.
 
-* `http`: For an HTTP check on a GET endpoint
-* `k6`: For running a k6 load test
-* `gatling`: For running a Gatling load test
-* `jmeter`: For running a JMeter load test
+If you do not use Steadybit’s service feature, you can require the user to provide additional validations via a wizard when creating the experiment.
+For that, you need to tag your Kubernetes targets with the label `tags.steadybit.com/service-validation` and one of the following values:
+
+* `http`: Run an HTTP check on a `GET` endpoint
+* `k6`: Run a k6 load test
+* `gatling`: Run a Gatling load test
+* `jmeter`: Run a JMeter load test
+
+If none of these options apply, the experiment will include a `TODO` step prompting you to add custom validation logic for your service.
 
 ## Implemented
 Once the Kubernetes container's specification `resources.limits.ephemeral-storage` configures a value that was marked as validated.
