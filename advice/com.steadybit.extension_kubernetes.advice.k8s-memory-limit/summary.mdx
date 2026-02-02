@@ -8,6 +8,14 @@ Automatically discovers whether all Kubernetes container's `resources.limits.mem
 ## Validation Needed
 Asks you to validate with an automatically created experiment that provided features work as expected, fail gracefully, workload resources scale up or monitoring alerts while consuming a lot of memory.
 
+By default, the experiment contains a TODO step to add validation logic for your service. We highly recommend resolving this step to facilitate the discussion of whether your service works as expected from a user's point of view.
+You can also tag your Kubernetes Deployment with the label `tags.steadybit.com/service-validation` to support different validations:
+
+* `http`: For an HTTP check on a GET endpoint
+* `k6`: For running a k6 load test
+* `gatling`: For running a Gatling load test
+* `jmeter`: For running a JMeter load test
+
 ## Implemented
 Once the Kubernetes container's specification `resources.limits.memory` configures a value that was marked as validated.
 
