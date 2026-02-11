@@ -1,5 +1,5 @@
 {
-    "lastChange": 1770044018,
+    "lastChange": 1770816046,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
@@ -209,6 +209,7 @@
         "/actions/com.steadybit.extension_kafka.topic.produce-periodically/description.yml",
         "/actions/com.steadybit.extension_kong.request_termination/description.yml",
         "/actions/com.steadybit.extension_kong.routes.request_termination/description.yml",
+        "/actions/com.steadybit.extension_kubernetes.argo-rollout-restart/description.yml",
         "/actions/com.steadybit.extension_kubernetes.crash_loop_pod/description.yml",
         "/actions/com.steadybit.extension_kubernetes.delete_pod/description.yml",
         "/actions/com.steadybit.extension_kubernetes.drain_node/description.yml",
