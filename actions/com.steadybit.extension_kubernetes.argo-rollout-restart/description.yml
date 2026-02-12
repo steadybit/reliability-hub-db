@@ -1,6 +1,6 @@
 ---
 id: com.steadybit.extension_kubernetes.argo-rollout-restart
-label: Restart Argo Rollout
+label: Trigger Restart Argo Rollout
 description: Trigger a restart of an Argo Rollout by patching spec.restartAt
 icon: |
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
