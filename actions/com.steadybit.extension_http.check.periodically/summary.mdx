@@ -25,7 +25,7 @@ With this extension you are able to check your http endpoints for availability a
 | MaxConcurrent      | Maximum count on parallel running requests. (min 1, max 10)                                                                                                                                                           | 5       |
 | InsecureSkipVerify | Should the TLS certificate be verified? If set to true, the certificate will not be verified.                                                                                                                         | false   |
 
-# Self signed certificates
+# Self-signed certificates
 
 If you want to use self-signed certificates, you need to import them into the extension. You can do this by mounting a volume with the certificates and referencing it in `extraVolumeMounts` and `extraVolumes` in the helm chart.
 See instructions in the [extension-http documentation](https://github.com/steadybit/extension-http?tab=readme-ov-file#importing-your-own-certificates).
