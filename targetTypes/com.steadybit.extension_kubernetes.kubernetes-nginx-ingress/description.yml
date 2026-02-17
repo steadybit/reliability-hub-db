@@ -9,3 +9,13 @@ icon: |
   </svg>
 
 extension: com.steadybit.extension_kubernetes
+tags:
+  - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
+  - Container
+  - AWS
+  - Azure
+  - GCP
+  - Advice
+  - Argo Rollout

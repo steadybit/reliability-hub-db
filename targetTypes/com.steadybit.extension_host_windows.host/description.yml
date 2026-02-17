@@ -10,3 +10,10 @@ icon: |
 extension: com.steadybit.extension_host_windows
 beta: true
 releaseDate: '2025-05-30'
+
+tags:
+  - Host
+  - Windows
+  - AWS
+  - Azure
+  - GCP

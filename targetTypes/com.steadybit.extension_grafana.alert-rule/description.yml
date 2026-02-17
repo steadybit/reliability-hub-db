@@ -9,3 +9,10 @@ icon: |
   </svg>
 extension: com.steadybit.extension_grafana
 releaseDate: '2024-08-01'
+tags:
+  - Grafana
+  - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
+  - Observability
+  - Monitoring

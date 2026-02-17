@@ -12,3 +12,12 @@ icon: |
     />
   </svg>
 extension: com.steadybit.extension_istio
+
+tags:
+  - Istio
+  - Service Mesh
+  - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
+  - Http
+  - gRPC

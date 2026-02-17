@@ -12,3 +12,8 @@ icon: |
     />
   </svg>
 extension: com.steadybit.extension_datadog
+
+tags:
+  - Datadog
+  - Observability
+  - Monitoring

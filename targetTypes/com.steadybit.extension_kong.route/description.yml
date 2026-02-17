@@ -12,3 +12,8 @@ icon: |
     />
   </svg>
 extension: com.steadybit.extension_kong
+
+tags:
+  - Kong
+  - API gateway
+  - Http

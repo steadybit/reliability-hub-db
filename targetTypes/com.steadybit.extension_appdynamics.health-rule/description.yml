@@ -9,3 +9,7 @@ icon: |
   </svg>
 extension: com.steadybit.extension_appdynamics
 releaseDate: '2025-05-21'
+tags:
+  - AppDynamics
+  - Observability
+  - Monitoring
