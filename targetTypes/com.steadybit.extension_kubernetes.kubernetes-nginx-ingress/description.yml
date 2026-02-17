@@ -13,9 +13,7 @@ tags:
   - Kubernetes
   - AKS (Azure Kubernetes Service)
   - EKS (AWS Elastic Kubernetes Service)
-  - Container
   - AWS
   - Azure
   - GCP
   - Advice
-  - Argo Rollout
