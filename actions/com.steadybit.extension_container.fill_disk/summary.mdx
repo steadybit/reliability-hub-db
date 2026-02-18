@@ -14,11 +14,20 @@ Fill the container's ephemeral storage with random data for a given duration.
 | Parameter  | Description                                                                                                                                                                           | Default                                                        |
 |------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
 | Duration   | How long should the disk be filled?                                                                                                                                                   | 30s                                                            |
-| Mode       | Decide how to specify the amount to fill the disk: <br/> *overall percentage of filled disk space in percent*, <br/> *Megabytes to write*,<br/> *Megabytes to leave free on disk*     | overall percentage of filled disk space in percent (*PERCENT*) |
+| Mode       | Specify how to calculate the amount of disk space to fill.: <br/> *Fill up to specified usage (in %)*, <br/> *Megabytes to write*,<br/> *Megabytes to leave free on disk*             | overall percentage of filled disk space in percent (*PERCENT*) |
 | Size       | Depending on the mode, specify the percentage of filled disk space or the number of Megabytes to be written or left free.                                                             | 80                                                             |
 | Path       | Path where the file should be written                                                                                                                                                 | /tmp                                                           |
 | Method     | Should the disk be filled all at once (using `fallocate`) or gradually over time (using `dd`)?                                                                                        | at once (*AT_ONCE*)                                            |
 | Block Size | Only applicable for method over time (`dd`): The block size when writing the file. If the block size is larger than the size value, the attack uses the size value as the block size. | 5                                                              |
+
+# Caveats
+
+## The underlying disk is (most likely) shared
+
+The root filesystem of a container is typically using an overlaying fs which is backed by the host's disk. This means that all containers running on the same host share the same underlying disk.
+Thus, if you run multiple instances of this attack on the same host, they will all write to the same disk.
+The Kubernetes' ephemeral storage limit for a container doesn't prevent the writes exceeding the limit, but will cause the container to be killed.
+Thus the modes *Fill up to specified usage (in %)* and *Megabytes to leave free on disk* will calculate **depending on total size of the disk (backing the container root fs), and not based on the ephemeral storage limit**.
 
 # Frequently Asked Questions (FAQs)
 ## Q: What is the difference between the available modes?
