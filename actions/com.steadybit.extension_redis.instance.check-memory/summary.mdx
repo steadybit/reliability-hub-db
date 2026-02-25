@@ -1,0 +1,16 @@
+# Introduction
+
+With this action, Steadybit can monitor Redis memory usage and fail if a threshold is exceeded on a Redis instance.
+
+# Use Cases
+
+ - Monitor memory usage during chaos experiments to detect memory leaks or pressure.
+ - Set guardrails to fail experiments if memory exceeds safe thresholds.
+
+# Parameters
+
+| Parameter          | Description                                                        | Default |
+|--------------------|--------------------------------------------------------------------|---------|
+| Duration           | How long to monitor.                                               | 60s     |
+| Max Memory Percent | Maximum allowed as percentage of maxmemory (0 to disable).        | 80      |
+| Max Memory Bytes   | Maximum allowed in MB (0 to disable).                             | 0       |

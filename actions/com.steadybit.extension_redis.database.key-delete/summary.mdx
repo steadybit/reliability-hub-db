@@ -1,0 +1,17 @@
+# Introduction
+
+With this action, Steadybit can delete keys matching a pattern in a Redis database to simulate data loss scenarios.
+
+# Use Cases
+
+ - Simulate data loss to verify application resilience and cache rebuild logic.
+ - Test how services handle missing cache entries.
+
+# Parameters
+
+| Parameter       | Description                                                              | Default          |
+|-----------------|--------------------------------------------------------------------------|------------------|
+| Duration        | How long the attack should last.                                         | 60s              |
+| Pattern         | Key pattern for deletion (e.g., 'user:*', 'cache:*').                    | steadybit-test:* |
+| Max Keys        | Maximum keys to delete (0 = unlimited).                                  | 100              |
+| Restore On Stop | Restore deleted keys when attack stops (string values only).             | true             |

@@ -1,0 +1,39 @@
+# Introduction to the Redis Extension
+The Steadybit Redis Extension enables chaos engineering for Redis instances and databases. It discovers your Redis infrastructure and provides attacks and checks to validate resilience under various failure scenarios.
+
+# Integration and Functionality
+Integration of Redis into Steadybit works via the [go-redis](https://github.com/redis/go-redis) client library.
+The extension connects to your Redis instances and may require appropriate permissions to:
+- Read server, memory, replication, and cluster information
+- Execute CONFIG GET/SET commands
+- Create and delete keys
+- Execute CLIENT PAUSE and DEBUG SLEEP commands
+
+## Integration of Redis in Steadybit
+
+Apply memory pressure in various ways:
+- Fill memory with random data
+- Reduce maxmemory to force evictions or OOM errors
+- Create and delete large keys in cycles
+
+Simulate data loss and cache failures:
+- Delete keys matching a pattern
+- Force cache expiration by setting short TTLs
+- Simulate cache penetration with non-existing key lookups
+
+Test connection and availability limits:
+- Exhaust connections to test connection limit handling
+- Pause all client command processing
+- Stop a Sentinel server to test failover behavior
+- Trigger a background save (BGSAVE)
+
+In parallel, you can check:
+- Memory usage against thresholds
+- Response latency
+- Connection count
+- Replication lag and master link status
+- Cache hit rate
+- Blocked clients count
+
+# Installation and Setup
+To integrate the Redis extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-redis#installation).

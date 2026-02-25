@@ -1,0 +1,16 @@
+# Introduction
+
+With this action, Steadybit can monitor Redis connected clients and fail if a threshold is exceeded on a Redis instance.
+
+# Use Cases
+
+ - Monitor connection count during connection exhaustion attacks.
+ - Detect connection leaks under failure conditions.
+
+# Parameters
+
+| Parameter              | Description                                                        | Default |
+|------------------------|--------------------------------------------------------------------|---------|
+| Duration               | How long to monitor.                                               | 60s     |
+| Max Connections Percent | Maximum allowed as percentage of maxclients (0 to disable).       | 80      |
+| Max Connections        | Maximum allowed absolute count (0 to disable).                    | 0       |
