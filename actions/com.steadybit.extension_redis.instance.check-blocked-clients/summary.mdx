@@ -1,0 +1,15 @@
+# Introduction
+
+With this action, Steadybit can monitor Redis blocked clients (waiting on BLPOP, BRPOP, etc.) and fail if a threshold is exceeded on a Redis instance.
+
+# Use Cases
+
+ - Detect client blocking issues during chaos experiments.
+ - Ensure blocking operations don't accumulate beyond safe limits.
+
+# Parameters
+
+| Parameter           | Description                          | Default |
+|---------------------|--------------------------------------|---------|
+| Duration            | How long to monitor.                 | 60s     |
+| Max Blocked Clients | Maximum allowed blocked clients.     | 10      |

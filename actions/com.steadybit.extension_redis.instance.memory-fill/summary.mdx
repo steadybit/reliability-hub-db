@@ -1,0 +1,17 @@
+# Introduction
+
+With this action, Steadybit can fill Redis memory with random data to simulate memory pressure on a Redis instance.
+
+# Use Cases
+
+ - Simulate memory pressure to test eviction policies and OOM handling.
+ - Validate application behavior when Redis runs out of memory.
+
+# Parameters
+
+| Parameter  | Description                                        | Default |
+|------------|----------------------------------------------------|---------|
+| Duration   | How long to fill memory.                           | 60s     |
+| Value Size | Size of each value in bytes.                       | 10240   |
+| Fill Rate  | Rate to fill memory in MB per second.              | 10      |
+| Max Memory | Maximum memory to fill in MB (0 = unlimited).      | 100     |

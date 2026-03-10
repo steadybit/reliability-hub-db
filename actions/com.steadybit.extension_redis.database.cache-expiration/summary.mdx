@@ -1,0 +1,18 @@
+# Introduction
+
+With this action, Steadybit can set a TTL on string keys matching a pattern in a Redis database to force them to expire, simulating sudden cache invalidation.
+
+# Use Cases
+
+ - Simulate sudden cache invalidation to test cache rebuild performance.
+ - Verify session expiration handling in your application.
+
+# Parameters
+
+| Parameter       | Description                                                        | Default          |
+|-----------------|--------------------------------------------------------------------|------------------|
+| Duration        | How long the attack should last.                                   | 60s              |
+| Pattern         | Key pattern (e.g., 'session:*', 'cache:*'). Only string keys affected. | steadybit-test:* |
+| TTL             | Time-to-live in seconds before keys expire.                        | 5                |
+| Max Keys        | Maximum keys to affect (0 = unlimited).                            | 100              |
+| Restore On Stop | Restore expired keys with original values and TTLs.                | false            |

@@ -1,0 +1,15 @@
+# Introduction
+
+With this action, Steadybit can monitor Redis cache hit rate and fail if it drops below a threshold on a Redis instance.
+
+# Use Cases
+
+ - Detect cache hit rate degradation during key deletion or expiration attacks.
+ - Validate that cache warming strategies maintain acceptable hit rates.
+
+# Parameters
+
+| Parameter    | Description                                 | Default |
+|--------------|---------------------------------------------|---------|
+| Duration     | How long to monitor.                        | 60s     |
+| Min Hit Rate | Minimum acceptable hit rate percentage.     | 80      |

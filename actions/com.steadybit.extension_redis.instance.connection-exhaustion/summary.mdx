@@ -1,0 +1,15 @@
+# Introduction
+
+With this action, Steadybit can open many connections to a Redis instance to test connection limit handling and exhaust the available connection pool.
+
+# Use Cases
+
+ - Test how applications handle Redis connection pool exhaustion.
+ - Verify connection limit configuration and error handling.
+
+# Parameters
+
+| Parameter             | Description                                  | Default |
+|-----------------------|----------------------------------------------|---------|
+| Duration              | How long to hold connections open.           | 60s     |
+| Number of Connections | Number of connections to open (1-10000).     | 100     |

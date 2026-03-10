@@ -1,0 +1,16 @@
+# Introduction
+
+With this action, Steadybit can monitor Redis replication status and lag for replicas on a Redis instance.
+
+# Use Cases
+
+ - Monitor replication health during failover or Sentinel stop experiments.
+ - Verify replica catch-up after network partitions.
+
+# Parameters
+
+| Parameter        | Description                                    | Default |
+|------------------|------------------------------------------------|---------|
+| Duration         | How long to monitor.                           | 60s     |
+| Max Lag Seconds  | Maximum allowed replication lag in seconds.     | 10      |
+| Require Link Up  | Fail if master link is down.                   | true    |

@@ -1,0 +1,16 @@
+# Introduction
+
+With this action, Steadybit can continuously create and delete large keys on a Redis instance to stress memory allocation and fragmentation handling.
+
+# Use Cases
+
+ - Stress test Redis memory allocation and fragmentation handling.
+ - Observe how large key operations impact other client performance.
+
+# Parameters
+
+| Parameter      | Description                                    | Default |
+|----------------|------------------------------------------------|---------|
+| Duration       | How long to run attack cycles.                 | 60s     |
+| Key Size       | Size of each key value in megabytes.           | 10      |
+| Number of Keys | Number of big keys to create per cycle.        | 1       |

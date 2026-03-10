@@ -1,0 +1,16 @@
+# Introduction
+
+With this action, Steadybit can reduce the Redis maxmemory configuration to force key evictions or OOM errors on a Redis instance.
+
+# Use Cases
+
+ - Force key evictions to verify application handles missing keys gracefully.
+ - Test OOM behavior by reducing maxmemory below current usage.
+
+# Parameters
+
+| Parameter       | Description                                                                                                                                    | Default    |
+|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration        | How long to apply the memory limit.                                                                                                            | 60s        |
+| Max Memory      | Memory limit (e.g., '10mb', '1gb', or bytes).                                                                                                  | 10mb       |
+| Eviction Policy | Eviction policy to apply: noeviction, allkeys-lru, allkeys-lfu, allkeys-random, volatile-lru, volatile-ttl, or keep (original).                | noeviction |
