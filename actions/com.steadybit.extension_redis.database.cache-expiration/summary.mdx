@@ -15,4 +15,4 @@ With this action, Steadybit can set a TTL on string keys matching a pattern in a
 | Pattern         | Key pattern (e.g., 'session:*', 'cache:*'). Only string keys affected. | steadybit-test:* |
 | TTL             | Time-to-live in seconds before keys expire.                        | 5                |
 | Max Keys        | Maximum keys to affect (0 = unlimited).                            | 100              |
-| Restore On Stop | Restore expired keys with original values and TTLs.                | false            |
+| Restore On Stop | Restore expired keys with original values and TTLs. Strongly recommended to prevent data loss. | true             |

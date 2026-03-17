@@ -2,6 +2,8 @@
 
 With this action, Steadybit can reduce the Redis maxmemory configuration to force key evictions or OOM errors on a Redis instance.
 
+**Warning:** Using eviction policies like `allkeys-lru`, `allkeys-lfu`, or `allkeys-random` will permanently delete keys when the memory limit is reached. Evicted data cannot be recovered. The default policy `noeviction` is recommended as it returns OOM errors instead of deleting data.
+
 # Use Cases
 
  - Force key evictions to verify application handles missing keys gracefully.
@@ -13,4 +15,4 @@ With this action, Steadybit can reduce the Redis maxmemory configuration to forc
 |-----------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------|
 | Duration        | How long to apply the memory limit.                                                                                                            | 60s        |
 | Max Memory      | Memory limit (e.g., '10mb', '1gb', or bytes).                                                                                                  | 10mb       |
-| Eviction Policy | Eviction policy to apply: noeviction, allkeys-lru, allkeys-lfu, allkeys-random, volatile-lru, volatile-ttl, or keep (original).                | noeviction |
+| Eviction Policy | Eviction policy to apply: noeviction, allkeys-lru, allkeys-lfu, allkeys-random, volatile-lru, volatile-ttl, or keep (original). **Caution: allkeys-* policies permanently delete data.** | noeviction |
