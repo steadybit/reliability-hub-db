@@ -1,18 +1,21 @@
 # Introduction
 
-Inject latency into any Java based application.
+Inject latency into any JVM based application.
 
 # Details
 
-The delay is applied before the handler method is executed.
+Specify the fully qualified class name in the `Class Name` parameter. For the `Method Name` parameter, provide only the method name, don't include the full method signature.
+If the targeted method is overloaded, all overloaded variants will be affected.
+
+The delay is applied before the method executes.
 
 # Parameters
 
-| Parameter                      | Description                                                                 | Default |
-|--------------------------------|-----------------------------------------------------------------------------|---------|
-| Class Name                     | Which Java class should be attacked?                                        |         |
-| Method Name                    | Which public method should be attacked?                                     |         |
-| Duration                       | How long should the traffic be delayed?                                     | 30s     |
-| Delay                          | How much should the traffic be delayed?                                     | 500ms   |
-| Jitter                         | Random +-30% jitter to network delay                                        | true    |
-| Validate class and method name |Should the action fail if the specified class and method could not be found? | true    |
+| Parameter                      | Description                                                                  | Default |
+|--------------------------------|------------------------------------------------------------------------------|---------|
+| Class Name                     | Which Java class should be attacked?                                         |         |
+| Method Name                    | Which public method should be attacked?                                      |         |
+| Duration                       | How long should the traffic be delayed?                                      | 30s     |
+| Delay                          | How much should the traffic be delayed?                                      | 500ms   |
+| Jitter                         | Random +-30% jitter to network delay                                         | true    |
+| Validate class and method name | Should the action fail if the specified class and method could not be found? | true    |
