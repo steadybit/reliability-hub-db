@@ -1,11 +1,12 @@
 # Introduction
 
-Injects a RuntimeException into a Spring™ MVC controller.
+Injects a `RuntimeException` into a Spring MVC controller.
 
 # Details
 
+This attack only target JVMs identified as Spring Application.
+
 The exception is thrown before the handler method is executed.
-When an exception is thrown the handler itself will not be executed.
 
 # Parameters
 
