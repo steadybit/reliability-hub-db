@@ -1,5 +1,5 @@
 {
-    "lastChange": 1773755269,
+    "lastChange": 1773993373,
     "templates": [
         "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
         "/templates/aws-ec2.ec2-restart/template.json",
