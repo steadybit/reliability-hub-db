@@ -1,7 +1,7 @@
 {
   "id": "0363a90e-9563-494c-bd25-81da6e4c3d55",
   "templateTitle": "New Relic should detect a disrupted workflow when a workload is unavailable",
-  "templateDescription": "Verify that New Relic alerts you to disruptions in your workflow, such as a critical deployment without pods ready to serve traffic.\n\n## Motivation\nKubernetes features a liveness probe to determine whether your pod is healthy and can accept traffic.\nIf Kubernetes cannot probe a pod, it restarts it in the hope that it will eventually be ready.\nIn case it is a critical deployment, New Relic workflow should alert on this disruption\n\n## Structure\nFirst, check that the New Relic Workflow is marked as operational\nAs soon as all pods of a workload aren't reachable, caused by the [block traffic](https://hub.steadybit.com/action/com.steadybit.extension_container.network_blackhole) attack, New Relic should detect this by marking the workflow as disrupted and ensuring your on-call team is taking action.\n\n## Solution Sketch\n\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n- [New Relic Workflow](https://docs.newrelic.com/docs/alerts-applied-intelligence/applied-intelligence/incident-workflows/incident-workflows/)",
+  "templateDescription": "Verify that New Relic alerts you to disruptions in your workflow, such as a critical deployment without pods ready to serve traffic.\n\n## Motivation\nKubernetes features a liveness probe to determine whether your pod is healthy and can accept traffic.\nIf Kubernetes cannot probe a pod, it restarts it in the hope that it will eventually be ready.\nIn case it is a critical deployment, New Relic workflow should alert on this disruption\n\n## Structure\nFirst, check that the New Relic Workflow is marked as operational\nAs soon as all pods of a workload aren't reachable, caused by the [block traffic](https://hub.steadybit.com/action/com.steadybit.extension_container.network_blackhole) attack, New Relic should detect this by marking the workflow as disrupted and ensuring your on-call team is taking action.\n\n## Solution Sketch\n\n- [Kubernetes liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)\n- [New Relic Workflow](https://docs.newrelic.com/docs/alerts/get-notified/alert-event-workflows/)",
   "placeholders": [
     {
       "key": "k8sClusterName",
@@ -29,11 +29,7 @@
       "description": "### Which New Relic Workload do you expect to be disrupted?"
     }
   ],
-  "tags": [
-    "New Relic",
-    "Harden Observability",
-    "Kubernetes"
-  ],
+  "tags": ["New Relic", "Harden Observability", "Kubernetes"],
   "experimentName": "New Relic should detect a disrupted workflow when [[k8sWorkloadOwner]] is unavailable",
   "hypothesis": "Whenever all pods of [[k8sWorkloadOwner]] can't be reached, the New Relic workload [[newRelicWorkloadName]] is disrupted.",
   "lanes": [
@@ -45,9 +41,7 @@
           "parameters": {
             "duration": "15s",
             "conditionCheckMode": "allTheTime",
-            "expectedStates": [
-              "OPERATIONAL"
-            ]
+            "expectedStates": ["OPERATIONAL"]
           },
           "customLabel": "Given: Workflow is operational",
           "actionType": "com.steadybit.extension_newrelic.workload_check",
@@ -59,16 +53,12 @@
                 {
                   "key": "new-relic.workload.account",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[newRelicAccountId]]"
-                  ]
+                  "values": ["[[newRelicAccountId]]"]
                 },
                 {
                   "key": "new-relic.workload.name",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[newRelicWorkloadName]]"
-                  ]
+                  "values": ["[[newRelicWorkloadName]]"]
                 }
               ]
             },
@@ -106,23 +96,17 @@
                 {
                   "key": "k8s.namespace",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[k8sNamespace]]"
-                  ]
+                  "values": ["[[k8sNamespace]]"]
                 },
                 {
                   "key": "k8s.workload-owner",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[k8sWorkloadOwner]]"
-                  ]
+                  "values": ["[[k8sWorkloadOwner]]"]
                 },
                 {
                   "key": "k8s.cluster-name",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[k8sClusterName]]"
-                  ]
+                  "values": ["[[k8sClusterName]]"]
                 }
               ]
             },
@@ -147,9 +131,7 @@
           "parameters": {
             "duration": "300s",
             "conditionCheckMode": "atLeastOnce",
-            "expectedStates": [
-              "DISRUPTED"
-            ]
+            "expectedStates": ["DISRUPTED"]
           },
           "customLabel": "THEN: Workflow should be disrupted",
           "actionType": "com.steadybit.extension_newrelic.workload_check",
@@ -161,9 +143,7 @@
                 {
                   "key": "new-relic.workload.account",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[newRelicAccountId]]"
-                  ]
+                  "values": ["[[newRelicAccountId]]"]
                 }
               ]
             },
@@ -197,9 +177,7 @@
                 {
                   "key": "new-relic.account.id",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[newRelicAccountId]]"
-                  ]
+                  "values": ["[[newRelicAccountId]]"]
                 }
               ]
             },
@@ -226,9 +204,7 @@
                 {
                   "key": "k8s.cluster-name",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[k8sClusterName]]"
-                  ]
+                  "values": ["[[k8sClusterName]]"]
                 }
               ]
             },
@@ -255,9 +231,7 @@
                 {
                   "key": "k8s.cluster-name",
                   "operator": "EQUALS",
-                  "values": [
-                    "[[k8sClusterName]]"
-                  ]
+                  "values": ["[[k8sClusterName]]"]
                 }
               ]
             },

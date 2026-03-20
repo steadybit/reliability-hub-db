@@ -9,3 +9,8 @@ icon: |
           fill="currentColor"/>
   </svg>
 extension: com.steadybit.extension_instana
+
+tags:
+  - Instana
+  - Observability
+  - Monitoring

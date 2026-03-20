@@ -11,3 +11,7 @@ icon: |
   </g>
   </svg>
 extension: com.steadybit.extension_aws
+
+tags:
+  - AWS
+  - Cloud

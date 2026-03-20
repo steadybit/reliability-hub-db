@@ -1,0 +1,36 @@
+# Introduction
+
+With this check you are able to measure the download bandwidth from an HTTP endpoint and validate that it stays within defined thresholds.
+
+# Details
+
+This check continuously sends parallel HTTP GET requests to the specified URL and measures the amount of response body data received within each measurement window. Response headers are not included in the measurement.
+
+It is intended to detect significant bandwidth changes, not to provide precise throughput numbers. For accurate bandwidth measurements, use a dedicated performance testing tool.
+
+# Use Cases
+
+ - Verify that your HTTP endpoints provide sufficient download bandwidth during chaos experiments
+ - Detect bandwidth degradation caused by network attacks or infrastructure issues
+ - Validate that bandwidth stays below a maximum threshold (e.g., to verify that a bandwidth limit attack is effective)
+
+# Parameters
+
+| Parameter          | Description                                                                                                                                                                   | Default |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration           | In which timeframe should the bandwidth be measured?                                                                                                                          | 10s     |
+| URL                | The URL to download from for bandwidth measurement.                                                                                                                           |         |
+| Headers            | The HTTP Headers.                                                                                                                                                             |         |
+| MaxConcurrent      | Number of parallel requests to execute simultaneously without delay. More concurrent requests generate more traffic to saturate the available bandwidth. (min 1, max 50)      | 5       |
+| MinBandwidth       | Minimum expected download bandwidth. Leave empty to skip minimum check.                                                                                                       |         |
+| MaxBandwidth       | Maximum expected download bandwidth. Leave empty to skip maximum check.                                                                                                       |         |
+| SuccessRate        | How many percent of the measurements must be within the bandwidth thresholds to consider the check successful? The result will be evaluated at the end of the given duration. | 100     |
+| FollowRedirects    | Should redirects be followed?                                                                                                                                                 |         |
+| ConnectTimeout     | Connection timeout for a single call in seconds. Should be between 1 and 10 seconds.                                                                                          | 5s      |
+| ReadTimeout        | Read timeout for a single call in seconds. Should be between 1 and 10 seconds.                                                                                                | 5s      |
+| InsecureSkipVerify | Should the TLS certificate be verified? If set to true, the certificate will not be verified.                                                                                 | false   |
+
+# Self-signed certificates
+
+If you want to use self-signed certificates, you need to import them into the extension. You can do this by mounting a volume with the certificates and referencing it in `extraVolumeMounts` and `extraVolumes` in the helm chart.
+See instructions in the [extension-http documentation](https://github.com/steadybit/extension-http?tab=readme-ov-file#importing-your-own-certificates).

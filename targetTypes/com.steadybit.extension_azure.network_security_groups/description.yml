@@ -9,3 +9,9 @@ icon: |
   </svg>
 extension: com.steadybit.extension_azure
 releaseDate: '2025-07-01'
+
+tags:
+  - Azure
+  - Cloud
+  - Virtual machine
+  - VM

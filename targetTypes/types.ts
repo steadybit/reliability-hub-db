@@ -12,4 +12,5 @@ export interface TargetTypeDescription {
   extension: ExtensionId;
   releaseDate?: string;
   beta?: boolean;
+  tags: string[];
 }

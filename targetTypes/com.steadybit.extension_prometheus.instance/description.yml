@@ -15,3 +15,12 @@ icon: |
     />
   </svg>
 extension: com.steadybit.extension_prometheus
+
+tags:
+  - Prometheus
+  - Kubernetes
+  - AKS (Azure Kubernetes Service)
+  - EKS (AWS Elastic Kubernetes Service)
+  - PromQL
+  - Observability
+  - Monitoring

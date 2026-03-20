@@ -9,3 +9,7 @@ icon: |
   </svg>
 extension: com.steadybit.extension_splunk
 releaseDate: '2025-04-01'
+tags:
+  - Splunk
+  - Observability
+  - Monitoring

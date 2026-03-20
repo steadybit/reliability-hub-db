@@ -6,6 +6,12 @@ Limit the bandwidth of outgoing network traffic.
 
 The Extension Windows Host needs to be installed on the target system.
 
+# Details
+
+This attack limits the bandwidth of outgoing network connections matching the configured criteria. As a result, the combined bandwidth of multiple parallel connections might exceed the configured limit.
+
+Without specifying a host or ip restriction, the attack would affect all traffic and may lead to broken communication between the Steadybit agent and platform. Hence, either the hostname or IP parameter is required.
+
 # Use Cases
 
 * Understand your service's performance under load
@@ -13,9 +19,6 @@ The Extension Windows Host needs to be installed on the target system.
 * Test your service's resilience to decreased bandwidth
 
 # Parameters
-
-**Note**: Without specifying a host or ip restriction, the attack would affect all traffic and may lead to broken communication between the Steadybit agent and platform. Hence, either the hostname or IP parameter is required.
-
 
 | Parameter         | Description                                                                                  | Default  |
 |-------------------|----------------------------------------------------------------------------------------------|----------|

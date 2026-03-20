@@ -1,0 +1,18 @@
+# Introduction
+
+This attack triggers a restart of an Argo Rollout by patching the `spec.restartAt` field with the current timestamp. This causes the Argo Rollouts controller to perform a rolling restart of all pods managed by the rollout, similar to how `kubectl argo rollouts restart` works.
+
+# Use Cases
+
+ - Check that a service remains available during an Argo Rollout restart, e.g., with the help of rolling updates or canary strategies.
+ - Verify how upstream services behave during a restart of downstream services managed by Argo Rollouts.
+ - Validate that traffic management (e.g., canary or blue-green routing) continues to function correctly during a pod restart.
+ - See whether persistent connections to a restarting service get re-established.
+
+# Parameters
+
+*No parameters.*
+
+# Rollback
+
+*No rollback possible.*

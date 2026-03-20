@@ -57,3 +57,6 @@ Where
 
 ## Q: Why is my disk not filled up to the specified value/percentage even though the attack was executed without errors?
 **A:** The attack calculates the amount to write only once at the beginning of the attack using the formulas mentioned above. If other processes cause the used disk space or overall capacity to vary while running the attack, you may have a higher or lower filled disk percentage. Also, the 'over time' approach works more reliably if you need to write more to the disk than available space.
+
+## Q: I get a "Operation not permitted" error when running the attack. Why?
+**A:** Some underlying filesystems (e.g., `ZFS`) do not support preallocation, which is used in the 'at once' mode. In such cases, you can switch to the 'over time' mode, which uses the `dd` command and should work on all filesystems.
