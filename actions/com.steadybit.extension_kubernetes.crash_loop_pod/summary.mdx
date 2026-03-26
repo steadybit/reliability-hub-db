@@ -11,7 +11,8 @@ You can use this step to continuously kill all (or a given) container in a selec
 
 # Rollback
 
-*No rollback necessary.*
+When the attack stops, the continuous killing of the container(s) stops immediately. It doesn't actively change the pod's state.
+Meaning if the pod is in `CrashLoopBackoff`, you need to wait for the backoff timer, as this is tracked internally by the kubelet and can't be reset.
 
 # Parameters
 
