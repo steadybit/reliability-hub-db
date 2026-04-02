@@ -1,0 +1,76 @@
+name: Hub Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  preview:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sanitize branch name
+        id: branch
+        env:
+          RAW: ${{ github.event.pull_request.head.ref }}
+        run: |
+          NAME="preview-$(echo "$RAW" | sed 's/[^a-zA-Z0-9._-]/-/g' | tr '[:upper:]' '[:lower:]')"
+          echo "name=${NAME}" >> "$GITHUB_OUTPUT"
+          echo "url=https://reliability-hub-git-${NAME}-steadybit.vercel.app" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout reliability-hub
+        uses: actions/checkout@v6
+        with:
+          repository: steadybit/reliability-hub
+          ref: main
+          submodules: true
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Update submodule to PR head
+        run: |
+          cd db
+          git fetch origin
+          git checkout ${{ github.event.pull_request.head.sha }}
+          cd ..
+          git add db
+
+      - name: Commit and force-push preview branch
+        run: |
+          git config user.name "Johannes Edmeier"
+          git config user.email "johannes.edmeier@steadybit.com"
+          git commit -m "chore: preview for ${{ github.event.pull_request.head.ref }}"
+          git push --force origin HEAD:refs/heads/${{ steps.branch.outputs.name }}
+
+      - name: Comment preview URL on PR
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          URL: ${{ steps.branch.outputs.url }}
+        run: |
+          MARKER="<!-- hub-preview-comment -->"
+          EXISTING=$(gh pr view "$PR_NUMBER" --repo "$REPO" --json comments --jq ".comments[].body" | grep -c "$MARKER" || true)
+          if [ "$EXISTING" = "0" ]; then
+            gh pr comment "$PR_NUMBER" --repo "$REPO" --body "${MARKER}
+          Hub preview: ${URL}"
+          fi
+
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sanitize branch name
+        id: branch
+        env:
+          RAW: ${{ github.event.pull_request.head.ref }}
+        run: |
+          NAME="preview-$(echo "$RAW" | sed 's/[^a-zA-Z0-9._-]/-/g' | tr '[:upper:]' '[:lower:]')"
+          echo "name=${NAME}" >> "$GITHUB_OUTPUT"
+          echo "url=https://reliability-hub-git-${NAME}-steadybit.vercel.app" >> "$GITHUB_OUTPUT"
+
+      - name: Delete preview branch
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh api -X DELETE "repos/steadybit/reliability-hub/git/refs/heads/${{ steps.branch.outputs.name }}" || echo "Branch already deleted or does not exist"
