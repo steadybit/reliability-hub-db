@@ -1,0 +1,30 @@
+# Introduction
+
+Actively terminates matching TCP connections on the host by sending TCP RST responses. Unlike "Block Traffic", which silently drops packets causing timeouts, this attack causes immediate connection errors on the client side.
+
+# Prerequisites
+
+If you are not using our container images for the extension, the attack requires `iptables` (from the iptables package).
+
+# Details
+
+The attack uses iptables REJECT rules with `--reject-with tcp-reset` to send TCP RST packets for matching connections. This affects both incoming and outgoing TCP traffic. The iptables rules are inserted at the top of the host's filter chains to ensure they are evaluated before any existing rules (e.g., Kubernetes kube-proxy rules). Each attack instance creates a unique iptables chain, allowing multiple concurrent attacks with different filters on the same target.
+
+Only TCP traffic is affected. UDP and other protocols are not impacted by this attack.
+
+# Use Cases
+
+* Simulate abrupt connection resets from upstream or downstream services
+* Test client-side retry and reconnection logic under immediate connection failures
+* Verify circuit breaker behavior when connections are actively refused rather than timing out
+* Simulate firewall or load balancer dropping connections with RST
+
+# Parameters
+
+| Parameter         | Description                                                            | Default |
+|-------------------|------------------------------------------------------------------------|---------|
+| Duration          | How long should TCP connections be reset?                              | 30s     |
+| Hostname          | Restrict to/from which hosts the traffic is affected                   |         |
+| IP Address        | Restrict to/from which IP addresses the traffic is affected            |         |
+| Ports             | Restrict to/from which ports the traffic is affected                   |         |
+| Network Interface | Target network interface to affect. All non-loopback if none specified |         |
