@@ -1,0 +1,40 @@
+# Introduction
+
+Injects configurable DNS errors into DNS queries for a specific duration. Unlike "Block DNS", which completely blocks access to DNS servers, this attack intercepts DNS queries and responds with specific error codes or simulates timeouts. This allows testing how services handle different DNS failure modes.
+
+# Details
+
+_Note:_ If you are going to attack containers using network attacks, **all containers in the target's linux network namespace** (e.g. all containers belonging to the same Kubernetes Pod) will be affected.
+
+When multiple error types are selected, each DNS query receives a randomly chosen error from the configured set.
+
+Supported error types:
+- **NXDOMAIN** - Responds as if the domain does not exist
+- **SERVFAIL** - Responds with a server failure error
+- **TIMEOUT** - Drops the DNS query, simulating a timeout (no response is sent)
+
+# Prerequisites
+
+The host kernel must support eBPF with TCX (Linux 6.6+). The extension requires `CAP_BPF` and `CAP_NET_ADMIN` capabilities.
+
+# Rollback
+
+When the attack duration expires or the attack is stopped, the eBPF program is detached from the network interface and removed.
+
+# Use Cases
+
+* Test how services handle DNS NXDOMAIN errors (e.g., during domain migration or misconfiguration)
+* Verify retry and fallback behavior when DNS servers return SERVFAIL
+* Simulate DNS timeout scenarios to test client-side timeout handling and caching
+* Validate that services degrade gracefully under intermittent DNS failures
+* Test service mesh and sidecar proxy behavior under DNS errors
+
+# Parameters
+
+| Parameter            | Description                                                                                                                  | Default  |
+|----------------------|------------------------------------------------------------------------------------------------------------------------------|----------|
+| Fail on Host Network | Emit failure when the targeted container is using the host network                                                           | true     |
+| Duration             | How long should the DNS errors be injected?                                                                                  | 30s      |
+| DNS Error Type       | DNS error to inject. Multiple types can be selected for random injection. Possible values: `NXDOMAIN`, `SERVFAIL`, `TIMEOUT` | NXDOMAIN |
+| DNS Port             | DNS port or port range to intercept                                                                                          | 53       |
+| Target CIDRs         | IP CIDRs to match. If empty, all DNS traffic is affected                                                                     |          |
