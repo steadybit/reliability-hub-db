@@ -9,12 +9,10 @@ jobs:
     if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Sanitize branch name
+      - name: Derive branch name
         id: branch
-        env:
-          RAW: ${{ github.event.pull_request.head.ref }}
         run: |
-          NAME="preview-$(echo "$RAW" | sed 's/[^a-zA-Z0-9._-]/-/g' | tr '[:upper:]' '[:lower:]')"
+          NAME="preview-${{ github.event.pull_request.number }}"
           echo "name=${NAME}" >> "$GITHUB_OUTPUT"
           echo "url=https://reliability-hub-git-${NAME}-steadybit.vercel.app" >> "$GITHUB_OUTPUT"
 
@@ -60,14 +58,11 @@ jobs:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Sanitize branch name
+      - name: Derive branch name
         id: branch
-        env:
-          RAW: ${{ github.event.pull_request.head.ref }}
         run: |
-          NAME="preview-$(echo "$RAW" | sed 's/[^a-zA-Z0-9._-]/-/g' | tr '[:upper:]' '[:lower:]')"
+          NAME="preview-${{ github.event.pull_request.number }}"
           echo "name=${NAME}" >> "$GITHUB_OUTPUT"
-          echo "url=https://reliability-hub-git-${NAME}-steadybit.vercel.app" >> "$GITHUB_OUTPUT"
 
       - name: Delete preview branch
         env:
