@@ -1,50 +1,23 @@
-echo '{' > index.json
-echo '    "lastChange": '$(date +%s)',' >> index.json
+#!/usr/bin/env bash
 
-echo '    "templates": [' >> index.json
-directory="templates"
-for folder in "$directory"/*/; do
-    if [ -d "${folder}" ]; then
-        folder_name=$(basename "$folder")
-        # Check if it's the last subfolder
-        if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
-            echo '        "/'${folder}'template.json",' >> index.json
-        else
-            echo '        "/'${folder}'template.json"' >> index.json
-        fi
-    fi
-done
-echo '    ],' >> index.json
+if ! command -v jq &> /dev/null; then
+  echo "pre-commit: jq is required but not installed. Install it via 'brew install jq' or 'apt-get install jq'." >&2
+  exit 1
+fi
 
-echo '    "actions": [' >> index.json
-directory="actions"
-for folder in "$directory"/*/; do
-    if [ -d "${folder}" ]; then
-        folder_name=$(basename "$folder")
-        # Check if it's the last subfolder
-        if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
-            echo '        "/'${folder}'description.yml",' >> index.json
-        else
-            echo '        "/'${folder}'description.yml"' >> index.json
-        fi
-    fi
-done
-echo '    ],' >> index.json
+list_paths() {
+  printf '%s\n' "$1"/*/"$2" | jq -R '"/\(.)"' | jq -s .
+}
 
-echo '    "extensions": [' >> index.json
-directory="extensions"
-for folder in "$directory"/*/; do
-    if [ -d "${folder}" ]; then
-        folder_name=$(basename "$folder")
-        if [ "$folder" != "$(ls -d "$directory"/*/ | tail -n 1)" ]; then
-            echo '        "/'${folder}'description.yml",' >> index.json
-        else
-            echo '        "/'${folder}'description.yml"' >> index.json
-        fi
-    fi
-done
-echo '    ]' >> index.json
+new_content=$(jq -n \
+  --argjson templates "$(list_paths templates template.json)" \
+  --argjson actions "$(list_paths actions description.yml)" \
+  --argjson extensions "$(list_paths extensions description.yml)" \
+  '{templates: $templates, actions: $actions, extensions: $extensions}')
 
-echo '}' >> index.json
+old_content=$(jq 'del(.lastChange)' index.json 2>/dev/null)
 
-git add index.json
+if [ "$new_content" != "$old_content" ]; then
+  echo "$new_content" | jq --argjson ts "$(date +%s)" '{lastChange: $ts} + .' > index.json
+  git add index.json
+fi
