@@ -1,17 +1,22 @@
 # Introduction
 
-With this action, Steadybit can check the partition activity for a given topic (leader election, replicas going offline or in-sync, new replica order).
+Monitors partition-level changes on a Kafka topic during an experiment. This check observes whether specific partition events occur — such as a leader election, replicas going offline, or in-sync replicas changing — and evaluates them against an expected change list.
+
+This action targets **topic partitions**, not brokers or consumer groups. For broker-level monitoring (controller elections, downtime), use `Check Brokers`. For consumer group state monitoring (Stable, Dead, Rebalancing), use `Check Consumer State`.
+
+**Important:** This action uses `changeCheckMode` and `expectedChanges` parameters — not `stateCheckMode` or `expectedStateList` (those belong to `Check Consumer State`).
 
 # Use Cases
 
- - Verify the behaviour of kafka regarding partitions management when unexpected events occurs.
+ - Verify that a leader election occurs on a topic's partition when the current leader broker is killed.
+ - Assert that in-sync replicas change when a broker hosting a replica is network-isolated.
+ - Confirm that no unexpected partition changes happen during a consumer-level fault injection.
 
 # Parameters
 
-| Parameter             | Description                                                                                                                                      | Default |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration              | The duration of the attack.                                                                                                                      | 10s     |
-| Expected Changes List | Required. The type of partition changes expected (new leader, partition replicas going in-sync or offlines, change in the order of the replicas) |         |
-| Change Check Mode     | How often should the change be expected. "At least once" or "All the time"                                                                       |         |
-
+| Parameter         | Description                                                                                                                                                                                                                                                                                                                                          | Default    |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration          | How long the check runs. The check continuously polls partition metadata for this duration.                                                                                                                                                                                                                                                          | 10s        |
+| Expected Changes  | Which partition-level changes to watch for. Valid values: **New Leader Elected** (`leader changed`), **Replicas Changed** (`replicas changed`), **Offline Replicas Changed** (`offline replicas changed`), **In-Sync Replicas Changed** (`in sync replicas changed`). Multiple values can be selected. If left empty, any partition change triggers. |            |
+| Change Check Mode | How the expected changes are evaluated. **All the time** (`allTheTime`): every poll must detect the change. **At least once** (`atLeastOnce`): the change must be observed at least once during the duration.                                                                                                                                        | allTheTime |
 

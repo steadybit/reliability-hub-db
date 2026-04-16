@@ -1,15 +1,16 @@
 # Introduction
 
-With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [max.connection.creation.rate](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#max-connection-creation-rate).
+Dynamically modifies the broker's [max.connection.creation.rate](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#max-connection-creation-rate) configuration to limit how many new client connections the broker accepts per second. The original value is automatically restored when the attack ends.
 
 # Use Cases
 
- - Limit the connection creation rate to simulate slow acceptance of new connections.
+ - Simulate slow connection acceptance to test how producers and consumers handle connection timeouts and retries.
+ - Verify that client connection pools and retry logic behave correctly under connection throttling.
 
 # Parameters
 
-| Parameter                | Description                                                                                      | Default |
-|--------------------------|--------------------------------------------------------------------------------------------------|---------|
-| Duration                 | The duration of the attack.                                                                      | 60s     |
-| Connection creation rate | The rate of connection creation permitted. The value is rollback to the previous one at the end. |         |
+| Parameter                | Description                                                                                                                                                                               | Default |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                 | How long the configuration change stays in effect. The original `max.connection.creation.rate` value is automatically restored when the duration expires.                                 | 60s     |
+| Connection creation rate | The maximum number of new connections the broker accepts per second. Set to a low value (e.g., 1) to simulate severe throttling. The original value is restored at the end of the attack. |         |
 

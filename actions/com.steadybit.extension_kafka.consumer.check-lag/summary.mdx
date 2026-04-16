@@ -1,18 +1,20 @@
 # Introduction
 
-With this action, Steadybit can check the lag of a consumer for a topic for a given time.
+Monitors the consumer lag (offset difference between the topic's latest offset and the consumer group's committed offset) for a specific topic. If the lag exceeds the configured threshold at any point during the check, the experiment fails.
+
+This is different from `Check Consumer State` which monitors the consumer group's coordination state (Stable, Dead, etc.). This action specifically measures **how far behind** the consumer is in processing messages.
 
 # Use Cases
 
- - You can check the topic lag of your consumer during your experiments.
- - You can fail the experiment if the lag is over a certain threshold.
+ - Fail the experiment if consumer lag grows beyond an acceptable threshold during a broker fault injection.
+ - Verify that consumers keep up with message production while injecting network latency.
+ - Combine with `Produce Periodically` to generate load and verify lag stays within bounds.
 
 # Parameters
 
-| Parameter           | Description                                                                                              | Default |
-|---------------------|----------------------------------------------------------------------------------------------------------|---------|
-| Duration            | The duration of the attack.                                                                              | 10s     |
-| Topic to track lag  | Required. The topic to check the lag                                                                     |         |
-| Lag alert threshold | Required. The acceptable threshold of offset difference between the topic offset and the consumer offset |         |
-
+| Parameter           | Description                                                                                                                                                                                                                    | Default |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration            | How long the check runs. Consumer lag is polled continuously for this duration.                                                                                                                                                | 10s     |
+| Topic to track lag  | Required. The name of the Kafka topic to monitor lag for. This is the topic whose offset will be compared against the consumer group's committed offset.                                                                       |         |
+| Lag alert threshold | Required. The maximum acceptable offset difference between the topic's latest offset and the consumer group's committed offset. If lag exceeds this value, the experiment fails. Specified as an integer (number of messages). |         |
 

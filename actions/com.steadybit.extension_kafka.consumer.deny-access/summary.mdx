@@ -1,20 +1,22 @@
 # Introduction
 
-With this action, Steadybit can deny access to a topic for one or many consumer groups on all kafka hosts.
+Blocks a Kafka user from accessing a specific topic by creating a deny ACL rule on all Kafka brokers. This simulates authorization failures for the consumer group using that user identity. The ACL rule is automatically removed when the attack ends.
 
 # Prerequisites
 
-Based on Kafka ACL, so the security must be activated on kafka.
+Kafka ACL security must be enabled on the cluster. This action uses Kafka's built-in ACL mechanism — it will not work on clusters without authorization configured.
 
 # Use Cases
 
- - Block a consumer of reading a topic and consuming message to see how the consumer deal with authorizations issues.
- - Can also be used to do a Delete Records action while the consumer is block to simulate a loss of records and see how the consumer reacts.
+ - Block a consumer from reading a topic to observe how the application handles authorization errors.
+ - Combine with `Delete Records` to first block the consumer, then delete records, and observe how the consumer reacts to a gap in records when access is restored.
+ - Verify that consumer applications gracefully degrade when topic access is revoked.
 
 # Parameters
 
-| Parameter | Description                                                                      | Default |
-|-----------|----------------------------------------------------------------------------------|---------|
-| Duration  | The duration of the attack.                                                      | 60s     |
-| User      | The user that will be affected by the Kafka ACL and be blocked during the attack |         |
-| User      | The topic to deny access that will be in the Kafka ACL                           |         |
+| Parameter | Description                                                                                                                                                        | Default |
+|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration  | How long the ACL deny rule stays in effect. The rule is automatically rolled back when the duration expires.                                                       | 60s     |
+| User      | The Kafka principal (user identity) to block. This should match the user configured in the consumer group's authentication. The deny ACL is created for this user. |         |
+| Topic     | The Kafka topic to deny access to. A deny ACL rule is created for this specific topic, preventing the specified user from reading it.                              |         |
+

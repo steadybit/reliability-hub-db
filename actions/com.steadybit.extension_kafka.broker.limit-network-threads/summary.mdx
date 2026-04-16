@@ -1,20 +1,20 @@
 # Introduction
 
-With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [num.network.threads](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#num-network-threads).
+Dynamically modifies the broker's [num.network.threads](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#num-network-threads) configuration to reduce the number of threads available for processing network requests. This limits the broker's ability to accept and process requests from producers and consumers. The original value is automatically restored when the attack ends.
 
 # Details
 
-Kafka restricts large changes to its current configuration. If the requested number of network threads falls outside the permissible range,
-the extension applies intermediate adjustments incrementally until the target value is achieved.
+Kafka restricts large changes to its current configuration. If the requested number of network threads falls outside the permissible range, the extension applies intermediate adjustments incrementally until the target value is achieved.
 
 # Use Cases
 
- - Reduce the num.network.threads to limit the broker’s ability to process network requests.
+ - Reduce network threads to simulate a broker under heavy network load and test client timeout/retry behavior.
+ - Verify that producers and consumers handle degraded broker responsiveness without data loss.
 
 # Parameters
 
-| Parameter                 | Description                                                                                     | Default |
-|---------------------------|-------------------------------------------------------------------------------------------------|---------|
-| Duration                  | The duration of the attack.                                                                     | 60s     |
-| Number of Network Threads | The number of network threads per broker. The value is rollback to the previous one at the end. |         |
+| Parameter                 | Description                                                                                                                                                                                                                                                                                  | Default |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                  | How long the configuration change stays in effect. The original `num.network.threads` value is automatically restored when the duration expires.                                                                                                                                             | 60s     |
+| Number of Network Threads | The target number of network threads per broker. Set to a low value (e.g., 1) to severely limit the broker's network request processing capacity. The original value is restored at the end of the attack. The change may be applied incrementally if Kafka's permissible range requires it. |         |
 

@@ -1,20 +1,20 @@
 # Introduction
 
-With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [num.io.threads](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#num-io-threads).
+Dynamically modifies the broker's [num.io.threads](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#num-io-threads) configuration to reduce the number of threads available for disk I/O operations. This can cause increased latency or request timeouts under load. The original value is automatically restored when the attack ends.
 
 # Details
 
-Kafka restricts large changes to its current configuration. If the requested number of network threads falls outside the permissible range,
-the extension applies intermediate adjustments incrementally until the target value is achieved.
+Kafka restricts large changes to its current configuration. If the requested number of I/O threads falls outside the permissible range, the extension applies intermediate adjustments incrementally until the target value is achieved.
 
 # Use Cases
 
- - Limit  I/O threads to reduce the broker’s capacity to perform disk operations, potentially causing increased latency or request timeouts.
+ - Reduce I/O threads to simulate degraded disk performance and test how producers/consumers handle increased latency.
+ - Verify that client timeout and retry settings are appropriate when broker I/O capacity is limited.
 
 # Parameters
 
-| Parameter            | Description                                                                                | Default |
-|----------------------|--------------------------------------------------------------------------------------------|---------|
-| Duration             | The duration of the attack.                                                                | 60s     |
-| Number of IO Threads | The number of io threads per broker. The value is rollback to the previous one at the end. |         |
+| Parameter            | Description                                                                                                                                                                                                                                               | Default |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration             | How long the configuration change stays in effect. The original `num.io.threads` value is automatically restored when the duration expires.                                                                                                               | 60s     |
+| Number of IO Threads | The target number of I/O threads per broker. Set to a low value (e.g., 1) to severely limit disk I/O capacity. The original value is restored at the end of the attack. The change may be applied incrementally if Kafka's permissible range requires it. |         |
 

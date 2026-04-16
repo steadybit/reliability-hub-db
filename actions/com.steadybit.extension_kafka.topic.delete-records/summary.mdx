@@ -1,17 +1,21 @@
 # Introduction
 
-With this action, Steadybit can delete records, you specify the number of last records that needs to be deleted (warning: by last records we are referring to the topic ones, not the consumed ones).
+Deletes records from a Kafka topic by advancing the partition offset, making older records inaccessible to consumers. The offset is moved relative to the latest known offset — for example, specifying 0 moves to the latest offset (skipping all unconsumed records), while specifying 10 keeps the last 10 records.
 
-To avoid kafka issues, we recommend to block the consumers of the topic targeted either by a block network or a kafka deny access action and during this time to trigger the delete records action.
+**Warning:** "Last records" refers to the topic's records, not the consumer's committed offset. Records deleted this way are permanently inaccessible.
+
+**Recommendation:** Block consumers before deleting records (using `Deny Access` or a network block action) to control the timing. This lets you observe how the consumer reacts to a gap in records when access is restored.
 
 # Use Cases
 
- - While blocking a consumer, delete some records to see how consumer reacts when records are missing or there is a gap in the records consumed.
+ - Simulate message loss by deleting records while a consumer is blocked, then observe how the consumer handles the offset gap.
+ - Test consumer recovery logic when records it expected to process no longer exist.
+ - Verify that downstream systems handle missing messages gracefully.
 
 # Parameters
 
-| Parameter                                  | Description                                                                                                            | Default |
-|--------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------|
-| X from newest Offset                       | To move the offset in the past, 0 means to the last known offset (skipping every records from where the consumer was). |         |
-| Partition to issue delete records requests | One or more partitions to delete the records.                                                                          |         |
+| Parameter                                  | Description                                                                                                                                                                                                                        | Default |
+|--------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| X from newest Offset                       | How many records to keep relative to the newest offset. `0` means advance to the latest offset, skipping all records. `10` means keep the 10 most recent records and delete everything before them. This is applied per partition. |         |
+| Partition to issue delete records requests | One or more partition IDs to delete records from. Specified as a list of partition numbers (e.g., `0`, `1`, `2`). Only the selected partitions are affected.                                                                       |         |
 

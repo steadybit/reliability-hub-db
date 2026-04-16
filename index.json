@@ -1,5 +1,5 @@
 {
-  "lastChange": 1775146992,
+  "lastChange": 1776333972,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -126,6 +126,9 @@
     "/actions/com.steadybit.extension_azure.network_security_groups.block_hosts/description.yml",
     "/actions/com.steadybit.extension_azure.scale_set.instance.state/description.yml",
     "/actions/com.steadybit.extension_azure.vm.state/description.yml",
+    "/actions/com.steadybit.extension_cloudfoundry.app.check/description.yml",
+    "/actions/com.steadybit.extension_cloudfoundry.app.restart/description.yml",
+    "/actions/com.steadybit.extension_cloudfoundry.app.stop/description.yml",
     "/actions/com.steadybit.extension_container.fill_disk/description.yml",
     "/actions/com.steadybit.extension_container.fill_mem/description.yml",
     "/actions/com.steadybit.extension_container.network_bandwidth/description.yml",
@@ -264,6 +267,7 @@
     "/extensions/com.steadybit.extension_appdynamics/description.yml",
     "/extensions/com.steadybit.extension_aws/description.yml",
     "/extensions/com.steadybit.extension_azure/description.yml",
+    "/extensions/com.steadybit.extension_cloudfoundry/description.yml",
     "/extensions/com.steadybit.extension_container/description.yml",
     "/extensions/com.steadybit.extension_datadog/description.yml",
     "/extensions/com.steadybit.extension_dynatrace/description.yml",

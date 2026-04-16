@@ -1,17 +1,20 @@
 # Introduction
 
-With this action, Steadybit can check the state of a consumer for a given time.
+Monitors the state of a Kafka consumer group during an experiment. This check polls the consumer group's coordination state and evaluates whether it matches the expected states.
+
+This action targets **consumer groups**, not brokers or topics. For broker-level monitoring (controller elections, downtime), use `Check Brokers`. For topic partition changes (leader election, replica changes), use `Check Partitions`. For consumer lag monitoring, use `Check Consumer Lag`.
 
 # Use Cases
 
- - You can check the state of your consumer during your experiments.
+ - Verify that a consumer group remains **Stable** while injecting faults into downstream services.
+ - Assert that a consumer group transitions to **PreparingRebalance** when a consumer pod is killed.
+ - Detect if a consumer group enters a **Dead** state during a broker fault injection.
 
 # Parameters
 
-| Parameter           | Description                                                                                               | Default |
-|---------------------|-----------------------------------------------------------------------------------------------------------|---------|
-| Duration            | The duration of the attack.                                                                               | 10s     |
-| Expected State List | Required. The state to look after (Dead, Stable, Empty, Unknown, CompletingRebalance, PreparingRebalance) |         |
-| State Check Mode    | How often should the state be expected. "At least once" or "All the time"                                 |         |
-
+| Parameter           | Description                                                                                                                                                                                                                                           | Default    |
+|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration            | How long the check runs. The check continuously polls consumer group state for this duration.                                                                                                                                                         | 10s        |
+| Expected State List | Which consumer group states to expect. Valid values: **Stable**, **Dead**, **Empty**, **Unknown**, **CompletingRebalance**, **PreparingRebalance**. Multiple states can be selected — the check succeeds if the group is in any of the listed states. |            |
+| State Check Mode    | How the expected state is evaluated. **All the time** (`allTheTime`): every poll must find the consumer in one of the expected states. **At least once** (`atLeastOnce`): the expected state must be observed at least once during the duration.      | allTheTime |
 

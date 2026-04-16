@@ -1,14 +1,18 @@
 # Introduction
 
-With this action, Steadybit elects the preferred replica for a partition.
+Triggers a partition leader election for a given topic by electing the preferred replica. To force the election, the action reorders the replica assignment so that the next in-sync replica becomes the first (preferred) replica and the current leader is moved to last position.
+
+**Warning:** This action modifies the replica assignment order to force the election. The replica order change persists after the action completes — it is not automatically rolled back.
 
 # Use Cases
 
- - Start the election of a new leader choosing the preferred replica for a partition, can be useful to trigger the election before the imbalance threshold.
+ - Trigger a leader election to test how producers and consumers handle the brief unavailability during leader transitions.
+ - Force an election before the automatic imbalance threshold kicks in, to test the election path in a controlled manner.
+ - Combine with `Check Partitions` (using `expectedChanges: leader changed`) to verify the election was observed.
 
 # Parameters
 
-| Parameter                      | Description                                             | Default |
-|--------------------------------|---------------------------------------------------------|---------|
-| Partition to elect new leader" | One or more partitions to trigger a new leader election |         |
+| Parameter                     | Description                                                                                                                                                                                                                 | Default |
+|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Partition to elect new leader | One or more partition IDs to trigger a leader election on. Specified as a list of partition numbers (e.g., `0`, `1`). Each selected partition will have its replica order changed to force a new preferred leader election. |         |
 

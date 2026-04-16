@@ -1,21 +1,24 @@
 # Introduction
 
-With this action, Steadybit can become a producer and send records at the desired rate.
+Produces records to a Kafka topic at a constant rate (records per second) for the entire attack duration. For example, 5 records/second over 60 seconds produces 300 records total.
+
+For producing a fixed total number of records (distributed across the duration), use `Produce (# of Records)` instead.
 
 # Use Cases
 
- - You can check the behaviour of your consumer under various types of messages
- - You can artificially create lags for your topic by producing messages at a high throughput
+ - Generate a steady stream of messages to simulate normal production load during fault injection.
+ - Create sustained consumer lag by producing at a rate higher than the consumer can process.
+ - Combine with `Check Consumer Lag` to verify that consumers keep up under a known production rate.
 
 # Parameters
 
-| Parameter           | Description                                                                                                                                 | Default |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Record Key          | Optional. You can define a key, that could define the partitions used based on the partitions logics in place (default is round robin).     |         |
-| Record Value        | Required. The value of the record to generate                                                                                               |         |
-| Record Headers      | The Record Headers.                                                                                                                         |         |
-| Duration            | The duration of the attack.                                                                                                                 | 10s     |
-| Records per seconds | The number of records per second. Should be between 1 and 10.                                                                               |         |
-| Success Rate        | How many percent of the records must be at least successful, that means not encountering any errors while sending the record to the broker. | 100%    |
-| MaxConcurrent       | Maximum count on parallel running requests. (min 1, max 10)                                                                                 | 5       |
+| Parameter           | Description                                                                                                                                                                | Default |
+|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration            | How long the producer runs at the specified rate. Total records produced = rate x duration.                                                                                | 10s     |
+| Records per seconds | The number of records to produce per second. Min: 1, Max: 10.                                                                                                              |         |
+| Record Key          | Optional. The Kafka record key. Determines which partition receives the record based on the topic's partitioning strategy (default is round-robin when no key is set).     |         |
+| Record Value        | Required. The message body to produce. Every record uses this same value.                                                                                                  |         |
+| Record Headers      | Optional. Kafka record headers to attach to each produced record. Specified as key-value pairs.                                                                            |         |
+| Success Rate        | Minimum percentage of records that must be produced without errors for the action to succeed. If the actual success rate drops below this threshold, the experiment fails. | 100%    |
+| MaxConcurrent       | Maximum number of parallel produce requests in flight at once. Min: 1, Max: 10.                                                                                            | 5       |
 

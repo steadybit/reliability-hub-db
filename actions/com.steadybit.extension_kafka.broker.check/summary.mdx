@@ -1,17 +1,20 @@
 # Introduction
 
-With this action, Steadybit can check the activity of brokers for a given time.
+Monitors broker-level cluster changes during an experiment. This check observes whether specific broker events occur — such as a controller election or a broker going offline — and evaluates them against an expected change list.
+
+This action targets **brokers**, not topics or consumer groups. For topic partition changes (leader election, replica changes), use `Check Partitions` instead. For consumer group state monitoring, use `Check Consumer State`.
 
 # Use Cases
 
- - You can check the activity of your brokers during your experiments (broker downtime and controller elections).
+ - Verify that a controller election happens when the active controller broker is taken down.
+ - Confirm that broker downtime is detected when a broker pod is killed or network-isolated.
+ - Assert that no unexpected broker-level disruptions occur during a topic-level fault injection.
 
 # Parameters
 
-| Parameter         | Description                                                               | Default |
-|-------------------|---------------------------------------------------------------------------|---------|
-| Duration          | The duration of the attack.                                               | 10s     |
-| Expected Changes  | The changes to look after (Broker Downtime, New Controller Elected)       |         |
-| Change Check Mode | How often should the state be expected. "At least once" or "All the time" |         |
-
+| Parameter         | Description                                                                                                                                                                                                    | Default    |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration          | How long the check runs. The check continuously polls broker state for this duration.                                                                                                                          | 10s        |
+| Expected Changes  | Which broker-level changes to watch for. Valid values: **New Controller Elected** (`kafka controller changed`), **Broker downtime** (`kafka broker with downtime`). If left empty, any broker change triggers. |            |
+| Change Check Mode | How the expected changes are evaluated. **All the time** (`allTheTime`): every poll must detect the change. **At least once** (`atLeastOnce`): the change must be observed at least once during the duration.  | allTheTime |
 

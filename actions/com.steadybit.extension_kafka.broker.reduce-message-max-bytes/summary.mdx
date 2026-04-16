@@ -1,15 +1,16 @@
 # Introduction
 
-With this action, Steadybit can dynamically modify a broker configuration to change the value of the following configuration [message.max.bytes](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#message-max-bytes).
+Dynamically modifies the broker's [message.max.bytes](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html#message-max-bytes) configuration to set a very low maximum message batch size. Messages exceeding this limit are rejected by the broker. The original value is automatically restored when the attack ends.
 
 # Use Cases
 
- - Set a very low max bytes per message to simulate message size rejections.
+ - Set a very low max bytes per message to simulate message size rejections and test how producers handle `RecordTooLargeException`.
+ - Verify that producer error handling and retry logic correctly deal with message size validation failures.
 
 # Parameters
 
-| Parameter             | Description                                                                                    | Default |
-|-----------------------|------------------------------------------------------------------------------------------------|---------|
-| Duration              | The duration of the attack.                                                                    | 60s     |
-| Max bytes per message | The number of bytes per message allowed. The value is rollback to the previous one at the end. |         |
+| Parameter             | Description                                                                                                                                                                                                                          | Default |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration              | How long the configuration change stays in effect. The original `message.max.bytes` value is automatically restored when the duration expires.                                                                                       | 60s     |
+| Max bytes per message | The maximum allowed size in bytes for a message batch. Messages larger than this value are rejected by the broker. Set to a very low value (e.g., 100) to force rejections. The original value is restored at the end of the attack. |         |
 
