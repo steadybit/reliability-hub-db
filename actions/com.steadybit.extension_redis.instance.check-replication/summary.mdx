@@ -1,16 +1,19 @@
 # Introduction
 
-With this action, Steadybit can monitor Redis replication status and lag for replicas on a Redis instance.
+Monitors Redis replication status and lag for replica instances. Fails the experiment if replication lag exceeds the configured threshold or if the master link goes down (when `Require Link Up` is enabled).
+
+This check is designed to be combined with attacks that affect replication, such as `Stop Sentinel` or network-level fault injections. For latency monitoring on the Redis command level, use `Latency Check` instead.
 
 # Use Cases
 
- - Monitor replication health during failover or Sentinel stop experiments.
- - Verify replica catch-up after network partitions.
+ - Monitor replication health during a `Stop Sentinel` attack to verify that replicas continue to sync with the master.
+ - Verify that replicas catch up within acceptable lag after a network partition is healed.
+ - Fail the experiment if the master link goes down during a fault injection, ensuring replication integrity.
 
 # Parameters
 
-| Parameter        | Description                                    | Default |
-|------------------|------------------------------------------------|---------|
-| Duration         | How long to monitor.                           | 60s     |
-| Max Lag Seconds  | Maximum allowed replication lag in seconds.     | 10      |
-| Require Link Up  | Fail if master link is down.                   | true    |
+| Parameter       | Description                                                                                                                                 | Default |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration        | How long the check runs. Replication status is polled continuously for this duration.                                                       | 60s     |
+| Max Lag Seconds | Maximum allowed replication lag in seconds. If the replica falls further behind than this threshold, the experiment fails.                  | 10      |
+| Require Link Up | Whether to fail the experiment if the master link is reported as down. When enabled, a broken master-replica link causes immediate failure. | true    |

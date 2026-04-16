@@ -1,16 +1,19 @@
 # Introduction
 
-With this action, Steadybit can monitor Redis connected clients and fail if a threshold is exceeded on a Redis instance.
+Monitors the number of connected clients on a Redis instance and fails the experiment if the count exceeds the configured threshold. Supports both percentage-of-maxclients and absolute connection count thresholds. At least one threshold must be enabled (non-zero).
+
+This check is designed to be combined with `Exhaust Connections` to verify that the application detects and handles connection pressure correctly. For memory monitoring, use `Memory Usage Check` instead.
 
 # Use Cases
 
- - Monitor connection count during connection exhaustion attacks.
- - Detect connection leaks under failure conditions.
+ - Set a connection guardrail during an `Exhaust Connections` attack to fail the experiment if connections exceed a safe limit.
+ - Monitor connection count during chaos experiments to detect connection leaks caused by fault injections.
+ - Validate alerting triggers when Redis connection count approaches the configured `maxclients` limit.
 
 # Parameters
 
-| Parameter              | Description                                                        | Default |
-|------------------------|--------------------------------------------------------------------|---------|
-| Duration               | How long to monitor.                                               | 60s     |
-| Max Connections Percent | Maximum allowed as percentage of maxclients (0 to disable).       | 80      |
-| Max Connections        | Maximum allowed absolute count (0 to disable).                    | 0       |
+| Parameter               | Description                                                                                                                                              | Default |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                | How long the check runs. Connection count is polled continuously for this duration.                                                                      | 60s     |
+| Max Connections Percent | Maximum allowed connected clients as a percentage of the configured `maxclients`. Set to 0 to disable percentage-based checking.                         | 80      |
+| Max Connections         | Maximum allowed connected clients as an absolute count. Set to 0 to disable. This is an advanced option for environments where you need a fixed ceiling. | 0       |

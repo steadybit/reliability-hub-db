@@ -1,16 +1,16 @@
 # Introduction
 
-With this action, Steadybit can dynamically force with a policy the following configuration [max-length](https://www.rabbitmq.com/docs/maxlength#definition).
-The generated policy will always be given the highest priority then be deleted at the end of the attack.
+Limits the maximum number of messages a RabbitMQ queue can hold by creating a temporary [max-length](https://www.rabbitmq.com/docs/maxlength#definition) policy with the highest priority. When the attack ends, the policy is automatically removed and the queue reverts to its original configuration.
 
 # Use Cases
 
- - Alter the queue max length to check the behavior of the producers/consumers and tune prefetch.
+ - Set a very low max length to force message drops and test how producers and consumers handle rejected or dead-lettered messages.
+ - Verify that consumers tune their prefetch correctly under constrained queue capacity.
+ - Simulate a resource-limited queue to validate dead-letter exchange routing behavior.
 
 # Parameters
 
-| Parameter  | Description                                                          | Default |
-|------------|----------------------------------------------------------------------|---------|
-| Duration   | The duration of the attack.                                          | 60s     |
-| Max Length | Maximum number of messages the queue will hold. Set 0 for unlimited. |         |
-
+| Parameter  | Description                                                                                                                                                                                  | Default |
+|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration   | How long the max-length policy stays in effect. The policy is automatically removed when the duration expires, restoring the queue's original configuration.                                 | 60s     |
+| Max Length | Maximum number of messages the queue is allowed to hold. Messages beyond this limit are dropped or dead-lettered depending on queue configuration. Set to a low value to force backpressure. | 1000    |

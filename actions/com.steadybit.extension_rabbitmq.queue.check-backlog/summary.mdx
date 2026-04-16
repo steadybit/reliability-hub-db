@@ -1,18 +1,18 @@
 # Introduction
 
-With this action, Steadybit can check the backlog of a queue for a given time.
+Monitors the total message count (backlog) in a RabbitMQ queue during an experiment. If the backlog exceeds the configured threshold at any point during the check, the experiment fails.
+
+This action targets **queues**, not nodes. For node-level monitoring (node down, alarms), use `Check Node` instead.
 
 # Use Cases
 
- - You can check the queue backlog during your experiments.
- - You can fail the experiment if the backlog is over a certain threshold.
+ - Fail the experiment if the queue backlog grows beyond an acceptable threshold during a consumer fault injection.
+ - Verify that consumers keep up with message production while injecting network latency on consumer pods.
+ - Combine with `Publish (Messages / s)` to generate load and verify the backlog stays within bounds.
 
 # Parameters
 
-| Parameter               | Description                                          | Default |
-|-------------------------|------------------------------------------------------|---------|
-| Duration                | The duration of the attack.                          | 10s     |
-| Queue to track backlog  | Required. The queue to check the backlog count.      |         |
-| Backlog alert threshold | Required. The acceptable threshold of backlog count. |         |
-
-
+| Parameter          | Description                                                                                                                                                                                              | Default |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration           | How long the check runs. The queue backlog is polled continuously for this duration.                                                                                                                     | 30s     |
+| Acceptable Backlog | The maximum acceptable number of messages in the queue. If the total message count exceeds this value at any point during the check, the experiment fails. Specified as an integer (number of messages). | 10      |

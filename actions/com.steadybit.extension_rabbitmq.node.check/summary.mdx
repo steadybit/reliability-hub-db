@@ -1,17 +1,19 @@
 # Introduction
 
-With this action, Steadybit can check the activity of nodes for a given time.
+Monitors node-level events in a RabbitMQ cluster during an experiment. This check observes whether specific node events occur — such as a node going down or a node alarm being raised — and evaluates them against an expected change list.
+
+This action targets **nodes**, not queues. For queue-level monitoring (message backlog), use `Check Queue Backlog` instead.
 
 # Use Cases
 
- - You can check the activity of your nodes during your experiments (node downtime and node alarms).
+ - Verify that a node-down event is detected when a RabbitMQ node pod is killed or network-isolated.
+ - Confirm that a node alarm is raised when memory or disk pressure is injected on a RabbitMQ node.
+ - Assert that no unexpected node-level disruptions occur during a queue-level fault injection.
 
 # Parameters
 
-| Parameter         | Description                                                               | Default |
-|-------------------|---------------------------------------------------------------------------|---------|
-| Duration          | The duration of the attack.                                               | 10s     |
-| Expected Changes  | The changes to look after (Node Downtime, Node Alarms)                    |         |
-| Change Check Mode | How often should the state be expected. "At least once" or "All the time" |         |
-
-
+| Parameter         | Description                                                                                                                                                                                                   | Default     |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| Duration          | How long the check runs. The check continuously polls node state for this duration.                                                                                                                           | 30s         |
+| Expected Changes  | Which node-level events to watch for. Valid values: **Node down** (`node down`), **Node alarm raised** (`node alarm raised`). Multiple values can be selected. If left empty, any node-level change triggers. |             |
+| Change Check Mode | How the expected changes are evaluated. **All the time** (`allTheTime`): every poll must detect the change. **At least once** (`atLeastOnce`): the change must be observed at least once during the duration. | atLeastOnce |

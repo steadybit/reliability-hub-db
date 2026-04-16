@@ -1,18 +1,21 @@
 # Introduction
 
-With this action, Steadybit can set a TTL on string keys matching a pattern in a Redis database to force them to expire, simulating sudden cache invalidation.
+Sets a short TTL on string keys matching a pattern in a Redis database to force them to expire, simulating sudden cache invalidation. Non-string keys (hashes, lists, sets, etc.) are skipped. When the attack ends, expired keys can optionally be restored with their original values and TTLs.
+
+This action targets **Redis databases** (not instances). For instance-level memory pressure, use `Limit MaxMemory` instead. For connection-level faults, use `Exhaust Connections`.
 
 # Use Cases
 
- - Simulate sudden cache invalidation to test cache rebuild performance.
- - Verify session expiration handling in your application.
+ - Simulate sudden cache invalidation to test cache rebuild performance and thundering-herd resilience.
+ - Verify session expiration handling by expiring session keys and observing application behavior.
+ - Test that the application gracefully handles cache misses without degraded user experience.
 
 # Parameters
 
-| Parameter       | Description                                                        | Default          |
-|-----------------|--------------------------------------------------------------------|------------------|
-| Duration        | How long the attack should last.                                   | 60s              |
-| Pattern         | Key pattern (e.g., 'session:*', 'cache:*'). Only string keys affected. | steadybit-test:* |
-| TTL             | Time-to-live in seconds before keys expire.                        | 5                |
-| Max Keys        | Maximum keys to affect (0 = unlimited).                            | 100              |
-| Restore On Stop | Restore expired keys with original values and TTLs. Strongly recommended to prevent data loss. | true             |
+| Parameter       | Description                                                                                                                                               | Default          |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| Duration        | How long the attack should last.                                                                                                                          | 60s              |
+| Pattern         | Key pattern to match (e.g., `session:*`, `cache:*`). Uses Redis `SCAN` glob-style matching. Only string keys are affected; non-string keys are skipped.  | steadybit-test:* |
+| TTL             | Time-to-live to set on matched keys. Keys expire after this duration.                                                                                     | 5s               |
+| Max Keys        | Maximum number of keys to affect. Set to 0 for unlimited. Use this to limit blast radius in production.                                                   | 100              |
+| Restore On Stop | Restore expired keys with their original values and TTLs when the attack ends. Strongly recommended to prevent data loss.                                 | true             |

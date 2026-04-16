@@ -1,14 +1,17 @@
 # Introduction
 
-With this action, Steadybit can stop a Redis Sentinel server for a given duration using the DEBUG SLEEP command, making it unresponsive to simulate Sentinel failures.
+Stops a Redis Sentinel server for a given duration using the `DEBUG SLEEP` command, making it completely unresponsive. This simulates a Sentinel failure to test high-availability failover behavior.
+
+Combine with `Replication Lag Check` to monitor replica health during the Sentinel outage. For data-plane faults (pausing the Redis instance itself), use `Pause Clients` instead.
 
 # Use Cases
 
- - Test failover behavior when a Sentinel becomes unresponsive.
- - Verify that the remaining Sentinels can still achieve quorum and trigger failover.
+ - Test failover behavior when a Sentinel becomes unresponsive and the remaining Sentinels must achieve quorum.
+ - Verify that the remaining Sentinels can still trigger automatic master failover without the stopped Sentinel.
+ - Validate that applications handle Sentinel topology changes gracefully during a Sentinel outage.
 
 # Parameters
 
-| Parameter | Description                              | Default |
-|-----------|------------------------------------------|---------|
-| Duration  | How long Sentinel should be unresponsive.| 30s     |
+| Parameter | Description                                                                        | Default |
+|-----------|------------------------------------------------------------------------------------|---------|
+| Duration  | How long the Sentinel should be unresponsive. Sentinel resumes after this period.  | 30s     |

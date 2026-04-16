@@ -1,18 +1,21 @@
 # Introduction
 
-With this action, Steadybit can reduce the Redis maxmemory configuration to force key evictions or OOM errors on a Redis instance.
+Reduces the Redis `maxmemory` configuration to force key evictions or OOM errors on a Redis instance. The original `maxmemory` and eviction policy are automatically restored when the attack ends.
 
-**Warning:** Using eviction policies like `allkeys-lru`, `allkeys-lfu`, or `allkeys-random` will permanently delete keys when the memory limit is reached. Evicted data cannot be recovered. The default policy `noeviction` is recommended as it returns OOM errors instead of deleting data.
+Combine with `Memory Usage Check` to monitor the impact of the reduced memory limit during the experiment. For connection-level faults, use `Exhaust Connections` instead.
+
+**Warning:** Using eviction policies like `allkeys-lru`, `allkeys-lfu`, or `allkeys-random` will permanently delete keys when the memory limit is reached. Evicted data cannot be recovered. The default policy `noeviction` is the safest choice as it returns OOM errors instead of deleting data.
 
 # Use Cases
 
- - Force key evictions to verify application handles missing keys gracefully.
- - Test OOM behavior by reducing maxmemory below current usage.
+ - Force key evictions to verify that the application handles missing cache keys gracefully and rebuilds them.
+ - Test OOM behavior by reducing `maxmemory` below current usage and verifying the application handles write errors.
+ - Validate that eviction-policy-aware applications degrade correctly under memory pressure.
 
 # Parameters
 
-| Parameter       | Description                                                                                                                                    | Default    |
-|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| Duration        | How long to apply the memory limit.                                                                                                            | 60s        |
-| Max Memory      | Memory limit (e.g., '10mb', '1gb', or bytes).                                                                                                  | 10mb       |
-| Eviction Policy | Eviction policy to apply: noeviction, allkeys-lru, allkeys-lfu, allkeys-random, volatile-lru, volatile-ttl, or keep (original). **Caution: allkeys-* policies permanently delete data.** | noeviction |
+| Parameter       | Description                                                                                                                                                                                                                                                                                                                                           | Default    |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration        | How long to apply the reduced memory limit. Original config is restored when the duration expires.                                                                                                                                                                                                                                                    | 60s        |
+| Max Memory      | Memory limit to set (e.g., `10mb`, `1gb`, or a value in bytes). Set this below current usage to trigger immediate evictions or OOM errors.                                                                                                                                                                                                            | 10mb       |
+| Eviction Policy | Eviction policy to apply while the limit is active. Valid values: **noeviction** (return errors on writes), **allkeys-lru**, **allkeys-lfu**, **allkeys-random** (evict from all keys), **volatile-lru**, **volatile-ttl** (evict from keys with TTL), **keep** (keep the original policy). **Caution: allkeys-\* policies permanently delete data.** | noeviction |

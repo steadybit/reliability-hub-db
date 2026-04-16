@@ -1,15 +1,18 @@
 # Introduction
 
-With this action, Steadybit can suspend all client command processing on a Redis instance for a given duration using the CLIENT PAUSE command.
+Suspends all client command processing on a Redis instance for a given duration using the `CLIENT PAUSE` command. Can pause all commands or only write commands.
+
+This action targets **Redis instances**. Combine with `Latency Check` to verify that your application's timeout and retry logic handles the unresponsive Redis correctly. For connection-level faults, use `Exhaust Connections` instead.
 
 # Use Cases
 
- - Simulate Redis unresponsiveness to test timeout and retry logic.
- - Test read-only mode by pausing only write commands.
+ - Simulate Redis unresponsiveness to test application timeout and retry logic.
+ - Test read-only mode by pausing only write commands while reads continue to succeed.
+ - Verify that circuit breakers trip when Redis stops processing commands.
 
 # Parameters
 
-| Parameter  | Description                                                                    | Default |
-|------------|--------------------------------------------------------------------------------|---------|
-| Duration   | How long to pause client connections.                                          | 30s     |
-| Pause Mode | Pause scope: "ALL" (all commands) or "WRITE" (write commands only).            | ALL     |
+| Parameter  | Description                                                                                                                         | Default |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration   | How long to pause client connections.                                                                                               | 30s     |
+| Pause Mode | Pause scope: **ALL** (all commands are paused) or **WRITE** (only write commands are paused; reads continue to be served normally). | ALL     |

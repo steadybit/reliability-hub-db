@@ -1,22 +1,24 @@
 # Introduction
 
-With this action, Steadybit can become a publisher and send the desired amount of messages.
+Publishes messages to a RabbitMQ queue at a constant rate (messages per second) for the entire attack duration. For example, 5 messages/second over 60 seconds publishes 300 messages total.
+
+For publishing a fixed total number of messages (distributed across the duration), use `Publish (# of Messages)` instead.
 
 # Use Cases
 
- - You can check the behaviour of your consumer under various types of messages
- - You can artificially increase the backlog for your queue by producing messages at a high throughput
+ - Generate a steady stream of messages to simulate normal production load during fault injection.
+ - Create sustained queue backlog by publishing at a rate higher than the consumer can process.
+ - Combine with `Check Queue Backlog` to verify that consumers keep up under a known publishing rate.
 
 # Parameters
 
-| Parameter          | Description                                                                                                                                 | Default      |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| Exchange           | Optional. By default it will be the queue unless you specify a specific exchange.                                                           |              |
-| Routing Key        | Optional routing key used for message delivery; defaults to the queue name if empty.                                                        |              |
-| Body               | The message body.                                                                                                                           | test-message |
-| Duration           | The duration of the attack.                                                                                                                 | 60s          |
-| Message Headers    | Optional. The Message headers to include in AMQP properties.                                                                                |              |
-| Number of Messages | The number of messages to create, the rate will be defined by this number divided by the duration of the attack.                            |              |
-| Success Rate       | How many percent of the records must be at least successful, that means not encountering any errors while sending the record to the broker. | 100%         |
-| MaxConcurrent      | Maximum count on parallel running requests. (min 1, max 10)                                                                                 | 5            |
-
+| Parameter           | Description                                                                                                                                                                  | Default      |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration            | How long the publisher runs at the specified rate. Total messages published = rate x duration.                                                                               | 30s          |
+| Messages per Second | The number of messages to publish per second. Min: 1, Max: 10.                                                                                                               | 1            |
+| Exchange            | Optional. The AMQP exchange to publish to. Defaults to the default exchange (empty string), which routes directly to the queue.                                              |              |
+| Routing Key         | Optional. The routing key used for message delivery. Defaults to the queue name if empty.                                                                                    |              |
+| Message Headers     | Optional. AMQP message headers to include in the message properties. Specified as key-value pairs.                                                                           |              |
+| Body                | The message body. Every message uses this same value.                                                                                                                        | test-message |
+| Success Rate        | Minimum percentage of messages that must be published without errors for the action to succeed. If the actual success rate drops below this threshold, the experiment fails. | 100%         |
+| MaxConcurrent       | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                                              | 1            |

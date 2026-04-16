@@ -1,15 +1,18 @@
 # Introduction
 
-With this action, Steadybit can monitor Redis response latency and fail if a threshold is exceeded on a Redis instance.
+Monitors Redis response latency by sending `PING` commands and fails the experiment if the response time exceeds the configured threshold.
+
+This check is designed to be combined with attacks that affect Redis responsiveness, such as `Pause Clients` or network-level fault injections. For monitoring connection counts, use `Connection Count Check` instead.
 
 # Use Cases
 
- - Detect latency spikes during chaos experiments.
- - Validate SLOs for Redis response times under failure conditions.
+ - Verify that Redis response latency stays within SLO bounds during a `Pause Clients` attack with `WRITE` mode (reads should remain fast).
+ - Detect latency spikes during chaos experiments that inject network latency or CPU stress on the Redis host.
+ - Set a latency guardrail to fail experiments if Redis becomes too slow, preventing cascading failures during testing.
 
 # Parameters
 
-| Parameter   | Description                                | Default |
-|-------------|--------------------------------------------|---------|
-| Duration    | How long to monitor.                       | 60s     |
-| Max Latency | Maximum allowed latency in milliseconds.   | 100     |
+| Parameter   | Description                                                                                                          | Default |
+|-------------|----------------------------------------------------------------------------------------------------------------------|---------|
+| Duration    | How long the check runs. Latency is measured continuously by sending PING commands for this duration.                | 60s     |
+| Max Latency | Maximum allowed response latency in milliseconds. If any PING response exceeds this threshold, the experiment fails. | 100     |

@@ -1,16 +1,19 @@
 # Introduction
 
-With this action, Steadybit can monitor Redis memory usage and fail if a threshold is exceeded on a Redis instance.
+Monitors Redis memory usage and fails the experiment if a threshold is exceeded. Supports both percentage-of-maxmemory and absolute MB thresholds. At least one threshold must be enabled (non-zero).
+
+This check is designed to be combined with attacks that affect memory, such as `Limit MaxMemory` or `Force Cache Expiration`. For connection monitoring, use `Connection Count Check` instead.
 
 # Use Cases
 
- - Monitor memory usage during chaos experiments to detect memory leaks or pressure.
- - Set guardrails to fail experiments if memory exceeds safe thresholds.
+ - Set a memory guardrail during a `Limit MaxMemory` attack to fail the experiment if memory usage spirals out of control.
+ - Monitor memory usage during chaos experiments to detect memory leaks or unexpected memory pressure.
+ - Validate that memory stays within SLO bounds while injecting faults into upstream services that increase cache load.
 
 # Parameters
 
-| Parameter          | Description                                                        | Default |
-|--------------------|--------------------------------------------------------------------|---------|
-| Duration           | How long to monitor.                                               | 60s     |
-| Max Memory Percent | Maximum allowed as percentage of maxmemory (0 to disable).        | 80      |
-| Max Memory Bytes   | Maximum allowed in MB (0 to disable).                             | 0       |
+| Parameter          | Description                                                                                                                                          | Default |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration           | How long the check runs. Memory usage is polled continuously for this duration.                                                                      | 60s     |
+| Max Memory Percent | Maximum allowed memory usage as a percentage of the configured `maxmemory`. Set to 0 to disable percentage-based checking.                           | 80      |
+| Max Memory Bytes   | Maximum allowed memory usage in MB (absolute threshold). Set to 0 to disable. This is an advanced option for environments without `maxmemory` set.   | 0       |
