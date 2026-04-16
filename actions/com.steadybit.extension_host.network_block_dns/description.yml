@@ -10,6 +10,7 @@ tags:
   - Host
   - Kubernetes
   - Network
+  - DNS
   - AWS
   - Azure
   - GCP
