@@ -1,0 +1,17 @@
+# Introduction
+
+Restarts a Cloud Foundry application by calling the CF V3 `POST /v3/apps/:guid/actions/restart` endpoint. This is an instantaneous action — the app's desired state remains `STARTED` throughout, but the underlying processes are recycled.
+
+# Use Cases
+
+- Validate that an app restart doesn't cause cascading failures in dependent services.
+- Verify that traffic drains gracefully before process termination.
+- Test that the app recovers correctly after a process-level recycle.
+
+# Parameters
+
+This action has no configurable parameters.
+
+# Note on App State
+
+A [restart operation](https://docs.cloudfoundry.org/devguide/deploy-apps/start-restart-restage.html) recycles the underlying processes without changing the app's desired state — it remains `STARTED` throughout. To observe a `STOPPED` state, use the Stop App action instead.

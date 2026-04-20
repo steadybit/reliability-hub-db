@@ -1,0 +1,23 @@
+# Introduction
+
+Monitors a Cloud Foundry application's state during an experiment and validates it against an expected state. The check continuously polls the CF V3 API and reports a failure if the app is not in the expected state according to the selected check mode.
+
+This action is useful to verify that an app stays `STARTED` throughout a disruption, or that it reaches a `STOPPED` state at least once when an attack fires.
+
+# Use Cases
+
+- Verify that an application stays `STARTED` during a load test or network fault.
+- Confirm that an app transitions to `STOPPED` at least once when the Stop App action fires.
+- Assert that an app is back in the expected state after a rollback.
+
+# Parameters
+
+| Parameter         | Description                                                                                                                                                                                          | Default    |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration          | How long the check runs. The check polls app state every 500ms for this duration.                                                                                                                    | 30s        |
+| Expected State    | The app state to check for. Valid values: **Started** (`STARTED`) or **Stopped** (`STOPPED`).                                                                                                         | STARTED    |
+| State Check Mode  | How the expected state is evaluated. **All the time** (`allTheTime`): every poll must show the expected state. **At least once** (`atLeastOnce`): the state must be observed at least once during the duration. | allTheTime |
+
+# Note on App State During Restart
+
+The CF V3 API exposes two desired states: `STARTED` and `STOPPED`. A [restart operation](https://docs.cloudfoundry.org/devguide/deploy-apps/start-restart-restage.html) recycles the underlying processes without changing the desired state — it remains `STARTED` throughout. Only an explicit stop (via the Stop App action or `cf stop`) sets the state to `STOPPED`. This check will therefore only observe `STOPPED` when the app has been explicitly stopped, not during a restart.

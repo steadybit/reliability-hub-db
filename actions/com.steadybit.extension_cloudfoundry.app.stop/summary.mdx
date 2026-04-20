@@ -1,0 +1,19 @@
+# Introduction
+
+Stops a Cloud Foundry application for the configured duration by calling the CF V3 `POST /v3/apps/:guid/actions/stop` endpoint. When the action ends, the app is automatically restarted if it was in `STARTED` state before the action began.
+
+# Use Cases
+
+- Simulate an application outage to test whether dependent services degrade gracefully.
+- Verify that monitoring and alerting fire when an app goes down.
+- Validate that upstream load balancers or clients handle an unavailable backend.
+
+# Parameters
+
+| Parameter | Description                                   | Default |
+|-----------|-----------------------------------------------|---------|
+| Duration  | How long the app should be stopped before the automatic restart. | 60s     |
+
+# Rollback
+
+On action end or cancellation, if the app was originally `STARTED`, the extension calls `POST /v3/apps/:guid/actions/restart` to bring it back. If the app was already `STOPPED` before the action, no restart is performed.
