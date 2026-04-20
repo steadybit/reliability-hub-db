@@ -1,0 +1,21 @@
+# Introduction to the Cloud Foundry Extension
+The Steadybit Cloud Foundry Extension enables chaos engineering experiments on Cloud Foundry applications. It discovers apps via the CF V3 API and provides actions to stop, restart, and check application state.
+
+# Integration and Functionality
+The extension integrates with Cloud Foundry using the [V3 API](https://v3-apidocs.cloudfoundry.org/). It supports multiple authentication methods: UAA password grant, static bearer tokens (for Korifi), and client certificates.
+
+## Discover Cloud Foundry Applications
+The extension automatically discovers all Cloud Foundry applications, including their space and organization context.
+
+## Attack Actions
+- **Stop App** — Stop an application for a configured duration. The app is automatically restarted when the action ends (rollback).
+- **Restart App** — Restart an application immediately.
+
+## Check Actions
+- **Check App State** — Continuously poll an application's state and validate it against an expected state (Started or Stopped). Supports "All the time" and "At least once" check modes.
+
+## Note on App State During Restart
+The CF V3 API exposes two desired states: `STARTED` and `STOPPED`. A [restart operation](https://docs.cloudfoundry.org/devguide/deploy-apps/start-restart-restage.html) recycles the underlying processes without changing the desired state — it remains `STARTED` throughout. Only an explicit stop (via the Stop App action or `cf stop`) sets the state to `STOPPED`. The Check App State action will therefore only observe `STOPPED` when the app has been explicitly stopped, not during a restart.
+
+# Installation and Setup
+To integrate the Cloud Foundry extension with your environment, follow our [setup guide](https://github.com/steadybit/extension-cloudfoundry#installation).
