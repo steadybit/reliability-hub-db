@@ -16,8 +16,8 @@ For example, to only start an experiment when the system is healthy.
 
 # Parameters
 
-| Parameter                | Description                                                                | Default                                                       |
-| -------------------------| -------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Duration                 | How long should steadybit check the state of the workload ?                | 30s                                                           |
-| Expected States          | Which states are expected?                                                 | "OPERATIONAL", "CRITICAL", "UNKNOWN", "DISRUPTED", "DEGRADED" |
-| Condition Check Mode     | How often should the status be expected. "At least once" or "All the time" | "All the time"                                                |
+| Parameter            | Description                                                                | Default                                             |
+|----------------------|----------------------------------------------------------------------------|-----------------------------------------------------|
+| Duration             | How long should steadybit check the state of the workload ?                | 30s                                                 |
+| Expected States      | Which states are expected?                                                 | OPERATIONAL, DEGRADED, DISRUPTED, CRITICAL, UNKNOWN |
+| Condition Check Mode | How often should the status be expected. "At least once" or "All the time" | allTheTime                                          |

@@ -10,6 +10,14 @@ Uploading can be done simply by adding a step of type "Gatling" and use the prov
 
 Parameters will be accessible from your Gatling Source via Java System Properties, e.g. `System.getProperty("myParameter")`
 
+# Parameters
+
+| Parameter       | Description                                                                                                                          | Default |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Gatling Sources | Upload your Gatling Sources. zip files will be extracted.                                                                            |         |
+| Parameter       | (optional) Parameters will be accessible from your Gatling Source via Java System Properties, e.g. System.getProperty("myParameter") |         |
+| Simulation      | (optional) ClassName of the Simulation to execute. Can be omitted if there is only one simulation in the source files.               |         |
+
 # Report
 
 After execution, Gatling results and logs are zipped and transferred to the platform.

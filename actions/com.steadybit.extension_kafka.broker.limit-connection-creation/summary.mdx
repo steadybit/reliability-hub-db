@@ -12,5 +12,5 @@ Dynamically modifies the broker's [max.connection.creation.rate](https://docs.co
 | Parameter                | Description                                                                                                                                                                               | Default |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | Duration                 | How long the configuration change stays in effect. The original `max.connection.creation.rate` value is automatically restored when the duration expires.                                 | 60s     |
-| Connection creation rate | The maximum number of new connections the broker accepts per second. Set to a low value (e.g., 1) to simulate severe throttling. The original value is restored at the end of the attack. |         |
+| Connection creation rate | The maximum number of new connections the broker accepts per second. Set to a low value (e.g., 1) to simulate severe throttling. The original value is restored at the end of the attack. | 10      |
 

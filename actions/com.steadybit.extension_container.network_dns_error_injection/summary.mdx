@@ -31,10 +31,10 @@ When the attack duration expires or the attack is stopped, the eBPF program is d
 
 # Parameters
 
-| Parameter            | Description                                                                                                                  | Default  |
-|----------------------|------------------------------------------------------------------------------------------------------------------------------|----------|
-| Fail on Host Network | Emit failure when the targeted container is using the host network                                                           | true     |
-| Duration             | How long should the DNS errors be injected?                                                                                  | 30s      |
-| DNS Error Type       | DNS error to inject. Multiple types can be selected for random injection. Possible values: `NXDOMAIN`, `SERVFAIL`, `TIMEOUT` | NXDOMAIN |
-| DNS Port             | DNS port or port range to intercept                                                                                          | 53       |
-| Target CIDRs         | IP CIDRs to match. If empty, all DNS traffic is affected                                                                     |          |
+| Parameter            | Description                                                                                                                  | Default      |
+|----------------------|------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Fail on Host Network | Emit failure when the targeted container is using the host network                                                           | true         |
+| Duration             | How long should the DNS errors be injected?                                                                                  | 30s          |
+| DNS Error Type       | DNS error to inject. Multiple types can be selected for random injection. Possible values: `NXDOMAIN`, `SERVFAIL`, `TIMEOUT` | ["NXDOMAIN"] |
+| DNS Port             | (optional) DNS port or port range to intercept                                                                               | 53           |
+| Target CIDRs         | (optional) IP CIDRs to match. If empty, all DNS traffic is affected                                                          |              |

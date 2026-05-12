@@ -16,7 +16,8 @@ Meaning if the pod is in `CrashLoopBackoff`, you need to wait for the backoff ti
 
 # Parameters
 
-| Parameter | Required | Description                                                                       | Default |
-|-----------|----------|-----------------------------------------------------------------------------------|---------|
-| Duration  | true     | How long should the attack run?                                                   | 60s     |
-| Container | false    | Name of a container which should be killed. By default all containers are killed. |         |
+| Parameter | Description                                                                                             | Default |
+|-----------|---------------------------------------------------------------------------------------------------------|---------|
+| Duration  | How long should the attack run?                                                                         | 30s     |
+| Container | (optional) Name of a container which should be killed. By default all containers are killed.            |         |
+| Signal    | By default, the container will be killed by `kill -SIGTERM 1`. You can specify a different signal here. | SIGTERM |

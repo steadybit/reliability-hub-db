@@ -20,10 +20,10 @@ Without specifying a host or ip restriction, the attack would affect all traffic
 
 # Parameters
 
-| Parameter         | Description                                                                                  | Default  |
-|-------------------|----------------------------------------------------------------------------------------------|----------|
-| Duration          | How long should the bandwidth be reduced?                                                    | 30s      |
-| Network Bandwidth | How much traffic should be allowed per second?                                               | 1024kbit |
-| Hostname          | Restrict to which host the traffic is reduced (`Hostname` or `IP Address` is required)       |          |
-| IP Address        | Restrict to which IP address the traffic is reduced (`Hostname` or `IP Address` is required) |          |
-| Port              | Restrict to which port the traffic is reduced, single entry only                             |          |
+| Parameter         | Description                                                                       | Default  |
+|-------------------|-----------------------------------------------------------------------------------|----------|
+| Duration          | How long should the bandwidth be reduced?                                         | 30s      |
+| Network Bandwidth | How much traffic should be allowed per second?                                    | 1024kbit |
+| Hostnames         | (optional) Restrict to/from which hosts the traffic is affected.                  |          |
+| IPs/CIDRs         | (optional) Restrict to/from which IP addresses or blocks the traffic is affected. |          |
+| Ports             | (optional) Restrict to/from which port the traffic is affected.                   |          |

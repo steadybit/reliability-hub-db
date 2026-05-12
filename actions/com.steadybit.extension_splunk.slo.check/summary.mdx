@@ -13,8 +13,9 @@ At last, to help you understand the SLO states and how they evolved, the run vie
 
 # Parameters
 
-| Parameter                     | Description                                                                                              | Default        |
-|-------------------------------|----------------------------------------------------------------------------------------------------------|----------------|
-| Duration                      | How long should the state of the alert rule be checked                                                   | 30s            |
-| Expected SLO Alerts triggered | The expected state of the SLO. One of No Alerts, Breach Alert, Burn Rate Alert, Error Budget Left Alert. |                |
-| State Check Mode              | How often should the state be expected. "At least once" or "All the time"                                | "All the time" |
+| Parameter                     | Description                                                                                                         | Default      |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration                      | How long should the state of the alert rule be checked                                                              | 30s          |
+| Expected SLO Alerts triggered | (optional) The expected state of the SLO. One of No Alerts, Breach Alert, Burn Rate Alert, Error Budget Left Alert. |              |
+| State Check Mode              | How often should the state be expected. "At least once" or "All the time"                                           | All the time |
+| Check New Alerts Only         | (optional) Only check alerts that were fired after the action started.                                              | false        |

@@ -21,8 +21,8 @@ Activation and deactivation of failure modes typically complete within 5 seconds
 
 # Parameters
 
-| Parameter | Description                                                           | Default |
-|-----------|-----------------------------------------------------------------------|---------|
-| Duration  | Duration of the attack                                                | 30s     |
-| Rate      | Percentage of invocations affected (100 = all invocations, 50 = half) | 100%    |
-| Deny List | Regular expressions matching hosts to block                           |         |
+| Parameter           | Description                                                           | Default |
+|---------------------|-----------------------------------------------------------------------|---------|
+| Duration            | Duration of the attack                                                | 30s     |
+| Rate                | Percentage of invocations affected (100 = all invocations, 50 = half) | 100%    |
+| Hostname Deny Regex | Regular expression to match the hostname to deny traffic.             | .*      |

@@ -9,10 +9,10 @@ Generate disk operations on mass storage devices (HDD/SSD).
 # Parameters
 
 
-| Parameter           | Description                                                                                                                                   | Default                |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|------------------------|
-| Thread Count        | Define the number of threads for IO operations.                                                                                               | 12                     |
-| IO Stress Layer     | On which layer IO is stressed? (File System, Named Partition, Physical Disk)                                                                  | Named Partition        |
-| Path                | Path where IO should be inflicted?                                                                                                            | /                      |
-| Disable Caching     | Disables both software and hardware write caching                                                                                             | true                   |
-| Duration            | How long should IO be consumed?                                                                                                               | 30s                    |
+| Parameter                           | Description                                                                  | Default         |
+|-------------------------------------|------------------------------------------------------------------------------|-----------------|
+| Thread Count                        | Define the number of threads for IO operations.                              | 12              |
+| IO Stress Layer                     | On which layer IO is stressed? (File System, Named Partition, Physical Disk) | Named Partition |
+| Disable Software & Hardware Caching | (optional) Disables both software and hardware write caching.                | true            |
+| Duration                            | How long should IO be consumed?                                              | 30s             |
+| Stress Layer Input                  | Based on the previous answer add the value here.                             |                 |

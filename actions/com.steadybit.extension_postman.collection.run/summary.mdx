@@ -22,16 +22,16 @@ You have to specify the collection to run as target. The collections will be dis
 
 # Parameters
 
-| Name                   | Required | Description                                                                                                                                                                                                              |
-|------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Estimated duration     | Yes      | As long as you have no timeout in place, the step will run as long as needed. You can set this estimation to size the step in the experiment editor for a better understanding of the time schedule.                     |
-| Environment Id or Name | No       | The environment id or name to use. You can put the environment name here or find out your environment id by fetching all environments from the postman api with `https://api.getpostman.com/environments?apikey=$apiKey` |
-| Environment Variables  | No       | Additional environment variables, will be passed to newman with `--env-var key=value`                                                                                                                                    |
-| Iterations             | No       | Number of iterations to run the collection, will be passed to newman with `-n`                                                                                                                                           |
-| Timeout                | No       | The timeout of your collection, wil be passed to newman with `--timeout`. Hint: If you hit this timeout, no reports will be generated.                                                                                   |
-| Request Timeout        | No       | The request timeout for each request, wil be passed to newman with `--timeout-request`                                                                                                                                   |
-| Verbose                | No       | Should we enable verbose logging? Will be passed to newman with `--verbose`                                                                                                                                              |
-| Bail                   | No       | Stops the runner when a test case fails. Will be passed to newman with `--bail`                                                                                                                                          |
+| Parameter              | Description                                                                                                                                                                                                                         | Default |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Estimated duration     | As long as you have no timeout in place, the step will run as long as needed. You can set this estimation to size the step in the experiment editor for a better understanding of the time schedule.                                | 30s     |
+| Environment ID or Name | (optional) The environment id or name to use. You can put the environment name here or find out your environment id by fetching all environments from the postman api with `https://api.getpostman.com/environments?apikey=$apiKey` |         |
+| Environment variables  | (optional) Additional environment variables, will be passed to newman with `--env-var key=value`                                                                                                                                    |         |
+| Iterations             | (optional) Number of iterations to run the collection, will be passed to newman with `-n`                                                                                                                                           | 1       |
+| Timeout                | (optional) The timeout of your collection, wil be passed to newman with `--timeout`. Hint: If you hit this timeout, no reports will be generated.                                                                                   |         |
+| Request Timeout        | (optional) The request timeout for each request, wil be passed to newman with `--timeout-request`                                                                                                                                   |         |
+| Verbose                | (optional) Should we enable verbose logging? Will be passed to newman with `--verbose`                                                                                                                                              |         |
+| Bail                   | (optional) Stops the runner when a test case fails. Will be passed to newman with `--bail`                                                                                                                                          |         |
 
 # Outputs
 

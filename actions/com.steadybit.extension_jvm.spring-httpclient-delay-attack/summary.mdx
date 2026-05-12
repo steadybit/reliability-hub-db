@@ -12,11 +12,11 @@ This attack only targets JVMs identified as Spring Application.
 
 # Parameters
 
-| Parameter    | Description                                                                                | Default |
-|--------------|--------------------------------------------------------------------------------------------|---------|
-| Duration     | How long should the response be delayed?                                                   | 30s     |
-| Delay        | How much should the response be delayed?                                                   | 500ms   |
-| Jitter       | Random +-30% jitter to response delay                                                      | true    |
-| HttpMethods  | Which HTTP methods should be attacked?                                                     |         |
-| Host Address | Which host address should be attacked                                                      | any     |
-| Path Pattern | Which URL path should be attacked? Supports Spring Ant-style path patterns (e.g. /api/**). | /**     |
+| Parameter    | Description                                                                                           | Default |
+|--------------|-------------------------------------------------------------------------------------------------------|---------|
+| Duration     | How long should the response be delayed?                                                              | 30s     |
+| Delay        | How much should the response be delayed?                                                              | 500ms   |
+| Jitter       | (optional) Random +-30% jitter to response delay                                                      | false   |
+| Host Address | (optional) Which host address should be attacked                                                      | *       |
+| Path Pattern | (optional) Which URL path should be attacked? Supports Spring Ant-style path patterns (e.g. /api/**). | /**     |
+| Http Methods | (optional) Which HTTP methods should be attacked?                                                     |         |

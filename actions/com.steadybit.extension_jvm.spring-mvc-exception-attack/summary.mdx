@@ -13,6 +13,6 @@ The exception is thrown before the handler method is executed.
 | Parameter           | Description                                                              | Default |
 |---------------------|--------------------------------------------------------------------------|---------|
 | Request Mapping     | Which request mapping pattern should be used to match the requests?      |         |
-| Http Methods        | Which http methods should be used to match the requests?                 | Any     |
+| Http Methods        | Which http methods should be used to match the requests?                 | *       |
 | Duration            | How long should the MVC controller be intercepted to throw an exception? | 30s     |
-| Erroneous Call Rate | What percentage of requests should trigger an exception?                 | 100     |
+| Erroneous Call Rate | (optional) What percentage of requests should trigger an exception?      | 100     |

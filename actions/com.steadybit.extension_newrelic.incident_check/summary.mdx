@@ -16,10 +16,10 @@ For example, to only start an experiment when the system is healthy.
 
 # Parameters
 
-| Parameter                | Description                                                                    | Default                             |
-| -------------------------| ------------------------------------------------------------------------------ | ----------------------------------- |
-| Duration                 | How long should steadybit check for incidents ?                                | 30s                                 |
-| Incident Priority Filter | Which incident priorities should be reported                                   | "LOW", "MEDIUM", "HIGH", "CRITICAL" |
-| Entity Tag Filter        | Filter Incidents based on tags of their related entities                       |                                     |
-| Condition                | If you pick a condition, the experiment will fail if the condition is not met. | No check, only show incidents       |
-| Condition Check Mode     | How often should the status be expected. "At least once" or "All the time"     | "All the time"                      |
+| Parameter                | Description                                                                    | Default                       |
+|--------------------------|--------------------------------------------------------------------------------|-------------------------------|
+| Duration                 | How long should steadybit check for incidents ?                                | 30s                           |
+| Incident Priority Filter | Which incident priorities should be reported                                   | LOW, MEDIUM, HIGH, CRITICAL   |
+| Entity Tag Filter        | (optional) Filter Incidents based on tags of their related entities            |                               |
+| Condition                | If you pick a condition, the experiment will fail if the condition is not met. | No check, only show incidents |
+| Condition Check Mode     | How often should the status be expected. "At least once" or "All the time"     | allTheTime                    |

@@ -10,8 +10,7 @@ This attack only target JVMs identified as Spring Application. The original call
 
 | Parameter           | Description                                                                  | Default |
 |---------------------|------------------------------------------------------------------------------|---------|
-| Operation           | Which operation should be attacked?                                          | Any     |
+| Operation           | Which operation should be attacked?                                          | *       |
 | Duration            | How long should the JDBC template call be intercepted to throw an exception? | 30s     |
-| Jitter              | Random +-30% jitter to network delay                                         | true    |
-| JDBC Connection Url | Which JDBC connection should be attacked?                                    | Any     |
-| Erroneous Call Rate | How many percent of calls should trigger an exception?                       | 100     |
+| JDBC connection url | (optional) Which JDBC connection should be attacked?                         | *       |
+| Erroneous Call Rate | (optional) How many percent of calls should trigger an exception?            | 100     |

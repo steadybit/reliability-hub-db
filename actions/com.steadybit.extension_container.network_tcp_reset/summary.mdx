@@ -21,11 +21,11 @@ Only TCP traffic is affected. UDP and other protocols are not impacted by this a
 
 # Parameters
 
-| Parameter            | Description                                                               | Default |
-|----------------------|---------------------------------------------------------------------------|---------|
-| Fail on Host Network | Emit failure when the targeted container is using the host network        | true    |
-| Duration             | How long should TCP connections be reset?                                 | 30s     |
-| Hostname             | Restrict to/from which hosts the traffic is affected                      |         |
-| IP Address           | Restrict to/from which IP addresses the traffic is affected               |         |
-| Ports                | Restrict to/from which ports the traffic is affected                      |         |
-| Network Interface    | Target network interface to affect. All non-loopback if none specified    |         |
+| Parameter            | Description                                                                       | Default |
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| Fail on Host Network | Emit failure when the targeted container is using the host network                | true    |
+| Duration             | How long should TCP connections be reset?                                         | 30s     |
+| Hostnames            | (optional) Restrict to/from which hosts the traffic is affected.                  |         |
+| IPs/CIDRs            | (optional) Restrict to/from which IP addresses or blocks the traffic is affected. |         |
+| Ports                | (optional) Restrict to/from which ports the traffic is affected                   |         |
+| Network Interface    | (optional) Target network interface to affect. All non-loopback if none specified |         |

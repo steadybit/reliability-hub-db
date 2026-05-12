@@ -12,11 +12,11 @@ This action is useful to verify that an app stays `STARTED` throughout a disrupt
 
 # Parameters
 
-| Parameter         | Description                                                                                                                                                                                          | Default    |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| Duration          | How long the check runs. The check polls app state every 500ms for this duration.                                                                                                                    | 30s        |
-| Expected State    | The app state to check for. Valid values: **Started** (`STARTED`) or **Stopped** (`STOPPED`).                                                                                                         | STARTED    |
-| State Check Mode  | How the expected state is evaluated. **All the time** (`allTheTime`): every poll must show the expected state. **At least once** (`atLeastOnce`): the state must be observed at least once during the duration. | allTheTime |
+| Parameter        | Description                                                                                                                                                                                                     | Default    |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration         | How long the check runs. The check polls app state every 500ms for this duration.                                                                                                                               | 30s        |
+| Expected State   | The app state to check for. Valid values: **Started** (`STARTED`) or **Stopped** (`STOPPED`).                                                                                                                   | STARTED    |
+| State Check Mode | How the expected state is evaluated. **All the time** (`allTheTime`): every poll must show the expected state. **At least once** (`atLeastOnce`): the state must be observed at least once during the duration. | allTheTime |
 
 # Note on App State During Restart
 

@@ -14,10 +14,10 @@ This attack affects network traffic for protocols that use port numbers (e.g., T
 
 # Parameters
 
-| Parameter            | Description                                                               | Default |
-|----------------------|---------------------------------------------------------------------------|---------|
-| Fail on Host Network | Emit failure when the targeted container is using the host network        | true    |
-| Duration             | How long should the traffic be affected?                                  | 30s     |
-| Hostname             | Restrict to which hosts the traffic is reduced                            |         |
-| IP Address           | Restrict to which IP address the traffic is reduced                       |         |
-| Ports                | Restrict to which ports the traffic is reduced                            |         |
+| Parameter            | Description                                                                       | Default |
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| Fail on Host Network | Emit failure when the targeted container is using the host network                | true    |
+| Duration             | How long should the traffic be affected?                                          | 30s     |
+| Hostnames            | (optional) Restrict to/from which hosts the traffic is affected.                  |         |
+| IPs/CIDRs            | (optional) Restrict to/from which IP addresses or blocks the traffic is affected. |         |
+| Ports                | (optional) Restrict to which ports the traffic is reduced                         |         |

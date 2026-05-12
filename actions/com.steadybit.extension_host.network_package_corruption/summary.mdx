@@ -16,11 +16,11 @@ This attack affects network traffic for protocols that use port numbers (e.g., T
 
 # Parameters
 
-| Parameter          | Description                                                               | Default |
-|--------------------|---------------------------------------------------------------------------|---------|
-| Package Corruption | How much traffic should be corrupted?                                     | 15%     |
-| Duration           | How much of the traffic should be corrupted??                             | 30s     |
-| Hostname           | Restrict to which hosts the traffic is corrupted?                         |         |
-| IP Address         | Restrict to which IP address the traffic is corrupted                     |         |
-| Port Number        | Restrict to which port number the traffic is corrupted                    |         |
-| Network Interface  | Target Network Interface which should be attacked. All if none specified. |         |
+| Parameter          | Description                                                                          | Default |
+|--------------------|--------------------------------------------------------------------------------------|---------|
+| Package Corruption | How much traffic should be corrupted?                                                | 15%     |
+| Duration           | How much of the traffic should be corrupted??                                        | 30s     |
+| Hostnames          | (optional) Restrict to/from which hosts the traffic is affected.                     |         |
+| IPs/CIDRs          | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.    |         |
+| Ports              | (optional) Restrict to/from which ports the traffic is affected.                     |         |
+| Network Interface  | (optional) Target Network Interface which should be attacked. All if none specified. |         |

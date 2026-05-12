@@ -12,8 +12,8 @@ This check is designed to be combined with `Exhaust Connections` to verify that 
 
 # Parameters
 
-| Parameter               | Description                                                                                                                                              | Default |
-|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration                | How long the check runs. Connection count is polled continuously for this duration.                                                                      | 60s     |
-| Max Connections Percent | Maximum allowed connected clients as a percentage of the configured `maxclients`. Set to 0 to disable percentage-based checking.                         | 80      |
-| Max Connections         | Maximum allowed connected clients as an absolute count. Set to 0 to disable. This is an advanced option for environments where you need a fixed ceiling. | 0       |
+| Parameter                  | Description                                                                                                                                                         | Default |
+|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                   | How long the check runs. Connection count is polled continuously for this duration.                                                                                 | 60s     |
+| Max Connections (absolute) | (optional) Maximum allowed connected clients as an absolute count. Set to 0 to disable. This is an advanced option for environments where you need a fixed ceiling. | 0       |
+| Max Connections (%)        | (optional) Maximum allowed connected clients as an absolute count. Set to 0 to disable. This is an advanced option for environments where you need a fixed ceiling. | 80      |

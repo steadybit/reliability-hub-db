@@ -12,7 +12,7 @@ Triggers a partition leader election for a given topic by electing the preferred
 
 # Parameters
 
-| Parameter                     | Description                                                                                                                                                                                                                 | Default |
-|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Partition to elect new leader | One or more partition IDs to trigger a leader election on. Specified as a list of partition numbers (e.g., `0`, `1`). Each selected partition will have its replica order changed to force a new preferred leader election. |         |
+| Parameter                                           | Description                                                                                                                                                                                                                 | Default |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Partition to elect a new leader (preferred replica) | One or more partition IDs to trigger a leader election on. Specified as a list of partition numbers (e.g., `0`, `1`). Each selected partition will have its replica order changed to force a new preferred leader election. |         |
 

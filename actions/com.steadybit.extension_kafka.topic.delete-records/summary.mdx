@@ -16,6 +16,6 @@ Deletes records from a Kafka topic by advancing the partition offset, making old
 
 | Parameter                                  | Description                                                                                                                                                                                                                        | Default |
 |--------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| X from newest Offset                       | How many records to keep relative to the newest offset. `0` means advance to the latest offset, skipping all records. `10` means keep the 10 most recent records and delete everything before them. This is applied per partition. |         |
+| X from newest Offset                       | How many records to keep relative to the newest offset. `0` means advance to the latest offset, skipping all records. `10` means keep the 10 most recent records and delete everything before them. This is applied per partition. | 0       |
 | Partition to issue delete records requests | One or more partition IDs to delete records from. Specified as a list of partition numbers (e.g., `0`, `1`, `2`). Only the selected partitions are affected.                                                                       |         |
 

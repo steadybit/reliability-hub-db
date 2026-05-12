@@ -16,7 +16,7 @@ Kafka ACL security must be enabled on the cluster. This action uses Kafka's buil
 
 | Parameter | Description                                                                                                                                                        | Default |
 |-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration  | How long the ACL deny rule stays in effect. The rule is automatically rolled back when the duration expires.                                                       | 60s     |
+| Duration  | How long the ACL deny rule stays in effect. The rule is automatically rolled back when the duration expires.                                                       | 180s    |
 | User      | The Kafka principal (user identity) to block. This should match the user configured in the consumer group's authentication. The deny ACL is created for this user. |         |
 | Topic     | The Kafka topic to deny access to. A deny ACL rule is created for this specific topic, preventing the specified user from reading it.                              |         |
 

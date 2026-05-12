@@ -45,10 +45,11 @@ The annotation made to the ingress resource will be removed automatically after 
 
 Path Pattern, HTTP Method, and HTTP Headers are optional parameters. If you do not set them, nothing will be delayed. If you set them, all requests that match the path pattern, HTTP method, and HTTP headers will be delayed.
 
-| Name         | Required | Description                                                                                                                           |
-|--------------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| Duration     | true     | How long should the traffic be affected?                                                                                              |
-| Delay        | true     | The delay to apply to the path in milliseconds.                                                                                       |
-| Path Pattern | false    | A regex pattern to match the paths to delay.                                                                                          |
-| HTTP Method  | false    | A http method to match the requests to delay. * is used as not set.                                                                   |
-| HTTP Headers | false    | A list of HTTP headers to match the requests to delay. Value is a regex pattern. If multiple headers are set, all of them must match. |
+| Parameter              | Description                                                                                                                                      | Default |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration               | How long should the traffic be affected?                                                                                                         | 30s     |
+| Delay                  | The delay to apply to the path in milliseconds.                                                                                                  | 500ms   |
+| Path Pattern           | (optional) A regex pattern to match the paths to delay.                                                                                          |         |
+| HTTP Method            | (optional) A http method to match the requests to delay. * is used as not set.                                                                   | *       |
+| HTTP Header            | (optional) A list of HTTP headers to match the requests to delay. Value is a regex pattern. If multiple headers are set, all of them must match. |         |
+| Force Enterprise NGINX | (optional) Whether to use Enterprise NGINX configuration instead of open source.                                                                 | false   |
