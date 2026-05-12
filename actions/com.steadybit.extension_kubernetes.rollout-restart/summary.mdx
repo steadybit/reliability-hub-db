@@ -19,6 +19,7 @@ The rollout restart attack helps simulate the rollout of a Kubernetes deployment
 
 # Parameters
 
-| Name | Required | Description                                                             |
-|------|----------|-------------------------------------------------------------------------|
-| Wait | No       | Whether to wait for the rollout to complete before completing the step. |
+| Parameter                       | Description                                                                        | Default |
+|---------------------------------|------------------------------------------------------------------------------------|---------|
+| Wait for rollout completion     | (optional) Whether to wait for the rollout to complete before completing the step. | false   |
+| Fail on already running rollout | (optional) Whether to fail if a rollout is already in progress.                    | true    |

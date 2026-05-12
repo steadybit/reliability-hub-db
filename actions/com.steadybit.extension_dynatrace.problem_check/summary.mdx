@@ -20,8 +20,9 @@ Through this visualization, you can see what states the Dynatrace's problems con
 
 # Parameters
 
-| Parameter            | Description                                                                    | Default                      |
-| ---------------------| ------------------------------------------------------------------------------ | ---------------------------- |
-| Duration             | How long should steadybit check for problems?                                  | 30s                          |
-| Condition            | If you pick a condition, the experiment will fail if the condition is not met. | No check, only show problems |
-| Condition Check Mode | How often should the status be expected. "At least once" or "All the time"     | "All the time"               |
+| Parameter            | Description                                                                                       | Default                      |
+|----------------------|---------------------------------------------------------------------------------------------------|------------------------------|
+| Duration             | How long should steadybit check for problems?                                                     | 30s                          |
+| Condition            | If you pick a condition, the experiment will fail if the condition is not met.                    | No check, only show problems |
+| Condition Check Mode | How often should the status be expected. "At least once" or "All the time"                        | "All the time"               |
+| Entity Selector      | (optional) Filter problems by a Dynatrace entity selector. If empty, all problems are considered. |                              |

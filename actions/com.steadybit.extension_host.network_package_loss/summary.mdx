@@ -16,11 +16,11 @@ This attack affects network traffic for protocols that use port numbers (e.g., T
 
 # Parameters
 
-| Parameter         | Description                                                               | Default |
-|-------------------|---------------------------------------------------------------------------|---------|
-| Duration          | How long should the traffic be lost?                                      | 30s     |
-| Hostname          | Restrict to which hosts the traffic is lost                               |         |
-| IP Address        | Restrict to which IP address the traffic is lost                          |         |
-| Network Loss      | How much percentage of traffic should be lost?                            | 70      |
-| Network Interface | Target Network Interface which should be attacked. All if none specified. |         |
-| Port Number       | Restrict to which port number the traffic is delayed                      |         |
+| Parameter         | Description                                                                          | Default |
+|-------------------|--------------------------------------------------------------------------------------|---------|
+| Duration          | How long should the traffic be lost?                                                 | 30s     |
+| Hostnames         | (optional) Restrict to/from which hosts the traffic is affected.                     |         |
+| IPs/CIDRs         | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.    |         |
+| Network Loss      | How much percentage of traffic should be lost?                                       | 70      |
+| Network Interface | (optional) Target Network Interface which should be attacked. All if none specified. |         |
+| Ports             | (optional) Restrict to/from which ports the traffic is affected.                     |         |

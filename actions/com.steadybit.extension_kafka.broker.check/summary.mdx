@@ -12,9 +12,9 @@ This action targets **brokers**, not topics or consumer groups. For topic partit
 
 # Parameters
 
-| Parameter         | Description                                                                                                                                                                                                    | Default    |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| Duration          | How long the check runs. The check continuously polls broker state for this duration.                                                                                                                          | 10s        |
-| Expected Changes  | Which broker-level changes to watch for. Valid values: **New Controller Elected** (`kafka controller changed`), **Broker downtime** (`kafka broker with downtime`). If left empty, any broker change triggers. |            |
-| Change Check Mode | How the expected changes are evaluated. **All the time** (`allTheTime`): every poll must detect the change. **At least once** (`atLeastOnce`): the change must be observed at least once during the duration.  | allTheTime |
+| Parameter         | Description                                                                                                                                                                                                               | Default    |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Duration          | How long the check runs. The check continuously polls broker state for this duration.                                                                                                                                     | 30s        |
+| Expected Changes  | (optional) Which broker-level changes to watch for. Valid values: **New Controller Elected** (`kafka controller changed`), **Broker downtime** (`kafka broker with downtime`). If left empty, any broker change triggers. |            |
+| Change Check Mode | How the expected changes are evaluated. **All the time** (`allTheTime`): every poll must detect the change. **At least once** (`atLeastOnce`): the change must be observed at least once during the duration.             | allTheTime |
 

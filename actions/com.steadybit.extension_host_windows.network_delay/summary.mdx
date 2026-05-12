@@ -13,13 +13,13 @@ The network delay operates at the ip level and affects single packets. Thus, you
 
 # Parameters
 
-| Parameter         | Description                                          | Default |
-|-------------------|------------------------------------------------------|---------|
-| Duration          | How long should the traffic be delayed?              | 30s     |
-| Network Delay     | How much should the traffic be delayed?              | 500ms   |
-| Jitter            | Random +-30% jitter to network delay                 | true    |
-| Hostname          | Restrict to which hosts the traffic is delayed       |         |
-| IP Address        | Restrict to which IP address the traffic is delayed  |         |
-| Port Number       | Restrict to which port number the traffic is delayed |         |
-| Network Interface | Target Network Interface which should be attacked    |         |
+| Parameter         | Description                                                                       | Default |
+|-------------------|-----------------------------------------------------------------------------------|---------|
+| Duration          | How long should the traffic be delayed?                                           | 30s     |
+| Network Delay     | How much should the traffic be delayed?                                           | 500ms   |
+| Jitter            | Random +-30% jitter to network delay                                              | false   |
+| Hostnames         | (optional) Restrict to/from which hosts the traffic is affected.                  |         |
+| IPs/CIDRs         | (optional) Restrict to/from which IP addresses or blocks the traffic is affected. |         |
+| Ports             | (optional) Restrict to/from which ports the traffic is affected.                  |         |
+| Network Interface | (optional) Target Network Interface which should be attacked                      |         |
 

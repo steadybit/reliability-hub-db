@@ -12,13 +12,13 @@ It counts the number of all nodes and performs the check defined by the given ch
 
 # Parameters
 
-| Parameter  | Description                                                         | Default |
-|------------|---------------------------------------------------------------------|---------|
-| Timeout    | How long should the check wait for the specified node count?        | 10s     |
-| Check Type | How should the node count change? (See values below)                |         |
-| Node Count | How many nodes are required or should change to let the check pass? |         |
+| Parameter  | Description                                                         | Default                    |
+|------------|---------------------------------------------------------------------|----------------------------|
+| Timeout    | How long should the check wait for the specified node count?        | 10s                        |
+| Check type | How should the node count change? (See values below)                | actual count >= node count |
+| Node count | How many nodes are required or should change to let the check pass? | 1                          |
 
-## Check Type
+## Check type
 
 You can use the node count check in one of the following modes:
 

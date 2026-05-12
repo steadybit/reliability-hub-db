@@ -12,11 +12,11 @@ Running a resource attack for a container is executed in the containers cgroup, 
 
 # Parameters
 
-| Parameter      | Description                                        | Default   |
-|----------------|----------------------------------------------------|-----------|
-| CPU Load       | How many CPU should be consumed?                   | 100       |
-| Container CPUs | How many workers should be used to stress the CPU? | All Cores |
-| Duration       | How long should CPU be consumed?                   | 30s       |
+| Parameter             | Description                                        | Default   |
+|-----------------------|----------------------------------------------------|-----------|
+| Load on Container CPU | How much CPU load should be inflicted?             | 80%       |
+| Container CPUs        | How many workers should be used to stress the CPU? | All Cores |
+| Duration              | How long should CPU be consumed?                   | 30s       |
 
 # Frequently Asked Questions (FAQs)
 ## Q: My container has a limit of 500m, set the attack to 100% load but only observe 35-45% CPU usage. Why?

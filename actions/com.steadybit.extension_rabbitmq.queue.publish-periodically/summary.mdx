@@ -12,13 +12,13 @@ For publishing a fixed total number of messages (distributed across the duration
 
 # Parameters
 
-| Parameter           | Description                                                                                                                                                                  | Default      |
-|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| Duration            | How long the publisher runs at the specified rate. Total messages published = rate x duration.                                                                               | 30s          |
-| Messages per Second | The number of messages to publish per second. Min: 1, Max: 10.                                                                                                               | 1            |
-| Exchange            | Optional. The AMQP exchange to publish to. Defaults to the default exchange (empty string), which routes directly to the queue.                                              |              |
-| Routing Key         | Optional. The routing key used for message delivery. Defaults to the queue name if empty.                                                                                    |              |
-| Message Headers     | Optional. AMQP message headers to include in the message properties. Specified as key-value pairs.                                                                           |              |
-| Body                | The message body. Every message uses this same value.                                                                                                                        | test-message |
-| Success Rate        | Minimum percentage of messages that must be published without errors for the action to succeed. If the actual success rate drops below this threshold, the experiment fails. | 100%         |
-| MaxConcurrent       | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                                              | 1            |
+| Parameter               | Description                                                                                                                                                                  | Default      |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration (seconds)      | How long the publisher runs at the specified rate. Total messages published = rate x duration.                                                                               | 30           |
+| Messages per second     | The number of messages to publish per second. Min: 1, Max: 10.                                                                                                               | 1            |
+| Exchange                | (optional) Optional. The AMQP exchange to publish to. Defaults to the default exchange (empty string), which routes directly to the queue.                                   |              |
+| Routing Key             | (optional) Optional. The routing key used for message delivery. Defaults to the queue name if empty.                                                                         |              |
+| Message Headers         | (optional) Optional. AMQP message headers to include in the message properties. Specified as key-value pairs.                                                                |              |
+| Message body            | The message body. Every message uses this same value.                                                                                                                        | test-message |
+| Required Success Rate   | Minimum percentage of messages that must be published without errors for the action to succeed. If the actual success rate drops below this threshold, the experiment fails. | 100%         |
+| Max concurrent requests | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                                              | 1            |

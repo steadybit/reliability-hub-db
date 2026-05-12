@@ -10,12 +10,12 @@ Leverage Istio's native capabilities to inject specific HTTP status codes into i
 
 # Parameters
 
-| Parameter              | Description                                                                                                                                                         | Default |
-|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration               | How long should the fault be injected?                                                                                                                              | 30s     |
-| Percentage             | What percentage of requests should be aborted?                                                                                                                      | 50%     |
-| HTTP status code       | Status code to abort the HTTP request with.                                                                                                                         | 500     |
-| Headers                | A list of headers required to be present in the request before the fault is injected. If not specified, the fault will be injected for all requests.                |         |
-| HTTP header match type | The type of match to be performed on the header. If not specified, the match type is exact.                                                                         |         |
-| Source Labels          | A list of labels that should be present in the source service instance before the fault is injected. If not specified, the fault will be injected for all requests. |         |
+| Parameter                              | Description                                                                                                                                                     | Default |
+|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                               | How long should the fault be injected?                                                                                                                          | 30s     |
+| Percentage                             | What percentage of requests should be aborted?                                                                                                                  | 50%     |
+| HTTP status code                       | Status code to abort the HTTP request with.                                                                                                                     | 500     |
+| For requests with HTTP headers         | (optional) A list of headers required to be present in the request before the fault is injected. If not specified, the fault will be injected for all requests. |         |
+| HTTP header match type                 | The type of match to be performed on the header. If not specified, the match type is exact.                                                                     | exact   |
+| For requests from sources labeled with | (optional) Restrict fault injection to requests from source workloads with the given labels.                                                                    |         |
 

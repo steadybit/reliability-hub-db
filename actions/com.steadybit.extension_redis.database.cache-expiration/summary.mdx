@@ -12,10 +12,10 @@ This action targets **Redis databases** (not instances). For instance-level memo
 
 # Parameters
 
-| Parameter       | Description                                                                                                                                               | Default          |
-|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
-| Duration        | How long the attack should last.                                                                                                                          | 60s              |
-| Pattern         | Key pattern to match (e.g., `session:*`, `cache:*`). Uses Redis `SCAN` glob-style matching. Only string keys are affected; non-string keys are skipped.  | steadybit-test:* |
-| TTL             | Time-to-live to set on matched keys. Keys expire after this duration.                                                                                     | 5s               |
-| Max Keys        | Maximum number of keys to affect. Set to 0 for unlimited. Use this to limit blast radius in production.                                                   | 100              |
-| Restore On Stop | Restore expired keys with their original values and TTLs when the attack ends. Strongly recommended to prevent data loss.                                 | true             |
+| Parameter       | Description                                                                                                                                             | Default |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration        | How long the attack should last.                                                                                                                        | 60s     |
+| Key Pattern     | Key pattern to match (e.g., `session:*`, `cache:*`). Uses Redis `SCAN` glob-style matching. Only string keys are affected; non-string keys are skipped. |         |
+| TTL (seconds)   | Time-to-live to set on matched keys. Keys expire after this duration.                                                                                   | 5       |
+| Max Keys        | Maximum number of keys to affect. Set to 0 for unlimited. Use this to limit blast radius in production.                                                 | 100     |
+| Restore on Stop | (optional) Restore expired keys with their original values and TTLs when the attack ends. Strongly recommended to prevent data loss.                    | true    |

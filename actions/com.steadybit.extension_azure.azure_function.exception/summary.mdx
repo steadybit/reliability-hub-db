@@ -24,8 +24,8 @@ In Azure Functions, this might present itself as flaky due to how the Azure Func
 
 # Parameters
 
-| Parameter | Description                                                                       | Default |
-| --------- | --------------------------------------------------------------------------------- | ------- |
-| Duration  | The duration of the attack.                                                       | 30s     |
-| Rate      | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%    |
-| Message   | Message of the thrown exception                                                   |         |
+| Parameter | Description                                                                       | Default            |
+|-----------|-----------------------------------------------------------------------------------|--------------------|
+| Duration  | The duration of the attack.                                                       | 30s                |
+| Rate      | The rate of invocations to affect. (100 = all request, 50 = half of all requests) | 100%               |
+| Message   | Message of the thrown exception                                                   | Injected exception |

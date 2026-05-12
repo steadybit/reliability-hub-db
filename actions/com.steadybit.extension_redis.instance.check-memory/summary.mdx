@@ -12,8 +12,8 @@ This check is designed to be combined with attacks that affect memory, such as `
 
 # Parameters
 
-| Parameter          | Description                                                                                                                                          | Default |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration           | How long the check runs. Memory usage is polled continuously for this duration.                                                                      | 60s     |
-| Max Memory Percent | Maximum allowed memory usage as a percentage of the configured `maxmemory`. Set to 0 to disable percentage-based checking.                           | 80      |
-| Max Memory Bytes   | Maximum allowed memory usage in MB (absolute threshold). Set to 0 to disable. This is an advanced option for environments without `maxmemory` set.   | 0       |
+| Parameter          | Description                                                                                                                           | Default |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration           | How long the check runs. Memory usage is polled continuously for this duration.                                                       | 60s     |
+| Max Memory Percent | (optional) Maximum allowed memory usage as a percentage of the configured `maxmemory`. Set to 0 to disable percentage-based checking. | 80      |
+| Max Memory (MB)    | (optional) Maximum allowed memory usage in MB (0 to disable).                                                                         | 0       |

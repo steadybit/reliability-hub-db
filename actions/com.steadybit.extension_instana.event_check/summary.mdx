@@ -17,9 +17,9 @@ For example, to only start an experiment when the system is healthy.
 # Parameters
 
 | Parameter             | Description                                                                    | Default                    |
-| ----------------------| ------------------------------------------------------------------------------ | -------------------------- |
+|-----------------------|--------------------------------------------------------------------------------|----------------------------|
 | Duration              | How long should steadybit check for events  ?                                  | 30s                        |
 | Condition             | If you pick a condition, the experiment will fail if the condition is not met. | No check, only show events |
-| Condition Check Mode  | How often should the status be expected. "At least once" or "All the time"     | "All the time"             |
-| Event Type Filter     | Which events should be reported                                                | "INCIDENT", "ISSUE"        |
-| Event Severity Filter | Which severity should be reported                                              | "Warning"                  |
+| Condition Check Mode  | How often should the status be expected. "At least once" or "All the time"     | All the time               |
+| Event Type Filter     | (optional) Which events should be reported                                     | INCIDENT, ISSUE            |
+| Event Severity Filter | (optional) Which severity should be reported                                   | Warning                    |

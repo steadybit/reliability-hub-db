@@ -12,8 +12,8 @@ This check is designed to be combined with attacks that affect replication, such
 
 # Parameters
 
-| Parameter       | Description                                                                                                                                 | Default |
-|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration        | How long the check runs. Replication status is polled continuously for this duration.                                                       | 60s     |
-| Max Lag Seconds | Maximum allowed replication lag in seconds. If the replica falls further behind than this threshold, the experiment fails.                  | 10      |
-| Require Link Up | Whether to fail the experiment if the master link is reported as down. When enabled, a broken master-replica link causes immediate failure. | true    |
+| Parameter         | Description                                                                                                                                            | Default |
+|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration          | How long the check runs. Replication status is polled continuously for this duration.                                                                  | 60s     |
+| Max Lag (seconds) | Maximum allowed replication lag in seconds. If the replica falls further behind than this threshold, the experiment fails.                             | 10      |
+| Require Link Up   | (optional) Whether to fail the experiment if the master link is reported as down. When enabled, a broken master-replica link causes immediate failure. | true    |

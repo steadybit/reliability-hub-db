@@ -12,7 +12,7 @@ This check is designed to be combined with attacks that affect Redis responsiven
 
 # Parameters
 
-| Parameter   | Description                                                                                                          | Default |
-|-------------|----------------------------------------------------------------------------------------------------------------------|---------|
-| Duration    | How long the check runs. Latency is measured continuously by sending PING commands for this duration.                | 60s     |
-| Max Latency | Maximum allowed response latency in milliseconds. If any PING response exceeds this threshold, the experiment fails. | 100     |
+| Parameter        | Description                                                                                                          | Default |
+|------------------|----------------------------------------------------------------------------------------------------------------------|---------|
+| Duration         | How long the check runs. Latency is measured continuously by sending PING commands for this duration.                | 60s     |
+| Max Latency (ms) | Maximum allowed response latency in milliseconds. If any PING response exceeds this threshold, the experiment fails. | 100     |
