@@ -1,6 +1,8 @@
 # Introduction
 
-This action disables an EventBridge rule on its event bus for the duration of the experiment. Matching events stop being delivered to the rule's targets while the rule is disabled. The rule is re-enabled on stop. No rule configuration is removed or recreated.
+This action disables an EventBridge rule on its event bus for the duration of the experiment. Matching events stop being delivered to the rule's targets while the rule is disabled.
+
+The rule is re-enabled on stop. No rule configuration is removed or recreated.
 
 # Use Cases
 
@@ -10,7 +12,9 @@ This action disables an EventBridge rule on its event bus for the duration of th
 
 # Rollback
 
-The rule is automatically re-enabled when the experiment stops. The pre-attack state (whether the rule was originally ENABLED or DISABLED) is recorded during *Prepare* and restored on *Stop*: a rule that was already disabled remains disabled.
+The rule is automatically re-enabled when the experiment stops.
+
+The pre-attack state (whether the rule was originally ENABLED or DISABLED) is recorded during *Prepare* and restored on *Stop*: a rule that was already disabled remains disabled.
 
 # Parameters
 

@@ -1,6 +1,8 @@
 # Introduction
 
-This action terminates a percentage of the EC2 instances backing an EKS managed node group. Instances are terminated through the node group's underlying Auto Scaling group, which replaces them automatically within minutes.
+This action terminates a percentage of the EC2 instances backing an EKS managed node group.
+
+Instances are terminated through the node group's underlying Auto Scaling group, which replaces them automatically within minutes.
 
 # Use Cases
 
@@ -10,7 +12,9 @@ This action terminates a percentage of the EC2 instances backing an EKS managed 
 
 # Rollback
 
-This attack does not support rollback. The terminated instances cannot be brought back; the Auto Scaling group launches fresh replacements. Cancellation is a no-op.
+This attack does not support rollback.
+
+The terminated instances cannot be brought back; the Auto Scaling group launches fresh replacements. Cancellation is a no-op.
 
 # Parameters
 

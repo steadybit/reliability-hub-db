@@ -10,7 +10,9 @@ This action leverages the AWS EC2 Auto Scaling API to suspend one or more Auto S
 
 # Rollback
 
-The processes that were already suspended on the ASG before the experiment are captured during *Prepare*. On *Stop* the extension resumes only the processes the attack suspended, so any pre-existing suspensions stay intact.
+The processes that were already suspended on the ASG before the experiment are captured during *Prepare*.
+
+On *Stop* the extension resumes only the processes the attack suspended, so any pre-existing suspensions stay intact.
 
 # Parameters
 

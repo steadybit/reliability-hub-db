@@ -1,6 +1,8 @@
 # Introduction
 
-This action temporarily changes the visibility timeout of an SQS queue using the `SetQueueAttributes` API. The pre-attack value is captured during *Prepare* and restored on *Stop*. Set the target value very low (0-5s) to force premature message redelivery, or very high (e.g. 12 hours) to stall in-flight messages.
+This action temporarily changes the visibility timeout of an SQS queue using the `SetQueueAttributes` API. The pre-attack value is captured during *Prepare* and restored on *Stop*.
+
+Set the target value very low (0-5s) to force premature message redelivery, or very high (e.g. 12 hours) to stall in-flight messages.
 
 # Use Cases
 
@@ -10,7 +12,9 @@ This action temporarily changes the visibility timeout of an SQS queue using the
 
 # Rollback
 
-The queue's original visibility timeout is captured during *Prepare* and restored on *Stop*. New messages enqueued during the experiment inherit the modified timeout; messages already in flight keep their assigned visibility window until their next visibility change.
+The queue's original visibility timeout is captured during *Prepare* and restored on *Stop*.
+
+New messages enqueued during the experiment inherit the modified timeout; messages already in flight keep their assigned visibility window until their next visibility change.
 
 # Observed AWS-side behaviour for the visibility-timeout parameter
 

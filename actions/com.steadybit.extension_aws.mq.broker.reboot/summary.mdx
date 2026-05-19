@@ -1,6 +1,8 @@
 # Introduction
 
-This action leverages the AWS Amazon MQ API to trigger a broker reboot. For ACTIVE_STANDBY and CLUSTER_MULTI_AZ deployments, AWS reboots the requested instance and traffic fails over to the standby/peers.
+This action leverages the AWS Amazon MQ API to trigger a broker reboot.
+
+For ACTIVE_STANDBY and CLUSTER_MULTI_AZ deployments, AWS reboots the requested instance and traffic fails over to the standby/peers.
 
 # Use Cases
 
@@ -10,7 +12,9 @@ This action leverages the AWS Amazon MQ API to trigger a broker reboot. For ACTI
 
 # Rollback
 
-This attack does not support rollback. The reboot is asynchronous on AWS's side and cannot be cancelled once triggered.
+This attack does not support rollback.
+
+The reboot is asynchronous on AWS's side and cannot be cancelled once triggered.
 
 # Parameters
 
