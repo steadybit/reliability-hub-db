@@ -1,0 +1,19 @@
+# Introduction
+
+This action terminates a percentage of the EC2 instances backing an EKS managed node group. Instances are terminated through the node group's underlying Auto Scaling group, which replaces them automatically within minutes.
+
+# Use Cases
+
+- Validate that pods reschedule onto healthy nodes when a fraction of the node group disappears.
+- Verify Pod Disruption Budgets, taints/tolerations, and topology spread constraints under node loss.
+- Measure cold-start cost: image pull, CSI volume re-attach, init containers on freshly launched nodes.
+
+# Rollback
+
+This attack does not support rollback. The terminated instances cannot be brought back; the Auto Scaling group launches fresh replacements. Cancellation is a no-op.
+
+# Parameters
+
+| Parameter                          | Description                                                                                  | Default |
+|------------------------------------|----------------------------------------------------------------------------------------------|---------|
+| Percentage of instances to terminate | Percentage (1-100) of `InService` instances to terminate. Rounded up to at least one host. | 33      |

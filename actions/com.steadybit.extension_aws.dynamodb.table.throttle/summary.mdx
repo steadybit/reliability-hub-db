@@ -1,0 +1,29 @@
+# Introduction
+
+This action lowers the provisioned read (RCU) and write (WCU) capacity on a DynamoDB table — and on every Global Secondary Index attached to it — to force `ProvisionedThroughputExceededException` for callers. Original capacities are captured during *Prepare* and restored on *Stop*.
+
+Tables in `PAY_PER_REQUEST` (on-demand) mode are rejected at *Prepare* because they have no provisioned capacity to lower.
+
+# Use Cases
+
+- Verify how the application behaves when DynamoDB returns `ProvisionedThroughputExceededException`.
+- Test the SDK's built-in retry/backoff behaviour under sustained throttling.
+- Stress monitoring/alerting on the `ThrottledRequests` and `UserErrors` CloudWatch metrics.
+
+# Rollback
+
+On *Stop*, the table is updated back to the original `ReadCapacityUnits` and `WriteCapacityUnits` captured during *Prepare*. Each GSI's per-index capacity is restored individually.
+
+# Observed AWS-side behaviour for capacity parameters
+
+- **Daily decrease quota** — AWS limits each PROVISIONED table to a small number of capacity decreases per UTC day (4 per day at the base rate; the cap grows if the table was previously increased during the same UTC day). On exhaustion, `UpdateTable` fails with `LimitExceededException: Subscriber limit exceeded: Provisioned throughput decreases are limited within a given UTC day`. Re-running the attack many times against the same table within a single day **will start failing**.
+- **Auto Scaling reaction window** — if Application Auto Scaling is attached to the table or its GSIs, the autoscaler will scale capacity back up within minutes regardless of *Stop*. The attack still exercises the throttle path during the autoscaler's reaction window, but sustained throttling beyond a few minutes will not happen with autoscaling enabled.
+- **Propagation delay** — DynamoDB processes capacity changes asynchronously. The table briefly enters the `UPDATING` state; throttling kicks in once the change is applied (usually within seconds). Reads/writes already in-flight at *Start* are not retroactively throttled.
+
+# Parameters
+
+| Parameter                  | Description                                                          | Default |
+|----------------------------|----------------------------------------------------------------------|---------|
+| Duration                   | How long the lowered capacity stays in effect. Restored on stop.     | 60s     |
+| Target read capacity (RCU) | New `ReadCapacityUnits` for the table and each GSI.                  | 1       |
+| Target write capacity (WCU)| New `WriteCapacityUnits` for the table and each GSI.                 | 1       |

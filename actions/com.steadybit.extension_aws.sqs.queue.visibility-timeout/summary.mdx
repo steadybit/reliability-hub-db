@@ -1,0 +1,26 @@
+# Introduction
+
+This action temporarily changes the visibility timeout of an SQS queue using the `SetQueueAttributes` API. The pre-attack value is captured during *Prepare* and restored on *Stop*. Set the target value very low (0-5s) to force premature message redelivery, or very high (e.g. 12 hours) to stall in-flight messages.
+
+# Use Cases
+
+- Stress consumer idempotency by forcing the same message to be redelivered while still being processed.
+- Validate consumer behaviour when in-flight messages stay invisible for extended periods.
+- Test the dead-letter queue / `maxReceiveCount` path by inflating redelivery rates.
+
+# Rollback
+
+The queue's original visibility timeout is captured during *Prepare* and restored on *Stop*. New messages enqueued during the experiment inherit the modified timeout; messages already in flight keep their assigned visibility window until their next visibility change.
+
+# Observed AWS-side behaviour for the visibility-timeout parameter
+
+- **In-flight messages are not affected** — `SetQueueAttributes` only updates the queue's *default* visibility timeout, which is applied to messages **at the moment they are received**. Messages already in flight when the attack starts keep the visibility window they were assigned at their original `ReceiveMessage` call, until that window expires or the consumer explicitly calls `ChangeMessageVisibility`. Setting the value to `0` does **not** instantly redeliver currently-processing messages — only subsequent receives inherit the new value.
+- **Symmetric on Stop** — restoring the original value on *Stop* does not retroactively fix the messages received during the attack: they keep the modified visibility window until their next receive. Allow a full receive-cycle after *Stop* before asserting on consumer behaviour.
+- **FIFO interaction** — on FIFO queues, a short visibility timeout combined with a slow consumer can cause head-of-line blocking on the message group while the same message is redelivered. This is AWS-side behaviour and is the intended chaos signal, but worth noting when interpreting results.
+
+# Parameters
+
+| Parameter                  | Description                                                       | Default |
+|----------------------------|-------------------------------------------------------------------|---------|
+| Duration                   | How long the modified visibility timeout stays in effect.         | 60s     |
+| New visibility timeout (s) | New value in seconds. Valid range: 0-43200 (12 hours).            | 0       |

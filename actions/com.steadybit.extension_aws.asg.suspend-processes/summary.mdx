@@ -1,0 +1,20 @@
+# Introduction
+
+This action leverages the AWS EC2 Auto Scaling API to suspend one or more Auto Scaling processes (`Launch`, `Terminate`, `HealthCheck`, `ReplaceUnhealthy`, `AZRebalance`, `AlarmNotification`, `ScheduledActions`, `AddToLoadBalancer`, `InstanceRefresh`) on an Auto Scaling Group for the duration of the experiment.
+
+# Use Cases
+
+- Verify how the workload behaves when AZ-Rebalance is unable to redistribute instances after an AZ event.
+- Validate that the system tolerates a frozen `HealthCheck` / `ReplaceUnhealthy` window.
+- Simulate an operational "scaling outage" (no new instances launched) and observe queue/latency growth.
+
+# Rollback
+
+The processes that were already suspended on the ASG before the experiment are captured during *Prepare*. On *Stop* the extension resumes only the processes the attack suspended, so any pre-existing suspensions stay intact.
+
+# Parameters
+
+| Parameter | Description                                                                 | Default                                  |
+|-----------|-----------------------------------------------------------------------------|------------------------------------------|
+| Duration  | How long to keep the processes suspended. Resumed on stop.                  | 60s                                      |
+| Processes | Auto Scaling processes to suspend (multi-select). See AWS docs for effects. | Launch, HealthCheck, ReplaceUnhealthy    |
