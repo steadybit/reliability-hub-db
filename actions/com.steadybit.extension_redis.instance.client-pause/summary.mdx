@@ -1,18 +1,21 @@
 # Introduction
 
-Suspends all client command processing on a Redis instance for a given duration using the `CLIENT PAUSE` command. Can pause all commands or only write commands.
+Pauses write command processing on a Redis instance for a given duration using the `CLIENT PAUSE ... WRITE` command. Reads continue to be served normally throughout the attack.
 
-This action targets **Redis instances**. Combine with `Latency Check` to verify that your application's timeout and retry logic handles the unresponsive Redis correctly. For connection-level faults, use `Exhaust Connections` instead.
+This action targets **Redis instances**. Combine with `Latency Check` to verify that your application's timeout and retry logic handles the stalled write path correctly. For connection-level faults, use `Exhaust Connections` instead.
+
+# Why writes only
+
+Redis applies the `CLIENT PAUSE` check to every non-master command — including `CLIENT UNPAUSE` itself. With `CLIENT PAUSE ALL`, the attack cannot be stopped early and the extension's own discovery probes (`PING`, `INFO`) are paused too. Pausing only writes keeps `CLIENT UNPAUSE` working (so Stop actually rolls the attack back) and leaves reads — including discovery — unaffected.
 
 # Use Cases
 
- - Simulate Redis unresponsiveness to test application timeout and retry logic.
- - Test read-only mode by pausing only write commands while reads continue to succeed.
- - Verify that circuit breakers trip when Redis stops processing commands.
+- Simulate a Redis instance that has stopped accepting writes to test application failover, queueing, and retry behavior.
+- Verify that circuit breakers on the write path trip while read traffic continues to be served.
+- Validate degraded-mode UX in applications that fall back to cached reads when writes are unavailable.
 
 # Parameters
 
-| Parameter  | Description                                                                                                                         | Default |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration   | How long to pause client connections.                                                                                               | 30s     |
-| Pause Mode | Pause scope: **ALL** (all commands are paused) or **WRITE** (only write commands are paused; reads continue to be served normally). | ALL     |
+| Parameter | Description                          | Default |
+|-----------|--------------------------------------|---------|
+| Duration  | How long to pause write commands.    | 30s     |
