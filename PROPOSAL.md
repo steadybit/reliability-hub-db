@@ -51,8 +51,6 @@ action_kit_api.ActionDescription{
 }
 ```
 
-This belongs in **`action-kit`**, not `extension-kit`. `ActionDescription` is owned by `action-kit`; `extension-kit` is the meta package that bundles the kits.
-
 The field is **optional**. Extensions without it just don't appear in the auto-generated matrix sections (they fall back to manual matrix entries for now). This means **the change is non-breaking**: no extension repo has to move on day one.
 
 The field flows through the existing pipeline:
