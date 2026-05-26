@@ -1,0 +1,30 @@
+# Introduction
+
+This action lowers the stage-level throttle rate (req/s) and burst limits on an API Gateway stage to simulate API throttling. Both REST APIs (v1) and HTTP APIs (v2) are supported.
+
+WebSocket APIs are not supported. The `$default` stage of a quick-created HTTP API is managed by AWS and cannot be modified.
+
+# Use Cases
+
+- Verify how a downstream service reacts when its upstream API Gateway starts returning `429 Too Many Requests`.
+- Test client retry/backoff logic under sustained throttling.
+- Validate that alarms fire on the API Gateway `4XXError` / `ThrottleCount` metrics.
+
+# Rollback
+
+**REST APIs (v1):** the original `*/*` MethodSettings are restored on stop. If the `*/*` MethodSetting did not exist before the attack, it is removed. If it existed but had no throttle, throttle is reset to AWS account-default (sentinel `-1`).
+
+**HTTP APIs (v2):** the original `DefaultRouteSettings` snapshot (including non-throttle fields like `DataTraceEnabled`, `LoggingLevel`, `DetailedMetricsEnabled`) is restored on stop. Note: once throttle is set on a v2 stage, AWS provides no API to truly clear it ([terraform-provider-aws#30373](https://github.com/hashicorp/terraform-provider-aws/issues/30373)). When the stage had no original throttle, the extension restores it to the AWS regional default values (rate 10000 rps, burst 5000) so request handling matches pre-attack behavior.
+
+# Observed AWS-side behaviour for rate/burst parameters
+
+- **Propagation delay** — AWS does not apply the new limits instantly. Expect a few seconds (typically 3-10s) before traffic starts getting `429`-throttled after *Start*, and a similar delay after *Stop* before the original limits resume. Set the experiment `Duration` long enough to cover the propagation window plus your actual observation period.
+- **HTTP APIs (v2) throttle is sticky** — once `ThrottlingRateLimit` / `ThrottlingBurstLimit` are set on a v2 stage's `DefaultRouteSettings`, AWS provides no API to truly clear them ([terraform-provider-aws#30373](https://github.com/hashicorp/terraform-provider-aws/issues/30373)). When the stage had no original throttle, *Stop* restores the fields to the AWS regional account defaults (rate `10000` rps / burst `5000`) so request-handling behaviour matches pre-attack — but the stage's configuration will retain those explicit values rather than going back to byte-identical pre-attack state. REST APIs (v1) do not have this limitation.
+
+# Parameters
+
+| Parameter             | Description                                                                  | Default |
+|-----------------------|------------------------------------------------------------------------------|---------|
+| Duration              | How long to keep the throttle in place. Original limits restored on stop.    | 60s     |
+| Throttle rate limit   | New throttle rate limit in requests per second.                              | 1       |
+| Throttle burst limit  | New throttle burst limit in requests.                                        | 1       |

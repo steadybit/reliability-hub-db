@@ -1,0 +1,23 @@
+# Introduction
+
+This action disables an EventBridge rule on its event bus for the duration of the experiment. Matching events stop being delivered to the rule's targets while the rule is disabled.
+
+The rule is re-enabled on stop. No rule configuration is removed or recreated.
+
+# Use Cases
+
+- Simulate dropped or missed events for a downstream consumer (Lambda, ECS task, Step Functions, ...).
+- Verify that a critical scheduled rule (cron-style) firing a routine job continues to work after a temporary outage.
+- Test alerting / SLO breach detection when an expected event stream stops.
+
+# Rollback
+
+The rule is automatically re-enabled when the experiment stops.
+
+The pre-attack state (whether the rule was originally ENABLED or DISABLED) is recorded during *Prepare* and restored on *Stop*: a rule that was already disabled remains disabled.
+
+# Parameters
+
+| Parameter | Description                                                | Default |
+|-----------|------------------------------------------------------------|---------|
+| Duration  | How long to keep the rule disabled. Re-enabled on stop.    | 60s     |
