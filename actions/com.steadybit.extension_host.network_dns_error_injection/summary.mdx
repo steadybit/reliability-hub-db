@@ -29,9 +29,10 @@ When the attack duration expires or the attack is stopped, the eBPF program is d
 
 # Parameters
 
-| Parameter      | Description                                                                                                                  | Default  |
-|----------------|------------------------------------------------------------------------------------------------------------------------------|----------|
-| Duration       | How long should the DNS errors be injected?                                                                                  | 30s      |
-| DNS Error Type | DNS error to inject. Multiple types can be selected for random injection. Possible values: `NXDOMAIN`, `SERVFAIL`, `TIMEOUT` | NXDOMAIN |
-| DNS Port       | DNS port or port range to intercept                                                                                          | 53       |
-| Target CIDRs   | IP CIDRs to match. If empty, all DNS traffic is affected                                                                     |          |
+| Parameter        | Description                                                                                                                                                                            | Default  |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| Duration         | How long should the DNS errors be injected?                                                                                                                                            | 30s      |
+| DNS Error Type   | DNS error to inject. Multiple types can be selected for random injection. Possible values: `NXDOMAIN`, `SERVFAIL`, `TIMEOUT`                                                           | NXDOMAIN |
+| DNS Hostnames    | Restrict injection to DNS queries whose name matches one of these hostnames exactly (case-insensitive; IDN and underscores allowed). If empty, all queries are affected                |          |
+| DNS Server Port  | Port (or range) the DNS server listens on (typically 53). Only DNS traffic to/from this port is intercepted                                                                            | 53       |
+| DNS Server CIDRs | IP CIDRs of the DNS server(s). Only queries destined for these IPs are affected. If empty, all DNS traffic on the matching port is affected                                            |          |
