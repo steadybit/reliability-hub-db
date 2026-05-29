@@ -1,0 +1,21 @@
+# Introduction
+
+This action sets the queue's status to `Disabled`, which causes Azure Service Bus to drop both sends and receives on the queue.
+
+The pre-attack status is captured during *Prepare* and restored on *Stop* — a queue that was already in `SendDisabled` or `ReceiveDisabled` is restored to that exact state.
+
+# Use Cases
+
+- Validate that producers gracefully handle a queue being unavailable (retries, backoff, dead-letter routing).
+- Test consumer behaviour when a queue stops delivering — connection resilience, alerting, lag accumulation.
+- Exercise the recovery path on the message pipeline after a brief queue outage.
+
+# Rollback
+
+The queue's original status is automatically restored when the experiment stops. If the agent loses connectivity mid-experiment, the queue stays disabled until manually re-enabled.
+
+# Parameters
+
+| Parameter | Description                                                    | Default |
+|-----------|----------------------------------------------------------------|---------|
+| Duration  | How long the queue stays disabled. Status is restored on stop. | 60s     |

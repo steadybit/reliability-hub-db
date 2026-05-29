@@ -1,0 +1,19 @@
+# Introduction
+
+This action swaps the failover priorities of a multi-region Cosmos DB account so the secondary region becomes the new write region.
+
+It validates that your application correctly follows the SDK's automatic write-region tracking and that retry / backoff logic survives the promotion.
+
+# Use Cases
+
+- Verify that applications using the official Cosmos DB SDKs follow the active write region without manual intervention.
+- Measure the end-to-end recovery time and write-error rate during a region promotion.
+- Exercise cross-region read consistency assumptions under a write-region change.
+
+# Rollback
+
+This action does not support rollback — Cosmos DB region promotion is a one-way operation. Re-run the experiment with the original primary listed first to fail back.
+
+# Parameters
+
+*No parameters.*

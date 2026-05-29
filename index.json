@@ -1,5 +1,5 @@
 {
-  "lastChange": 1779191244,
+  "lastChange": 1780048800,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -122,6 +122,7 @@
     "/actions/com.steadybit.extension_aws.rds.instance.reboot/description.yml",
     "/actions/com.steadybit.extension_aws.rds.instance.stop/description.yml",
     "/actions/com.steadybit.extension_aws.sqs.queue.visibility-timeout/description.yml",
+    "/actions/com.steadybit.extension_azure.aks.nodepool.terminate-instances/description.yml",
     "/actions/com.steadybit.extension_azure.azure_function.exception/description.yml",
     "/actions/com.steadybit.extension_azure.azure_function.fill_disk/description.yml",
     "/actions/com.steadybit.extension_azure.azure_function.latency/description.yml",
@@ -130,8 +131,12 @@
     "/actions/com.steadybit.extension_azure.container_app.fill_disk/description.yml",
     "/actions/com.steadybit.extension_azure.container_app.latency/description.yml",
     "/actions/com.steadybit.extension_azure.container_app.status_code/description.yml",
+    "/actions/com.steadybit.extension_azure.cosmosdb.account.failover/description.yml",
+    "/actions/com.steadybit.extension_azure.nat-gateway.disassociate-subnets/description.yml",
     "/actions/com.steadybit.extension_azure.network_security_groups.block_hosts/description.yml",
     "/actions/com.steadybit.extension_azure.scale_set.instance.state/description.yml",
+    "/actions/com.steadybit.extension_azure.servicebus.queue.disable/description.yml",
+    "/actions/com.steadybit.extension_azure.servicebus.topic.disable/description.yml",
     "/actions/com.steadybit.extension_azure.vm.state/description.yml",
     "/actions/com.steadybit.extension_cloudfoundry.app.check/description.yml",
     "/actions/com.steadybit.extension_cloudfoundry.app.restart/description.yml",
