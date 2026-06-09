@@ -1,0 +1,21 @@
+# Introduction
+
+This action sets the topic's status to `Disabled`, which causes Azure Service Bus to drop both publishes and subscriber receives on the topic.
+
+The pre-attack status is captured during *Prepare* and restored on *Stop* — a topic that was already in a partially-disabled state is restored to that exact state.
+
+# Use Cases
+
+- Validate that publishers gracefully handle a topic being unavailable (retries, dead-letter routing, alerting).
+- Test how every subscriber on the topic reacts when no events arrive — lag, false-negative alerts, stuck workflows.
+- Exercise the recovery path for downstream consumers after a brief topic outage.
+
+# Rollback
+
+The topic's original status is automatically restored when the experiment stops. If the agent loses connectivity mid-experiment, the topic stays disabled until manually re-enabled.
+
+# Parameters
+
+| Parameter | Description                                                    | Default |
+|-----------|----------------------------------------------------------------|---------|
+| Duration  | How long the topic stays disabled. Status is restored on stop. | 60s     |

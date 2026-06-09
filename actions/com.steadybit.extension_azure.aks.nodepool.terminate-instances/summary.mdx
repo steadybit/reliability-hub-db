@@ -1,0 +1,22 @@
+# Introduction
+
+This action deletes a percentage of nodes from a managed AKS node pool via the AKS `BeginDeleteMachines` API.
+
+With the cluster-autoscaler enabled on the node pool, AKS replaces the deleted nodes within minutes. Without autoscaling, the pool shrinks until manually scaled back. AKS forbids deleting all nodes from a *System* pool — the experiment fails *Prepare* with an actionable error in that case.
+
+# Use Cases
+
+- Validate that pods reschedule onto surviving nodes within the configured PodDisruptionBudgets.
+- Measure cluster-autoscaler scale-up time and the impact on application availability during node churn.
+- Verify that StatefulSet, DaemonSet, and PDB-protected workloads recover correctly when nodes disappear.
+- Exercise alerting around node count drops or pool health degradation.
+
+# Rollback
+
+This action does not support rollback — the AKS delete-machines call is fire-and-forget. Either the cluster-autoscaler restores the pool size, or you scale the pool manually after the experiment.
+
+# Parameters
+
+| Parameter                        | Description                                               | Default |
+|----------------------------------|-----------------------------------------------------------|---------|
+| Percentage of nodes to terminate | Percentage (1-100) of the node pool's nodes to terminate. | 33      |

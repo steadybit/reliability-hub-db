@@ -1,0 +1,21 @@
+# Introduction
+
+This action removes the NAT Gateway reference from every subnet currently associated with it, simulating an outbound-internet outage for the workloads in those subnets.
+
+Only the NAT Gateway reference is touched; every other subnet property is preserved. Each subnet's NAT Gateway reference is restored on stop.
+
+# Use Cases
+
+- Verify that workloads behind the NAT Gateway handle the loss of outbound internet gracefully (retries, circuit breakers, queueing).
+- Test alerting on a sudden drop in egress traffic or rising connection failures to external services.
+- Exercise dependency-failure scenarios for outbound calls to third-party APIs, package mirrors, or SaaS services.
+
+# Rollback
+
+The NAT Gateway reference is restored on every previously-attached subnet when the experiment stops. If the agent loses connectivity mid-experiment, the subnet remains disassociated until manually re-attached.
+
+# Parameters
+
+| Parameter | Description                                                                   | Default |
+|-----------|-------------------------------------------------------------------------------|---------|
+| Duration  | How long subnets remain disassociated. The associations are restored on stop. | 60s     |
