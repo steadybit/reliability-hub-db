@@ -6,7 +6,6 @@ icon: <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><p
 kind: attack
 targetType: com.steadybit.extension_host_windows.host
 extension:  com.steadybit.extension_host_windows
-beta: true
 releaseDate: '2025-05-30'
 tags:
   - Host
