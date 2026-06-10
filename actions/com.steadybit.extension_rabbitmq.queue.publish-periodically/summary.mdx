@@ -12,13 +12,13 @@ For publishing a fixed total number of messages (distributed across the duration
 
 # Parameters
 
-| Parameter               | Description                                                                                                                                                                  | Default      |
-|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| Duration (seconds)      | How long the publisher runs at the specified rate. Total messages published = rate x duration.                                                                               | 30           |
-| Messages per second     | The number of messages to publish per second. Min: 1, Max: 10.                                                                                                               | 1            |
-| Exchange                | (optional) Optional. The AMQP exchange to publish to. Defaults to the default exchange (empty string), which routes directly to the queue.                                   |              |
-| Routing Key             | (optional) Optional. The routing key used for message delivery. Defaults to the queue name if empty.                                                                         |              |
-| Message Headers         | (optional) Optional. AMQP message headers to include in the message properties. Specified as key-value pairs.                                                                |              |
-| Message body            | The message body. Every message uses this same value.                                                                                                                        | test-message |
-| Required Success Rate   | Minimum percentage of messages that must be published without errors for the action to succeed. If the actual success rate drops below this threshold, the experiment fails. | 100%         |
-| Max concurrent requests | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                                              | 1            |
+| Parameter               | Description                                                                                                                        | Default      |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Exchange                | (optional) Optional. The AMQP exchange to publish to. If empty, messages go directly to the target queue via the default exchange. |              |
+| Routing Key             | (optional) Optional routing key used for message delivery; defaults to the queue name if empty.                                    |              |
+| Message Headers         | (optional) Message headers to include in AMQP properties.                                                                          |              |
+| Message body            | Required. The message body to publish. Every message uses this same value.                                                         | test-message |
+| Messages per second     | The number of messages per second. Should be between 1 and 10.                                                                     | 1            |
+| Duration (seconds)      | How long the publisher runs at the specified rate, in seconds. Total messages produced = rate x duration.                          | 30           |
+| Required Success Rate   | Minimum percentage of messages that must be published without errors. If the success rate drops below this, the experiment fails.  | 100          |
+| Max concurrent requests | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                    | 1            |
