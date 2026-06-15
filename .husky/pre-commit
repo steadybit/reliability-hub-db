@@ -13,7 +13,8 @@ new_content=$(jq -n \
   --argjson templates "$(list_paths templates template.json)" \
   --argjson actions "$(list_paths actions description.yml)" \
   --argjson extensions "$(list_paths extensions description.yml)" \
-  '{templates: $templates, actions: $actions, extensions: $extensions}')
+  --argjson advice "$(list_paths advice description.yml)" \
+  '{templates: $templates, actions: $actions, extensions: $extensions, advice: $advice}')
 
 old_content=$(jq 'del(.lastChange)' index.json 2>/dev/null)
 

@@ -1,5 +1,5 @@
 {
-  "lastChange": 1780048800,
+  "lastChange": 1781526055,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -306,5 +306,20 @@
     "/extensions/com.steadybit.extension_splunk_platform/description.yml",
     "/extensions/com.steadybit.extension_splunk/description.yml",
     "/extensions/com.steadybit.extension_stackstate/description.yml"
+  ],
+  "advice": [
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-cpu-limit/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-cpu-request/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-deployment-strategy/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-ephemeral-storage-limit/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-ephemeral-storage-request/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-host-podantiaffinity/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-image-latest-tag/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-image-pull-policy/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-memory-limit/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-memory-request/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-probes/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.k8s-single-replica/description.yml",
+    "/advice/com.steadybit.extension_kubernetes.advice.single-zone/description.yml"
   ]
 }
