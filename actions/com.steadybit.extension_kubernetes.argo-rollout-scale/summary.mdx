@@ -1,0 +1,22 @@
+# Introduction
+
+Use this action to up- or downscale a Kubernetes Argo Rollout.
+The attack scales the Argo Rollout to the specified replica count at the beginning of the attack and rolls it back to the old replica count whenever the attack stops.
+Intermediate changes of the replica count, i.e., by third-party tools, don't cause a re-scaling by the attack.
+
+# Use Cases
+
+- Verify that your Argo Rollout is successfully scaled up and the new pods are taken into account by your load balancer or service mesh.
+- Check how long it takes to scale your Argo Rollout to a desirable amount of pods (in combination with a [pod count check](https://hub.steadybit.com/action/com.steadybit.extension_kubernetes.pod_count_check)).
+- Validate that canary or blue-green traffic routing keeps working as expected when the rollout is scaled during an experiment.
+
+# Parameters
+
+| Parameter     | Description                            | Default |
+|---------------|----------------------------------------|---------|
+| Duration      | How long should the new scale be used? | 180s    |
+| Replica Count | The desired replica count              | 1       |
+
+# Rollback
+
+At the end of the attack or in case of an error, the original `spec.replicas` value is restored on the Argo Rollout.
