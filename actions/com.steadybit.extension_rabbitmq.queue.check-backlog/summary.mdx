@@ -12,7 +12,7 @@ This action targets **queues**, not nodes. For node-level monitoring (node down,
 
 # Parameters
 
-| Parameter               | Description                                                                                                                           | Default |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration                | How long the check runs. The queue backlog is polled continuously for this duration.                                                  | 30s     |
-| Backlog alert threshold | Maximum acceptable message count in the queue. If the backlog exceeds this value at any point during the check, the experiment fails. | 10      |
+| Parameter               | Description                                                                                         | Default |
+|-------------------------|-----------------------------------------------------------------------------------------------------|---------|
+| Duration                | How long the check runs. Queue backlog is polled continuously for this duration.                    | 30s     |
+| Backlog alert threshold | Maximum acceptable message count in the queue. If backlog exceeds this value, the experiment fails. | 10      |
