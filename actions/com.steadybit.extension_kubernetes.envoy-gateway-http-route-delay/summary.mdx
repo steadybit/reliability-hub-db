@@ -1,0 +1,51 @@
+# Introduction
+
+The *Envoy Delay Traffic* attack injects a fixed delay into a configurable percentage of the traffic routed by an Envoy Gateway `HTTPRoute`. Use it to test how your application behaves when a route becomes slow.
+
+# How it works
+
+The attack applies an Envoy Gateway [`BackendTrafficPolicy`](https://gateway.envoyproxy.io/latest/tasks/traffic/fault-injection/) that targets the selected `HTTPRoute` and enables fault injection with a fixed `delay`:
+
+```yaml
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: <route>
+  faultInjection:
+    delay:
+      fixedDelay: <delay>
+      percentage: <percentage>
+```
+
+The policy is created when the attack starts and deleted when it stops.
+
+# Requirements
+
+- Envoy Gateway is installed and the `HTTPRoute` is served by an Envoy Gateway `GatewayClass`.
+- The Envoy Gateway discovery is enabled in the extension (`discovery.disabled.envoyGateway=false`).
+
+# Use Cases
+
+* Understand how your services behave under network latency on a specific route
+* Test client and downstream timeout/retry behavior
+* Validate SLOs under slow-route conditions
+
+# Usage
+
+The attack refuses to start if another `BackendTrafficPolicy` already targets the route (or the selected route rule). Envoy Gateway resolves conflicting policies *oldest-wins*, so a pre-existing policy would silently shadow the attack — remove it or target a different route/rule.
+
+Use the optional **Route Rule Name** parameter to scope the fault to a single named route rule (`spec.rules[].name`) instead of the whole route.
+
+# Rollback
+
+The `BackendTrafficPolicy` created for the attack is deleted automatically when the attack ends. If you need to clean up manually, delete the policy named `steadybit-delay-<executionId>` in the route's namespace (labelled `steadybit.com/managed-by=extension-kubernetes`).
+
+# Parameters
+
+| Parameter          | Description                                                              | Default |
+|--------------------|--------------------------------------------------------------------------|---------|
+| Duration           | How long the route should be affected.                                   | 30s     |
+| Traffic Percentage | The percentage of requests the delay is applied to.                      | 50      |
+| Delay              | The fixed delay injected into matching requests.                         | 500ms   |
+| Route Rule Name    | (optional) Restrict the attack to a single named route rule.             |         |

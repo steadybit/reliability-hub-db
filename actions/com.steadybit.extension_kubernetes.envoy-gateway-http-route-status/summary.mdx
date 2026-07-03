@@ -1,0 +1,51 @@
+# Introduction
+
+The *Envoy Abort Traffic* attack aborts a configurable percentage of the traffic routed by an Envoy Gateway `HTTPRoute`, returning a chosen HTTP status code instead of reaching the backend. Use it to test how clients and downstream services react to errors from a route.
+
+# How it works
+
+The attack applies an Envoy Gateway [`BackendTrafficPolicy`](https://gateway.envoyproxy.io/latest/tasks/traffic/fault-injection/) that targets the selected `HTTPRoute` and enables fault injection with an `abort`:
+
+```yaml
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: <route>
+  faultInjection:
+    abort:
+      httpStatus: <statusCode>
+      percentage: <percentage>
+```
+
+The policy is created when the attack starts and deleted when it stops.
+
+# Requirements
+
+- Envoy Gateway is installed and the `HTTPRoute` is served by an Envoy Gateway `GatewayClass`.
+- The Envoy Gateway discovery is enabled in the extension (`discovery.disabled.envoyGateway=false`).
+
+# Use Cases
+
+* Test client-side error handling, retries and circuit breakers
+* Validate downstream resilience to upstream 5xx responses
+* Verify alerting fires when a route starts returning errors
+
+# Usage
+
+The attack refuses to start if another `BackendTrafficPolicy` already targets the route (or the selected route rule). Envoy Gateway resolves conflicting policies *oldest-wins*, so a pre-existing policy would silently shadow the attack — remove it or target a different route/rule.
+
+Use the optional **Route Rule Name** parameter to scope the fault to a single named route rule (`spec.rules[].name`) instead of the whole route.
+
+# Rollback
+
+The `BackendTrafficPolicy` created for the attack is deleted automatically when the attack ends. If you need to clean up manually, delete the policy named `steadybit-status-<executionId>` in the route's namespace (labelled `steadybit.com/managed-by=extension-kubernetes`).
+
+# Parameters
+
+| Parameter          | Description                                                              | Default |
+|--------------------|--------------------------------------------------------------------------|---------|
+| Duration           | How long the route should be affected.                                   | 30s     |
+| Traffic Percentage | The percentage of requests aborted with the status code.                 | 50      |
+| HTTP Status Code   | The HTTP status code returned for aborted requests (200–600).            | 500     |
+| Route Rule Name    | (optional) Restrict the attack to a single named route rule.             |         |

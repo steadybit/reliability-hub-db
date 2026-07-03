@@ -1,0 +1,23 @@
+---
+id: com.steadybit.extension_kubernetes.envoy-gateway-http-route-status
+label: Envoy Abort Traffic
+description: Abort a percentage of the traffic on an Envoy Gateway HTTP route with a given HTTP status code.
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2 L20.66 7 L20.66 17 L12 22 L3.34 17 L3.34 7 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M7.5 12 H14 M11.5 9.5 L15 12 L11.5 14.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+kind: attack
+targetType: com.steadybit.extension_kubernetes.envoy-gateway-http-route
+extension: com.steadybit.extension_kubernetes
+tags:
+  - Kubernetes
+  - Envoy
+  - Envoy Gateway
+  - Gateway API
+  - Network
+  - HTTP
+  - Error
+  - AWS
+  - Azure
+  - GCP

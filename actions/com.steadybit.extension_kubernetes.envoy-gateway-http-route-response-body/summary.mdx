@@ -1,0 +1,70 @@
+# Introduction
+
+The *Envoy Overwrite Response* attack overwrites the response body (and status code) returned to clients for a configurable percentage of the traffic routed by an Envoy Gateway `HTTPRoute`. Use it to simulate a route returning corrupted, unexpected or error payloads.
+
+# How it works
+
+Envoy Gateway's `BackendTrafficPolicy` cannot rewrite an upstream response body directly, so the attack combines two of its features in a single policy:
+
+1. **Fault injection abort** — aborts the matching percentage of traffic locally with an internal *sentinel* status code (default `418`).
+2. **Response override** — matches that sentinel status and rewrites the response to your configured status code, body and content type. The override uses `source: Local`, so only the injected (Envoy-generated) responses are rewritten — genuine backend responses are left untouched.
+
+```yaml
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: <route>
+  faultInjection:
+    abort:
+      httpStatus: <sentinelStatus>   # default 418
+      percentage: <percentage>
+  responseOverride:
+    - match:
+        statusCodes:
+          - type: Value
+            value: <sentinelStatus>
+      response:
+        statusCode: <statusCode>
+        contentType: <contentType>
+        body:
+          type: Inline
+          inline: <body>
+      source: Local
+```
+
+The policy is created when the attack starts and deleted when it stops.
+
+# Requirements
+
+- **Envoy Gateway `v1.3.0` or later** — this attack relies on the `responseOverride` feature (response `statusCode` override and `source` selector), which is available from `v1.3.0`.
+- Envoy Gateway is installed and the `HTTPRoute` is served by an Envoy Gateway `GatewayClass`.
+- The Envoy Gateway discovery is enabled in the extension (`discovery.disabled.envoyGateway=false`).
+
+# Use Cases
+
+* Simulate a route returning malformed or error response bodies
+* Test client parsing/validation and error handling of unexpected payloads
+* Return a custom maintenance/error page for a percentage of requests
+
+# Usage
+
+The attack refuses to start if another `BackendTrafficPolicy` already targets the route (or the selected route rule). Envoy Gateway resolves conflicting policies *oldest-wins*, so a pre-existing policy would silently shadow the attack — remove it or target a different route/rule.
+
+The client always sees the configured **HTTP Status Code**, never the sentinel. The **Sentinel Status Code** is an internal, advanced parameter: it is the code used to abort traffic before the response override rewrites it. Only change it if your backend legitimately returns the default `418` — otherwise genuine backend `418` responses would also be rewritten. Pick a code your backend never emits.
+
+# Rollback
+
+The `BackendTrafficPolicy` created for the attack is deleted automatically when the attack ends. If you need to clean up manually, delete the policy named `steadybit-response-body-<executionId>` in the route's namespace (labelled `steadybit.com/managed-by=extension-kubernetes`).
+
+# Parameters
+
+| Parameter           | Description                                                                                   | Default          |
+|---------------------|-----------------------------------------------------------------------------------------------|------------------|
+| Duration            | How long the route should be affected.                                                        | 30s              |
+| Traffic Percentage  | The percentage of requests whose response is overwritten.                                     | 50               |
+| HTTP Status Code    | The HTTP status code the client receives alongside the overwritten body (200–600).            | 200              |
+| Response Body       | The response body returned to the client.                                                     |                  |
+| Content Type        | (optional) The `Content-Type` header set on the overwritten response.                         | application/json |
+| Sentinel Status Code| (optional, advanced) Internal status used to abort traffic before the override rewrites it.   | 418              |
+| Route Rule Name     | (optional) Restrict the attack to a single named route rule.                                  |                  |

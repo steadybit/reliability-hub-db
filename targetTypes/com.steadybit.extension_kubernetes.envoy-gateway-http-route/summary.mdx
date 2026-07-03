@@ -1,0 +1,17 @@
+The Envoy Gateway HTTP Route target type lets you discover the [Gateway API](https://gateway-api.sigs.k8s.io/) `HTTPRoute` resources that are served by [Envoy Gateway](https://gateway.envoyproxy.io/) in your Kubernetes cluster, and inject faults into the traffic they route.
+
+A route is discovered when its parent `Gateway` belongs to a `GatewayClass` managed by the Envoy Gateway controller (`gateway.envoyproxy.io/gatewayclass-controller`). The Gateway and GatewayClass are reported as attributes on the route (a route can attach to more than one Gateway via its `parentRefs`).
+
+## Key Features
+
+- Discover Envoy Gateway HTTP routes, including their hostnames, parent gateway(s) and gateway class
+- Inject a fixed delay into a percentage of a route's traffic
+- Abort a percentage of a route's traffic with a chosen HTTP status code
+- Overwrite the response body and status code returned to clients
+- Optionally scope a fault to a single named route rule (`spec.rules[].name`) via the section name parameter
+
+## Requirements
+
+- **Envoy Gateway `v1.3.0` or later.** Delay and abort faults work on earlier releases, but the *Envoy Overwrite Response* attack relies on the `BackendTrafficPolicy` `responseOverride` feature (response `statusCode` override and `source` selector), available from `v1.3.0`.
+- The feature is **opt-in** and disabled by default. Enable it via the `discovery.disabled.envoyGateway=false` Helm value (`STEADYBIT_EXTENSION_DISCOVERY_DISABLED_ENVOY_GATEWAY=false`).
+- Cluster-scoped read access is required (GatewayClasses are cluster-scoped), so the feature is unavailable when the extension is restricted to a single namespace.
