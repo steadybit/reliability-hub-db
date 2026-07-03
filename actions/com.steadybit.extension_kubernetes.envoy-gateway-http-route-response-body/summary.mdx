@@ -6,7 +6,7 @@ The *Envoy Overwrite Response* attack overwrites the response body (and status c
 
 Envoy Gateway's `BackendTrafficPolicy` cannot rewrite an upstream response body directly, so the attack combines two of its features in a single policy:
 
-1. **Fault injection abort** — aborts the matching percentage of traffic locally with an internal *sentinel* status code (default `418`).
+1. **Fault injection abort** — aborts the matching percentage of traffic locally with a fixed internal *sentinel* status code (`418`, "I'm a teapot"). This code is never shown to clients.
 2. **Response override** — matches that sentinel status and rewrites the response to your configured status code, body and content type. The override uses `source: Local`, so only the injected (Envoy-generated) responses are rewritten — genuine backend responses are left untouched.
 
 ```yaml
@@ -17,13 +17,13 @@ spec:
       name: <route>
   faultInjection:
     abort:
-      httpStatus: <sentinelStatus>   # default 418
+      httpStatus: 418   # fixed internal sentinel, never shown to clients
       percentage: <percentage>
   responseOverride:
     - match:
         statusCodes:
           - type: Value
-            value: <sentinelStatus>
+            value: 418
       response:
         statusCode: <statusCode>
         contentType: <contentType>
@@ -51,7 +51,7 @@ The policy is created when the attack starts and deleted when it stops.
 
 The attack refuses to start if another `BackendTrafficPolicy` already targets the route (or the selected route rule). Envoy Gateway resolves conflicting policies *oldest-wins*, so a pre-existing policy would silently shadow the attack — remove it or target a different route/rule.
 
-The client always sees the configured **HTTP Status Code**, never the sentinel. The **Sentinel Status Code** is an internal, advanced parameter: it is the code used to abort traffic before the response override rewrites it. Only change it if your backend legitimately returns the default `418` — otherwise genuine backend `418` responses would also be rewritten. Pick a code your backend never emits.
+The client always sees the configured **HTTP Status Code**, never the internal sentinel (`418`), which is used only to abort traffic before the response override rewrites it. Because the sentinel is fixed, genuine backend responses with status `418` on the same route would also be rewritten while the attack is active — this is not an issue for typical backends, which never return `418`.
 
 # Rollback
 
@@ -66,5 +66,4 @@ The `BackendTrafficPolicy` created for the attack is deleted automatically when 
 | HTTP Status Code    | The HTTP status code the client receives alongside the overwritten body (200–600).            | 200              |
 | Response Body       | The response body returned to the client.                                                     |                  |
 | Content Type        | (optional) The `Content-Type` header set on the overwritten response.                         | application/json |
-| Sentinel Status Code| (optional, advanced) Internal status used to abort traffic before the override rewrites it.   | 418              |
 | Route Rule Name     | (optional) Restrict the attack to a single named route rule.                                  |                  |
