@@ -5,13 +5,12 @@ A route is discovered when its parent `Gateway` belongs to a `GatewayClass` mana
 ## Key Features
 
 - Discover Envoy Gateway HTTP routes, including their hostnames, parent gateway(s) and gateway class
-- Inject a fixed delay into a percentage of a route's traffic
-- Abort a percentage of a route's traffic with a chosen HTTP status code
-- Overwrite the response body and status code returned to clients
+- **Envoy Delay Traffic** — inject a fixed delay into a percentage of a route's traffic
+- **Envoy Abort Traffic** — abort a percentage of a route's traffic with a chosen HTTP status code, optionally returning a custom response body (empty by default)
 - Optionally scope a fault to a single named route rule (`spec.rules[].name`) via the section name parameter
 
 ## Requirements
 
-- **Envoy Gateway `v1.3.0` or later.** Delay and abort faults work on earlier releases, but the *Envoy Overwrite Response* attack relies on the `BackendTrafficPolicy` `responseOverride` feature (response `statusCode` override and `source` selector), available from `v1.3.0`.
+- **Envoy Gateway version:** *Envoy Delay Traffic* works on any release with `BackendTrafficPolicy` fault injection. *Envoy Abort Traffic* requires **Envoy Gateway `v1.3.0` or later**, because it uses the `BackendTrafficPolicy` `responseOverride` feature (response `statusCode` override) to return a controllable response body instead of Envoy's built-in `fault filter abort` body.
 - The feature is **opt-in** and disabled by default. Enable it via the `discovery.disabled.envoyGateway=false` Helm value (`STEADYBIT_EXTENSION_DISCOVERY_DISABLED_ENVOY_GATEWAY=false`).
 - Cluster-scoped read access is required (GatewayClasses are cluster-scoped), so the feature is unavailable when the extension is restricted to a single namespace.
