@@ -1,0 +1,68 @@
+# Introduction
+
+The *Envoy Abort Traffic* attack aborts a configurable percentage of the traffic routed by an Envoy Gateway `HTTPRoute`, returning a chosen HTTP status code instead of reaching the backend. It can **optionally overwrite the response body** returned to clients. Use it to test how clients and downstream services react to errors — and, if needed, to specific error payloads — from a route.
+
+# How it works
+
+The attack applies an Envoy Gateway [`BackendTrafficPolicy`](https://gateway.envoyproxy.io/latest/tasks/traffic/fault-injection/) targeting the selected `HTTPRoute`. A plain Envoy fault-injection abort always returns Envoy's built-in `fault filter abort` body, which cannot be changed. To return a clean, controllable body instead, the attack aborts locally with a fixed internal *sentinel* status (`418`, "I'm a teapot", never shown to clients) and adds a `responseOverride` that matches the sentinel and rewrites the response to your status code, body (empty by default) and content type:
+
+```yaml
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: <route>
+  faultInjection:
+    abort:
+      httpStatus: 418   # fixed internal sentinel, never shown to clients
+      percentage: <percentage>
+  responseOverride:
+    - match:
+        statusCodes:
+          - type: Value
+            value: 418
+      response:
+        statusCode: <statusCode>
+        contentType: <contentType>
+        body:
+          type: Inline
+          inline: <body>   # empty by default
+```
+
+The policy is created when the attack starts and deleted when it stops.
+
+# Requirements
+
+- Envoy Gateway is installed and the `HTTPRoute` is served by an Envoy Gateway `GatewayClass`.
+- The Envoy Gateway discovery is enabled in the extension (`discovery.disabled.envoyGateway=false`).
+- **Envoy Gateway `v1.3.0` or later**, since the attack uses the `responseOverride` feature (response `statusCode` override) to control the response body.
+
+# Use Cases
+
+* Test client-side error handling, retries and circuit breakers
+* Validate downstream resilience to upstream 5xx responses
+* Simulate a route returning malformed or unexpected error payloads
+* Verify alerting fires when a route starts returning errors
+
+# Usage
+
+The attack refuses to start if another `BackendTrafficPolicy` already targets the route (or the selected route rule). Envoy Gateway resolves conflicting policies *oldest-wins*, so a pre-existing policy would silently shadow the attack — remove it or target a different route/rule.
+
+The status code `418` cannot be used, as it is reserved as the internal sentinel. Because the response override matches on that sentinel status regardless of source, a genuine backend response returning `418` on the same route would also be rewritten while the attack is active — this is not an issue for typical backends, which never return `418`.
+
+Use the optional **Route Rule Name** parameter to scope the fault to a single named route rule (`spec.rules[].name`) instead of the whole route.
+
+# Rollback
+
+The `BackendTrafficPolicy` created for the attack is deleted automatically when the attack ends. If you need to clean up manually, delete the policy named `steadybit-abort-<executionId>` in the route's namespace (labelled `steadybit.com/managed-by=extension-kubernetes`).
+
+# Parameters
+
+| Parameter          | Description                                                                                              | Default          |
+|--------------------|----------------------------------------------------------------------------------------------------------|------------------|
+| Duration           | How long the route should be affected.                                                                   | 30s              |
+| Traffic Percentage | The percentage of requests aborted with the status code.                                                 | 50               |
+| HTTP Status Code   | The HTTP status code returned for aborted requests (200–600, excluding 418).                             | 500              |
+| Response Body      | (optional) The response body returned to clients for aborted requests. Leave empty to return an empty body. |               |
+| Content Type       | (optional) The `Content-Type` header set on the overwritten response body.                               | application/json |
+| Route Rule Name    | (optional) Restrict the attack to a single named route rule.                                             |                  |
