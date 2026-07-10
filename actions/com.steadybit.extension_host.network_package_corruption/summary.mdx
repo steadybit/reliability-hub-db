@@ -16,11 +16,13 @@ This attack affects network traffic for protocols that use port numbers (e.g., T
 
 # Parameters
 
-| Parameter          | Description                                                                          | Default |
-|--------------------|--------------------------------------------------------------------------------------|---------|
-| Package Corruption | How much traffic should be corrupted?                                                | 15%     |
-| Duration           | How much of the traffic should be corrupted??                                        | 30s     |
-| Hostnames          | (optional) Restrict to/from which hosts the traffic is affected.                     |         |
-| IPs/CIDRs          | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.    |         |
-| Ports              | (optional) Restrict to/from which ports the traffic is affected.                     |         |
-| Network Interface  | (optional) Target Network Interface which should be attacked. All if none specified. |         |
+| Parameter          | Description                                                                                                                                              | Default |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Package Corruption | How much traffic should be corrupted?                                                                                                                    | 15%     |
+| Duration           | How much of the traffic should be corrupted??                                                                                                            | 30s     |
+| Include Hostnames  | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
+| Include IPs/CIDRs  | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
+| Exclude Hostnames  | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
+| Exclude IPs/CIDRs  | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
+| Include Ports      | (optional) Restrict to/from which ports the traffic is affected.                                                                                         |         |
+| Network Interface  | (optional) Target Network Interface which should be attacked. All if none specified.                                                                     |         |
