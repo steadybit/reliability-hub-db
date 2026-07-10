@@ -17,9 +17,11 @@ If you are not using our container images for the extension, the attack requires
 
 # Parameters
 
-| Parameter | Description                                                                       | Default |
-|-----------|-----------------------------------------------------------------------------------|---------|
-| Duration  | How long should traffic been blocked?                                             | 30s     |
-| Hostnames | (optional) Restrict to/from which hosts the traffic is affected.                  |         |
-| IPs/CIDRs | (optional) Restrict to/from which IP addresses or blocks the traffic is affected. |         |
-| Ports     | (optional) Restrict to which ports the traffic is dropped                         |         |
+| Parameter         | Description                                                                                                                                              | Default |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration          | How long should traffic been blocked?                                                                                                                    | 30s     |
+| Include Hostnames | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
+| Include IPs/CIDRs | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
+| Exclude Hostnames | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
+| Exclude IPs/CIDRs | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
+| Include Ports     | (optional) Restrict to which ports the traffic is dropped                                                                                                |         |
