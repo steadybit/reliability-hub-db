@@ -11,7 +11,9 @@ In contrast to the [Stress Memory](/action/com.steadybit.extension_host.stress-m
 
 When using the attack to meet a specific memory usage, it may allocate or free memory to reach the desired memory usage.
 
-> If you specify a usage that exceeds the total memory (e.g. > 100%) it fills up the memory as much as possible until the process is oom-killed, as it's impossible to reach usages higher than 100%.
+To keep the host usable, the attack always leaves a safety reserve of memory free (512 MB by default). This keeps the operating system — and, on Kubernetes nodes, the kubelet — responsive; filling a node to a literal 100% would otherwise starve the kubelet and take the node `NotReady`. In *Fill and meet specified usage* mode it also backs off automatically when the host comes under memory pressure. If memory is exhausted anyway, the fill is terminated by the OOM killer before the Steadybit agent and extensions, so they stay alive to end the experiment and roll back. The reserve and this OOM priority are configurable on the extension.
+
+> Because of that reserve, even a usage of 100% (or higher) fills only up to *total memory − reserve*, so the fill no longer OOM-kills itself at high usages.
 
 > Remember that the Linux kernel reserves parts of the installed physical memory for itself. That means the total memory available to processes in the user space (like this action) is less than the total physical memory installed in the system.
 
