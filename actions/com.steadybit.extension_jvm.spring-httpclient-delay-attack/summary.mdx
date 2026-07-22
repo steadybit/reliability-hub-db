@@ -2,8 +2,6 @@
 
 Delays a response from a Spring `RestTemplate`, `WebClient` or `RestClient` by the given duration.
 
-`RestClient` is available from Spring Boot 3.2; all three clients are supported on every maintained Spring Boot line.
-
 # Details
 
 This attack only targets JVMs identified as Spring Application.
@@ -11,6 +9,10 @@ This attack only targets JVMs identified as Spring Application.
 # Use Cases
 
 * Understand how your services behave under slow network connections to other services
+
+# Compatibility
+
+Verified with Spring Boot 2.7, 3.5 and 4.1 for `RestTemplate`, `WebClient` and (Spring Boot 3.2+) `RestClient`.
 
 # Parameters
 
