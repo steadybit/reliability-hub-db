@@ -4,7 +4,7 @@ Inject latency into all matching egress traffic.
 
 # Details
 
-The network delay operates at the ip level and affects single packets (network layer, level 3). Thus, it works for UDP and TCP traffic, and you may encounter HTTP requests that are delayed by a multiple of the specified delay.
+The network delay operates at the ip level and affects single packets (network layer, level 3). Thus, you may encounter HTTP requests that are delayed by a multiple of the specified delay.
 
 In this example the traffic is delayed by 500ms. If you tap the wire (using tcpdump) and feed it into Wireshark it looks like shown in the image above.
 
