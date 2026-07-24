@@ -1,3 +1,21 @@
 # Introduction
 
 With this extension you are able to attack your jvm / java based applications in different ways like delay endpoints / http clients / jdbc connections, inject exceptions and modify http status codes.
+
+# Supported versions
+
+The attacks are verified against the current Java LTS releases (8, 11, 17, 21, 25) and the maintained Spring Boot lines (2.7, 3.5, 4.1):
+
+| Attack | Plain JVM | Boot 2.7 | Boot 3.5 | Boot 4.1 |
+|---|:---:|:---:|:---:|:---:|
+| Java Method Delay / Exception | yes | yes | yes | yes |
+| Spring Controller Delay / Exception | no | yes | yes | yes |
+| Spring JDBC Template Delay / Exception | no | yes | yes | yes |
+| Spring HTTP Client Delay | no | yes | yes | yes |
+| Spring HTTP Client Status (WebClient) | no | yes | yes | yes |
+| Spring HTTP Client Status (RestTemplate / RestClient) | no | yes | no | no |
+
+Notes:
+
+- The HTTP-client attacks cover `RestTemplate`, `WebClient` and — from Spring Boot 3.2 — `RestClient`. The **delay** attack works for all three clients on every supported version.
+- The HTTP-client **status** attack does not currently take effect for the blocking clients (`RestTemplate` / `RestClient`) on Spring Framework 6+ (Spring Boot 3.x / 4.x) — the original call still executes. Use `WebClient` to simulate HTTP-client failures on these versions.

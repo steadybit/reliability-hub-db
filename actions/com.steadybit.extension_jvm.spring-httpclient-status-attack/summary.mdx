@@ -1,12 +1,18 @@
 # Introduction
 
-Return the given status code from Spring `RestTemplate` or `WebClient` calls.
+Return the given status code from Spring `RestTemplate`, `WebClient` or `RestClient` calls.
 
 # Details
 
 This attack only targets JVMs identified as Spring Application.
 
 The original call is not executed.
+
+# Compatibility
+
+Verified with Spring Boot 2.7, 3.5 and 4.1.
+
+On Spring Framework 6+ (Spring Boot 3.x / 4.x) the status injection currently only takes effect for `WebClient`; for `RestTemplate` and `RestClient` the original call is still executed. Use `WebClient` to simulate HTTP-client failures on these versions. On Spring Boot 2.7 (Spring Framework 5) `RestTemplate` and `WebClient` are both supported.
 
 # Use Cases
 
