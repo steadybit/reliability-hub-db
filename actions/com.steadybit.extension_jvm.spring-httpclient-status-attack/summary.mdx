@@ -12,7 +12,7 @@ The original call is not executed.
 
 Verified with Spring Boot 2.7, 3.5 and 4.1.
 
-On Spring Framework 6+ (Spring Boot 3.x / 4.x) the status injection currently only takes effect for `WebClient`; for `RestTemplate` and `RestClient` the original call is still executed. Use `WebClient` to simulate HTTP-client failures on these versions. On Spring Boot 2.7 (Spring Framework 5) `RestTemplate` and `WebClient` are both supported.
+The status injection takes effect for `RestTemplate`, `WebClient` and `RestClient`.
 
 # Use Cases
 

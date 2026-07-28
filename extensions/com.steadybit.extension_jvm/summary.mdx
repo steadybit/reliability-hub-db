@@ -12,10 +12,8 @@ The attacks are verified against the current Java LTS releases (8, 11, 17, 21, 2
 | Spring Controller Delay / Exception | no | yes | yes | yes |
 | Spring JDBC Template Delay / Exception | no | yes | yes | yes |
 | Spring HTTP Client Delay | no | yes | yes | yes |
-| Spring HTTP Client Status (WebClient) | no | yes | yes | yes |
-| Spring HTTP Client Status (RestTemplate / RestClient) | no | yes | no | no |
+| Spring HTTP Client Status | no | yes | yes | yes |
 
 Notes:
 
-- The HTTP-client attacks cover `RestTemplate`, `WebClient` and — from Spring Boot 3.2 — `RestClient`. The **delay** attack works for all three clients on every supported version.
-- The HTTP-client **status** attack does not currently take effect for the blocking clients (`RestTemplate` / `RestClient`) on Spring Framework 6+ (Spring Boot 3.x / 4.x) — the original call still executes. Use `WebClient` to simulate HTTP-client failures on these versions.
+- The HTTP-client **delay** and **status** attacks both cover `RestTemplate`, `WebClient` and `RestClient`.
