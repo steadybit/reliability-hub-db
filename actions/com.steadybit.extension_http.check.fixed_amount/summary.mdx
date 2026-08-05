@@ -8,24 +8,24 @@ With this extension you are able to check your http endpoints for availability a
 
 # Parameters
 
-| Parameter                       | Description                                                                                                                | Default         |
-|---------------------------------|----------------------------------------------------------------------------------------------------------------------------|-----------------|
-| Duration                        | In which timeframe should the specified requests be executed?                                                              | 2s              |
-| HTTP Method                     | The HTTP method to use                                                                                                     | GET             |
-| Target URL                      | The URL to check.                                                                                                          |                 |
-| HTTP Body                       | (optional) The HTTP Body.                                                                                                  |                 |
-| HTTP Headers                    | (optional) The HTTP Headers.                                                                                               |                 |
-| Number of Requests.             | Fixed total number of requests, distributed evenly across the duration.                                                    | 1               |
-| Required Success Rate           | Percentage of requests that must be successful. Evaluated at the end of the duration.                                      | 100             |
-| Response status codes           | HTTP status codes considered as success. Supports ranges with '-' and multiple codes delimited by ';', e.g. '200-399;429'. | 200-299         |
-| Responses contain               | (optional) The responses must contain this string, otherwise the step fails.                                               |                 |
-| Response Time Verification Mode | (optional) Whether response time must be shorter or longer than the specified value.                                       | NO_VERIFICATION |
-| Response Time                   | (optional) The value for the response time verification.                                                                   | 500ms           |
-| Follow Redirects?               | Whether HTTP redirects should be followed.                                                                                 |                 |
-| Connection Timeout              | Connection timeout for a single call. Should be between 1 and 10 seconds.                                                  | 5s              |
-| Read Timeout                    | Read timeout for a single call. Should be between 1 and 10 seconds.                                                        | 5s              |
-| Max concurrent requests         | Maximum number of parallel requests in flight at once. (min 1, max 10)                                                     | 5               |
-| Skip certificate verification   | (optional) Whether TLS certificate verification should be skipped.                                                         | false           |
+| Parameter                         | Description                                                                                                                                             | Default      |
+|-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration                          | In which timeframe should the specified requests be executed?                                                                                           | 2s           |
+| HTTP Method                       | The HTTP method to use                                                                                                                                  | GET          |
+| Target URL                        | The URL to check.                                                                                                                                       |              |
+| HTTP Body                         | (optional) The HTTP Body.                                                                                                                               |              |
+| HTTP Headers                      | (optional) The HTTP Headers.                                                                                                                            |              |
+| Number of Requests                | Fixed total number of requests, distributed evenly across the duration.                                                                                 | 1            |
+| Required Success Rate             | Percentage of requests that must be successful. Evaluated at the end of the duration.                                                                   | 100          |
+| Required Response Status Codes    | HTTP status codes considered as success. Supports ranges with '-' and multiple codes delimited by ';', e.g. '200-399;429'.                              | 200-299      |
+| Required Response Body (contains) | (optional) The responses must contain this string, otherwise the step fails.                                                                            |              |
+| Verify Response Time              | How the response time should be verified against the required response time: 'don't verify', 'faster than required', or 'slower than required'.        | don't verify |
+| Required Response Time            | The required response time, measured until the first response byte is received. Only used when 'Verify Response Time' is not set to 'don't verify'.    | 500ms        |
+| Follow Redirects                  | Whether HTTP redirects should be followed.                                                                                                              |              |
+| Connection Timeout                | Connection timeout for a single call. Should be between 1 and 10 seconds.                                                                               | 5s           |
+| Read Timeout                      | Read timeout for a single call. Should be between 1 and 10 seconds.                                                                                     | 5s           |
+| Max Concurrent Requests           | Maximum number of parallel requests in flight at once. (min 1, max 10)                                                                                  | 5            |
+| Skip Certificate Verification     | (optional) Whether TLS certificate verification should be skipped.                                                                                      | false        |
 
 
 # Self-signed certificates
