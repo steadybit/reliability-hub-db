@@ -1,0 +1,16 @@
+---
+id: com.steadybit.extension_gcp.spanner.instance
+label:
+  one: Spanner instance
+  other: Spanner instances
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 4h16v2H4V4zm0 7h16v2H4v-2zm0 7h16v2H4v-2z" fill="currentColor"/>
+  </svg>
+extension: com.steadybit.extension_gcp
+
+tags:
+  - GCP
+  - GCP Spanner
+  - Cloud
+  - Database

@@ -1,0 +1,17 @@
+---
+id: com.steadybit.extension_gcp.mig
+label:
+  one: Managed Instance Group
+  other: Managed Instance Groups
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 4h8v8H4V4zm12 0h4v4h-4V4zM16 10h4v4h-4v-4zm-4 4h8v6h-8V14zM4 14h6v6H4v-6z" fill="currentColor"/>
+  </svg>
+extension: com.steadybit.extension_gcp
+
+tags:
+  - GCP
+  - GCP MIG
+  - Cloud
+  - Compute
+  - Autoscaling

@@ -1,8 +1,27 @@
 # Introduction
 
-The GCP (Google Cloud Platform) extension bundles various attacks, target discovery, and check capabilities for GCP managed services.
+The GCP (Google Cloud Platform) extension bundles attacks and target discovery for a range of GCP managed services. Each target type maps directly to a GCP resource so you can build selectors over your live environment without inventorying anything by hand.
 
-The GCP extension is essentially an adapter for the GCP APIs. It currently only supports a small set of GCP APIs.
+## Supported services
+
+The extension currently discovers and, where applicable, injects faults against:
+
+| Service | Discovery | Attacks |
+|---------|:---------:|--------|
+| Compute Engine (VMs) | ✓ | Change VM state (reset, stop, delete, suspend) |
+| Managed Instance Group | ✓ | Recreate a percentage of running instances |
+| GKE cluster | ✓ | — |
+| GKE node pool | ✓ | Recreate a percentage of node instances |
+| Cloud NAT | ✓ | Disassociate the NAT for the attack duration (auto-restored on stop) |
+| Persistent Disk | ✓ | — |
+| Cloud SQL instance | ✓ | Trigger REGIONAL-HA failover |
+| Memorystore for Redis instance | ✓ | Trigger STANDARD_HA failover |
+| Spanner instance | ✓ | — |
+| Cloud Run service | ✓ | — |
+| Pub/Sub topic | ✓ | — |
+| Pub/Sub subscription | ✓ | — |
+
+Discovery-only targets are still useful — they let you write experiment selectors that reference the GCP resource inventory (for example, "any experiment that touches a Cloud Run service tagged environment=prod").
 
 # Further Support for Managed Services
 While the GCP extension provides integrations to managed services via GCP APIs, we also offer deeper integration for the following services based on the underlying technology.

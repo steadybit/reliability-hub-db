@@ -1,0 +1,5 @@
+# Cloud SQL Instance Discovery
+
+The extension discovers Cloud SQL instances (MySQL, PostgreSQL, SQL Server) across accessible projects. Each instance is exposed as a target with attributes for its database engine and version, availability type (`ZONAL` / `REGIONAL` HA), machine tier, region, and settings version.
+
+The `availability-type` attribute lets you scope failover attacks to HA-enabled instances only.

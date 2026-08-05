@@ -1,0 +1,27 @@
+# Introduction
+
+This action triggers a failover of a `STANDARD_HA` Memorystore for Redis instance. The replica in the alternate zone is promoted to primary — exercising the same code path a real zonal outage on the primary would.
+
+The endpoint host (`10.x.x.x`) is stable across the swap; only the underlying zone changes.
+
+# Use Cases
+
+- Verify that clients using client-side connection pools cleanly reconnect and re-establish tracking / auth after the primary flips.
+- Understand the performance impact of a cold cache immediately after failover, and how quickly the read/write hit-rate recovers.
+- Validate that observability alerts fire (or don't fire) as expected during a controlled failover.
+
+# Rollback
+
+This attack does not support rollback. Memorystore performs the promotion and rebuilds the replica automatically. Cancellation is a no-op.
+
+# Parameters
+
+| Parameter            | Description                                                                                                                                                | Default            |
+|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| Data protection mode | `LIMITED_DATA_LOSS` proceeds only if the replica is caught up within GCP's threshold; `FORCE_DATA_LOSS` fails over immediately and may lose recent writes. | `LIMITED_DATA_LOSS` |
+
+# Notes
+
+Failover requires `STANDARD_HA` tier. `BASIC` tier instances cannot fail over (no replica exists). The `gcp.memorystore.tier` attribute lets you scope this attack in your selector.
+
+If the replica is not caught up when running in `LIMITED_DATA_LOSS`, GCP will complete the operation as `done` but leave the primary in place — no role swap occurs. Use `FORCE_DATA_LOSS` when you need to guarantee an actual promotion for chaos purposes.

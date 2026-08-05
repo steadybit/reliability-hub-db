@@ -1,0 +1,18 @@
+---
+id: com.steadybit.extension_gcp.gke.nodepool.terminate-instances
+label: Recreate GKE node pool instances
+description: Recreates a percentage of instances in a GKE node pool via the underlying MIG's RecreateInstances API. Pool size is preserved. Not reversible.
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2l10 5v10l-10 5-10-5V7l10-5z" fill="currentColor"/>
+  </svg>
+kind: attack
+targetType: com.steadybit.extension_gcp.gke.nodepool
+extension: com.steadybit.extension_gcp
+tags:
+  - GCP
+  - GCP GKE
+  - Cloud
+  - Kubernetes
+  - Node pool
+  - State

@@ -1,0 +1,22 @@
+# Introduction
+
+This action recreates a percentage of the `RUNNING` instances in a Managed Instance Group by calling GCP's `recreateInstances` API. GCP terminates the selected instances and provisions fresh replacements from the instance template while **keeping the MIG's `targetSize` intact** — this is the key difference from `deleteInstances`, which permanently shrinks the group.
+
+The attack samples target instances uniformly from the current `RUNNING` set. For small pools it always picks at least one instance (rounded up from the requested percentage).
+
+# Use Cases
+
+- Validate that stateless workloads recover cleanly when a fraction of the fleet disappears and is replaced with fresh instances.
+- Measure cold-start cost: image pull, boot, startup scripts, connection-pool warmup on the new instances.
+- Verify load-balancer health checks correctly drain terminating instances and route only to healthy replacements.
+
+# Rollback
+
+This attack does not support rollback. GCP provisions fresh replacements automatically. Cancellation is a no-op.
+
+# Parameters
+
+| Parameter                          | Description                                                                                       | Default |
+|------------------------------------|---------------------------------------------------------------------------------------------------|---------|
+| Percentage of instances to recreate | Percentage (1–100) of the MIG's `RUNNING` instances to recreate. Rounded up to at least one.       | 33      |
+| Allow percentages above 50%         | Required to enable percentages above 50%. Acknowledges that more than half the MIG will be recreated simultaneously. | false   |
