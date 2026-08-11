@@ -1,0 +1,23 @@
+# Introduction
+
+This action triggers a failover of a `REGIONAL` (high-availability) Cloud SQL instance. Cloud SQL promotes the standby to primary and provisions a new standby behind it — exercising the same code path a real zonal outage would.
+
+The extension fetches the instance's current `settingsVersion` and passes it in the `FailoverContext`, so Cloud SQL will reject the failover if the instance configuration was mutated between our read and our write (optimistic-concurrency safety).
+
+# Use Cases
+
+- Verify that connection pools reconnect cleanly when the database endpoint's underlying zone changes.
+- Measure end-to-end downtime seen by the application during a failover.
+- Validate that read-replica-aware clients handle the primary/standby role swap correctly.
+
+# Rollback
+
+This attack does not support rollback. Cloud SQL manages the promotion and rebuilds the new standby automatically. Cancellation is a no-op.
+
+# Parameters
+
+*No parameters.*
+
+# Notes
+
+Failover requires `REGIONAL` availability type. The target discovery exposes `gcp.cloudsql.availability-type` — use it in your selector to keep this attack from matching `ZONAL` instances (Prepare will error out otherwise).

@@ -1,0 +1,5 @@
+# Memorystore for Redis Instance Discovery
+
+The extension discovers Memorystore for Redis instances across accessible projects and regions. Each instance is exposed as a target with attributes for its tier (`BASIC` / `STANDARD_HA`), Redis version, memory size, current / alternative zone, replica count, read-replica mode, and endpoint host.
+
+The `tier` attribute lets you scope failover attacks to `STANDARD_HA` instances only, since failover is not supported on `BASIC` tier.

@@ -1,0 +1,5 @@
+# Managed Instance Group Discovery
+
+The extension discovers zonal and regional Managed Instance Groups (MIGs) across accessible projects. Each MIG is exposed as a target with attributes for its scope (zonal / regional), target size, instance template, autoscaling configuration, health-check policy, and base instance name.
+
+Note: MIGs backing GKE node pools are also discovered here, but are usually attacked through the [GKE node pool target](/target/com.steadybit.extension_gcp.gke.nodepool) instead to keep pool ownership semantics intact.

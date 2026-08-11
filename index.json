@@ -1,5 +1,5 @@
 {
-  "lastChange": 1783085975,
+  "lastChange": 1785935385,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -162,6 +162,11 @@
     "/actions/com.steadybit.extension_dynatrace.problem_check/description.yml",
     "/actions/com.steadybit.extension_gatling.enterprise.run/description.yml",
     "/actions/com.steadybit.extension_gatling.run/description.yml",
+    "/actions/com.steadybit.extension_gcp.cloud-nat.disassociate-subnets/description.yml",
+    "/actions/com.steadybit.extension_gcp.cloudsql.instance.failover/description.yml",
+    "/actions/com.steadybit.extension_gcp.gke.nodepool.terminate-instances/description.yml",
+    "/actions/com.steadybit.extension_gcp.memorystore.redis-instance.failover/description.yml",
+    "/actions/com.steadybit.extension_gcp.mig.delete-instances/description.yml",
     "/actions/com.steadybit.extension_gcp.vm.state/description.yml",
     "/actions/com.steadybit.extension_grafana.alert-rule.check/description.yml",
     "/actions/com.steadybit.extension_host_windows.fill_disk/description.yml",

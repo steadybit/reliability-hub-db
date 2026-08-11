@@ -1,0 +1,3 @@
+# GKE Node Pool Discovery
+
+The extension discovers all node pools inside every accessible GKE cluster. Each node pool is exposed as a target with attributes for its parent cluster, machine type, autoscaling configuration, Spot / preemptible flag, and taints — useful for building selectors that target specific pool shapes (for example, an "attack a Spot node pool but never a system pool" query).

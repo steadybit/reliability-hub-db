@@ -1,0 +1,21 @@
+# Introduction
+
+This action removes a Cloud NAT gateway from its Cloud Router for the duration of the attack. VMs in the subnetworks that relied on that NAT lose their outbound internet egress and any traffic requiring SNAT (package fetches, external API calls, log shipping to public endpoints).
+
+At Prepare time, the extension snapshots the NAT's full configuration (subnetwork bindings, NAT IP allocation, log config, timeouts, source range mode) via a protobuf marshal. At Start, the NAT is removed from the router. At Stop, the snapshot is re-attached — restoring the exact prior configuration byte-for-byte, including any custom timeouts or manual IP allocations.
+
+# Use Cases
+
+- Verify that services depending on external APIs have retry, circuit-breaker, or fallback behavior when egress disappears.
+- Validate monitoring and alerting on outbound connectivity loss (blackholed egress is a common real-world failure mode).
+- Understand how VMs behind NAT behave when their egress path vanishes and how quickly they recover once it is restored.
+
+# Rollback
+
+Yes — Stop restores the NAT from the snapshot taken at Prepare. Sibling NATs on the same router are untouched by refetching the router state on every remove/restore.
+
+# Parameters
+
+| Parameter | Description                                                            | Default |
+|-----------|------------------------------------------------------------------------|---------|
+| Duration  | How long the Cloud NAT stays removed. Restored automatically on stop.  | 60s     |

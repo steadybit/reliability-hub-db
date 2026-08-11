@@ -1,0 +1,22 @@
+# Introduction
+
+This action recreates a percentage of the node instances in a GKE node pool by calling `recreateInstances` on the underlying Managed Instance Group(s). GCP terminates the selected nodes and provisions fresh replacements while **preserving the node pool's size** — unlike `deleteInstances`, which permanently shrinks the pool.
+
+Pods on affected nodes are drained by kubelet's node-shutdown handling and reschedule onto surviving or freshly-recreated nodes (subject to PodDisruptionBudgets, taints, tolerations, and topology spread constraints).
+
+# Use Cases
+
+- Validate Pod Disruption Budgets under partial node loss.
+- Verify taints/tolerations and topology-spread constraints keep critical workloads spread across surviving nodes.
+- Measure cold-start cost on new nodes: image pull, CSI volume re-attach, init containers, DaemonSet startup.
+
+# Rollback
+
+This attack does not support rollback. GKE recreates the terminated nodes automatically. Cancellation is a no-op.
+
+# Parameters
+
+| Parameter                          | Description                                                                                            | Default |
+|------------------------------------|--------------------------------------------------------------------------------------------------------|---------|
+| Percentage of instances to recreate | Percentage (1–100) of the node pool's instances to recreate. Rounded up to at least one.                | 33      |
+| Allow percentages above 50%         | Required to enable percentages above 50%. Acknowledges that more than half the node pool will be recreated simultaneously. | false   |

@@ -24,3 +24,14 @@ tags:
   - Cloud
   - Virtual machines
   - VM
+  - GKE
+  - Kubernetes
+  - MIG
+  - Cloud SQL
+  - Cloud NAT
+  - Memorystore
+  - Redis
+  - Spanner
+  - Persistent Disk
+  - Cloud Run
+  - Pub/Sub

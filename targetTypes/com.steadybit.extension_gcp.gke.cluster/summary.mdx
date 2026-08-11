@@ -1,0 +1,5 @@
+# GKE Cluster Discovery
+
+The extension discovers all Google Kubernetes Engine (GKE) clusters accessible to the configured GCP credentials — both standard and Autopilot clusters. Each cluster is exposed as a target with attributes for its location, version, node pool count, release channel, and network configuration.
+
+For deeper Kubernetes-workload chaos (pods, containers, hosts), install the Kubernetes-aware extensions alongside: [extension-kubernetes](/extension/com.steadybit.extension_kubernetes), [extension-container](/extension/com.steadybit.extension_container), and [extension-host](/extension/com.steadybit.extension_host) (host attacks require Standard clusters).
