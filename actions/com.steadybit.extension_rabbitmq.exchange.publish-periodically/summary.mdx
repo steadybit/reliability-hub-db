@@ -1,0 +1,25 @@
+# Introduction
+
+Publishes messages to a RabbitMQ exchange at a constant rate (messages per second) for the attack duration.
+
+Delivery is determined by the exchange type and its bindings: a fanout exchange copies each message to every bound queue, while direct and topic exchanges route by the routing key. Messages that no queue receives count as failures against the required success rate.
+
+For publishing a fixed total number of messages, use `Publish to Exchange (# of Messages)` instead. To fill one specific queue directly, use the queue-targeted `Publish (Messages / s)`.
+
+# Use Cases
+
+ - Apply sustained load through an exchange and verify all bound consumers keep up.
+ - Combine with fault injection (e.g. node restarts) and verify the publish success rate through the exchange stays at 100%.
+ - Verify topic routing under continuous traffic by watching which bound queues accumulate backlog.
+
+# Parameters
+
+| Parameter                | Description                                                                                                                                                | Default      |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration (seconds)       | How long the publisher runs at the specified rate. Total messages produced = rate x duration.                                                             | 30           |
+| Messages per second      | The number of messages per second. Min: 1, Max: 10.                                                                                                       | 1            |
+| Routing Key              | (optional) Routing key used for message delivery, published as-is. Fanout exchanges ignore it; on direct and topic exchanges an empty or non-matching key makes messages unroutable, which counts as failure. |              |
+| Message Headers          | (optional) AMQP message headers to include in the message properties. Specified as key-value pairs.                                                       |              |
+| Message body             | The message body. Every message uses this same value.                                                                                                     | test-message |
+| Required Success Rate    | Minimum percentage of messages that must be published and routed without errors. If the success rate drops below this, the experiment fails.              | 100          |
+| Max concurrent requests  | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                           | 1            |

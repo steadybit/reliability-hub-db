@@ -1,0 +1,25 @@
+# Introduction
+
+Publishes a fixed total number of messages to a RabbitMQ exchange. The messages are distributed evenly across the attack duration — for example, 100 messages over 10 seconds publishes approximately 10 messages/second. The effective rate is: `numberOfMessages / duration`.
+
+Delivery is determined by the exchange type and its bindings: a fanout exchange copies each message to every bound queue, while direct and topic exchanges route by the routing key. Messages that no queue receives count as failures against the required success rate.
+
+For rate-based publishing (messages per second), use `Publish to Exchange (Messages / s)` instead. To fill one specific queue directly, use the queue-targeted `Publish (# of Messages)`.
+
+# Use Cases
+
+ - Verify fanout routing: publish through a fanout exchange and check that every bound queue receives the messages.
+ - Verify topic selectivity: publish with different routing keys and check that only the matching bindings receive messages.
+ - Detect broken routing: a non-matching routing key makes every message unroutable, failing the experiment instead of silently dropping traffic.
+
+# Parameters
+
+| Parameter                | Description                                                                                                                                                | Default      |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration (seconds)       | How long the publisher runs. The total number of messages is distributed evenly across this duration.                                                     | 30           |
+| Number of Messages       | Total number of messages to publish across the entire duration. The publishing rate is this value divided by the duration. Min: 1.                        | 1            |
+| Routing Key              | (optional) Routing key used for message delivery, published as-is. Fanout exchanges ignore it; on direct and topic exchanges an empty or non-matching key makes messages unroutable, which counts as failure. |              |
+| Message Headers          | (optional) AMQP message headers to include in the message properties. Specified as key-value pairs.                                                       |              |
+| Message body             | The message body. Every message uses this same value.                                                                                                     | test-message |
+| Required Success Rate    | Minimum percentage of messages that must be published and routed without errors. If the success rate drops below this, the experiment fails.              | 100          |
+| Max concurrent requests  | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                           | 1            |

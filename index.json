@@ -1,5 +1,5 @@
 {
-  "lastChange": 1785935385,
+  "lastChange": 1786544286,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -264,6 +264,8 @@
     "/actions/com.steadybit.extension_newrelic.workload_check/description.yml",
     "/actions/com.steadybit.extension_postman.collection.run/description.yml",
     "/actions/com.steadybit.extension_prometheus.instance.metrics/description.yml",
+    "/actions/com.steadybit.extension_rabbitmq.exchange.publish-fixed-amount/description.yml",
+    "/actions/com.steadybit.extension_rabbitmq.exchange.publish-periodically/description.yml",
     "/actions/com.steadybit.extension_rabbitmq.node.check/description.yml",
     "/actions/com.steadybit.extension_rabbitmq.queue.alter-max-length/description.yml",
     "/actions/com.steadybit.extension_rabbitmq.queue.check-backlog/description.yml",
