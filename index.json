@@ -1,5 +1,5 @@
 {
-  "lastChange": 1786544286,
+  "lastChange": 1788170542,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -147,6 +147,9 @@
     "/actions/com.steadybit.extension_container.network_blackhole/description.yml",
     "/actions/com.steadybit.extension_container.network_block_dns/description.yml",
     "/actions/com.steadybit.extension_container.network_delay/description.yml",
+    "/actions/com.steadybit.extension_container.network_dependency_http_response/description.yml",
+    "/actions/com.steadybit.extension_container.network_dependency_latency/description.yml",
+    "/actions/com.steadybit.extension_container.network_dependency_reset/description.yml",
     "/actions/com.steadybit.extension_container.network_dns_error_injection/description.yml",
     "/actions/com.steadybit.extension_container.network_package_corruption/description.yml",
     "/actions/com.steadybit.extension_container.network_package_loss/description.yml",
@@ -189,6 +192,9 @@
     "/actions/com.steadybit.extension_host.network_blackhole/description.yml",
     "/actions/com.steadybit.extension_host.network_block_dns/description.yml",
     "/actions/com.steadybit.extension_host.network_delay/description.yml",
+    "/actions/com.steadybit.extension_host.network_dependency_http_response/description.yml",
+    "/actions/com.steadybit.extension_host.network_dependency_latency/description.yml",
+    "/actions/com.steadybit.extension_host.network_dependency_reset/description.yml",
     "/actions/com.steadybit.extension_host.network_dns_error_injection/description.yml",
     "/actions/com.steadybit.extension_host.network_package_corruption/description.yml",
     "/actions/com.steadybit.extension_host.network_package_loss/description.yml",

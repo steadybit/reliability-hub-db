@@ -1,0 +1,31 @@
+# Introduction
+
+Adds latency to calls to a specific **dependency**, identified by hostname at layer 7 (TLS SNI / HTTP Host). Unlike *Network Delay*, which slows **all** traffic to an IP or CIDR, this slows only the traffic to the named dependency — and it works over HTTPS and for endpoints served by shared or rotating IPs.
+
+# Prerequisites
+
+If you are not using our container images for the extension, the attack requires `iptables` (from the iptables package).
+
+# Details
+
+A transparent TCP proxy is started in the host's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which inspects the connection at layer 7 — reading the TLS ClientHello **SNI** for HTTPS or the **HTTP Host** header for cleartext — to decide whether it belongs to one of the targeted dependencies. Connections to other destinations are relayed through untouched, so only traffic to the named hostname(s) is affected. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints) and over HTTPS. Each execution uses its own iptables chain, so multiple attacks can run concurrently. Matched connections are held for the configured latency before their bytes are relayed to the real destination; the delay is applied per connection.
+
+Only TCP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched.
+
+# Use Cases
+
+* Simulate a slow third-party API or downstream service and verify client timeouts and retries
+* Validate SLOs and fallbacks when one dependency degrades while the rest of the network is healthy
+* Test connection-pool and circuit-breaker behavior under sustained dependency latency
+
+# Parameters
+
+| Parameter | Description | Default |
+|---|---|---|
+| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 via TLS SNI or the HTTP Host header. **Required.** |  |
+| Duration | How long should the attack last? | 30s |
+| Percentage | Percentage of matching connections the fault is applied to. | 50 |
+| Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
+| Dependency Ports | (optional) Restrict matching to these ports. | 80,443 |
+| Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Latency | How much latency should be added to calls to the dependency? | 500ms |

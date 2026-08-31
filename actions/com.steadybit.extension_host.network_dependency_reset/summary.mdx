@@ -1,0 +1,30 @@
+# Introduction
+
+Resets (**RST**) connections to a specific **dependency**, identified by hostname at layer 7 (TLS SNI / HTTP Host). Unlike the packet-level *Reset TCP Connection* attack, which matches by IP and port, this targets a named dependency and works over HTTPS and for shared or rotating IPs. Unlike *Block Traffic*, which drops packets and causes timeouts, a reset produces an immediate connection error on the client side.
+
+# Prerequisites
+
+If you are not using our container images for the extension, the attack requires `iptables` (from the iptables package).
+
+# Details
+
+A transparent TCP proxy is started in the host's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which inspects the connection at layer 7 — reading the TLS ClientHello **SNI** for HTTPS or the **HTTP Host** header for cleartext — to decide whether it belongs to one of the targeted dependencies. Connections to other destinations are relayed through untouched, so only traffic to the named hostname(s) is affected. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints) and over HTTPS. Each execution uses its own iptables chain, so multiple attacks can run concurrently. Matched connections are terminated with a TCP RST as soon as the dependency is identified from the SNI or Host header.
+
+Only TCP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched.
+
+# Use Cases
+
+* Simulate abrupt disconnects from an upstream or downstream dependency
+* Test client-side retry and reconnection logic under immediate connection failures
+* Verify circuit-breaker behavior when a dependency actively refuses connections rather than timing out
+
+# Parameters
+
+| Parameter | Description | Default |
+|---|---|---|
+| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 via TLS SNI or the HTTP Host header. **Required.** |  |
+| Duration | How long should the attack last? | 30s |
+| Percentage | Percentage of matching connections the fault is applied to. | 50 |
+| Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
+| Dependency Ports | (optional) Restrict matching to these ports. | 80,443 |
+| Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
