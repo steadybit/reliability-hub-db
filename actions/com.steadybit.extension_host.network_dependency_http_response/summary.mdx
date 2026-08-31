@@ -18,6 +18,13 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 * Force specific status codes (e.g. 429, 503) to test retry, backoff and circuit-breaker logic
 * Return a crafted body or headers to exercise response parsing and validation
 
+# Protocol compatibility
+
+- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header and the synthesized response is written back. Fully supported.
+- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow HTTP(s) Dependency* or the L7 mode of *Reset TCP Connection* for HTTPS dependencies.
+- **HTTP/2 cleartext (h2c)** — not matched (the authority is not a plain `Host` header).
+- **HTTP/3 (QUIC)** — not affected: this attack intercepts TCP only.
+
 # Parameters
 
 | Parameter | Description | Default |
@@ -31,3 +38,8 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 | Response Status | The HTTP status code to return for matched requests. | 503 |
 | Response Body | (optional) A custom response body to return. |  |
 | Response Headers | (optional) Custom response headers to return. |  |
+| Response Delay | (optional) Delay before returning the synthesized response, to mimic a slow-then-failing dependency. | 0s |
+
+# Statistics
+
+While the attack runs, a **Dependency Fault Statistics** widget shows how many connections were matched and faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. A matched count of zero means the interception installed but no traffic hit it — check the hostname, ports, and that traffic flows through this network namespace.
