@@ -1,6 +1,6 @@
 # Introduction
 
-Returns a **synthesized HTTP response** for a specific dependency's **cleartext HTTP** calls — a status code, and optionally a custom body and headers — without ever reaching the real dependency. Requests are matched by the HTTP **Host** header. This is cleartext HTTP only; HTTPS cannot be intercepted at layer 7 without breaking TLS, so for HTTPS dependencies use the L7 mode of **Reset TCP/HTTP(S) Connection** instead.
+Returns a **synthesized HTTP response** for a specific dependency's **cleartext HTTP** calls — a status code, and optionally a custom body and headers — without ever reaching the real dependency. Requests are matched by the HTTP **Host** header. This is cleartext HTTP only; HTTPS cannot be intercepted at layer 7 without breaking TLS, so for HTTPS dependencies use the L7 mode of **Reset TCP/HTTP(s) Connection** instead.
 
 # Prerequisites
 
@@ -12,7 +12,7 @@ The target container must not share the host's network namespace. Containers usi
 
 A transparent TCP proxy is started in the container's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which reads the **HTTP Host** header to decide whether a request belongs to one of the targeted dependencies. Requests to other destinations are relayed through untouched. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints). Each execution uses its own iptables chain, so multiple attacks can run concurrently. For matched requests the proxy writes the configured HTTP status code (and optional body and headers) back to the client instead of forwarding the request. Because it operates on cleartext HTTP, it defaults to port 80.
 
-Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traffic in the container is relayed untouched. HTTPS is not intercepted; to disrupt an HTTPS dependency use the L7 mode of **Reset TCP/HTTP(S) Connection**.
+Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traffic in the container is relayed untouched. HTTPS is not intercepted; to disrupt an HTTPS dependency use the L7 mode of **Reset TCP/HTTP(s) Connection**.
 
 # Use Cases
 
@@ -23,7 +23,7 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 # Protocol compatibility
 
 - **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header and the synthesized response is written back. Fully supported.
-- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow HTTP(s) Dependency* or the L7 mode of *Reset TCP/HTTP(S) Connection* for HTTPS dependencies.
+- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow HTTP(s) Dependency* or the L7 mode of *Reset TCP/HTTP(s) Connection* for HTTPS dependencies.
 - **HTTP/2 cleartext (h2c)** — not matched (the authority is not a plain `Host` header).
 - **HTTP/3 (QUIC)** — not affected: this attack intercepts TCP only.
 
