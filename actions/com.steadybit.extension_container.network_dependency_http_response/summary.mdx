@@ -23,7 +23,7 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 # Protocol compatibility
 
 - **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header and the synthesized response is written back. Fully supported.
-- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow HTTP(s) Dependency* or the L7 mode of *Reset TCP/HTTP(s) Connection* for HTTPS dependencies.
+- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow Outgoing HTTP(s) Dependency* or the L7 mode of *Reset TCP/HTTP(s) Connection* for HTTPS dependencies.
 - **HTTP/2 cleartext (h2c)** — not matched (the authority is not a plain `Host` header).
 - **HTTP/3 (QUIC)** — not affected: this attack intercepts TCP only.
 
