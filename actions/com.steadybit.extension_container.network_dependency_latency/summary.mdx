@@ -1,0 +1,48 @@
+# Introduction
+
+Adds latency to calls to a specific **dependency**, identified by hostname at layer 7 (TLS SNI / HTTP Host). Unlike *Network Delay*, which slows **all** traffic to an IP or CIDR, this slows only the traffic to the named dependency — and it works over HTTPS and for endpoints served by shared or rotating IPs.
+
+# Prerequisites
+
+If you are not using our container images for the extension, the attack requires `iptables` (from the iptables package).
+
+The target container must not share the host's network namespace. Containers using host networking are skipped by default (see the *Fail on Host Network* parameter).
+
+# Details
+
+A transparent TCP proxy is started in the container's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which inspects the connection at layer 7 — reading the TLS ClientHello **SNI** for HTTPS or the **HTTP Host** header for cleartext — to decide whether it belongs to one of the targeted dependencies. Connections to other destinations are relayed through untouched, so only traffic to the named hostname(s) is affected. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints) and over HTTPS. Each execution uses its own iptables chain, so multiple attacks can run concurrently. Matched connections are held for the configured latency before their bytes are relayed to the real destination; the delay is applied per connection.
+
+Only TCP traffic to the targeted hostname(s) is affected. Other traffic in the container is relayed untouched.
+
+# Use Cases
+
+* Simulate a slow third-party API or downstream service and verify client timeouts and retries
+* Validate SLOs and fallbacks when one dependency degrades while the rest of the network is healthy
+* Test connection-pool and circuit-breaker behavior under sustained dependency latency
+
+# Protocol compatibility
+
+Selection happens at layer 7, so which protocols are affected depends on how the dependency is reached:
+
+- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header. Fully supported.
+- **HTTPS (TLS), including HTTP/1.1 and HTTP/2 over TLS** — matched by the TLS SNI. Supported: the fault acts at the connection level and does not need to read inside TLS.
+- **HTTP/2 cleartext (h2c)** — not matched: there is no SNI and the authority is carried in an HPACK-compressed HEADERS frame rather than a plain `Host` header. (h2c is rare in practice.)
+- **HTTP/3 (QUIC)** — not affected: QUIC runs over UDP and this attack intercepts TCP only. Disable HTTP/3/QUIC on the client, or target the TCP fallback, to exercise the dependency.
+
+# Parameters
+
+| Parameter | Description | Default |
+|---|---|---|
+| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 via TLS SNI or the HTTP Host header. **Required.** |  |
+| Duration | How long should the attack last? | 30s |
+| Percentage | Percentage of matching connections the fault is applied to. | 50 |
+| Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
+| Dependency Ports | (optional) Restrict matching to these ports. | 80,443 |
+| Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Fail on Host Network | (optional) Fail the attack if the target container uses host networking. | true |
+| Latency | How much latency should be added to calls to the dependency? | 500ms |
+| Reset existing connections | Reset the target's already-open (keep-alive/pooled) connections to the dependency when the attack starts, so they reconnect through the proxy and immediately experience the latency. Disable to affect only new connections. | true |
+
+# Statistics
+
+While the attack runs, a **Dependency Fault Statistics** widget shows how many connections were matched and faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. A matched count of zero means the interception installed but no traffic hit it — check the hostname, ports, and that traffic flows through this network namespace.

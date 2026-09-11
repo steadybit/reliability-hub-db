@@ -12,6 +12,31 @@ When an Istio sidecar is detected in the target's network namespace, the attack 
 
 Only TCP traffic is affected. UDP and other protocols are not impacted by this attack.
 
+# L7 mode: reset by hostname (SNI / HTTP Host)
+
+Enabling **Reset at L7 by hostname (SNI/Host)** switches this attack from the packet-level engine to the transparent proxy, so it resets connections to a *named dependency* instead of by IP/port. The default (checkbox off) keeps the historical packet-level behaviour described above.
+
+| | Default (packet-level) | L7 mode |
+|---|---|---|
+| Selects by | IP / port | hostname (TLS SNI / HTTP Host) |
+| Direction | incoming and outgoing | outgoing only |
+| HTTPS / shared or rotating IPs | only if you know the IPs | matched by hostname, works over HTTPS |
+| Percentage | — | supported |
+| Statistics | — | per-hostname matched/faulted widget |
+
+In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Percentage** applies, and **Include Ports** defaults to `80,443` when left empty. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
+
+## Protocol compatibility (L7 mode)
+
+- **HTTP/1.x cleartext** — matched by the HTTP `Host` header.
+- **HTTPS (TLS), HTTP/1.1 and HTTP/2 over TLS** — matched by the TLS SNI (the reset acts at the connection level).
+- **HTTP/2 cleartext (h2c)** — not matched.
+- **HTTP/3 (QUIC)** — not affected: the proxy intercepts TCP only.
+
+## Statistics (L7 mode)
+
+A **Dependency Fault Statistics** widget shows connections matched and reset, plus a per-hostname breakdown. A matched count of zero means the interception installed but no traffic hit it.
+
 # Use Cases
 
 * Simulate abrupt connection resets from upstream or downstream services

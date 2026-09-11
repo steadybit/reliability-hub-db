@@ -1,0 +1,48 @@
+# Introduction
+
+Returns a **synthesized HTTP response** for a specific dependency's **cleartext HTTP** calls — a status code, and optionally a custom body and headers — without ever reaching the real dependency. Requests are matched by the HTTP **Host** header. This is cleartext HTTP only; HTTPS cannot be intercepted at layer 7 without breaking TLS, so for HTTPS dependencies use the L7 mode of **Reset TCP/HTTP(s) Connection** instead.
+
+# Prerequisites
+
+If you are not using our container images for the extension, the attack requires `iptables` (from the iptables package).
+
+The target container must not share the host's network namespace. Containers using host networking are skipped by default (see the *Fail on Host Network* parameter).
+
+# Details
+
+A transparent TCP proxy is started in the container's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which reads the **HTTP Host** header to decide whether a request belongs to one of the targeted dependencies. Requests to other destinations are relayed through untouched. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints). Each execution uses its own iptables chain, so multiple attacks can run concurrently. For matched requests the proxy writes the configured HTTP status code (and optional body and headers) back to the client instead of forwarding the request. Because it operates on cleartext HTTP, it defaults to port 80.
+
+Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traffic in the container is relayed untouched. HTTPS is not intercepted; to disrupt an HTTPS dependency use the L7 mode of **Reset TCP/HTTP(s) Connection**.
+
+# Use Cases
+
+* Simulate a dependency returning 5xx errors and verify error handling and fallbacks
+* Force specific status codes (e.g. 429, 503) to test retry, backoff and circuit-breaker logic
+* Return a crafted body or headers to exercise response parsing and validation
+
+# Protocol compatibility
+
+- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header and the synthesized response is written back. Fully supported.
+- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow Outgoing HTTP(s) Dependency* or the L7 mode of *Reset TCP/HTTP(s) Connection* for HTTPS dependencies.
+- **HTTP/2 cleartext (h2c)** — not matched (the authority is not a plain `Host` header).
+- **HTTP/3 (QUIC)** — not affected: this attack intercepts TCP only.
+
+# Parameters
+
+| Parameter | Description | Default |
+|---|---|---|
+| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 via TLS SNI or the HTTP Host header. **Required.** |  |
+| Duration | How long should the attack last? | 30s |
+| Percentage | Percentage of matching connections the fault is applied to. | 50 |
+| Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
+| Dependency Ports | (optional) Restrict matching to these ports. | 80 |
+| Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Fail on Host Network | (optional) Fail the attack if the target container uses host networking. | true |
+| Response Status | The HTTP status code to return for matched requests. | 503 |
+| Response Body | (optional) A custom response body to return. |  |
+| Response Headers | (optional) Custom response headers to return. |  |
+| Response Delay (ms) | (optional) Delay in milliseconds before returning the synthesized response, to mimic a slow-then-failing dependency. | 0 |
+
+# Statistics
+
+While the attack runs, a **Dependency Fault Statistics** widget shows how many connections were matched and faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. A matched count of zero means the interception installed but no traffic hit it — check the hostname, ports, and that traffic flows through this network namespace.
