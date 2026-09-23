@@ -4,7 +4,16 @@ Pauses one or more container for a certain time.
 
 # Details
 
-If a container is restarted during the pause, the action will stop (not fail).
+The container is frozen for the whole duration and resumed afterwards.
+
+If the container stops being paused before the duration is over, the attack completes early (it doesn't fail) and shows a warning summary in the experiment run. This happens, for example, when:
+
+* a liveness probe fails and Kubernetes kills the frozen container
+* the pod is deleted, evicted or rolled out, or the container is stopped, killed or restarted by an orchestrator or by hand
+* the container runtime or the node is restarted
+* the container is unpaused by someone else
+
+Because the step ends early, the following steps of the lane start earlier than planned.
 
 _Note:_ Only available for the docker and containerd container runtimes.
 
