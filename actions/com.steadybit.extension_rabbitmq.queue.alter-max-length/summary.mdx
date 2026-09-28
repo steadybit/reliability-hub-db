@@ -10,7 +10,7 @@ Limits the maximum number of messages a RabbitMQ queue can hold by creating a te
 
 # Parameters
 
-| Parameter  | Description                                                                                                                                                                                  | Default |
-|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration   | How long the max-length policy stays in effect. The policy is automatically removed when the duration expires, restoring the queue's original configuration.                                 | 60s     |
-| Max Length | Maximum number of messages the queue is allowed to hold. Messages beyond this limit are dropped or dead-lettered depending on queue configuration. Set to a low value to force backpressure. | 1000    |
+| Parameter  | Description                                                                                                                   | Default |
+|------------|-------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration   | How long the policy stays in effect. The policy is automatically removed when the duration expires.                           | 60s     |
+| Max Length | Maximum number of messages the queue will hold. Messages beyond this limit are dropped or dead-lettered. Set 0 for unlimited. | 1000    |
