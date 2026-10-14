@@ -8,4 +8,4 @@ kind: load_test
 extension: com.steadybit.extension_gatling
 tags:
   - Gatling
-  - Load test
+  - Load Test

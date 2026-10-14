@@ -21,4 +21,4 @@ installation: https://github.com/steadybit/extension-k6#installation
 changelog: https://github.com/steadybit/extension-k6/blob/main/CHANGELOG.md
 tags:
   - k6
-  - Load test
+  - Load Test

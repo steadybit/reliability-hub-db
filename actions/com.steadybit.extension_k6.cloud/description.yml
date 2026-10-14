@@ -21,4 +21,4 @@ kind: load_test
 extension: com.steadybit.extension_k6
 tags:
   - k6
-  - Load test
+  - Load Test
