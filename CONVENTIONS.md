@@ -26,6 +26,10 @@ the same way.
    | `Database`        | `DB`                               |
    | `Load Balancing`  | `Load balancing`                   |
    | `Virtual Machine` | `Virtual machine`, `Virtual machines` |
+   | `Message Queue`   | `Messaging`, `Queue`               |
+
+   When choosing between variants, prefer the name that contains the shorter ones: search and the suggestions both match
+   any part of a tag, so typing `queue` or `messag` already finds `Message Queue`.
 
 3. **Title Case**, except for names with an official spelling (`gRPC`, `k6`, `PromQL`, `.NET`, `NGINX`).
 4. **Singular nouns**: `Container`, `Virtual Machine`, `Database`.
