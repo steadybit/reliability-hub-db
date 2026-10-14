@@ -35,8 +35,8 @@ the same way.
    traffic by hostname, and also for gRPC (which runs over HTTP/2; add `gRPC` as well). Network-level actions get
    `Network`.
 7. **Keep variants in sync.** Actions that exist for several targets (e.g. `extension_container.*`,
-   `extension_host.*`, `extension_host_windows.*`) carry the same tags, apart from the target-specific one
-   (`Container`, `Host`, `Windows`).
+   `extension_host.*`, `extension_host_windows.*`) carry the same tags, apart from the ones that describe the target
+   or platform (`Container`, `Host`, `Windows`, `Kubernetes`).
 8. **No duplicates** within one entry, and no tag that only repeats the label.
 
 ## Labels
