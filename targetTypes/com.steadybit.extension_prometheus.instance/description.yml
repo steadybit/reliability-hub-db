@@ -19,8 +19,8 @@ extension: com.steadybit.extension_prometheus
 tags:
   - Prometheus
   - Kubernetes
-  - AKS (Azure Kubernetes Service)
-  - EKS (AWS Elastic Kubernetes Service)
+  - Azure AKS
+  - AWS EKS
   - PromQL
   - Observability
   - Monitoring

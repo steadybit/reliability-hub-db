@@ -17,7 +17,7 @@ tags:
   - Istio
   - Service Mesh
   - Kubernetes
-  - AKS (Azure Kubernetes Service)
-  - EKS (AWS Elastic Kubernetes Service)
+  - Azure AKS
+  - AWS EKS
   - HTTP
   - gRPC

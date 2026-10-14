@@ -40,7 +40,7 @@
     }
   ],
   "tags": [
-    "RDS",
+    "AWS RDS",
     "Postgres",
     "Recoverability",
     "Datadog",

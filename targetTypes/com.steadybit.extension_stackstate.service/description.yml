@@ -10,7 +10,7 @@ extension: com.steadybit.extension_stackstate
 tags:
   - StackState
   - Kubernetes
-  - AKS (Azure Kubernetes Service)
-  - EKS (AWS Elastic Kubernetes Service)
+  - Azure AKS
+  - AWS EKS
   - Observability
   - Monitoring

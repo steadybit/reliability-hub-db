@@ -19,7 +19,7 @@ changelog: https://github.com/steadybit/extension-stackstate/blob/main/CHANGELOG
 tags:
   - StackState
   - Kubernetes
-  - AKS (Azure Kubernetes Service)
-  - EKS (AWS Elastic Kubernetes Service)
+  - Azure AKS
+  - AWS EKS
   - Observability
   - Monitoring

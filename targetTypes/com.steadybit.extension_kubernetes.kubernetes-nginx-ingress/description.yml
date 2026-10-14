@@ -11,8 +11,8 @@ icon: |
 extension: com.steadybit.extension_kubernetes
 tags:
   - Kubernetes
-  - AKS (Azure Kubernetes Service)
-  - EKS (AWS Elastic Kubernetes Service)
+  - Azure AKS
+  - AWS EKS
   - AWS
   - Azure
   - GCP
