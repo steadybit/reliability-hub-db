@@ -10,6 +10,10 @@ If for any reason, your first contribution is in a PR created by other contribut
 with the following text to agree our CLA: "I have read the CLA Document and I hereby sign the CLA".
 
 
+## Content Conventions
+
+Tags, labels, descriptions, summaries and icons follow the rules in [CONVENTIONS.md](CONVENTIONS.md).
+
 ## SVG Icons
 
 - The icons shouldn't define a fixed `width`and `height` in order to be able to scale them individually.

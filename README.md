@@ -2,7 +2,8 @@
 
 We are happy to retrieve pull requests for your extensions or templates.
 
-Just copy the structure of already available extension / template and edit the files accordingly.
+Just copy the structure of already available extension / template and edit the files accordingly. Please follow the
+[content conventions](CONVENTIONS.md) for tags, labels, descriptions and icons.
 
 Afterwards please add a pull request to this repository.
 
