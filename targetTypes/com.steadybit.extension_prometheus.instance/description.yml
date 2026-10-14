@@ -21,6 +21,7 @@ tags:
   - Kubernetes
   - Azure AKS
   - AWS EKS
+  - GCP GKE
   - PromQL
   - Observability
   - Monitoring
