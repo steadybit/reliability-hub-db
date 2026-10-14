@@ -34,7 +34,8 @@ the same way.
 3. **Title Case**, except for names with an official spelling (`gRPC`, `k6`, `PromQL`, `.NET`, `NGINX`).
 4. **Singular nouns**: `Container`, `Virtual Machine`, `Database`.
 5. **Prefix cloud services with their provider**: `AWS Lambda`, `Azure Service Bus`, `GCP Cloud SQL`. Also add the
-   provider tag itself (`AWS`, `Azure`, `GCP`).
+   provider tag itself (`AWS`, `Azure`, `GCP`). Entries that run on any managed Kubernetes list all three platforms:
+   `Azure AKS`, `AWS EKS` and `GCP GKE`.
 6. **Tag the protocol an action works on.** An action that acts on HTTP(s) traffic gets `HTTP` — also when it selects
    traffic by hostname, and also for gRPC (which runs over HTTP/2; add `gRPC` as well). Network-level actions get
    `Network`.
