@@ -28,5 +28,5 @@ tags:
   - Kubernetes
   - AKS (Azure Kubernetes Service)
   - EKS (AWS Elastic Kubernetes Service)
-  - Http
+  - HTTP
   - gRPC

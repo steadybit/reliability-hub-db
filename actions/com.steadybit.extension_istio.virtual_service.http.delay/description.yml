@@ -18,7 +18,7 @@ tags:
   - Service Mesh
   - Kubernetes
   - Network
-  - Http
+  - HTTP
   - gRPC
   - Latency
   - Delay
