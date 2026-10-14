@@ -25,4 +25,4 @@ changelog: https://github.com/steadybit/extension-kong/blob/main/CHANGELOG.md
 tags:
   - Kong
   - API gateway
-  - Http
+  - HTTP
