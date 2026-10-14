@@ -6,18 +6,30 @@ Drops all network traffic (IN/OUT/FORWARDED).
 
 _Note:_ If you are going to attack containers using network attacks, **all containers in the target's linux network namespace** (e.g. all containers belonging to the same Kubernetes Pod) will be affected. In case you want to target the traffic of a single container in the namespace you can for example use the port parameter to limit the blast radius.
 
+## Localhost traffic
+
+By default, localhost traffic (`127.0.0.0/8`, `::1`) in the target's network namespace is not blocked. Enable
+**Block Localhost Traffic** to block it as well. As all containers of a Kubernetes Pod share the network namespace,
+this also blocks traffic between them over `localhost`, e.g. between an application and its sidecar.
+
+- Only localhost traffic matching the include restrictions is blocked. Use *Include Ports* to target a single
+  container's port.
+- If the target container uses the host network, the option affects the host's localhost traffic. Use
+  *Fail on Host Network* to prevent this.
+
 # Use Cases
 
 * Understand how your services behave under network outages
 
 # Parameters
 
-| Parameter            | Description                                                                                                                                              | Default |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Fail on Host Network | Emit failure when the targeted container is using the host network                                                                                       | true    |
-| Duration             | How long should the traffic be affected?                                                                                                                 | 30s     |
-| Include Hostnames    | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
-| Include IPs/CIDRs    | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
-| Exclude Hostnames    | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
-| Exclude IPs/CIDRs    | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
-| Include Ports        | (optional) Restrict to which ports the traffic is reduced                                                                                                |         |
+| Parameter               | Description                                                                                                                                                                             | Default |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Fail on Host Network    | Emit failure when the targeted container is using the host network                                                                                                                      | true    |
+| Duration                | How long should the traffic be affected?                                                                                                                                                | 30s     |
+| Include Hostnames       | (optional) Restrict to/from which hosts the traffic is affected.                                                                                                                        |         |
+| Include IPs/CIDRs       | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                                                       |         |
+| Exclude Hostnames       | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                                                      |         |
+| Exclude IPs/CIDRs       | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions.                                |         |
+| Include Ports           | (optional) Restrict to which ports the traffic is reduced                                                                                                                               |         |
+| Block Localhost Traffic | (optional) Also block matching traffic on the loopback interface (127.0.0.0/8, ::1), e.g. between two processes on the same container or between containers of the same Kubernetes Pod. | false   |
