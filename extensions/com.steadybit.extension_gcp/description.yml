@@ -22,16 +22,16 @@ changelog: https://github.com/steadybit/extension-gcp/blob/main/CHANGELOG.md
 tags:
   - GCP
   - Cloud
-  - Virtual machines
+  - Virtual Machine
   - VM
-  - GKE
+  - GCP GKE
   - Kubernetes
-  - MIG
-  - Cloud SQL
-  - Cloud NAT
-  - Memorystore
+  - GCP MIG
+  - GCP Cloud SQL
+  - GCP Cloud NAT
+  - GCP Memorystore
   - Redis
-  - Spanner
-  - Persistent Disk
-  - Cloud Run
-  - Pub/Sub
+  - GCP Spanner
+  - GCP Persistent Disk
+  - GCP Cloud Run
+  - GCP Pub/Sub

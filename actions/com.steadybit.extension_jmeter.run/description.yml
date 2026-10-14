@@ -8,4 +8,4 @@ kind: load_test
 extension: com.steadybit.extension_jmeter
 tags:
   - JMeter
-  - Load test
+  - Load Test

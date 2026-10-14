@@ -12,5 +12,5 @@ extension: com.steadybit.extension_gcp
 tags:
   - GCP
   - Cloud
-  - Virtual machines
+  - Virtual Machine
   - VM

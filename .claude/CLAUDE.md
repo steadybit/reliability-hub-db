@@ -145,12 +145,15 @@ releaseDate: 'YYYY-MM-DD'
 
 ## Conventions
 
-- **IDs** use reverse domain notation: `com.steadybit.extension_<name>.<target>.<action>`
-- **Icons** are inline SVG in the YAML, using the pipe (`|`) multiline syntax
-- **Tags** are an array of strings, typically the technology name + category
-- **`releaseDate`** is a quoted ISO date string: `'YYYY-MM-DD'`
+Follow [`CONVENTIONS.md`](../CONVENTIONS.md) for tags, labels, descriptions, summaries, icons and IDs. In short:
+
+- **Tags**: reuse existing spellings (one spelling per concept), Title Case, singular, cloud services prefixed with
+  their provider (`AWS Lambda`), and tag the protocol an action works on (`HTTP`, `Network`)
+- **Descriptions**: one sentence, at most 150 characters; details go into `summary.mdx`
+- **Labels**: Title Case, matching the extension's code
+- **Icons**: no fixed `width`/`height`, `currentColor` for fill/stroke, the same icon across extension, target type and actions
+- **IDs** use reverse domain notation and match the directory name; **`releaseDate`** is a quoted ISO date (`'YYYY-MM-DD'`)
 - All extensions by Steadybit use `maintainer: com.steadybit` and `license: MIT`
-- The SVG icon should be the same across the extension, target type, and all actions
 
 ## Checklist for Adding a New Extension
 
@@ -160,4 +163,5 @@ releaseDate: 'YYYY-MM-DD'
 - [ ] `actions/com.steadybit.extension_<name>.<target>.<action>/description.yml` (one per action)
 - [ ] `advice/com.steadybit.extension_<name>.advice.<name>/description.yml` (if applicable)
 - [ ] IDs match what's in the extension's Go code (`TargetType`, action IDs, advice IDs)
+- [ ] Entries follow [`CONVENTIONS.md`](../CONVENTIONS.md) (see its review checklist)
 - [ ] Create a PR on this repo
