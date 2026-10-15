@@ -2,22 +2,36 @@
 
 Block all network traffic.
 
-# Prerequisites
-
-The Extension Windows Host needs to be installed on the target system.
-
 # Use Cases
 
 * Understand how your services behave under network outages
 
+# Prerequisites
+
+The Extension Windows Host needs to be installed on the target system.
+
 # Parameters
 
-| Parameter         | Description                                                                                                                                              | Default |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration          | How long should traffic been blocked?                                                                                                                    | 30s     |
-| Include Hostnames | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
-| Include IPs/CIDRs | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
-| Exclude Hostnames | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
-| Exclude IPs/CIDRs | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
-| Include Ports     | (optional) Restrict to which ports the traffic is reduced                                                                                                |         |
-| Network Interface | (optional) Target Network Interface which should be attacked                                                                                             |         |
+| Parameter               | Description                                                                                                                                              | Default |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                | How long should traffic been blocked?                                                                                                                    | 30s     |
+| Include Hostnames       | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
+| Include IPs/CIDRs       | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
+| Exclude Hostnames       | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
+| Exclude IPs/CIDRs       | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
+| Include Ports           | (optional) Restrict to which ports the traffic is reduced                                                                                                |         |
+| Network Interface       | (optional) Target Network Interface which should be attacked                                                                                             |         |
+| Block Localhost Traffic | (optional) Also block matching traffic on the loopback interface (127.0.0.0/8, ::1), e.g. between two processes on the same host.                        | true    |
+
+# Details
+
+## Localhost traffic
+
+Block Traffic on Windows also blocks traffic the host sends to itself: traffic over `127.0.0.0/8` and `::1`, and
+traffic to the host's own IP addresses. **Block Localhost Traffic** is enabled by default, so this stays as it has
+always been. Disable it to leave that traffic untouched, e.g. to block a dependency without cutting the connections
+between local processes.
+
+- Only traffic matching the include restrictions is blocked. Without restrictions, all of it is blocked.
+- Selecting a loopback interface in *Network Interface* keeps this traffic in scope, even with the option disabled.
+- Excludes take precedence. The extension's own ports stay reachable on localhost.
