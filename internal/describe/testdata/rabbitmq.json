@@ -1,0 +1,761 @@
+{
+  "/": {
+    "actions": [
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.queue.alter-max-length"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.queue.check-backlog"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.node.check"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.queue.publish-fixed-amount"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.queue.publish-periodically"
+      }
+    ],
+    "discoveries": [
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.vhost/discovery"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.node/discovery"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.queue/discovery"
+      }
+    ],
+    "targetAttributes": [
+      {
+        "method": "GET",
+        "path": "/discovery/attributes"
+      }
+    ],
+    "targetEnrichmentRules": [],
+    "targetTypes": [
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.vhost/discovery/target-description"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.node/discovery/target-description"
+      },
+      {
+        "method": "GET",
+        "path": "/com.steadybit.extension_rabbitmq.queue/discovery/target-description"
+      }
+    ],
+    "eventListeners": null,
+    "advice": null
+  },
+  "/com.steadybit.extension_rabbitmq.node.check": {
+    "category": "RabbitMQ",
+    "description": "Monitor RabbitMQ node-level events (node going down, alarms raised) during an experiment. For queue-level monitoring, use Check Queue Backlog instead.",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.node.check",
+    "kind": "check",
+    "label": "Check Nodes",
+    "parameters": [
+      {
+        "defaultValue": "30s",
+        "description": "How long the check runs. Node state is polled continuously for this duration.",
+        "label": "Duration",
+        "name": "duration",
+        "required": true,
+        "type": "duration"
+      },
+      {
+        "description": "Which node-level changes to watch for. If left empty, any node change triggers the check.",
+        "label": "Expected Changes",
+        "name": "expectedChanges",
+        "options": [
+          {
+            "label": "Node down",
+            "value": "Node down"
+          },
+          {
+            "label": "Node alarm raised",
+            "value": "Node alarm raised"
+          }
+        ],
+        "type": "string_array"
+      },
+      {
+        "defaultValue": "all-time",
+        "description": "How expected changes are evaluated. 'All the time': every poll must detect it. 'At least once': observed once during the duration.",
+        "label": "Change Check Mode",
+        "name": "changeCheckMode",
+        "options": [
+          {
+            "label": "All the time",
+            "value": "all-time"
+          },
+          {
+            "label": "At least once",
+            "value": "at-least-once"
+          }
+        ],
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "prepare": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.node.check/prepare"
+    },
+    "start": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.node.check/start"
+    },
+    "status": {
+      "callInterval": "2s",
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.node.check/status"
+    },
+    "targetSelection": {
+      "selectionTemplates": [
+        {
+          "description": "Find nodes by name",
+          "label": "by node name",
+          "query": "rabbitmq.node.name=\"\""
+        }
+      ],
+      "targetType": "com.steadybit.extension_rabbitmq.node"
+    },
+    "technology": "RabbitMQ",
+    "timeControl": "internal",
+    "version": "unknown",
+    "widgets": [
+      {
+        "identity": {
+          "from": "metric.id"
+        },
+        "label": {
+          "from": "metric.id"
+        },
+        "state": {
+          "from": "state"
+        },
+        "title": "RabbitMQ Node Changes",
+        "tooltip": {
+          "from": "tooltip"
+        },
+        "type": "com.steadybit.widget.state_over_time",
+        "url": {
+          "from": "url"
+        },
+        "value": {
+          "hide": true
+        }
+      }
+    ]
+  },
+  "/com.steadybit.extension_rabbitmq.node/discovery": {
+    "discover": {
+      "callInterval": "0s",
+      "method": "GET",
+      "path": "/com.steadybit.extension_rabbitmq.node/discovery/discovered-targets"
+    },
+    "id": "com.steadybit.extension_rabbitmq.node"
+  },
+  "/com.steadybit.extension_rabbitmq.node/discovery/target-description": {
+    "category": "rabbitmq",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.node",
+    "label": {
+      "one": "RabbitMQ Node",
+      "other": "RabbitMQ Nodes"
+    },
+    "table": {
+      "columns": [
+        {
+          "attribute": "steadybit.label"
+        },
+        {
+          "attribute": "rabbitmq.node.name"
+        },
+        {
+          "attribute": "rabbitmq.node.type"
+        },
+        {
+          "attribute": "rabbitmq.node.running"
+        },
+        {
+          "attribute": "rabbitmq.cluster.name"
+        },
+        {
+          "attribute": "rabbitmq.mgmt.url"
+        }
+      ],
+      "orderBy": [
+        {
+          "attribute": "steadybit.label",
+          "direction": "ASC"
+        }
+      ]
+    },
+    "version": "unknown"
+  },
+  "/com.steadybit.extension_rabbitmq.queue.alter-max-length": {
+    "category": "RabbitMQ",
+    "description": "Limit the maximum number of messages a queue can hold by creating a temporary RabbitMQ policy. The policy is removed when the attack ends.",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.queue.alter-max-length",
+    "kind": "attack",
+    "label": "Alter Queue Max Length",
+    "parameters": [
+      {
+        "defaultValue": "60s",
+        "description": "How long the policy stays in effect. The policy is automatically removed when the duration expires.",
+        "label": "Duration",
+        "name": "duration",
+        "required": true,
+        "type": "duration"
+      },
+      {
+        "defaultValue": "1000",
+        "description": "Maximum number of messages the queue will hold. Messages beyond this limit are dropped or dead-lettered. Set 0 for unlimited.",
+        "label": "Max Length",
+        "name": "maxLength",
+        "required": true,
+        "type": "integer"
+      }
+    ],
+    "prepare": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.alter-max-length/prepare"
+    },
+    "start": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.alter-max-length/start"
+    },
+    "status": {
+      "callInterval": "15s",
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.alter-max-length/status"
+    },
+    "stop": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.alter-max-length/stop"
+    },
+    "targetSelection": {
+      "quantityRestriction": "exactly_one",
+      "selectionTemplates": [
+        {
+          "description": "Select queue by name",
+          "label": "queue name",
+          "query": "rabbitmq.queue.name=\"\""
+        }
+      ],
+      "targetType": "com.steadybit.extension_rabbitmq.queue"
+    },
+    "technology": "RabbitMQ",
+    "timeControl": "external",
+    "version": "unknown"
+  },
+  "/com.steadybit.extension_rabbitmq.queue.check-backlog": {
+    "category": "RabbitMQ",
+    "description": "Monitor the total message count (backlog) in a RabbitMQ queue and fail the experiment if it exceeds a threshold. For node-level monitoring (downtime, alarms), use Check Nodes instead.",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.queue.check-backlog",
+    "kind": "check",
+    "label": "Check Queue Backlog",
+    "parameters": [
+      {
+        "defaultValue": "30s",
+        "description": "How long the check runs. Queue backlog is polled continuously for this duration.",
+        "label": "Duration",
+        "name": "duration",
+        "required": true,
+        "type": "duration"
+      },
+      {
+        "defaultValue": "10",
+        "description": "Maximum acceptable message count in the queue. If backlog exceeds this value, the experiment fails.",
+        "label": "Backlog alert threshold",
+        "name": "acceptableBacklog",
+        "required": true,
+        "type": "integer"
+      }
+    ],
+    "prepare": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.check-backlog/prepare"
+    },
+    "start": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.check-backlog/start"
+    },
+    "status": {
+      "callInterval": "2s",
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.check-backlog/status"
+    },
+    "targetSelection": {
+      "quantityRestriction": "all",
+      "selectionTemplates": [
+        {
+          "description": "Find queue by name",
+          "label": "queue name",
+          "query": "rabbitmq.queue.name=\"\""
+        }
+      ],
+      "targetType": "com.steadybit.extension_rabbitmq.queue"
+    },
+    "technology": "RabbitMQ",
+    "timeControl": "internal",
+    "version": "unknown",
+    "widgets": [
+      {
+        "grouping": {
+          "groups": [
+            {
+              "color": "success",
+              "matcher": {
+                "type": "com.steadybit.widget.line_chart.group_matcher_fallback"
+              },
+              "title": "Under Threshold"
+            },
+            {
+              "color": "warn",
+              "matcher": {
+                "key": "backlog_constraints_fulfilled",
+                "type": "com.steadybit.widget.line_chart.group_matcher_key_equals_value",
+                "value": "false"
+              },
+              "title": "Threshold Violated"
+            }
+          ],
+          "showSummary": true
+        },
+        "identity": {
+          "from": "id",
+          "metricName": "rabbitmq_queue_backlog",
+          "mode": "com.steadybit.widget.line_chart.identity_mode.select"
+        },
+        "title": "Queue Backlog",
+        "tooltip": {
+          "additionalContent": [
+            {
+              "from": "queue",
+              "title": "Queue"
+            },
+            {
+              "from": "vhost",
+              "title": "Vhost"
+            }
+          ],
+          "metricValueTitle": "Messages"
+        },
+        "type": "com.steadybit.widget.line_chart"
+      }
+    ]
+  },
+  "/com.steadybit.extension_rabbitmq.queue.publish-fixed-amount": {
+    "category": "RabbitMQ",
+    "description": "Publish a fixed total number of messages to a queue, distributed evenly across the duration. For rate-based publishing (messages/second), use Publish (Messages / s) instead.",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.queue.publish-fixed-amount",
+    "kind": "attack",
+    "label": "Publish (# of Messages)",
+    "parameters": [
+      {
+        "defaultValue": "",
+        "description": "Optional. The AMQP exchange to publish to. If empty, messages go directly to the target queue via the default exchange.",
+        "label": "Exchange",
+        "name": "exchange",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "defaultValue": "",
+        "description": "Optional routing key used for message delivery; defaults to the queue name if empty.",
+        "label": "Routing Key",
+        "name": "routingKey",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "description": "Message headers to include in AMQP properties.",
+        "label": "Message Headers",
+        "name": "headers",
+        "required": false,
+        "type": "key_value"
+      },
+      {
+        "defaultValue": "test-message",
+        "description": "Required. The message body to publish. Every message uses this same value.",
+        "label": "Message body",
+        "name": "body",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "defaultValue": "1",
+        "description": "Total number of messages to publish across the entire duration. The publishing rate is this value divided by the duration.",
+        "label": "Number of Messages",
+        "name": "numberOfMessages",
+        "required": true,
+        "type": "integer"
+      },
+      {
+        "defaultValue": "30",
+        "description": "How long the publisher runs, in seconds. The total number of messages is distributed evenly across this duration.",
+        "label": "Duration (seconds)",
+        "name": "duration",
+        "required": true,
+        "type": "integer"
+      },
+      {
+        "advanced": true,
+        "defaultValue": "1",
+        "description": "Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.",
+        "label": "Max concurrent requests",
+        "maxValue": 10,
+        "minValue": 1,
+        "name": "maxConcurrent",
+        "required": true,
+        "type": "integer"
+      }
+    ],
+    "prepare": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-fixed-amount/prepare"
+    },
+    "start": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-fixed-amount/start"
+    },
+    "status": {
+      "callInterval": "1s",
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-fixed-amount/status"
+    },
+    "stop": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-fixed-amount/stop"
+    },
+    "targetSelection": {
+      "targetType": "com.steadybit.extension_rabbitmq.queue"
+    },
+    "technology": "RabbitMQ",
+    "timeControl": "internal",
+    "version": "unknown"
+  },
+  "/com.steadybit.extension_rabbitmq.queue.publish-periodically": {
+    "category": "RabbitMQ",
+    "description": "Publish messages to a queue at a constant rate (messages per second) for the attack duration. For publishing a fixed total number of messages, use Publish (# of Messages) instead.",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.queue.publish-periodically",
+    "kind": "attack",
+    "label": "Publish (Messages / s)",
+    "parameters": [
+      {
+        "defaultValue": "",
+        "description": "Optional. The AMQP exchange to publish to. If empty, messages go directly to the target queue via the default exchange.",
+        "label": "Exchange",
+        "name": "exchange",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "defaultValue": "",
+        "description": "Optional routing key used for message delivery; defaults to the queue name if empty.",
+        "label": "Routing Key",
+        "name": "routingKey",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "description": "Message headers to include in AMQP properties.",
+        "label": "Message Headers",
+        "name": "headers",
+        "required": false,
+        "type": "key_value"
+      },
+      {
+        "defaultValue": "test-message",
+        "description": "Required. The message body to publish. Every message uses this same value.",
+        "label": "Message body",
+        "name": "body",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "defaultValue": "1",
+        "description": "The number of messages per second. Should be between 1 and 10.",
+        "label": "Messages per second",
+        "maxValue": 10,
+        "minValue": 1,
+        "name": "messagesPerSecond",
+        "required": true,
+        "type": "integer"
+      },
+      {
+        "defaultValue": "30",
+        "description": "How long the publisher runs at the specified rate, in seconds. Total messages produced = rate x duration.",
+        "label": "Duration (seconds)",
+        "name": "duration",
+        "required": true,
+        "type": "integer"
+      },
+      {
+        "defaultValue": "100",
+        "description": "Minimum percentage of messages that must be published without errors. If the success rate drops below this, the experiment fails.",
+        "label": "Required Success Rate",
+        "maxValue": 100,
+        "minValue": 0,
+        "name": "successRate",
+        "required": true,
+        "type": "percentage"
+      },
+      {
+        "advanced": true,
+        "defaultValue": "1",
+        "description": "Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.",
+        "label": "Max concurrent requests",
+        "maxValue": 10,
+        "minValue": 1,
+        "name": "maxConcurrent",
+        "required": true,
+        "type": "integer"
+      }
+    ],
+    "prepare": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-periodically/prepare"
+    },
+    "start": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-periodically/start"
+    },
+    "status": {
+      "callInterval": "1s",
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-periodically/status"
+    },
+    "stop": {
+      "method": "POST",
+      "path": "/com.steadybit.extension_rabbitmq.queue.publish-periodically/stop"
+    },
+    "targetSelection": {
+      "targetType": "com.steadybit.extension_rabbitmq.queue"
+    },
+    "technology": "RabbitMQ",
+    "timeControl": "external",
+    "version": "unknown"
+  },
+  "/com.steadybit.extension_rabbitmq.queue/discovery": {
+    "discover": {
+      "callInterval": "0s",
+      "method": "GET",
+      "path": "/com.steadybit.extension_rabbitmq.queue/discovery/discovered-targets"
+    },
+    "id": "com.steadybit.extension_rabbitmq.queue"
+  },
+  "/com.steadybit.extension_rabbitmq.queue/discovery/target-description": {
+    "category": "rabbitmq",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.queue",
+    "label": {
+      "one": "RabbitMQ Queue",
+      "other": "RabbitMQ Queues"
+    },
+    "table": {
+      "columns": [
+        {
+          "attribute": "steadybit.label"
+        },
+        {
+          "attribute": "rabbitmq.cluster.name"
+        },
+        {
+          "attribute": "rabbitmq.queue.vhost"
+        },
+        {
+          "attribute": "rabbitmq.queue.name"
+        },
+        {
+          "attribute": "rabbitmq.amqp.url"
+        },
+        {
+          "attribute": "rabbitmq.queue.status"
+        },
+        {
+          "attribute": "rabbitmq.queue.durable"
+        },
+        {
+          "attribute": "rabbitmq.queue.auto_delete"
+        }
+      ],
+      "orderBy": [
+        {
+          "attribute": "steadybit.label",
+          "direction": "ASC"
+        }
+      ]
+    },
+    "version": "unknown"
+  },
+  "/com.steadybit.extension_rabbitmq.vhost/discovery": {
+    "discover": {
+      "callInterval": "0s",
+      "method": "GET",
+      "path": "/com.steadybit.extension_rabbitmq.vhost/discovery/discovered-targets"
+    },
+    "id": "com.steadybit.extension_rabbitmq.vhost"
+  },
+  "/com.steadybit.extension_rabbitmq.vhost/discovery/target-description": {
+    "category": "rabbitmq",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yMS4xOTggMTAuNjAxSDE0Ljc5ODZDMTQuNjkzMiAxMC42MDE2IDE0LjU4ODYgMTAuNTgyMyAxNC40OTEgMTAuNTQ0M0MxNC4zOTM0IDEwLjUwNjIgMTQuMzA0OCAxMC40NTAyIDE0LjIzMDIgMTAuMzc5M0MxNC4xNTU2IDEwLjMwODUgMTQuMDk2NiAxMC4yMjQzIDE0LjA1NjUgMTAuMTMxNkMxNC4wMTY1IDEwLjAzODkgMTMuOTk2MiA5LjkzOTYxIDEzLjk5NjggOS44Mzk0M1YzLjc2MTU0QzEzLjk5NjggMy42NjE3NiAxMy45NzYxIDMuNTYyOTYgMTMuOTM1NyAzLjQ3MDgzQzEzLjg5NTQgMy4zNzg3MSAxMy44MzYyIDMuMjk1MDcgMTMuNzYxNyAzLjIyNDc0QzEzLjY4NzIgMy4xNTQ0IDEzLjU5ODggMy4wOTg3NiAxMy41MDE1IDMuMDYxMDFDMTMuNDA0MyAzLjAyMzI2IDEzLjMwMDEgMy4wMDQxNSAxMy4xOTUxIDMuMDA0NzdIMTAuNzk5N0MxMC42OTQ2IDMuMDA0MTUgMTAuNTkwNSAzLjAyMzI2IDEwLjQ5MzIgMy4wNjEwMUMxMC4zOTYgMy4wOTg3NiAxMC4zMDc2IDMuMTU0NCAxMC4yMzMgMy4yMjQ3NEMxMC4xNTg1IDMuMjk1MDcgMTAuMDk5NCAzLjM3ODcxIDEwLjA1OSAzLjQ3MDgzQzEwLjAxODcgMy41NjI5NiA5Ljk5NzkgMy42NjE3NiA5Ljk5NzkgMy43NjE1NFY5LjgzOTQzQzkuOTk4NTcgOS45Mzk2MSA5Ljk3ODI4IDEwLjAzODkgOS45MzgyMyAxMC4xMzE2QzkuODk4MTcgMTAuMjI0MyA5LjgzOTEzIDEwLjMwODUgOS43NjQ1NSAxMC4zNzkzQzkuNjg5OTYgMTAuNDUwMiA5LjYwMTMxIDEwLjUwNjIgOS41MDM3MyAxMC41NDQzQzkuNDA2MTUgMTAuNTgyMyA5LjMwMTU5IDEwLjYwMTYgOS4xOTYxMSAxMC42MDFINi44MDA3NUM2LjY5NTI3IDEwLjYwMTYgNi41OTA3MSAxMC41ODIzIDYuNDkzMTMgMTAuNTQ0M0M2LjM5NTU2IDEwLjUwNjIgNi4zMDY5IDEwLjQ1MDIgNi4yMzIzMiAxMC4zNzkzQzYuMTU3NzMgMTAuMzA4NSA2LjA5ODcgMTAuMjI0MyA2LjA1ODY0IDEwLjEzMTZDNi4wMTg1OCAxMC4wMzg5IDUuOTk4MjkgOS45Mzk2MSA1Ljk5ODk2IDkuODM5NDNWMy43NjE1NEM1Ljk5OTYzIDMuNjYxMzYgNS45NzkzNCAzLjU2MjA1IDUuOTM5MjggMy40NjkzN0M1Ljg5OTIyIDMuMzc2NjkgNS44NDAxOSAzLjI5MjQ5IDUuNzY1NiAzLjIyMTY1QzUuNjkxMDIgMy4xNTA4MSA1LjYwMjM2IDMuMDk0NzQgNS41MDQ3OSAzLjA1NjY5QzUuNDA3MjEgMy4wMTg2NSA1LjMwMjY1IDIuOTk5MzggNS4xOTcxNyAzLjAwMDAySDIuNzk2OEMyLjY5MTc0IDMuMDAwMDEgMi41ODc3MiAzLjAxOTc0IDIuNDkwNzIgMy4wNTgwN0MyLjM5MzcyIDMuMDk2NCAyLjMwNTY2IDMuMTUyNTcgMi4yMzE2MSAzLjIyMzM1QzIuMTU3NTUgMy4yOTQxMiAyLjA5ODk3IDMuMzc4MTEgMi4wNTkyMiAzLjQ3MDQ3QzIuMDE5NDggMy41NjI4NCAxLjk5OTM2IDMuNjYxNzYgMi4wMDAwMiAzLjc2MTU0VjIxLjIzODVDMS45OTkzNSAyMS4zMzg2IDIuMDE5NjMgMjEuNDM4IDIuMDU5NjkgMjEuNTMwNkMyLjA5OTc1IDIxLjYyMzMgMi4xNTg3OSAyMS43MDc1IDIuMjMzMzcgMjEuNzc4NEMyLjMwNzk2IDIxLjg0OTIgMi4zOTY2MSAyMS45MDUzIDIuNDk0MTkgMjEuOTQzM0MyLjU5MTc3IDIxLjk4MTQgMi42OTYzMyAyMi4wMDA2IDIuODAxODEgMjJIMjEuMTk4QzIxLjMwMzQgMjIuMDAwNiAyMS40MDggMjEuOTgxNCAyMS41MDU2IDIxLjk0MzNDMjEuNjAzMiAyMS45MDUzIDIxLjY5MTggMjEuODQ5MiAyMS43NjY0IDIxLjc3ODRDMjEuODQxIDIxLjcwNzUgMjEuOSAyMS42MjMzIDIxLjk0MDEgMjEuNTMwNkMyMS45ODAxIDIxLjQzOCAyMi4wMDA0IDIxLjMzODYgMjEuOTk5NyAyMS4yMzg1VjExLjM3NjhDMjIuMDAyNCAxMS4yNzU0IDIxLjk4MzYgMTEuMTc0NSAyMS45NDQ1IDExLjA4MDJDMjEuOTA1MyAxMC45ODU5IDIxLjg0NjYgMTAuODk5OSAyMS43NzE4IDEwLjgyNzZDMjEuNjk3IDEwLjc1NTIgMjEuNjA3NyAxMC42OTc5IDIxLjUwOTEgMTAuNjU4OUMyMS40MTA1IDEwLjYyIDIxLjMwNDcgMTAuNjAwMyAyMS4xOTggMTAuNjAxWk0xNy45ODA4IDE3LjA1NDlDMTcuOTgxNCAxNy4yMDQ2IDE3Ljk1MDkgMTcuMzUzMSAxNy44OTEgMTcuNDkxNkMxNy44MzExIDE3LjYzMDIgMTcuNzQzIDE3Ljc1NjEgMTcuNjMxNyAxNy44NjIzQzE3LjUyMDUgMTcuOTY4NCAxNy4zODgyIDE4LjA1MjYgMTcuMjQyNiAxOC4xMTAxQzE3LjA5NjkgMTguMTY3NiAxNi45NDA4IDE4LjE5NzEgMTYuNzgzMSAxOC4xOTcxSDE1LjE3OTVDMTUuMDIxOCAxOC4xOTcxIDE0Ljg2NTYgMTguMTY3NiAxNC43MiAxOC4xMTAxQzE0LjU3NDQgMTguMDUyNiAxNC40NDIxIDE3Ljk2ODQgMTQuMzMwOCAxNy44NjIzQzE0LjIxOTUgMTcuNzU2MSAxNC4xMzE0IDE3LjYzMDIgMTQuMDcxNSAxNy40OTE2QzE0LjAxMTYgMTcuMzUzMSAxMy45ODEyIDE3LjIwNDYgMTMuOTgxOCAxNy4wNTQ5VjE1LjUzNjZDMTMuOTgxMiAxNS4zODY4IDE0LjAxMTYgMTUuMjM4NCAxNC4wNzE1IDE1LjA5OThDMTQuMTMxNCAxNC45NjEyIDE0LjIxOTUgMTQuODM1MyAxNC4zMzA4IDE0LjcyOTFDMTQuNDQyMSAxNC42MjMgMTQuNTc0NCAxNC41Mzg4IDE0LjcyIDE0LjQ4MTNDMTQuODY1NiAxNC40MjM5IDE1LjAyMTggMTQuMzk0MyAxNS4xNzk1IDE0LjM5NDNIMTYuNzgzMUMxNi45NDA4IDE0LjM5NDMgMTcuMDk2OSAxNC40MjM5IDE3LjI0MjYgMTQuNDgxM0MxNy4zODgyIDE0LjUzODggMTcuNTIwNSAxNC42MjMgMTcuNjMxNyAxNC43MjkxQzE3Ljc0MyAxNC44MzUzIDE3LjgzMTEgMTQuOTYxMiAxNy44OTEgMTUuMDk5OEMxNy45NTA5IDE1LjIzODQgMTcuOTgxNCAxNS4zODY4IDE3Ljk4MDggMTUuNTM2NlYxNy4wNTQ5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+Cjwvc3ZnPg==",
+    "id": "com.steadybit.extension_rabbitmq.vhost",
+    "label": {
+      "one": "RabbitMQ Vhost",
+      "other": "RabbitMQ Vhosts"
+    },
+    "table": {
+      "columns": [
+        {
+          "attribute": "steadybit.label"
+        },
+        {
+          "attribute": "rabbitmq.vhost.name"
+        },
+        {
+          "attribute": "rabbitmq.vhost.tracing"
+        },
+        {
+          "attribute": "rabbitmq.cluster.name"
+        }
+      ],
+      "orderBy": [
+        {
+          "attribute": "steadybit.label",
+          "direction": "ASC"
+        }
+      ]
+    },
+    "version": "unknown"
+  },
+  "/discovery/attributes": {
+    "attributes": [
+      {
+        "attribute": "rabbitmq.vhost.name",
+        "label": {
+          "one": "Vhost name",
+          "other": "Vhost names"
+        }
+      },
+      {
+        "attribute": "rabbitmq.vhost.tracing",
+        "label": {
+          "one": "Vhost tracing",
+          "other": "Vhost tracing"
+        }
+      },
+      {
+        "attribute": "rabbitmq.cluster.name",
+        "label": {
+          "one": "Cluster name",
+          "other": "Cluster names"
+        }
+      },
+      {
+        "attribute": "rabbitmq.node.name",
+        "label": {
+          "one": "Node name",
+          "other": "Node names"
+        }
+      },
+      {
+        "attribute": "rabbitmq.node.type",
+        "label": {
+          "one": "Node type",
+          "other": "Node types"
+        }
+      },
+      {
+        "attribute": "rabbitmq.node.running",
+        "label": {
+          "one": "Running state",
+          "other": "Running states"
+        }
+      },
+      {
+        "attribute": "rabbitmq.cluster.name",
+        "label": {
+          "one": "Cluster name",
+          "other": "Cluster names"
+        }
+      },
+      {
+        "attribute": "rabbitmq.queue.vhost",
+        "label": {
+          "one": "Vhost",
+          "other": "Vhosts"
+        }
+      },
+      {
+        "attribute": "rabbitmq.queue.name",
+        "label": {
+          "one": "Queue name",
+          "other": "Queue names"
+        }
+      },
+      {
+        "attribute": "rabbitmq.queue.status",
+        "label": {
+          "one": "Status",
+          "other": "Status"
+        }
+      },
+      {
+        "attribute": "rabbitmq.queue.durable",
+        "label": {
+          "one": "Durable",
+          "other": "Durable"
+        }
+      },
+      {
+        "attribute": "rabbitmq.queue.auto_delete",
+        "label": {
+          "one": "Auto-delete",
+          "other": "Auto-delete"
+        }
+      },
+      {
+        "attribute": "rabbitmq.queue.max_length",
+        "label": {
+          "one": "Max length",
+          "other": "Max lengths"
+        }
+      },
+      {
+        "attribute": "rabbitmq.amqp.url",
+        "label": {
+          "one": "AMQP URL",
+          "other": "AMQP URLs"
+        }
+      },
+      {
+        "attribute": "rabbitmq.cluster.name",
+        "label": {
+          "one": "Cluster name",
+          "other": "Cluster names"
+        }
+      }
+    ]
+  }
+}

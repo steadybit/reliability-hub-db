@@ -12,8 +12,8 @@ This action targets **nodes**, not queues. For queue-level monitoring (message b
 
 # Parameters
 
-| Parameter         | Description                                                                                                                                                                                                              | Default  |
-|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| Duration          | How long the check runs. The check continuously polls node state for this duration.                                                                                                                                      | 30s      |
-| Expected Changes  | (optional) Which node-level events to watch for. Valid values: **Node down** (`node down`), **Node alarm raised** (`node alarm raised`). Multiple values can be selected. If left empty, any node-level change triggers. |          |
-| Change Check Mode | How the expected changes are evaluated. **All the time** (`allTheTime`): every poll must detect the change. **At least once** (`atLeastOnce`): the change must be observed at least once during the duration.            | all-time |
+| Parameter         | Description                                                                                                                        | Default  |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------|----------|
+| Duration          | How long the check runs. Node state is polled continuously for this duration.                                                      | 30s      |
+| Expected Changes  | (optional) Which node-level changes to watch for. If left empty, any node change triggers the check.                               |          |
+| Change Check Mode | How expected changes are evaluated. 'All the time': every poll must detect it. 'At least once': observed once during the duration. | all-time |
