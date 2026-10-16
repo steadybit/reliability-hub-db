@@ -4,7 +4,7 @@ The K6 extension allows to integrate K6 Load Tests into Steadybit Experiments. L
 
 ## Single Scripts and k6 Archives
 Upload a test as a single script (`.js`) or, if it imports other local files or reads data files, as a [k6 archive](https://grafana.com/docs/k6/latest/misc/archive/) (`.tar`) created with `k6 archive`.
-Set the duration and number of virtual users with the step's environment variables `K6_DURATION` and `K6_VUS`. See the K6 action for details.
+Set the step's optional Duration and Virtual users parameters to change the load without editing the test. The experiment editor uses the duration to show how long the step runs. Both can't be combined with k6 scenarios; see the K6 action for details.
 
 ## Support Multiple k6 Executions Locations
 Optionally, you can activate the extension's support for multiple k6 execution locations.
