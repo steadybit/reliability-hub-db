@@ -1,4 +1,4 @@
 ---
 - type: image
-  src: k6-experiment.png
+  src: img.png
   alt: Identified information about a AppDynamics application that can later be used within experiments.
