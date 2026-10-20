@@ -1,5 +1,5 @@
 {
-  "lastChange": 1788183526,
+  "lastChange": 1792483684,
   "templates": [
     "/templates/appdynamics.healthrule-violates-on-pod-crash-loop/template.json",
     "/templates/aws-ec2.ec2-restart/template.json",
@@ -248,6 +248,9 @@
     "/actions/com.steadybit.extension_kubernetes.haproxy-block-traffic/description.yml",
     "/actions/com.steadybit.extension_kubernetes.haproxy-delay-traffic/description.yml",
     "/actions/com.steadybit.extension_kubernetes.kubernetes_logs/description.yml",
+    "/actions/com.steadybit.extension_kubernetes.log_error_count_check_daemonset/description.yml",
+    "/actions/com.steadybit.extension_kubernetes.log_error_count_check_statefulset/description.yml",
+    "/actions/com.steadybit.extension_kubernetes.log_error_count_check/description.yml",
     "/actions/com.steadybit.extension_kubernetes.nginx-block-traffic/description.yml",
     "/actions/com.steadybit.extension_kubernetes.nginx-delay-traffic/description.yml",
     "/actions/com.steadybit.extension_kubernetes.node_count_check/description.yml",

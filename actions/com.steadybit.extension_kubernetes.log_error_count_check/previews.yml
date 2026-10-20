@@ -1,0 +1,13 @@
+---
+- type: image
+  src: editor-target.png
+  alt: "Experiment editor: the Deployment Error Log Count check targeting one deployment, selected in the query editor."
+- type: image
+  src: editor-settings.png
+  alt: "Check settings: fail when any pod's error count exceeds the max, with the default error pattern and the optional filters."
+- type: image
+  src: run-chart.png
+  alt: "Run view: the error log count of one pod rising steadily; points turn red once the max error count is exceeded, and the tooltip shows the count next to the max."
+- type: image
+  src: run-fail-early.png
+  alt: "With fail early, the step fails at the first count above the max, a few seconds into the step."

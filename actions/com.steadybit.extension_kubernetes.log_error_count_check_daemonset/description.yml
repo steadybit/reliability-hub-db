@@ -1,0 +1,26 @@
+---
+id: com.steadybit.extension_kubernetes.log_error_count_check_daemonset
+label: DaemonSet Error Log Count
+description: Counts the error log lines of the daemonset's pods and optionally fails when a threshold is exceeded.
+icon: |
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5 3H14L19 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 3V21H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8 9H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 13H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 13a4.5 4.5 0 1 0 0 9a4.5 4.5 0 1 0 0-9ZM16.75 15h1.5v2.8h-1.5ZM17.5 19.1a0.8 0.8 0 1 0 0 1.6a0.8 0.8 0 1 0 0-1.6Z" fill="currentColor"/>
+  </svg>
+kind: check
+targetType: com.steadybit.extension_kubernetes.kubernetes-daemonset
+extension: com.steadybit.extension_kubernetes
+tags:
+  - Kubernetes
+  - Log
+  - Observability
+  - Monitoring
+  - AWS
+  - Azure
+  - GCP
+  - AWS EKS
+  - Azure AKS
+  - GCP GKE
