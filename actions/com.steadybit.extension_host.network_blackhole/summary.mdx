@@ -2,25 +2,44 @@
 
 Drops all network traffic (IN/OUT/FORWARDED).
 
-# Prerequisites
-
-If you are not using our container images for the extension, the attack requires `tc` (from the iproute2 package).
-
-# Restrictions
-
-- This attack is not supported on hosts using Cilium.
-
 # Use Cases
 
 * Understand how your services behave under network outages
 
+# Prerequisites
+
+If you are not using our container images for the extension, the attack requires `tc` (from the iproute2 package).
+
 # Parameters
 
-| Parameter         | Description                                                                                                                                              | Default |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration          | How long should traffic been blocked?                                                                                                                    | 30s     |
-| Include Hostnames | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
-| Include IPs/CIDRs | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
-| Exclude Hostnames | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
-| Exclude IPs/CIDRs | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
-| Include Ports     | (optional) Restrict to which ports the traffic is dropped                                                                                                |         |
+| Parameter               | Description                                                                                                                                                                                                                | Default |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                | How long should traffic been blocked?                                                                                                                                                                                      | 30s     |
+| Include Hostnames       | (optional) Restrict to/from which hosts the traffic is affected.                                                                                                                                                           |         |
+| Include IPs/CIDRs       | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                                                                                          |         |
+| Exclude Hostnames       | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                                                                                         |         |
+| Exclude IPs/CIDRs       | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions.                                                                   |         |
+| Include Ports           | (optional) Restrict to which ports the traffic is dropped                                                                                                                                                                  |         |
+| Block Localhost Traffic | (optional) Also block matching traffic on the loopback interface (127.0.0.0/8, ::1), e.g. between two processes on the same host. Combine with the include restrictions above, otherwise all localhost traffic is blocked. | false   |
+
+# Details
+
+## Restrictions
+
+- This attack is not supported on hosts using Cilium.
+
+## Localhost traffic
+
+By default, traffic between processes on the same host (`127.0.0.0/8`, `::1`) is not blocked: the kernel delivers it
+before any blocking rule is evaluated. Enable **Block Localhost Traffic** to block it as well, e.g. to cut the
+connection between an application and a database running on the same host.
+
+- Only localhost traffic matching the include restrictions is blocked. Without restrictions, all localhost traffic on
+  the host is blocked, so combine the option with *Include IPs/CIDRs* and/or *Include Ports*.
+- Only the address families of the include restrictions are affected: with IPv4 includes only, `::1` keeps working.
+- Traffic the host sends to its own non-loopback IPs is never blocked, with or without this option.
+- While the attack runs, the default routing rule for local traffic (`0: from all lookup local`) is replaced by two
+  narrower ones around the blocking rules, and restored when the attack ends. If that default rule is missing, e.g.
+  because of custom policy routing, the attack doesn't start.
+- A Block Traffic attack with this option can't run at the same time as another Block Traffic attack on the same host; the second attack fails to start.
+- Excludes take precedence. The extension's own ports stay reachable on localhost.
