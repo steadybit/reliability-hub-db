@@ -1,0 +1,19 @@
+name: Trigger Hub Submodule Update
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: trigger-hub-update
+  cancel-in-progress: true
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch submodule-update in reliability-hub
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh workflow run submodule-update.yml --repo steadybit/reliability-hub --ref main
