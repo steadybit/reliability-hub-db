@@ -1,0 +1,89 @@
+name: sync drift
+
+# Daily cron is commented out until the workflow has been validated against a
+# few extensions via workflow_dispatch. To enable, uncomment the schedule
+# block and adjust the cron line.
+on:
+  workflow_dispatch:
+    inputs:
+      extension:
+        description: "Extension ID to sync (e.g. com.steadybit.extension_rabbitmq). Leave empty to sync every extension listed in sync.yml."
+        required: false
+        default: ""
+  # schedule:
+  #   - cron: "30 4 * * *"   # 04:30 UTC every day
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+          cache: true
+
+      - name: Build sync binary
+        run: go build -o bin/sync ./cmd/sync
+
+      - name: Determine target extensions
+        id: pick
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "${{ inputs.extension }}" ]]; then
+            echo "extensions=${{ inputs.extension }}" >> "$GITHUB_OUTPUT"
+          else
+            # All IDs from sync.yml, space-separated.
+            ids=$(yq '.extensions[].id' sync.yml | tr '\n' ' ')
+            echo "extensions=${ids}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sync each extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -ra exts <<< "${{ steps.pick.outputs.extensions }}"
+          for id in "${exts[@]}"; do
+            echo "::group::sync ${id}"
+            image=$(yq ".extensions[] | select(.id == \"${id}\") | .image" sync.yml)
+            if [[ -z "${image}" || "${image}" == "null" ]]; then
+              echo "no image configured for ${id}; skipping"
+              echo "::endgroup::"
+              continue
+            fi
+            docker pull "${image}"
+            tmp=$(mktemp)
+            docker run --rm \
+              -e STEADYBIT_EXTENSION_MANAGEMENT_ENDPOINTS_JSON='[]' \
+              "${image}" --describe > "${tmp}"
+            ./bin/sync \
+              --extension "${id}" \
+              --describe-file "${tmp}" \
+              --sync-config sync.yml \
+              --root .
+            rm -f "${tmp}"
+            echo "::endgroup::"
+          done
+
+      - name: Open PR if there are changes
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: sync extension descriptions from --describe"
+          title: "chore: extension description drift"
+          body: |
+            Automated sync from extension `--describe` output.
+
+            Triggered by: `${{ github.event_name }}`
+            Target extension(s): `${{ steps.pick.outputs.extensions }}`
+
+            Review the diff carefully — this PR may delete folders for actions/targetTypes/advice that the extension no longer emits.
+          branch: drift/sync
+          delete-branch: true
