@@ -1,0 +1,9 @@
+---
+- type: youtube
+  id: 9NK0TNbFqDg
+- type: image
+  src: attack-settings.png
+  alt: The HTTP dependency attacks in the experiment editor, configured to return a 502 Bad Gateway for a downstream dependency.
+- type: image
+  src: attack-run.png
+  alt: The run view with dependency fault statistics showing how many connections were matched and faulted per dependency.
