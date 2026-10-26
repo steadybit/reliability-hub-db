@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: 5ZOUj3cJnL4
 - type: image
   src: editor-settings.png
   alt: "Check settings: fail when any pod's error count exceeds the max, with the default error pattern and the optional filters."

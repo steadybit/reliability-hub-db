@@ -1,4 +1,6 @@
 ---
+- type: youtube
+  id: 5ZOUj3cJnL4
 - type: image
   src: editor-target.png
   alt: "Experiment editor: the Deployment Error Log Count check targeting one deployment, selected in the query editor."
