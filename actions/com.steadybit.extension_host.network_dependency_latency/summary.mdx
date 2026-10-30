@@ -12,6 +12,10 @@ A transparent TCP proxy is started in the host's network namespace. An iptables 
 
 Only TCP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched.
 
+## Intercepting every port
+
+With **Dependency Ports** left empty, every outgoing TCP connection of the host passes through the proxy during the attack; loopback traffic is excluded. This includes system services such as the kubelet and the container runtime. The fault still applies only to connections to the dependency hostnames, everything else is relayed untouched. Because HTTP is recognized on any port by its `Host` header and TLS by its SNI, other protocols over TLS whose SNI matches a dependency hostname (e.g. Kafka or Redis over TLS) are affected too. Protocols that switch to TLS mid-connection (Postgres, MySQL, SMTP STARTTLS) are not recognized and are relayed untouched.
+
 # Use Cases
 
 * Simulate a slow third-party API or downstream service and verify client timeouts and retries
@@ -35,11 +39,11 @@ Selection happens at layer 7, so which protocols are affected depends on how the
 | Duration | How long should the attack last? | 30s |
 | Percentage | Percentage of matching connections the fault is applied to. | 50 |
 | Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
-| Dependency Ports | (optional) Restrict matching to these ports. | 80,443 |
+| Dependency Ports | (optional) Restrict matching to these ports. Leave empty to intercept every port. | 80,443 |
 | Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
 | Latency | How much latency should be added to calls to the dependency? | 500ms |
 | Reset existing connections | Reset the target's already-open (keep-alive/pooled) connections to the dependency when the attack starts, so they reconnect through the proxy and immediately experience the latency. Disable to affect only new connections. | true |
 
 # Statistics
 
-While the attack runs, a **Dependency Fault Statistics** widget shows how many connections were matched and faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. A matched count of zero means the interception installed but no traffic hit it — check the hostname, ports, and that traffic flows through this network namespace.
+While the attack runs, a **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to a dependency hostname and how many were faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. Zero intercepted connections means the interception installed but no traffic hit it — check the ports and that traffic flows through this network namespace. Intercepted connections but none to a dependency hostname means the traffic flows, but the hostnames don't match — check them against the TLS SNI or HTTP Host header.

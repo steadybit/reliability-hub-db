@@ -12,6 +12,10 @@ A transparent TCP proxy is started in the host's network namespace. An iptables 
 
 Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched. HTTPS is not intercepted; to disrupt an HTTPS dependency use the L7 mode of **Reset TCP/HTTP(s) Connection**.
 
+## Intercepting every port
+
+With **Dependency Ports** left empty, every outgoing TCP connection of the host passes through the proxy during the attack; loopback traffic is excluded. This includes system services such as the kubelet and the container runtime. Cleartext HTTP requests to the dependency hostnames are recognized on any port by their `Host` header and answered with the configured response; everything else, including HTTPS, is relayed untouched.
+
 # Use Cases
 
 * Simulate a dependency returning 5xx errors and verify error handling and fallbacks
@@ -33,7 +37,7 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 | Duration | How long should the attack last? | 30s |
 | Percentage | Percentage of matching connections the fault is applied to. | 50 |
 | Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
-| Dependency Ports | (optional) Restrict matching to these ports. | 80 |
+| Dependency Ports | (optional) Restrict matching to these ports. Leave empty to intercept every port. | 80 |
 | Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
 | Response Status | The HTTP status code to return for matched requests. | 503 |
 | Response Body | (optional) A custom response body to return. |  |
@@ -42,4 +46,4 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 
 # Statistics
 
-While the attack runs, a **Dependency Fault Statistics** widget shows how many connections were matched and faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. A matched count of zero means the interception installed but no traffic hit it — check the hostname, ports, and that traffic flows through this network namespace.
+While the attack runs, a **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to a dependency hostname and how many were faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. Zero intercepted connections means the interception installed but no traffic hit it — check the ports and that traffic flows through this network namespace. Intercepted connections but none to a dependency hostname means the traffic flows, but the hostnames don't match — check them against the TLS SNI or HTTP Host header.
