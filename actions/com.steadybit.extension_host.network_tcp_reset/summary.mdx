@@ -24,7 +24,9 @@ Enabling **Reset at L7 by hostname (SNI/Host)** switches this attack from the pa
 | Percentage | — | supported |
 | Statistics | — | per-hostname matched/faulted widget |
 
-In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Percentage** applies, and **Include Ports** defaults to `80,443` when left empty. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
+In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Percentage** applies, and an empty **Include Ports** intercepts every port, as in packet-level mode. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
+
+With **Include Ports** left empty in L7 mode, every outgoing TCP connection of the host passes through the proxy during the attack; loopback traffic is excluded. This includes system services such as the kubelet and the container runtime. Only connections to the hostnames are reset, everything else is relayed untouched. Because TLS is recognized on any port by its SNI, other protocols over TLS whose SNI matches a hostname (e.g. Kafka or Redis over TLS) are reset too. Set **Include Ports** to `80,443` to limit the attack to the usual HTTP(S) ports.
 
 ## Protocol compatibility (L7 mode)
 
@@ -35,7 +37,7 @@ In L7 mode the **Hostnames** parameter is required (it selects the dependency), 
 
 ## Statistics (L7 mode)
 
-A **Dependency Fault Statistics** widget shows connections matched and reset, plus a per-hostname breakdown. A matched count of zero means the interception installed but no traffic hit it.
+A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header.
 
 # Use Cases
 
@@ -53,5 +55,5 @@ A **Dependency Fault Statistics** widget shows connections matched and reset, pl
 | Include IPs/CIDRs | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
 | Exclude Hostnames | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
 | Exclude IPs/CIDRs | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
-| Include Ports     | (optional) Restrict to/from which ports the traffic is affected                                                                                          |         |
+| Include Ports     | (optional) Restrict to/from which ports the traffic is affected. Empty affects all ports.                                                                |         |
 | Network Interface | (optional) Target network interface to affect. All non-loopback if none specified                                                                        |         |
