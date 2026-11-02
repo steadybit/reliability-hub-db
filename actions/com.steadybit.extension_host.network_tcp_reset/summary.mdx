@@ -49,7 +49,7 @@ forward proxy or a `127.x` entry in `/etc/hosts`.
   of them are closed when it ends. Without *Include Ports*, this applies to **all** localhost traffic on the host, including local agents and sidecars.
   Use *Include Ports* to narrow it down.
 - Only IPv4 localhost is intercepted; `::1` is not affected.
-- If a hostname looks like it belongs to localhost (`localhost`, a `127.x` address, or a name the target's `/etc/hosts` maps to `127.x`), the attack warns but still runs.
+- If a hostname seems to point to localhost, the attack warns but still runs.
 - The extension's own ports stay excluded, so the attack can still be stopped.
 - Earlier versions intercepted localhost only when *Include Ports* were set.
 
