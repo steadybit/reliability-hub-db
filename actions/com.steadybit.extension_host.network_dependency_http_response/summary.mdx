@@ -14,7 +14,20 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 
 ## Intercepting every port
 
-With **Dependency Ports** left empty, every outgoing TCP connection of the host passes through the proxy during the attack; loopback traffic is excluded. This includes system services such as the kubelet and the container runtime. Cleartext HTTP requests to the dependency hostnames are recognized on any port by their `Host` header and answered with the configured response; everything else, including HTTPS, is relayed untouched.
+With **Dependency Ports** left empty, every outgoing TCP connection of the host passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic** is enabled (see below). This includes system services such as the kubelet and the container runtime. Cleartext HTTP requests to the dependency hostnames are recognized on any port by their `Host` header and answered with the configured response; everything else, including HTTPS, is relayed untouched.
+
+## Localhost traffic
+
+By default, localhost traffic (`127.0.0.0/8`) on the host is never intercepted, whether or not *Dependency Ports* are set.
+Enable **Attack Localhost Traffic** to intercept it as well, e.g. when the application reaches the dependency through a local
+forward proxy or a `127.x` entry in `/etc/hosts`.
+
+- Matching localhost connections pass through the proxy: existing ones may be reset when the attack starts, and all
+  of them are closed when it ends. Without *Dependency Ports*, this applies to **all** localhost traffic on the host, including local agents and sidecars.
+  Use *Dependency Ports* to narrow it down.
+- Only IPv4 localhost is intercepted; `::1` is not affected.
+- The extension's own ports stay excluded, so the attack can still be stopped.
+- Earlier versions intercepted localhost only when *Dependency Ports* were set.
 
 # Use Cases
 
@@ -37,8 +50,9 @@ With **Dependency Ports** left empty, every outgoing TCP connection of the host 
 | Duration | How long should the attack last? | 30s |
 | Percentage | Percentage of matching connections the fault is applied to. | 50 |
 | Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
-| Dependency Ports | (optional) Restrict matching to these ports. Leave empty to intercept every port. | 80 |
+| Dependency Ports | (optional) Restrict matching to these ports. Leave empty to intercept every port. |  |
 | Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Attack Localhost Traffic | (optional) Also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic*. | false |
 | Response Status | The HTTP status code to return for matched requests. | 503 |
 | Response Body | (optional) A custom response body to return. |  |
 | Response Headers | (optional) Custom response headers to return. |  |
