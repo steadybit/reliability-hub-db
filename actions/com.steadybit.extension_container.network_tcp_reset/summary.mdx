@@ -37,6 +37,20 @@ In L7 mode the **Hostnames** parameter is required (it selects the dependency), 
 
 A **Dependency Fault Statistics** widget shows connections matched and reset, plus a per-hostname breakdown. A matched count of zero means the interception installed but no traffic hit it.
 
+## Localhost traffic (L7 mode)
+
+By default, localhost traffic (`127.0.0.0/8`) in the target's network namespace is never intercepted, whether or not *Include Ports* are set.
+Enable **Attack Localhost Traffic (L7 mode)** to intercept it as well, e.g. when the application reaches the dependency through a local
+forward proxy or a `127.x` entry in `/etc/hosts`. As all containers of a Kubernetes Pod share the network namespace, this includes traffic between them over `localhost`.
+
+- Matching localhost connections pass through the proxy: existing ones may be reset when the attack starts, and all
+  of them are closed when it ends. Without *Include Ports*, this applies to **all** localhost traffic in the pod, including sidecars such as service mesh proxies.
+  Use *Include Ports* to narrow it down.
+- Only IPv4 localhost is intercepted; `::1` is not affected.
+- If the target container uses the host network, the option intercepts the host's localhost traffic (e.g. probes or
+  agents on `127.0.0.1`), except the extension's own ports. Use *Fail on Host Network* to prevent this.
+- Earlier versions intercepted localhost only when *Include Ports* were set.
+
 # Use Cases
 
 * Simulate abrupt connection resets from upstream or downstream services
@@ -46,13 +60,14 @@ A **Dependency Fault Statistics** widget shows connections matched and reset, pl
 
 # Parameters
 
-| Parameter            | Description                                                                                                                                              | Default |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Fail on Host Network | Emit failure when the targeted container is using the host network                                                                                       | true    |
-| Duration             | How long should TCP connections be reset?                                                                                                                | 30s     |
-| Include Hostnames    | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
-| Include IPs/CIDRs    | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
-| Exclude Hostnames    | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
-| Exclude IPs/CIDRs    | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
-| Include Ports        | (optional) Restrict to/from which ports the traffic is affected                                                                                          |         |
-| Network Interface    | (optional) Target network interface to affect. All non-loopback if none specified                                                                        |         |
+| Parameter                          | Description                                                                                                                                              | Default |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Fail on Host Network               | Emit failure when the targeted container is using the host network                                                                                       | true    |
+| Duration                           | How long should TCP connections be reset?                                                                                                                | 30s     |
+| Include Hostnames                  | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
+| Include IPs/CIDRs                  | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
+| Exclude Hostnames                  | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
+| Exclude IPs/CIDRs                  | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
+| Include Ports                      | (optional) Restrict to/from which ports the traffic is affected                                                                                          |         |
+| Network Interface                  | (optional) Target network interface to affect. All non-loopback if none specified                                                                        |         |
+| Attack Localhost Traffic (L7 mode) | (optional) L7 mode only: also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic (L7 mode)*.                                         | false   |

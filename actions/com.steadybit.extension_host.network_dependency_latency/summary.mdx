@@ -12,6 +12,19 @@ A transparent TCP proxy is started in the host's network namespace. An iptables 
 
 Only TCP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched.
 
+## Localhost traffic
+
+By default, localhost traffic (`127.0.0.0/8`) on the host is never intercepted, whether or not *Dependency Ports* are set.
+Enable **Attack Localhost Traffic** to intercept it as well, e.g. when the application reaches the dependency through a local
+forward proxy or a `127.x` entry in `/etc/hosts`.
+
+- Matching localhost connections pass through the proxy: existing ones may be reset when the attack starts, and all
+  of them are closed when it ends. Without *Dependency Ports*, this applies to **all** localhost traffic on the host, including local agents and sidecars.
+  Use *Dependency Ports* to narrow it down.
+- Only IPv4 localhost is intercepted; `::1` is not affected.
+- The extension's own ports stay excluded, so the attack can still be stopped.
+- Earlier versions intercepted localhost only when *Dependency Ports* were set.
+
 # Use Cases
 
 * Simulate a slow third-party API or downstream service and verify client timeouts and retries
@@ -37,6 +50,7 @@ Selection happens at layer 7, so which protocols are affected depends on how the
 | Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
 | Dependency Ports | (optional) Restrict matching to these ports. | 80,443 |
 | Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Attack Localhost Traffic | (optional) Also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic*. | false |
 | Latency | How much latency should be added to calls to the dependency? | 500ms |
 | Reset existing connections | Reset the target's already-open (keep-alive/pooled) connections to the dependency when the attack starts, so they reconnect through the proxy and immediately experience the latency. Disable to affect only new connections. | true |
 

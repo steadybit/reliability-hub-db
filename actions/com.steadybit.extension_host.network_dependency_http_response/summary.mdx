@@ -12,6 +12,19 @@ A transparent TCP proxy is started in the host's network namespace. An iptables 
 
 Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched. HTTPS is not intercepted; to disrupt an HTTPS dependency use the L7 mode of **Reset TCP/HTTP(s) Connection**.
 
+## Localhost traffic
+
+By default, localhost traffic (`127.0.0.0/8`) on the host is never intercepted, whether or not *Dependency Ports* are set.
+Enable **Attack Localhost Traffic** to intercept it as well, e.g. when the application reaches the dependency through a local
+forward proxy or a `127.x` entry in `/etc/hosts`.
+
+- Matching localhost connections pass through the proxy: existing ones may be reset when the attack starts, and all
+  of them are closed when it ends. Without *Dependency Ports*, this applies to **all** localhost traffic on the host, including local agents and sidecars.
+  Use *Dependency Ports* to narrow it down.
+- Only IPv4 localhost is intercepted; `::1` is not affected.
+- The extension's own ports stay excluded, so the attack can still be stopped.
+- Earlier versions intercepted localhost only when *Dependency Ports* were set.
+
 # Use Cases
 
 * Simulate a dependency returning 5xx errors and verify error handling and fallbacks
@@ -35,6 +48,7 @@ Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traff
 | Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
 | Dependency Ports | (optional) Restrict matching to these ports. | 80 |
 | Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Attack Localhost Traffic | (optional) Also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic*. | false |
 | Response Status | The HTTP status code to return for matched requests. | 503 |
 | Response Body | (optional) A custom response body to return. |  |
 | Response Headers | (optional) Custom response headers to return. |  |
