@@ -37,7 +37,7 @@ With **Include Ports** left empty in L7 mode, every outgoing TCP connection of t
 
 ## Statistics (L7 mode)
 
-A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header.
+A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header. For cleartext HTTP, a **Requests** section shows how many requests went to one of the hostnames and how many were reset, with the share in percent to compare with **Percentage**.
 
 ## Localhost traffic (L7 mode)
 
