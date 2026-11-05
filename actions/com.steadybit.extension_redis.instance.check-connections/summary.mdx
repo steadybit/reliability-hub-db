@@ -12,8 +12,9 @@ This check is designed to be combined with `Exhaust Connections` to verify that 
 
 # Parameters
 
-| Parameter                  | Description                                                                                                                                                         | Default |
-|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| Duration                   | How long the check runs. Connection count is polled continuously for this duration.                                                                                 | 60s     |
-| Max Connections (absolute) | (optional) Maximum allowed connected clients as an absolute count. Set to 0 to disable. This is an advanced option for environments where you need a fixed ceiling. | 0       |
-| Max Connections (%)        | (optional) Maximum allowed connected clients as an absolute count. Set to 0 to disable. This is an advanced option for environments where you need a fixed ceiling. | 80      |
+| Parameter                  | Description                                                                                                                                                                 | Default |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Duration                   | How long the check runs. Connection count is polled continuously for this duration.                                                                                         | 60s     |
+| Max Connections (%)        | (optional) Maximum allowed connected clients as a percentage of `maxclients`. Set to 0 to disable.                                                                          | 80      |
+| Max Connections (absolute) | (optional) Maximum allowed connected clients as an absolute count, for a fixed ceiling independent of `maxclients`. Set to 0 to disable.                                    | 0       |
+| Fail early                 | (optional) If enabled, the check fails as soon as the threshold is exceeded. If disabled, it keeps monitoring for the whole duration and only fails at the end of the step. | false   |
