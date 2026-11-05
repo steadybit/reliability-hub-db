@@ -24,20 +24,20 @@ Enabling **Reset at L7 by hostname (SNI/Host)** switches this attack from the pa
 | Percentage | — | supported |
 | Statistics | — | per-hostname matched/faulted widget |
 
-In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Percentage** applies, and an empty **Include Ports** intercepts every port, as in packet-level mode. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
+In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Percentage** applies (per request for cleartext HTTP, per connection for HTTPS; see *Protocol compatibility (L7 mode)*), and an empty **Include Ports** intercepts every port, as in packet-level mode. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
 
 With **Include Ports** left empty in L7 mode, every outgoing TCP connection of the container passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic (L7 mode)** is enabled (see below). Only connections to the hostnames are reset, everything else is relayed untouched. Because TLS is recognized on any port by its SNI, other protocols over TLS whose SNI matches a hostname (e.g. Kafka or Redis over TLS) are reset too. Set **Include Ports** to `80,443` to limit the attack to the usual HTTP(S) ports.
 
 ## Protocol compatibility (L7 mode)
 
-- **HTTP/1.x cleartext** — matched by the HTTP `Host` header.
-- **HTTPS (TLS), HTTP/1.1 and HTTP/2 over TLS** — matched by the TLS SNI (the reset acts at the connection level).
+- **HTTP/1.x cleartext** — matched by the HTTP `Host` header. **Percentage** applies per request: requests are forwarded until one is selected, then the connection is reset; the client's next connection starts over.
+- **HTTPS (TLS), HTTP/1.1 and HTTP/2 over TLS** — matched by the TLS SNI (the reset acts at the connection level). **Percentage** applies per connection, so with keep-alive clients the share of failing requests can be far from the configured Percentage.
 - **HTTP/2 cleartext (h2c)** — not matched.
 - **HTTP/3 (QUIC)** — not affected: the proxy intercepts TCP only.
 
 ## Statistics (L7 mode)
 
-A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header.
+A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header. For cleartext HTTP, a **Requests** section shows how many requests went to one of the hostnames and how many were reset, with the share in percent to compare with **Percentage**.
 
 ## Localhost traffic (L7 mode)
 
