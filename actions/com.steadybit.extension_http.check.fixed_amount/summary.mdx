@@ -5,6 +5,7 @@ With this extension you are able to check your http endpoints for availability a
 # Use Cases
 
  - Check if your http endpoints are available within a given amount of checks
+ - Verify that an attack breaks requests the way you intend, e.g. expect a connection reset during a Reset TCP/HTTP(s) Connection attack
 
 # Parameters
 
@@ -17,7 +18,7 @@ With this extension you are able to check your http endpoints for availability a
 | HTTP Headers                      | (optional) The HTTP Headers.                                                                                                                            |              |
 | Number of Requests                | Fixed total number of requests, distributed evenly across the duration.                                                                                 | 1            |
 | Required Success Rate             | Percentage of requests that must be successful. Evaluated at the end of the duration.                                                                   | 100          |
-| Required Response Status Codes    | HTTP status codes considered as success. Supports ranges with '-' and multiple codes delimited by ';', e.g. '200-399;429'.                              | 200-299      |
+| Required Response Status Codes    | HTTP status codes considered as success. Supports ranges with '-' and multiple codes delimited by ';', e.g. '200-399;429'. For requests without a response, use the tokens listed under Details, e.g. '503;reset'. | 200-299      |
 | Required Response Body (contains) | (optional) The responses must contain this string, otherwise the step fails.                                                                            |              |
 | Verify Response Time              | How the response time should be verified against the required response time: 'don't verify', 'faster than required', or 'slower than required'.        | don't verify |
 | Required Response Time | The required response time. Which part of the response is measured is controlled by 'Response Time Measurement'. Only used when 'Verify Response Time' is not set to 'don't verify'. | 500ms |
@@ -28,6 +29,24 @@ With this extension you are able to check your http endpoints for availability a
 | Max Concurrent Requests           | Maximum number of parallel requests in flight at once. (min 1, max 10)                                                                                  | 5            |
 | Skip Certificate Verification     | (optional) Whether TLS certificate verification should be skipped.                                                                                      | false        |
 
+
+# Details
+
+## Requests without a response
+
+Some requests never get an HTTP status, e.g. when the connection is refused or reset. Add one of these tokens to **Required Response Status Codes** to count such a request as successful. Tokens can be combined with status codes and ranges, e.g. `200-299;timeout`.
+
+| Token         | Covers                                                                                  |
+|---------------|-----------------------------------------------------------------------------------------|
+| `refused`     | Connection refused                                                                      |
+| `timeout`     | Connection or read timeout, including a DNS lookup that runs out of time                |
+| `reset`       | Connection reset, or closed before any response                                         |
+| `dns`         | Name resolution failed                                                                  |
+| `tls`         | TLS handshake or certificate error                                                      |
+| `unreachable` | No route to host, network unreachable                                                   |
+| `error`       | Any request without a response: everything above plus e.g. protocol errors and redirect loops |
+
+Each failed request reports its type as **Error Type** in the result widget. A failure that matches the expected status codes is shown as successful, with its message as **Expected Error**.
 
 # Self-signed certificates
 
