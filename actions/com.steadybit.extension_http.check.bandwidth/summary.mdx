@@ -25,10 +25,15 @@ It is intended to detect significant bandwidth changes, not to provide precise t
 | Required Success Rate         | Percentage of measurement windows that must be within the bandwidth thresholds. Evaluated at the end of the duration.                                      | 100     |
 | Minimum Bandwidth             | (optional) Minimum expected download bandwidth. Leave empty to skip.                                                                                       |         |
 | Maximum Bandwidth             | (optional) Maximum expected download bandwidth. Leave empty to skip.                                                                                       |         |
+| Keep-Alive | (optional) Reuse connections between requests (HTTP keep-alive). If disabled, every request opens a new connection. | false |
 | Follow Redirects              | Whether HTTP redirects should be followed.                                                                                                                 |         |
 | Connection Timeout            | Connection timeout for a single call. Should be between 1 and 10 seconds.                                                                                  | 5s      |
 | Read Timeout                  | Read timeout for a single call. Should be between 1 and 10 seconds.                                                                                        | 5s      |
 | Skip Certificate Verification | (optional) Whether TLS certificate verification should be skipped.                                                                                         | false   |
+
+# Keep-Alive
+
+When **Keep-Alive** is enabled, connections are reused between requests: DNS lookup, TCP connect and TLS handshake only happen when a new connection is opened, so connection-level faults (e.g. delayed connects or failing TLS handshakes) only affect requests that open a new connection. Leave it disabled to include connection setup in every request.
 
 # Self-signed certificates
 
