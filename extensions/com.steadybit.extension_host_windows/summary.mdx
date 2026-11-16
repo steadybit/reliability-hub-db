@@ -7,3 +7,15 @@ The driver is not persistent and is only active during the duration of the attac
 The driver passed all of the [HLK](https://learn.microsoft.com/en-us/windows-hardware/test/hlk/) tests and is signed by Microsoft, assuring safety.
 
 In case you're looking for support of Linux hosts, check out our [Linux Host extension](/extension/com.steadybit.extension_host).
+
+# Installation and Setup
+
+To install the extension on your Windows hosts, follow our [setup guide](https://github.com/steadybit/extension-host-windows#installation).
+The installer runs the extension as a Windows service, and a Steadybit agent on the same host discovers it automatically.
+
+## Accepting connections from other hosts
+
+The extension's API is not authenticated by default, so the extension only accepts connections from the same host (`localhost`).
+If an agent on another host must reach the extension, set the system environment variable `STEADYBIT_EXTENSION_BIND_ADDRESS` to `0.0.0.0` (all interfaces) or to an IP address of the host, and restart the service.
+In that case, restrict access to the extension's port `8085`, for example with a Windows Firewall rule.
+See [Accepting connections from other hosts](https://github.com/steadybit/extension-host-windows#accepting-connections-from-other-hosts) for details.
