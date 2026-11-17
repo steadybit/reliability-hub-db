@@ -14,12 +14,12 @@ For rate-based publishing (messages per second), use `Publish to Exchange (Messa
 
 # Parameters
 
-| Parameter                | Description                                                                                                                                                | Default      |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| Duration (seconds)       | How long the publisher runs. The total number of messages is distributed evenly across this duration.                                                     | 30           |
-| Number of Messages       | Total number of messages to publish across the entire duration. The publishing rate is this value divided by the duration. Min: 1.                        | 1            |
-| Routing Key              | (optional) Routing key used for message delivery, published as-is. Fanout exchanges ignore it; on direct and topic exchanges an empty or non-matching key makes messages unroutable, which counts as failure. |              |
-| Message Headers          | (optional) AMQP message headers to include in the message properties. Specified as key-value pairs.                                                       |              |
-| Message body             | The message body. Every message uses this same value.                                                                                                     | test-message |
-| Required Success Rate    | Minimum percentage of messages that must be published and routed without errors. If the success rate drops below this, the experiment fails.              | 100          |
-| Max concurrent requests  | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10.                                                                           | 1            |
+| Parameter               | Description                                                                                                                                                                                                               | Default      |
+|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| Duration (seconds)      | How long the publisher runs. The total number of messages is distributed evenly across this duration.                                                                                                                     | 30           |
+| Number of Messages      | Total number of messages to publish across the entire duration. The publishing rate is this value divided by the duration. Min: 1.                                                                                        | 1            |
+| Routing Key             | (optional) Routing key used for message delivery, published as-is. Fanout exchanges ignore it; on direct and topic exchanges an empty or non-matching key makes messages unroutable, which counts as failure.             |              |
+| Message Headers         | (optional) AMQP message headers to include in the message properties. Specified as key-value pairs.                                                                                                                       |              |
+| Message body            | The message body. Every message uses this same value.                                                                                                                                                                     | test-message |
+| Required Success Rate   | Minimum percentage of messages that must be published and routed without errors. If the success rate drops below this, the experiment fails.                                                                              | 100          |
+| Max concurrent requests | Maximum number of parallel publish requests in flight at once. Min: 1, Max: 10. Only matters when the broker responds slowly: if all requests are still in flight, the next ones wait and the target rate is not reached. | 1            |
