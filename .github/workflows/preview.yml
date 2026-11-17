@@ -26,19 +26,26 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
 
       - name: Update submodule to PR head
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           cd db
           git fetch origin
-          git checkout ${{ github.event.pull_request.head.sha }}
+          git checkout "$HEAD_SHA"
           cd ..
           git add db
 
       - name: Commit and force-push preview branch
+        # The branch name is chosen by whoever opens the pull request: pass it through the
+        # environment, never paste it into the script.
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PREVIEW_BRANCH: ${{ steps.branch.outputs.name }}
         run: |
           git config user.name "Johannes Edmeier"
           git config user.email "johannes.edmeier@steadybit.com"
-          git commit -m "chore: preview for ${{ github.event.pull_request.head.ref }}"
-          git push --force origin HEAD:refs/heads/${{ steps.branch.outputs.name }}
+          git commit -m "chore: preview for $HEAD_REF"
+          git push --force origin "HEAD:refs/heads/$PREVIEW_BRANCH"
 
       - name: Comment preview URL on PR
         env:
