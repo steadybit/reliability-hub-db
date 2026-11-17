@@ -23,6 +23,7 @@ With this extension you are able to check your http endpoints for availability a
 | Verify Response Time              | How the response time should be verified against the required response time: 'don't verify', 'faster than required', or 'slower than required'.        | don't verify |
 | Required Response Time | The required response time. Which part of the response is measured is controlled by 'Response Time Measurement'. Only used when 'Verify Response Time' is not set to 'don't verify'. | 500ms |
 | Response Time Measurement | Which part of the response time to measure and verify: 'Time to first byte' (request written until the first response byte, excluding connection setup) or 'Time to last byte' (connection start until the last response byte, so connection latency and slow body downloads are included). | Time to first byte |
+| Keep-Alive | (optional) Reuse connections between requests (HTTP keep-alive). If disabled, every request opens a new connection. | false |
 | Follow Redirects                  | Whether HTTP redirects should be followed.                                                                                                              |              |
 | Connection Timeout                | Connection timeout for a single call. Should be between 1 and 10 seconds.                                                                               | 5s           |
 | Read Timeout                      | Read timeout for a single call. Should be between 1 and 10 seconds.                                                                                     | 5s           |
@@ -47,6 +48,10 @@ Some requests never get an HTTP status, e.g. when the connection is refused or r
 | `error`       | Any request without a response: everything above plus e.g. protocol errors and redirect loops |
 
 Each failed request reports its type as **Error Type** in the result widget. A failure that matches the expected status codes is shown as successful, with its message as **Expected Error**.
+
+## Keep-Alive
+
+When **Keep-Alive** is enabled, connections are reused between requests: DNS lookup, TCP connect and TLS handshake only happen when a new connection is opened. With 'Time to last byte', the measured response time of a reused connection is therefore shorter, and connection-level faults (e.g. delayed connects or failing TLS handshakes) only affect requests that open a new connection. Leave it disabled to check connection setup on every request.
 
 # Self-signed certificates
 
