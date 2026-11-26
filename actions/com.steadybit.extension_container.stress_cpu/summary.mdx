@@ -3,8 +3,10 @@
 Generate CPU load for one or more cores
 
 # Usage
-The resources on a host are shared between containers.
-Running a resource attack for a container is executed in the containers cgroup, but affects the host's resources and all containers running on it.
+
+The CPU load is generated inside the target container's cgroup, so it is capped by the container's CPU limit. The load percentage is relative to that limit; for a container without a CPU limit it is relative to the CPUs the container may use on the host.
+
+The host's resources are still shared between containers. Neighbouring workloads can be affected through shared node resources (for example CPU time they would otherwise burst into, CPU caches or memory bandwidth), especially on overcommitted nodes or when the target container has no CPU limit.
 
 # Use Cases
 
