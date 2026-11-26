@@ -4,6 +4,8 @@ Stresses a specific amount of memory using ongoing memory allocations, reads and
 
 # Usage
 
+The memory is allocated inside the target container's cgroup, so it counts against the container's memory limit. When the limit is reached, the container's processes may be OOM-killed. For a container without a memory limit, the memory is taken from the host and can put the whole node under memory pressure. Even with a limit, neighbouring workloads can be affected on overcommitted nodes, where the limits of all containers add up to more than the node's memory.
+
 Note that this can cause systems to trip the Linux Kernel OOM killer without enough physical or swap Memory.
 
 > This action uses `stress-ng` to stress the Memory. In addition to memory consumption, due to the ongoing memory allocations, reads, and writes, CPU usage will also increase.
