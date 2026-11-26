@@ -1,6 +1,6 @@
 # Introduction
 
-Adds latency to calls to a specific **dependency**, identified by hostname at layer 7 (TLS SNI / HTTP Host). Unlike *Network Delay*, which slows **all** traffic to an IP or CIDR, this slows only the traffic to the named dependency — and it works over HTTPS and for endpoints served by shared or rotating IPs.
+Adds latency to calls to a specific **dependency**, identified by hostname at layer 7 (TLS SNI / HTTP Host). Unlike *Network Delay*, which slows **all** traffic to an IP or CIDR, this slows only the traffic to the named dependency — and it works over HTTPS (with an interception CA, see *HTTPS*) and for endpoints served by shared or rotating IPs.
 
 # Prerequisites
 
@@ -8,13 +8,22 @@ If you are not using our container images for the extension, the attack requires
 
 # Details
 
-A transparent TCP proxy is started in the host's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which inspects the connection at layer 7 — reading the TLS ClientHello **SNI** for HTTPS or the **HTTP Host** header for cleartext — to decide whether it belongs to one of the targeted dependencies. Connections to other destinations are relayed through untouched, so only traffic to the named hostname(s) is affected. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints) and over HTTPS. Each execution uses its own iptables chain, so multiple attacks can run concurrently. Over HTTPS, a matched connection is held for the configured latency before it connects to the real destination. Over cleartext HTTP, the delay is added before each selected request is forwarded.
+A transparent TCP proxy is started in the host's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which inspects the connection at layer 7 — reading the TLS ClientHello **SNI** for HTTPS or the **HTTP Host** header for cleartext — to decide whether it belongs to one of the targeted dependencies. Connections to other destinations are relayed through untouched, so only traffic to the named hostname(s) is affected. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints) and over HTTPS. Each execution uses its own iptables chain, so multiple attacks can run concurrently. The delay is added before each selected request is forwarded, for cleartext HTTP and for HTTPS.
 
 Only TCP traffic to the targeted hostname(s) is affected. Other traffic on the host is relayed untouched.
 
+## HTTPS
+
+Attacking an HTTPS dependency requires an interception CA configured in the extension (Helm value `tlsIntercept.existingSecret`, see the extension's README). The proxy decrypts each matched HTTPS connection with a certificate it issues for the hostname, so it delays each request on its own, exactly as for cleartext HTTP, and forwards the other requests to the real dependency over its own TLS connection. Without a CA, the proxy can't see the requests inside TLS: the latency is added only once, when the connection opens, and later requests on a keep-alive connection are not delayed. Don't attack HTTPS dependencies without one.
+
+- The target's workloads must trust the CA. Every matched HTTPS connection is decrypted, whatever the **Fault Probability**, so a workload that doesn't trust the CA, or pins certificates, fails **all** its requests to the dependency. The statistics show these rejected connections.
+- A forwarded request reaches the dependency only if the proxy can verify the dependency's certificate. Public CAs are built in. For a dependency with a private CA, mount that CA and point `SSL_CERT_DIR` at it, or enable **Skip Dependency Certificate Verification** (unsafe, test environments only). Otherwise these requests get a `502` from the proxy.
+- Mutual TLS is not supported: the proxy forwards without the workload's client certificate, so the dependency rejects the request and the workload gets a `502`.
+- Every TLS connection whose SNI matches a dependency hostname is decrypted as HTTP. Other protocols over TLS to the same hostname (e.g. Kafka or Redis over TLS) then fail, so restrict **Dependency Ports** to the HTTPS port(s) in that case.
+
 ## Intercepting every port
 
-With **Dependency Ports** left empty, every outgoing TCP connection of the host passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic** is enabled (see below). This includes system services such as the kubelet and the container runtime. The fault still applies only to connections to the dependency hostnames, everything else is relayed untouched. Because HTTP is recognized on any port by its `Host` header and TLS by its SNI, other protocols over TLS whose SNI matches a dependency hostname (e.g. Kafka or Redis over TLS) are affected too. Protocols that switch to TLS mid-connection (Postgres, MySQL, SMTP STARTTLS) are not recognized and are relayed untouched.
+With **Dependency Ports** left empty, every outgoing TCP connection of the host passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic** is enabled (see below). This includes system services such as the kubelet and the container runtime. The fault still applies only to connections to the dependency hostnames, everything else is relayed untouched. Because HTTP is recognized on any port by its `Host` header and TLS by its SNI, other protocols over TLS whose SNI matches a dependency hostname (e.g. Kafka or Redis over TLS) are affected too: with an interception CA they fail (see *HTTPS*). Protocols that switch to TLS mid-connection (Postgres, MySQL, SMTP STARTTLS) are not recognized and are relayed untouched.
 
 ## Localhost traffic
 
@@ -40,8 +49,8 @@ forward proxy or a `127.x` entry in `/etc/hosts`.
 
 Selection happens at layer 7, so which protocols are affected depends on how the dependency is reached:
 
-- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header. Fully supported. **Percentage** applies per request: each request on a keep-alive connection is decided on its own, and the delay is added before that request is forwarded.
-- **HTTPS (TLS), including HTTP/1.1 and HTTP/2 over TLS** — matched by the TLS SNI. Supported: the fault acts at the connection level and does not need to read inside TLS. **Percentage** applies per connection, and the latency is added once, when the connection opens: later requests on a keep-alive connection are not delayed. With pooled clients the attack mostly slows new connections; *Reset existing connections* makes pooled clients reconnect at the start, but each new connection is still slowed only once.
+- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header. Fully supported. **Fault Probability** applies per request: each request on a keep-alive connection is decided on its own, and the delay is added before that request is forwarded.
+- **HTTPS (TLS), HTTP/1.1 and HTTP/2** — matched by the TLS SNI; requires an interception CA (see *HTTPS*). The connection is decrypted and handled like cleartext HTTP: **Fault Probability** applies per request, also on keep-alive and multiplexed HTTP/2 connections, and the delay is added before each selected request is forwarded.
 - **HTTP/2 cleartext (h2c)** — not matched: there is no SNI and the authority is carried in an HPACK-compressed HEADERS frame rather than a plain `Host` header. (h2c is rare in practice.)
 - **HTTP/3 (QUIC)** — not affected: QUIC runs over UDP and this attack intercepts TCP only. Disable HTTP/3/QUIC on the client, or target the TCP fallback, to exercise the dependency.
 
@@ -49,16 +58,17 @@ Selection happens at layer 7, so which protocols are affected depends on how the
 
 | Parameter | Description | Default |
 |---|---|---|
-| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 via TLS SNI or the HTTP Host header. **Required.** |  |
+| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 by the HTTP Host header (cleartext HTTP) or the TLS SNI (HTTPS). **Required.** |  |
 | Duration | How long should the attack last? | 30s |
-| Percentage | Percentage of matching requests (cleartext HTTP) or connections (HTTPS) the fault is applied to. See *Protocol compatibility*. | 50 |
-| Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
+| Fault Probability | The chance that each matching request gets the fault. Each request is decided on its own, also on keep-alive connections, for cleartext HTTP and HTTPS. | 50 |
+| Dependency IPs/CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
 | Dependency Ports | (optional) Restrict matching to these ports. Leave empty to intercept every port. |  |
-| Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Exclude IPs/CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
 | Attack Localhost Traffic | (optional) Also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic*. | false |
 | Latency | How much latency should be added to calls to the dependency? | 500ms |
+| Skip Dependency Certificate Verification | (optional) Unsafe, test environments only: forward intercepted HTTPS requests to the dependency without verifying its certificate. See *HTTPS*. | false |
 | Reset existing connections | Reset the target's already-open (keep-alive/pooled) connections to the dependency when the attack starts, so they reconnect through the proxy and immediately experience the latency. Disable to affect only new connections. | true |
 
 # Statistics
 
-While the attack runs, a **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to a dependency hostname and how many were faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. Zero intercepted connections means the interception installed but no traffic hit it — check the ports and that traffic flows through this network namespace. Intercepted connections but none to a dependency hostname means the traffic flows, but the hostnames don't match — check them against the TLS SNI or HTTP Host header. For cleartext HTTP, the summary shows requests instead of connections: how many went to a dependency hostname and how many were faulted, with the share in percent to compare with **Percentage**. The per-hostname table shows both, and there a keep-alive connection counts as faulted once, however many of its requests were. If the proxy can't connect to a destination, the widget shows how often forwarding failed.
+While the attack runs, a **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to a dependency hostname and how many were faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. Zero intercepted connections means the interception installed but no traffic hit it — check the ports and that traffic flows through this network namespace. Intercepted connections but none to a dependency hostname means the traffic flows, but the hostnames don't match — check them against the TLS SNI or HTTP Host header. For HTTP and HTTPS, the summary shows requests instead of connections: how many went to a dependency hostname and how many were faulted, with the share in percent to compare with **Fault Probability**. The per-hostname table shows both, and there a keep-alive connection counts as faulted once, however many of its requests were. If the proxy can't connect to a destination, the widget shows how often forwarding failed.

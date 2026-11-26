@@ -20,24 +20,33 @@ Enabling **Reset at L7 by hostname (SNI/Host)** switches this attack from the pa
 |---|---|---|
 | Selects by | IP / port | hostname (TLS SNI / HTTP Host) |
 | Direction | incoming and outgoing | outgoing only |
-| HTTPS / shared or rotating IPs | only if you know the IPs | matched by hostname, works over HTTPS |
-| Percentage | — | supported |
+| HTTPS / shared or rotating IPs | only if you know the IPs | matched by hostname, works over HTTPS (with an interception CA) |
+| Fault Probability | — | supported |
 | Statistics | — | per-hostname matched/faulted widget |
 
-In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Percentage** applies (per request for cleartext HTTP, per connection for HTTPS; see *Protocol compatibility (L7 mode)*), and an empty **Include Ports** intercepts every port, as in packet-level mode. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
+In L7 mode the **Hostnames** parameter is required (it selects the dependency), **Fault Probability (L7 mode)** applies per request, for cleartext HTTP and HTTPS (see *Protocol compatibility (L7 mode)*), and an empty **Include Ports** intercepts every port, as in packet-level mode. **Exclude Hostnames** and **Network Interface** apply to packet-level mode only.
 
 With **Include Ports** left empty in L7 mode, every outgoing TCP connection of the host passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic (L7 mode)** is enabled (see below). This includes system services such as the kubelet and the container runtime. Only connections to the hostnames are reset, everything else is relayed untouched. Because TLS is recognized on any port by its SNI, other protocols over TLS whose SNI matches a hostname (e.g. Kafka or Redis over TLS) are reset too. Set **Include Ports** to `80,443` to limit the attack to the usual HTTP(S) ports.
 
+## HTTPS (L7 mode)
+
+Attacking an HTTPS dependency requires an interception CA configured in the extension (Helm value `tlsIntercept.existingSecret`, see the extension's README). The proxy decrypts each matched HTTPS connection with a certificate it issues for the hostname, so it resets each request on its own, exactly as for cleartext HTTP, and forwards the other requests to the real dependency over its own TLS connection. Without a CA, the proxy can't see the requests inside TLS: the reset is decided once per connection, so a keep-alive client is only reset until one connection is spared, which then carries every later request. Don't attack HTTPS dependencies without one.
+
+- The target's workloads must trust the CA. Every matched HTTPS connection is decrypted, whatever the **Fault Probability (L7 mode)**, so a workload that doesn't trust the CA, or pins certificates, fails **all** its requests to the dependency. The statistics show these rejected connections.
+- A forwarded request reaches the dependency only if the proxy can verify the dependency's certificate. Public CAs are built in. For a dependency with a private CA, mount that CA and point `SSL_CERT_DIR` at it, or enable **Skip Dependency Certificate Verification** (unsafe, test environments only). Otherwise these requests get a `502` from the proxy.
+- Mutual TLS is not supported: the proxy forwards without the workload's client certificate, so the dependency rejects the request and the workload gets a `502`.
+- Every TLS connection whose SNI matches a dependency hostname is decrypted as HTTP. Other protocols over TLS to the same hostname (e.g. Kafka or Redis over TLS) then fail, so restrict **Include Ports** to the HTTPS port(s) in that case.
+
 ## Protocol compatibility (L7 mode)
 
-- **HTTP/1.x cleartext** — matched by the HTTP `Host` header. **Percentage** applies per request: requests are forwarded until one is selected, then the connection is reset; the client's next connection starts over. Most clients silently resend a request whose reused connection was reset, so the application may see fewer failures than **Percentage**; the statistics count every reset.
-- **HTTPS (TLS), HTTP/1.1 and HTTP/2 over TLS** — matched by the TLS SNI (the reset acts at the connection level). **Percentage** applies per connection, so with keep-alive clients the share of failing requests can be far below the configured Percentage: the first connection that isn't reset carries every later request.
+- **HTTP/1.x cleartext** — matched by the HTTP `Host` header. **Fault Probability (L7 mode)** applies per request: requests are forwarded until one is selected, then the connection is reset; the client's next connection starts over. Most clients silently resend a request whose reused connection was reset, so the application may see fewer failures than **Fault Probability (L7 mode)**; the statistics count every reset.
+- **HTTPS (TLS), HTTP/1.1 and HTTP/2** — matched by the TLS SNI; requires an interception CA (see *HTTPS (L7 mode)*). The connection is decrypted and **Fault Probability (L7 mode)** applies per request: on HTTP/2 the request's stream is reset and the connection stays open, on HTTP/1.1 the connection is closed. As for cleartext HTTP, clients that resend the request may see fewer failures; the statistics count every reset.
 - **HTTP/2 cleartext (h2c)** — not matched.
 - **HTTP/3 (QUIC)** — not affected: the proxy intercepts TCP only.
 
 ## Statistics (L7 mode)
 
-A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header. For cleartext HTTP, the summary shows requests instead of connections: how many went to one of the hostnames and how many were reset, with the share in percent to compare with **Percentage**. If the proxy can't connect to a destination, the widget shows how often forwarding failed.
+A **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to one of the hostnames and how many were reset, plus a per-hostname breakdown. Zero intercepted connections means the interception installed but no traffic hit it; intercepted connections but none to the hostnames means the hostnames don't match the TLS SNI or HTTP Host header. For HTTP and HTTPS, the summary shows requests instead of connections: how many went to one of the hostnames and how many were reset, with the share in percent to compare with **Fault Probability (L7 mode)**. If the proxy can't connect to a destination, the widget shows how often forwarding failed.
 
 ## Localhost traffic (L7 mode)
 
@@ -65,10 +74,13 @@ forward proxy or a `127.x` entry in `/etc/hosts`.
 | Parameter                          | Description                                                                                                                                              | Default |
 |------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | Duration                           | How long should TCP connections be reset?                                                                                                                | 30s     |
-| Include Hostnames                  | (optional) Restrict to/from which hosts the traffic is affected.                                                                                         |         |
+| Reset at L7 by hostname (SNI/Host) | Off: packet-level reset by IP/port. On: reset connections or requests to the named dependency via the transparent proxy. See *L7 mode*. | false |
+| Hostnames | (optional) Restrict to/from which hosts the traffic is affected. In L7 mode: the dependency's hostname(s), matched by the HTTP Host header (cleartext HTTP) or the TLS SNI (HTTPS) — required. |  |
+| Fault Probability (L7 mode) | L7 mode only: the chance that each matching request gets reset. Each request is decided on its own, also on keep-alive connections, for cleartext HTTP and HTTPS. | 50 |
 | Include IPs/CIDRs                  | (optional) Restrict to/from which IP addresses or blocks the traffic is affected.                                                                        |         |
 | Exclude Hostnames                  | (optional) Exclude traffic to/from these hosts from being affected. Excludes always take precedence over the include restrictions.                       |         |
 | Exclude IPs/CIDRs                  | (optional) Exclude traffic to/from these IP addresses or CIDR blocks from being affected. Excludes always take precedence over the include restrictions. |         |
 | Include Ports                      | (optional) Restrict to/from which ports the traffic is affected. Empty affects all ports.                                                                |         |
 | Network Interface                  | (optional) Target network interface to affect. All non-loopback if none specified                                                                        |         |
 | Attack Localhost Traffic (L7 mode) | (optional) L7 mode only: also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic (L7 mode)*.                                         | false   |
+| Skip Dependency Certificate Verification | (optional) L7 mode only. Unsafe, test environments only: forward intercepted HTTPS requests to the dependency without verifying its certificate. See *HTTPS (L7 mode)*. | false |

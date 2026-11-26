@@ -1,6 +1,6 @@
 # Introduction
 
-Returns a **synthesized HTTP response** for a specific dependency's **cleartext HTTP** calls — a status code, and optionally a custom body and headers — without ever reaching the real dependency. Requests are matched by the HTTP **Host** header. This is cleartext HTTP only; HTTPS cannot be intercepted at layer 7 without breaking TLS, so for HTTPS dependencies use the L7 mode of **Reset TCP/HTTP(s) Connection** instead.
+Returns a **synthesized HTTP response** for a specific dependency's **HTTP(S)** calls — a status code, and optionally a custom body and headers — without ever reaching the real dependency. Requests are matched by the HTTP **Host** header (cleartext HTTP) or the TLS **SNI** (HTTPS). HTTPS requires an interception CA configured in the extension (see *HTTPS*).
 
 # Prerequisites
 
@@ -10,13 +10,22 @@ The target container must not share the host's network namespace. Containers usi
 
 # Details
 
-A transparent TCP proxy is started in the container's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which reads the **HTTP Host** header to decide whether a request belongs to one of the targeted dependencies. Requests to other destinations are relayed through untouched. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints). Each execution uses its own iptables chain, so multiple attacks can run concurrently. For matched requests the proxy writes the configured HTTP status code (and optional body and headers) back to the client instead of forwarding the request. Because it operates on cleartext HTTP, it defaults to port 80.
+A transparent TCP proxy is started in the container's network namespace. An iptables rule redirects matching outgoing TCP connections to the proxy, which reads the **HTTP Host** header (cleartext HTTP) or the TLS **SNI** (HTTPS) to decide whether a request belongs to one of the targeted dependencies. Requests to other destinations are relayed through untouched. Because selection happens by hostname rather than by IP, the attack works for dependencies behind shared or rotating IPs (CDNs, cloud endpoints). Each execution uses its own iptables chain, so multiple attacks can run concurrently. For matched requests the proxy writes the configured HTTP status code (and optional body and headers) back to the client instead of forwarding the request.
 
-Only cleartext HTTP traffic to the targeted hostname(s) is affected. Other traffic in the container is relayed untouched. HTTPS is not intercepted; to disrupt an HTTPS dependency use the L7 mode of **Reset TCP/HTTP(s) Connection**.
+Only HTTP(S) traffic to the targeted hostname(s) is affected. Other traffic in the container is relayed untouched.
+
+## HTTPS
+
+Attacking an HTTPS dependency requires an interception CA configured in the extension (Helm value `tlsIntercept.existingSecret`, see the extension's README). The proxy decrypts each matched HTTPS connection with a certificate it issues for the hostname, so it decides each request on its own, exactly as for cleartext HTTP, and forwards the other requests to the real dependency over its own TLS connection. Without a CA, the proxy can't see the requests inside TLS and HTTPS is relayed untouched, so no response is synthesized. Don't attack HTTPS dependencies without one.
+
+- The target's workloads must trust the CA. Every matched HTTPS connection is decrypted, whatever the **Fault Probability**, so a workload that doesn't trust the CA, or pins certificates, fails **all** its requests to the dependency. The statistics show these rejected connections.
+- A forwarded request reaches the dependency only if the proxy can verify the dependency's certificate. Public CAs are built in. For a dependency with a private CA, mount that CA and point `SSL_CERT_DIR` at it, or enable **Skip Dependency Certificate Verification** (unsafe, test environments only). Otherwise these requests get a `502` from the proxy.
+- Mutual TLS is not supported: the proxy forwards without the workload's client certificate, so the dependency rejects the request and the workload gets a `502`.
+- Every TLS connection whose SNI matches a dependency hostname is decrypted as HTTP. Other protocols over TLS to the same hostname (e.g. Kafka or Redis over TLS) then fail, so restrict **Dependency Ports** to the HTTPS port(s) in that case.
 
 ## Intercepting every port
 
-With **Dependency Ports** left empty, every outgoing TCP connection of the container passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic** is enabled (see below). Cleartext HTTP requests to the dependency hostnames are recognized on any port by their `Host` header and answered with the configured response; everything else, including HTTPS, is relayed untouched.
+With **Dependency Ports** left empty, every outgoing TCP connection of the container passes through the proxy during the attack; localhost traffic is excluded unless **Attack Localhost Traffic** is enabled (see below). Requests to the dependency hostnames are recognized on any port, by their `Host` header or their TLS SNI, and answered with the configured response; everything else is relayed untouched.
 
 ## Localhost traffic
 
@@ -41,8 +50,8 @@ forward proxy or a `127.x` entry in `/etc/hosts`. As all containers of a Kuberne
 
 # Protocol compatibility
 
-- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header and the synthesized response is written back. Fully supported. **Percentage** applies per request: each request on a keep-alive connection is decided on its own, and the connection stays open after a synthesized response. A WebSocket upgrade is decided on the upgrade request only; after that, the connection is passed through untouched.
-- **HTTPS (TLS), any HTTP version** — not supported: a synthesized HTTP response cannot be returned inside TLS without terminating it. Use *Slow Outgoing HTTP(s) Dependency* or the L7 mode of *Reset TCP/HTTP(s) Connection* for HTTPS dependencies.
+- **HTTP/1.0 and HTTP/1.1 (cleartext)** — matched by the HTTP `Host` header and the synthesized response is written back. Fully supported. **Fault Probability** applies per request: each request on a keep-alive connection is decided on its own, and the connection stays open after a synthesized response. A WebSocket upgrade is decided on the upgrade request only; after that, the connection is passed through untouched.
+- **HTTPS (TLS), HTTP/1.1 and HTTP/2** — matched by the TLS SNI; requires an interception CA (see *HTTPS*). The connection is decrypted and handled like cleartext HTTP: **Fault Probability** applies per request, also on keep-alive and multiplexed HTTP/2 connections, and the synthesized response is written back inside TLS.
 - **HTTP/2 cleartext (h2c)** — not matched (the authority is not a plain `Host` header).
 - **HTTP/3 (QUIC)** — not affected: this attack intercepts TCP only.
 
@@ -50,19 +59,20 @@ forward proxy or a `127.x` entry in `/etc/hosts`. As all containers of a Kuberne
 
 | Parameter | Description | Default |
 |---|---|---|
-| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 via TLS SNI or the HTTP Host header. **Required.** |  |
+| Dependency Hostnames | The hostname(s) of the dependency to affect. Matched at layer 7 by the HTTP Host header (cleartext HTTP) or the TLS SNI (HTTPS). **Required.** |  |
 | Duration | How long should the attack last? | 30s |
-| Percentage | Percentage of matching requests the fault is applied to. Each request is decided on its own, also on keep-alive connections. | 50 |
-| Dependency CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
+| Fault Probability | The chance that each matching request gets the fault. Each request is decided on its own, also on keep-alive connections, for cleartext HTTP and HTTPS. | 50 |
+| Dependency IPs/CIDRs | (optional) Restrict matching to these IP addresses or CIDR blocks. |  |
 | Dependency Ports | (optional) Restrict matching to these ports. Leave empty to intercept every port. |  |
-| Exclude CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
+| Exclude IPs/CIDRs | (optional) Exclude these IP addresses or CIDR blocks from matching. |  |
 | Attack Localhost Traffic | (optional) Also intercept traffic to localhost (`127.0.0.0/8`). See *Localhost traffic*. | false |
 | Fail on Host Network | (optional) Fail the attack if the target container uses host networking. | true |
 | Response Status | The HTTP status code to return for matched requests. | 503 |
 | Response Body | (optional) A custom response body to return. |  |
 | Response Headers | (optional) Custom response headers to return. |  |
+| Skip Dependency Certificate Verification | (optional) Unsafe, test environments only: forward intercepted HTTPS requests to the dependency without verifying its certificate. See *HTTPS*. | false |
 | Response Delay (ms) | (optional) Delay in milliseconds before returning the synthesized response, to mimic a slow-then-failing dependency. | 0 |
 
 # Statistics
 
-While the attack runs, a **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to a dependency hostname and how many were faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. Zero intercepted connections means the interception installed but no traffic hit it — check the ports and that traffic flows through this network namespace. Intercepted connections but none to a dependency hostname means the traffic flows, but the hostnames don't match — check them against the TLS SNI or HTTP Host header. For cleartext HTTP, the summary shows requests instead of connections: how many went to a dependency hostname and how many were faulted, with the share in percent to compare with **Percentage**. The per-hostname table shows both, and there a keep-alive connection counts as faulted once, however many of its requests were. If the proxy can't connect to a destination, the widget shows how often forwarding failed. *HTTP responses injected* counts every synthesized response.
+While the attack runs, a **Dependency Fault Statistics** widget shows the intercepted ports, how many connections were intercepted, how many of them went to a dependency hostname and how many were faulted, a breakdown of what was done (latency applied, HTTP responses injected, connections reset, forwarded untouched), and a per-hostname table. Zero intercepted connections means the interception installed but no traffic hit it — check the ports and that traffic flows through this network namespace. Intercepted connections but none to a dependency hostname means the traffic flows, but the hostnames don't match — check them against the TLS SNI or HTTP Host header. For HTTP and HTTPS, the summary shows requests instead of connections: how many went to a dependency hostname and how many were faulted, with the share in percent to compare with **Fault Probability**. The per-hostname table shows both, and there a keep-alive connection counts as faulted once, however many of its requests were. If the proxy can't connect to a destination, the widget shows how often forwarding failed. *HTTP responses injected* counts every synthesized response.
